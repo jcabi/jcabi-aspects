@@ -94,7 +94,6 @@ public final class MethodValidator {
      */
     @Before("initialization(*.new(.., @(javax.validation.Valid || javax.validation.constraints.NotNull || javax.validation.constraints.Pattern) (*), ..))")
     public void beforeCtor(final JoinPoint point) {
-        System.out.println("boom");
         this.validate(
             point,
             ConstructorSignature.class.cast(point.getSignature())
