@@ -77,7 +77,7 @@ public final class MethodValidator {
      * @param point Join point
      * @checkstyle LineLength (3 lines)
      */
-    @Before("execution(* *(@(javax.validation.Valid || javax.validation.constraints.NotNull || javax.validation.constraints.Pattern) (*)))")
+    @Before("execution(* *(.., @(javax.validation.Valid || javax.validation.constraints.NotNull || javax.validation.constraints.Pattern) (*), ..))")
     public void beforeMethod(final JoinPoint point) {
         this.validate(
             point,
@@ -92,8 +92,9 @@ public final class MethodValidator {
      * @param point Join point
      * @checkstyle LineLength (3 lines)
      */
-    @Before("execution(*.new(@(javax.validation.Valid || javax.validation.constraints.NotNull || javax.validation.constraints.Pattern) (*)))")
+    @Before("initialization(*.new(.., @(javax.validation.Valid || javax.validation.constraints.NotNull || javax.validation.constraints.Pattern) (*), ..))")
     public void beforeCtor(final JoinPoint point) {
+        System.out.println("boom");
         this.validate(
             point,
             ConstructorSignature.class.cast(point.getSignature())
