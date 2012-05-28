@@ -31,7 +31,6 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.log.Logger;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -46,6 +45,7 @@ import javax.validation.metadata.ConstraintDescriptor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.reflect.ConstructorSignature;
 import org.aspectj.lang.reflect.MethodSignature;
 
 /**
@@ -75,16 +75,41 @@ public final class MethodValidator {
     /**
      * Catch exception and log it.
      * @param point Join point
-     * @checkstyle LineLength (2 lines)
+     * @checkstyle LineLength (3 lines)
      */
     @Before("execution(* *(@(javax.validation.Valid || javax.validation.constraints.NotNull || javax.validation.constraints.Pattern) (*)))")
-    public void before(final JoinPoint point) {
+    public void beforeMethod(final JoinPoint point) {
+        this.validate(
+            point,
+            MethodSignature.class.cast(point.getSignature())
+                .getMethod()
+                .getParameterAnnotations()
+        );
+    }
+
+    /**
+     * Catch exception and log it.
+     * @param point Join point
+     * @checkstyle LineLength (3 lines)
+     */
+    @Before("execution(*.new(@(javax.validation.Valid || javax.validation.constraints.NotNull || javax.validation.constraints.Pattern) (*)))")
+    public void beforeCtor(final JoinPoint point) {
+        this.validate(
+            point,
+            ConstructorSignature.class.cast(point.getSignature())
+                .getConstructor()
+                .getParameterAnnotations()
+        );
+    }
+
+    /**
+     * Validate method at the given point.
+     * @param point Join point
+     * @param params Parameters (their annotations)
+     */
+    private void validate(final JoinPoint point, final Annotation[][] params) {
         final Set<ConstraintViolation<?>> violations =
             new HashSet<ConstraintViolation<?>>();
-        final Method method = MethodSignature.class
-            .cast(point.getSignature())
-            .getMethod();
-        final Annotation[][] params = method.getParameterAnnotations();
         for (int pos = 0; pos < params.length; ++pos) {
             violations.addAll(
                 this.validate(pos, point.getArgs()[pos], params[pos])
