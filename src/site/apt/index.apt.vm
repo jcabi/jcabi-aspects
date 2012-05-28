@@ -49,10 +49,10 @@ Useful Java AOP Aspects
   <version>${releasedVersion}</version>
 </dependency>
 <dependency>
-    <groupId>org.aspectj</groupId>
-    <artifactId>aspectjrt</artifactId>
-    <version>1.6.12</version>
-    <scope>runtime</scope>
+  <groupId>org.aspectj</groupId>
+  <artifactId>aspectjrt</artifactId>
+  <version>1.6.12</version>
+  <scope>runtime</scope>
 </dependency>
 +--
 
@@ -60,32 +60,32 @@ Useful Java AOP Aspects
 
 +--
 <plugin>
-    <groupId>org.codehaus.mojo</groupId>
-    <artifactId>aspectj-maven-plugin</artifactId>
-    <version>1.4</version>
-    <configuration>
-        <complianceLevel>1.6</complianceLevel>
-        <encoding>${project.build.sourceEncoding}</encoding>
-        <showWeaveInfo>true</showWeaveInfo>
-        <source>1.6</source>
-        <target>1.6</target>
-        <verbose>true</verbose>
-        <aspectLibraries>
-            <aspectLibrary>
-                <groupId>com.jcabi</groupId>
-                <artifactId>jcabi-aspects</artifactId>
-            </aspectLibrary>
-        </aspectLibraries>
-    </configuration>
-    <executions>
-        <execution>
-            <id>weave-classes</id>
-            <phase>process-classes</phase>
-            <goals>
-                <goal>compile</goal>
-            </goals>
-        </execution>
-    </executions>
+  <groupId>org.codehaus.mojo</groupId>
+  <artifactId>aspectj-maven-plugin</artifactId>
+  <version>1.4</version>
+  <configuration>
+    <complianceLevel>1.6</complianceLevel>
+    <encoding>${project.build.sourceEncoding}</encoding>
+    <showWeaveInfo>true</showWeaveInfo>
+    <source>1.6</source>
+    <target>1.6</target>
+    <verbose>true</verbose>
+    <aspectLibraries>
+      <aspectLibrary>
+        <groupId>com.jcabi</groupId>
+        <artifactId>jcabi-aspects</artifactId>
+      </aspectLibrary>
+    </aspectLibraries>
+  </configuration>
+  <executions>
+    <execution>
+      <id>weave-classes</id>
+      <phase>process-classes</phase>
+      <goals>
+        <goal>compile</goal>
+      </goals>
+    </execution>
+  </executions>
 </plugin>
 +--
 
@@ -105,7 +105,9 @@ public class Foo {
 +--
 
   For JSR-303 annotations don't forget to include JSR-303 API and
-  some reference implementation (for example, Hibernate Validator):
+  some reference implementation (for example,
+  {{{http://www.hibernate.org/subprojects/validator.html}Hibernate Validator}}
+  or {{{http://bval.apache.org/}Apache BVal}}):
 
 +--
 <dependency>
