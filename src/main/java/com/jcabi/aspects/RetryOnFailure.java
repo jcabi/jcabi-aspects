@@ -52,17 +52,20 @@ public @interface RetryOnFailure {
 
     /**
      * How many times to retry.
+     * @checkstyle MagicNumber (2 lines)
      */
     int attempts() default 3;
 
     /**
      * Delay between attempts, in milliseconds.
+     * @checkstyle MagicNumber (2 lines)
      */
     long delay() default 50;
 
     /**
      * When to retry (in case of what exception types).
+     * @todo #39 Not implemented yet, just ignored
      */
-    Class<? extends Exception>[] types() default {};
+    Class<? extends Exception>[] types() default { };
 
 }

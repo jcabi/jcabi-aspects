@@ -39,6 +39,7 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor@jcabi.com)
  * @version $Id$
  */
+@SuppressWarnings("PMD.DoNotUseThreads")
 public final class RetryOnFailureTest {
 
     /**
@@ -56,7 +57,7 @@ public final class RetryOnFailureTest {
                     throw new IllegalArgumentException();
                 }
             }
-        }.run();
+        } .run();
         MatcherAssert.assertThat(count.get(), Matchers.greaterThan(0));
     }
 
