@@ -90,7 +90,8 @@ Useful Java AOP Aspects
 +--
 
   Then, use one of our annotations:
-  {{{./apidocs/com/jcabi/aspects/LogExceptions.html}LogExceptions}}.
+  {{{./apidocs/com/jcabi/aspects/LogExceptions.html}LogExceptions}},
+  {{{./apidocs/com/jcabi/aspects/RetryOnFailure.html}RetryOnFailure}}.
 
   Or one of JSR-303 annotations, for example:
 
