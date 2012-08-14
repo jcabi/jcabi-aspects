@@ -104,6 +104,13 @@
                             <goal>compile</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>weave-test-classes</id>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
