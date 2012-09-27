@@ -41,7 +41,7 @@ JSR-303 Annotations with AspectJ
   First, configure your pom.xml as explained {{{./index.html}here}}.
 
   Then, include JSR-303 API and
-  some reference implementation (for example,
+  one of its reference implementations (for example,
   {{{http://www.hibernate.org/subprojects/validator.html}Hibernate Validator}}
   or {{{http://bval.apache.org/}Apache BVal}}):
 
