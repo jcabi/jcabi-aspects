@@ -36,7 +36,7 @@
 ~~ OF THE POSSIBILITY OF SUCH DAMAGE.
 ~~
 
-JSR-303 Annotation with AspectJ runtime
+JSR-303 Annotations with AspectJ
 
   First, configure your pom.xml as explained {{{./index.html}here}}.
 
@@ -63,7 +63,6 @@ JSR-303 Annotation with AspectJ runtime
   Next, annotate method arguments:
 
 +--
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 public class Foo {
   public void doSomething(@NotNull String name) {
@@ -72,10 +71,11 @@ public class Foo {
 }
 +--
 
-  That's it. Every time you call <<<Foo.doSomething()>>> with <<<NULL>>
+  That's it. Every time you call <<<Foo.doSomething()>>> with <<<NULL>>>
   a <<<javax.validation.ConstraintViolationException>>> will be thrown.
 
-  And now a bit more complex example. Suppose you have a custom class:
+  And now a bit more complex example. Suppose you have a custom class <<<Bar>>>
+  that should be able to validate itself:
 
 +--
 import java.lang.annotation.Documented;
@@ -134,4 +134,5 @@ public class Foo {
 }
 +--
 
-  Every time this method is called <<<bar>>> will be validated.
+  Every time method <<<Foo.doSomethingElse()>>> is called
+  <<<bar>>> will be validated with <<<Bar.Validator>>>.
