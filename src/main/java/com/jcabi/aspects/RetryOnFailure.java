@@ -38,9 +38,6 @@ import java.lang.annotation.Target;
 /**
  * Retry the method in case of exception.
  *
- * <p>Add this annotation to the method you want to log. Any exception thrown
- * out of it will be logged through {@link com.jcabi.log.Logger}.
- *
  * @author Yegor Bugayenko (yegor@jcabi.com)
  * @version $Id$
  * @since 0.1.10
