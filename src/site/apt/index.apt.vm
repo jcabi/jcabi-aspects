@@ -93,34 +93,4 @@ Useful Java AOP Aspects
   {{{./apidocs/com/jcabi/aspects/LogExceptions.html}LogExceptions}},
   {{{./apidocs/com/jcabi/aspects/RetryOnFailure.html}RetryOnFailure}}.
 
-  Or one of JSR-303 annotations, for example:
-
-+--
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-public class Foo {
-  public void doSomething(@Valid Bar bar, @NotNull String name) {
-    // ...
-  }
-}
-+--
-
-  For JSR-303 annotations don't forget to include JSR-303 API and
-  some reference implementation (for example,
-  {{{http://www.hibernate.org/subprojects/validator.html}Hibernate Validator}}
-  or {{{http://bval.apache.org/}Apache BVal}}):
-
-+--
-<dependency>
-  <groupId>javax.validation</groupId>
-  <artifactId>validation-api</artifactId>
-  <version>1.1.0.Alpha1</version>
-  <scope>provided</scope>
-</dependency>
-<dependency>
-  <groupId>org.apache.bval</groupId>
-  <artifactId>bval-jsr303</artifactId>
-  <version>0.4</version>
-  <scope>runtime</scope>
-</dependency>
-+--
+  Read more about {{{./jsr-303.html}JSR-303 annotations}}.

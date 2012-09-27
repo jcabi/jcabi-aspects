@@ -1,0 +1,137 @@
+ ------
+ JSR-303 Annotations With AspectJ
+ ------
+ Yegor Bugayenko
+ ------
+ 2012-09-27
+ ------
+
+~~
+~~ Copyright (c) 2011, jcabi.com
+~~ All rights reserved.
+~~
+~~ Redistribution and use in source and binary forms, with or without
+~~ modification, are permitted provided that the following conditions
+~~ are met: 1) Redistributions of source code must retain the above
+~~ copyright notice, this list of conditions and the following
+~~ disclaimer. 2) Redistributions in binary form must reproduce the above
+~~ copyright notice, this list of conditions and the following
+~~ disclaimer in the documentation and/or other materials provided
+~~ with the distribution. 3) Neither the name of the jcabi.com nor
+~~ the names of its contributors may be used to endorse or promote
+~~ products derived from this software without specific prior written
+~~ permission.
+~~
+~~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+~~ NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+~~ FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+~~ THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+~~ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+~~ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+~~ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+~~ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+~~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+~~ OF THE POSSIBILITY OF SUCH DAMAGE.
+~~
+
+JSR-303 Annotation with AspectJ runtime
+
+  First, configure your pom.xml as explained {{{./index.html}here}}.
+
+  Then, include JSR-303 API and
+  some reference implementation (for example,
+  {{{http://www.hibernate.org/subprojects/validator.html}Hibernate Validator}}
+  or {{{http://bval.apache.org/}Apache BVal}}):
+
++--
+<dependency>
+  <groupId>javax.validation</groupId>
+  <artifactId>validation-api</artifactId>
+  <version>1.1.0.Alpha1</version>
+  <scope>provided</scope>
+</dependency>
+<dependency>
+  <groupId>org.apache.bval</groupId>
+  <artifactId>bval-jsr303</artifactId>
+  <version>0.4</version>
+  <scope>runtime</scope>
+</dependency>
++--
+
+  Next, annotate method arguments:
+
++--
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+public class Foo {
+  public void doSomething(@NotNull String name) {
+    // ...
+  }
+}
++--
+
+  That's it. Every time you call <<<Foo.doSomething()>>> with <<<NULL>>
+  a <<<javax.validation.ConstraintViolationException>>> will be thrown.
+
+  And now a bit more complex example. Suppose you have a custom class:
+
++--
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import javax.validation.Constraint;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+import javax.validation.Payload;
+
+@Bar.Valid
+public class Bar {
+  @Target(ElementType.TYPE)
+  @Retention(RetentionPolicy.RUNTIME)
+  @Constraint(validatedBy = Bar.Validator.class)
+  @Documented
+  public @interface Valid {
+      String message() default "invalid Bar";
+      Class<?>[] groups() default {};
+      Class<? extends Payload>[] payload() default {};
+  }
+  class Validator implements ConstraintValidator<Bar.Valid, Bar> {
+    @Override
+    public void initialize(final Bar.Valid annotation) {
+        //nothing to do
+    }
+    @Override
+    public boolean isValid(final Bar bar,
+      final ConstraintValidatorContext ctx) {
+      boolean isValid = true;
+      if (!bar.name().matches("\\d+")) {
+        ctx.buildConstraintViolationWithTemplate("invalid name")
+          .addNode("name")
+          .addConstraintViolation();
+        isValid = false;
+      }
+      return isValid;
+    }
+  }
+  public String name() {
+    // return name of the object
+  }
+}
++--
+
+  Now objects of class <<<Bar>>> can be validated every time they are used:
+
++--
+import javax.validation.Valid;
+public class Foo {
+  public void doSomethingElse(@Valid Bar bar) {
+    // ...
+  }
+}
++--
+
+  Every time this method is called <<<bar>>> will be validated.

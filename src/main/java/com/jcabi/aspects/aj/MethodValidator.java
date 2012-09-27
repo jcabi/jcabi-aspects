@@ -51,8 +51,8 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Validates method calls.
  *
- * <p>We do this manual processing of {@link NotNull} and {@link Pattern}
- * only because
+ * <p>We do this manual processing of {@code javax.validation.constraints.*}
+ * annotations only because
  * JSR-303 in its current version doesn't support method level validation
  * (see its Appendix C). At the moment we don't support anything expect these
  * two annotations. We think that it's better to wait for JSR-303.
@@ -77,7 +77,7 @@ public final class MethodValidator {
      * @param point Join point
      * @checkstyle LineLength (3 lines)
      */
-    @Before("execution(* *(.., @(javax.validation.Valid || javax.validation.constraints.NotNull || javax.validation.constraints.Pattern) (*), ..))")
+    @Before("execution(* *(.., @(javax.validation.Valid || javax.validation.constraints.*) (*), ..))")
     public void beforeMethod(final JoinPoint point) {
         this.validate(
             point,
@@ -92,7 +92,7 @@ public final class MethodValidator {
      * @param point Join point
      * @checkstyle LineLength (3 lines)
      */
-    @Before("initialization(*.new(.., @(javax.validation.Valid || javax.validation.constraints.NotNull || javax.validation.constraints.Pattern) (*), ..))")
+    @Before("initialization(*.new(.., @(javax.validation.Valid || javax.validation.constraints.*) (*), ..))")
     public void beforeCtor(final JoinPoint point) {
         this.validate(
             point,
@@ -135,30 +135,35 @@ public final class MethodValidator {
         final Set<ConstraintViolation<?>> violations =
             new HashSet<ConstraintViolation<?>>();
         for (Annotation antn : annotations) {
-            if (antn.annotationType().equals(NotNull.class)
-                && arg == null) {
-                violations.add(
-                    MethodValidator.violation(
-                        String.format("param #%d", pos),
-                        "must not be NULL"
-                    )
-                );
-                break;
-            }
-            if (antn.annotationType().equals(Valid.class)) {
-                violations.addAll(this.validator.validate(arg));
-                break;
-            }
-            if (antn.annotationType().equals(Pattern.class)
-                && !arg.toString()
-                    .matches(Pattern.class.cast(antn).regexp())) {
-                violations.add(
-                    MethodValidator.violation(
-                        String.format("param #%d '%s'", pos, arg),
-                        String.format(
-                            "must match the following regexp: '%s'",
-                            Pattern.class.cast(antn).regexp()
+            if (antn.annotationType().equals(NotNull.class)) {
+                if (arg == null) {
+                    violations.add(
+                        MethodValidator.violation(
+                            String.format("param #%d", pos),
+                            "must not be NULL"
                         )
+                    );
+                }
+            } else if (antn.annotationType().equals(Valid.class)) {
+                violations.addAll(this.validator.validate(arg));
+            } else if (antn.annotationType().equals(Pattern.class)) {
+                if (!arg.toString()
+                    .matches(Pattern.class.cast(antn).regexp())) {
+                    violations.add(
+                        MethodValidator.violation(
+                            String.format("param #%d '%s'", pos, arg),
+                            String.format(
+                                "must match the following regexp: '%s'",
+                                Pattern.class.cast(antn).regexp()
+                            )
+                        )
+                    );
+                }
+            } else {
+                throw new IllegalStateException(
+                    Logger.format(
+                        "%[type]s annotation is not supported at the moment",
+                        antn
                     )
                 );
             }
