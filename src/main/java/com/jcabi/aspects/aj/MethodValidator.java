@@ -31,6 +31,7 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.log.Logger;
 import java.lang.annotation.Annotation;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -118,7 +119,7 @@ public final class MethodValidator {
         }
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(
-                Logger.format("%[list]s", violations),
+                MethodValidator.pack(violations),
                 violations
             );
         }
@@ -219,6 +220,22 @@ public final class MethodValidator {
                 return String.class;
             }
         };
+    }
+
+    /**
+     * Pack violations into string.
+     * @param errs All violations
+     * @return The full text
+     */
+    private static String pack(final Collection<ConstraintViolation<?>> errs) {
+        final StringBuilder text = new StringBuilder();
+        for (ConstraintViolation<?> violation : errs) {
+            if (text.length() > 0) {
+                text.append("; ");
+            }
+            text.append(violation.getMessage());
+        }
+        return text.toString();
     }
 
 }
