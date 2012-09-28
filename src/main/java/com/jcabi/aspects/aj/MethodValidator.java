@@ -153,7 +153,7 @@ public final class MethodValidator {
             } else if (antn.annotationType().equals(Valid.class)) {
                 violations.addAll(this.validator.validate(arg));
             } else if (antn.annotationType().equals(Pattern.class)) {
-                if (!arg.toString()
+                if (arg != null && !arg.toString()
                     .matches(Pattern.class.cast(antn).regexp())) {
                     violations.add(
                         MethodValidator.violation(
