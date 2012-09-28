@@ -131,6 +131,10 @@ public final class MethodValidator {
      * @param arg The argument
      * @param annotations Array of annotations
      * @return A set of violations
+     * @todo #61 It's a temporary design, which enables only NotNull,
+     *  Valid, and Pattern annotations. In the future we should use
+     *  JSR-303 Validator, when they implement validation of values (see
+     *  their appendix C).
      */
     private Set<ConstraintViolation<?>> validate(final int pos,
         final Object arg, final Annotation[] annotations) {
@@ -142,7 +146,7 @@ public final class MethodValidator {
                     violations.add(
                         MethodValidator.violation(
                             String.format("param #%d", pos),
-                            "must not be NULL"
+                            NotNull.class.cast(antn).message()
                         )
                     );
                 }
@@ -154,10 +158,7 @@ public final class MethodValidator {
                     violations.add(
                         MethodValidator.violation(
                             String.format("param #%d '%s'", pos, arg),
-                            String.format(
-                                "must match the following regexp: '%s'",
-                                Pattern.class.cast(antn).regexp()
-                            )
+                            Pattern.class.cast(antn).message()
                         )
                     );
                 }

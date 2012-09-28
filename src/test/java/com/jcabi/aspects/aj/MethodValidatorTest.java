@@ -31,6 +31,7 @@ package com.jcabi.aspects.aj;
 
 import java.lang.reflect.Method;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.Test;
@@ -53,12 +54,21 @@ public final class MethodValidatorTest {
     }
 
     /**
+     * MethodValidator can throw when regex doesn't match.
+     * @throws Exception If something goes wrong
+     */
+    @Test(expected = javax.validation.ConstraintViolationException.class)
+    public void throwsWhenRegularExpressionDoesntMatch() throws Exception {
+        this.call(new Object[] {"some text"});
+    }
+
+    /**
      * MethodValidator can pass for valid parameters.
      * @throws Exception If something goes wrong
      */
     @Test
     public void passesWhenMethodParametersAreValid() throws Exception {
-        this.call(new Object[] {"test"});
+        this.call(new Object[] {"123"});
     }
 
     /**
@@ -86,7 +96,7 @@ public final class MethodValidatorTest {
          * Do nothing.
          * @param text Some text
          */
-        public void foo(@NotNull final String text) {
+        public void foo(@NotNull @Pattern(regexp = "\\d+") final String text) {
             // nothing to do
         }
     }
