@@ -76,6 +76,9 @@ public final class Repeater {
                     attempt,
                     ex
                 );
+                if (ex instanceof InterruptedException) {
+                    throw ex;
+                }
                 if (attempt > rof.attempts()) {
                     throw ex;
                 }
