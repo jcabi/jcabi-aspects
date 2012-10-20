@@ -72,8 +72,9 @@ public final class Repeater {
                 ++attempt;
                 Logger.warn(
                     this,
-                    "attempt #%d %[exception]s",
+                    "attempt #%d of %d failed: %[exception]s",
                     attempt,
+                    rof.attempts(),
                     ex
                 );
                 if (ex instanceof InterruptedException) {
