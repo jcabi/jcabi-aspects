@@ -67,6 +67,8 @@ public final class Repeater {
         while (true) {
             try {
                 return point.proceed();
+            } catch (InterruptedException ex) {
+                throw ex;
             // @checkstyle IllegalCatch (1 line)
             } catch (Throwable ex) {
                 ++attempt;
@@ -77,9 +79,6 @@ public final class Repeater {
                     rof.attempts(),
                     ex
                 );
-                if (ex instanceof InterruptedException) {
-                    throw ex;
-                }
                 if (attempt > rof.attempts()) {
                     throw ex;
                 }
