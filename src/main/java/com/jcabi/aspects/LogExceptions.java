@@ -45,9 +45,9 @@ import java.lang.annotation.Target;
  * String load(URL url) throws IOException{
  *   return url.getContent().toString();
  * }</pre>
- * 
+ *
  * <p>This method will log its exception, if thrown.
- * 
+ *
  * @author Yegor Bugayenko (yegor@jcabi.com)
  * @version $Id$
  * @since 0.1.10
