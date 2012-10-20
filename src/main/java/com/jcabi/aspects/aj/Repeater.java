@@ -68,6 +68,7 @@ public final class Repeater {
             try {
                 return point.proceed();
             } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
                 throw ex;
             // @checkstyle IllegalCatch (1 line)
             } catch (Throwable ex) {
