@@ -38,6 +38,14 @@ import java.lang.annotation.Target;
 /**
  * Retry the method in case of exception.
  *
+ * <p>For example, this {@code load()} method will retry to load the URL
+ * content if it fails at the first attempts:
+ *
+ * <pre> &#64;RetryOnFailure(attempts = 2)
+ * String load(URL url) throws IOException {
+ *   return url.getContent().toString();
+ * }</pre>
+ *
  * @author Yegor Bugayenko (yegor@jcabi.com)
  * @version $Id$
  * @since 0.1.10
