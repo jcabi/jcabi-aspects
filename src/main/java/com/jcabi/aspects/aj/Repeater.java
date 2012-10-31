@@ -65,6 +65,7 @@ public final class Repeater {
             .getAnnotation(RetryOnFailure.class);
         int attempt = 0;
         while (true) {
+            final long start = System.currentTimeMillis();
             try {
                 return point.proceed();
             } catch (InterruptedException ex) {
@@ -75,9 +76,10 @@ public final class Repeater {
                 ++attempt;
                 Logger.warn(
                     this,
-                    "attempt #%d of %d failed: %[exception]s",
+                    "attempt #%d of %d failed in %[ms]s: %[exception]s",
                     attempt,
                     rof.attempts(),
+                    System.currentTimeMillis() - start,
                     ex
                 );
                 if (attempt > rof.attempts()) {
