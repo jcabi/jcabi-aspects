@@ -40,7 +40,7 @@
         <menu name="Overview">
             <item name="Introduction" href="index.html" />
             <item name="JSR-303 validations" href="jsr-303.html" />
-            <item name="API (JavaDoc)" href="./apidocs/index.html" />
+            <item name="API ${releasedVersion} (JavaDoc)" href="./apidocs-${releasedVersion}/index.html" />
             <item name="Test coverage" href="./cobertura/index.html" />
         </menu>
         <menu ref="reports" />
