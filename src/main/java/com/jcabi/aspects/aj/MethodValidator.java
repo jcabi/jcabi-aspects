@@ -58,7 +58,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  * (see its Appendix C). At the moment we don't support anything expect these
  * two annotations. We think that it's better to wait for JSR-303.
  *
- * @author Yegor Bugayenko (yegor@jcabi.com)
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1.10
  * @link <a href="http://beanvalidation.org/1.0/spec/#appendix-methodlevelvalidation">Appendix C</a>
