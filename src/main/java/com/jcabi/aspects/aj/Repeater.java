@@ -82,7 +82,7 @@ public final class Repeater {
                     System.currentTimeMillis() - start,
                     ex
                 );
-                if (attempt > rof.attempts()) {
+                if (attempt >= rof.attempts()) {
                     throw ex;
                 }
                 TimeUnit.MILLISECONDS.sleep(rof.delay() * attempt);

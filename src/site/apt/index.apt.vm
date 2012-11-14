@@ -38,8 +38,6 @@
 
 Useful Java AOP Aspects
 
-  <<Notice>>: Experimental implementation.
-
   First, add these two artifacts to your <<<pom.xml>>>:
 
 +--
