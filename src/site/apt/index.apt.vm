@@ -44,7 +44,7 @@ Useful Java AOP Aspects
 <dependency>
   <groupId>com.jcabi</groupId>
   <artifactId>jcabi-aspects</artifactId>
-  <version>${releasedVersion}</version>
+  <version>${project.version}</version>
 </dependency>
 <dependency>
   <groupId>org.aspectj</groupId>
