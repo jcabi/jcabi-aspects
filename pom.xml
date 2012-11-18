@@ -47,19 +47,16 @@
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
-            <!-- this one is compliant with aspectj-maven-plugin -->
-            <version since="27 May 2012">1.6.11</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version since="27 May 2012">1.1.0.Alpha1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version since="27 May 2012">4.3.0.Final</version>
             <scope>test</scope>
         </dependency>
         <dependency>
