@@ -48,7 +48,7 @@ import java.lang.annotation.Target;
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.7.2
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

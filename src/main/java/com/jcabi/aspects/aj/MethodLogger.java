@@ -42,7 +42,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.7.2
  */
 @Aspect
 public final class MethodLogger {
