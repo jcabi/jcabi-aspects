@@ -27,63 +27,38 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.aspects;
+package com.jcabi;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.jcabi.aspects.RetryOnFailure;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Makes a method loggable via {@link com.jcabi.log.Logger}.
- *
- * <p>For example, this {@code load()} method produce a log line
- * on every call:
- *
- * <pre> &#64;Loggable
- * String load(String resource) throws IOException {
- *   return "something";
- * }</pre>
- *
+ * Counter.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.7.2
  */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.CONSTRUCTOR })
-@SuppressWarnings("PMD.VariableNamingConventions")
-public @interface Loggable {
+public final class Counter {
 
     /**
-     * TRACE level of logging.
+     * Count.
      */
-    int TRACE = 0;
+    private final AtomicInteger count = new AtomicInteger();
 
     /**
-     * INFO level of logging.
+     * Get count.
+     * @return Count
      */
-    int INFO = 1;
+    public int get() {
+        return this.count.get();
+    }
 
     /**
-     * DEBUG level of logging.
+     * Ping it.
      */
-    int DEBUG = 2;
-
-    /**
-     * WARN level of logging.
-     */
-    int WARN = 3;
-
-    /**
-     * ERROR level of logging.
-     */
-    int ERROR = 4;
-
-    /**
-     * Level of logging.
-     */
-    int value() default Loggable.INFO;
+    @RetryOnFailure(attempts = 4, delay = 0)
+    public void ping() {
+        this.count.incrementAndGet();
+        throw new IllegalStateException();
+    }
 
 }

@@ -27,63 +27,38 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.aspects;
+package com.jcabi;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.jcabi.aspects.Loggable;
 
 /**
- * Makes a method loggable via {@link com.jcabi.log.Logger}.
- *
- * <p>For example, this {@code load()} method produce a log line
- * on every call:
- *
- * <pre> &#64;Loggable
- * String load(String resource) throws IOException {
- *   return "something";
- * }</pre>
- *
+ * Document.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.7.2
  */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.CONSTRUCTOR })
-@SuppressWarnings("PMD.VariableNamingConventions")
-public @interface Loggable {
+public final class Document {
 
     /**
-     * TRACE level of logging.
+     * Name of it.
      */
-    int TRACE = 0;
+    private final String name;
 
     /**
-     * INFO level of logging.
+     * Public ctor.
+     * @param txt Name of it
      */
-    int INFO = 1;
+    @Loggable
+    public Document(String txt) {
+        this.name = txt;
+    }
 
     /**
-     * DEBUG level of logging.
+     * Get name of it.
+     * @return Name of it
      */
-    int DEBUG = 2;
-
-    /**
-     * WARN level of logging.
-     */
-    int WARN = 3;
-
-    /**
-     * ERROR level of logging.
-     */
-    int ERROR = 4;
-
-    /**
-     * Level of logging.
-     */
-    int value() default Loggable.INFO;
+    @Loggable
+    public String name() {
+        return this.name;
+    }
 
 }

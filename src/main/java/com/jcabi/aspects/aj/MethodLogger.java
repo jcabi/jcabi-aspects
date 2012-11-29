@@ -53,8 +53,9 @@ public final class MethodLogger {
      * @return The result of call
      * @throws Throwable If something goes wrong inside
      * @checkstyle IllegalThrows (5 lines)
+     * @checkstyle LineLength (3 lines)
      */
-    @Around("execution(* * (..)) && @annotation(com.jcabi.aspects.Loggable)")
+    @Around("(execution(* *(..)) || call(*.new(..))) && @annotation(com.jcabi.aspects.Loggable)")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         final long start = System.nanoTime();
         final Object result = point.proceed();
@@ -68,11 +69,11 @@ public final class MethodLogger {
             if (pos > 0) {
                 log.append(", ");
             }
-            log.append(args[pos]);
+            log.append('\'').append(args[pos]).append('\'');
         }
         log.append("):");
         if (!"void".equals(method.getReturnType().getName())) {
-            log.append(' ').append(result);
+            log.append(" '").append(result).append('\'');
         }
         log.append(Logger.format(" in %[nano]s", System.nanoTime() - start));
         this.log(
