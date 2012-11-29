@@ -29,6 +29,7 @@
  */
 package com.jcabi.aspects.aj;
 
+import com.jcabi.aspects.Loggable;
 import com.jcabi.log.Logger;
 import java.lang.reflect.Method;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -54,7 +55,6 @@ public final class MethodLogger {
      * @checkstyle IllegalThrows (5 lines)
      */
     @Around("execution(* * (..)) && @annotation(com.jcabi.aspects.Loggable)")
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         final long start = System.nanoTime();
         final Object result = point.proceed();
@@ -70,11 +70,38 @@ public final class MethodLogger {
             }
             log.append(args[pos]);
         }
-        log.append("): ");
-        log.append(result);
+        log.append("):");
+        if (!"void".equals(method.getReturnType().getName())) {
+            log.append(' ').append(result);
+        }
         log.append(Logger.format(" in %[nano]s", System.nanoTime() - start));
-        Logger.info(method.getDeclaringClass(), log.toString());
+        this.log(
+            method.getAnnotation(Loggable.class).value(),
+            method.getDeclaringClass(),
+            log.toString()
+        );
         return result;
+    }
+
+    /**
+     * Log one line.
+     * @param level Level of logging
+     * @param log Destination log
+     * @param message Message to log
+     */
+    private void log(final int level, final Class<?> log,
+        final String message) {
+        if (level == Loggable.TRACE) {
+            Logger.trace(log, message);
+        } else if (level == Loggable.DEBUG) {
+            Logger.debug(log, message);
+        } else if (level == Loggable.INFO) {
+            Logger.info(log, message);
+        } else if (level == Loggable.WARN) {
+            Logger.warn(log, message);
+        } else if (level == Loggable.ERROR) {
+            Logger.error(log, message);
+        }
     }
 
 }

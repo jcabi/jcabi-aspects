@@ -53,5 +53,37 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD, ElementType.TYPE })
+@SuppressWarnings("PMD.VariableNamingConventions")
 public @interface Loggable {
+
+    /**
+     * TRACE level of logging.
+     */
+    int TRACE = 0;
+
+    /**
+     * INFO level of logging.
+     */
+    int INFO = 1;
+
+    /**
+     * DEBUG level of logging.
+     */
+    int DEBUG = 2;
+
+    /**
+     * WARN level of logging.
+     */
+    int WARN = 3;
+
+    /**
+     * ERROR level of logging.
+     */
+    int ERROR = 4;
+
+    /**
+     * Level of logging.
+     */
+    int value() default Loggable.INFO;
+
 }

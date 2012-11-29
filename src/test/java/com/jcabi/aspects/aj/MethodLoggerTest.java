@@ -29,9 +29,8 @@
  */
 package com.jcabi.aspects.aj;
 
+import com.jcabi.aspects.Loggable;
 import java.lang.reflect.Method;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.Test;
@@ -82,6 +81,7 @@ public final class MethodLoggerTest {
          * @param text Some text
          * @return Reverted text
          */
+        @Loggable(Loggable.INFO)
         public String revert(final String text) {
             return new StringBuffer(text).reverse().toString();
         }
