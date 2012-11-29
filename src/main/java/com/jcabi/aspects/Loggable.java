@@ -36,7 +36,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Makes a class of a method loggable via {@link com.jcabi.log.Logger}.
+ * Makes a method loggable via {@link com.jcabi.log.Logger}.
  *
  * <p>For example, this {@code load()} method produce a log line
  * on every call:
@@ -52,7 +52,7 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.TYPE })
+@Target(ElementType.METHOD)
 @SuppressWarnings("PMD.VariableNamingConventions")
 public @interface Loggable {
 
