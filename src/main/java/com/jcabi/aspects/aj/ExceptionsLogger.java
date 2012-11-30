@@ -37,6 +37,8 @@ import org.aspectj.lang.annotation.Aspect;
 /**
  * Logs all exceptions thrown out of a method.
  *
+ * <p>The class is immutable and thread-safe.
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1.10

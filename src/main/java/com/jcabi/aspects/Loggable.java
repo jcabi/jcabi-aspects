@@ -46,9 +46,17 @@ import java.lang.annotation.Target;
  *   return "something";
  * }</pre>
  *
+ * <p>You can configure the level of logging:
+ *
+ * <pre> &#64;Loggable(Loggable.DEBUG)
+ * void save(String resource) throws IOException {
+ *   // do something
+ * }</pre>
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.2
+ * @see com.jcabi.log.Logger
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

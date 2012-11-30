@@ -58,6 +58,8 @@ import org.aspectj.lang.reflect.MethodSignature;
  * (see its Appendix C). At the moment we don't support anything expect these
  * two annotations. We think that it's better to wait for JSR-303.
  *
+ * <p>The class is immutable and thread-safe.
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1.10

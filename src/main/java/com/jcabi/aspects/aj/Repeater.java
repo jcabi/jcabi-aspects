@@ -40,6 +40,8 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Repeat execution in case of exception.
  *
+ * <p>The class is immutable and thread-safe.
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1.10
