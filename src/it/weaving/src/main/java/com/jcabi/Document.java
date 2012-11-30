@@ -30,6 +30,7 @@
 package com.jcabi;
 
 import com.jcabi.aspects.Loggable;
+import javax.validation.constraints.NotNull;
 
 /**
  * Document.
@@ -48,7 +49,7 @@ public final class Document {
      * @param txt Name of it
      */
     @Loggable
-    public Document(String txt) {
+    public Document(@NotNull String txt) {
         this.name = txt;
     }
 
@@ -59,6 +60,14 @@ public final class Document {
     @Loggable
     public String name() {
         return this.name;
+    }
+
+    /**
+     * Always throws an exception.
+     */
+    @Loggable
+    public void exception() {
+        throw new IllegalStateException();
     }
 
 }

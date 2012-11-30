@@ -55,10 +55,14 @@ public final class Counter {
     /**
      * Ping it.
      */
-    @RetryOnFailure(attempts = 4, delay = 0)
+    @RetryOnFailure(attempts = 4, delay = 0, verbose = false)
     public void ping() {
-        this.count.incrementAndGet();
-        throw new IllegalStateException();
+        throw new IllegalStateException(
+            String.format(
+                "ping #%d",
+                this.count.incrementAndGet()
+            )
+        );
     }
 
 }

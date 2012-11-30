@@ -73,4 +73,10 @@ public @interface RetryOnFailure {
      */
     Class<? extends Exception>[] types() default { };
 
+    /**
+     * Shall it be fully verbose (show full exception trace) or just
+     * exception message?
+     */
+    boolean verbose() default true;
+
 }

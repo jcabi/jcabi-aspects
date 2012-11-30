@@ -56,12 +56,57 @@ public final class MethodLogger {
      * @checkstyle LineLength (3 lines)
      */
     @Around("(execution(* *(..)) || call(*.new(..))) && @annotation(com.jcabi.aspects.Loggable)")
+    @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         final long start = System.nanoTime();
-        final Object result = point.proceed();
         final Method method = MethodSignature.class.cast(
             point.getSignature()
         ).getMethod();
+        try {
+            final Object result = point.proceed();
+            this.log(
+                method.getAnnotation(Loggable.class).value(),
+                method.getDeclaringClass(),
+                this.compose(
+                    method,
+                    point,
+                    Logger.format(
+                        "returned %s in %[nano]s",
+                        MethodLogger.text(result),
+                        System.nanoTime() - start
+                    )
+                )
+            );
+            return result;
+        // @checkstyle IllegalCatch (1 line)
+        } catch (Throwable ex) {
+            this.log(
+                Loggable.ERROR,
+                method.getDeclaringClass(),
+                this.compose(
+                    method,
+                    point,
+                    Logger.format(
+                        "thrown %[type]s (%s) in %[nano]s",
+                        ex,
+                        MethodLogger.text(ex.getMessage()),
+                        System.nanoTime() - start
+                    )
+                )
+            );
+            throw ex;
+        }
+    }
+
+    /**
+     * Compose a log message.
+     * @param method Method just called
+     * @param point Join point
+     * @param result Result of execution
+     * @return Composed log message
+     */
+    private String compose(final Method method, final ProceedingJoinPoint point,
+        final String result) {
         final StringBuilder log = new StringBuilder();
         log.append('#').append(method.getName()).append('(');
         final Object[] args = point.getArgs();
@@ -69,19 +114,10 @@ public final class MethodLogger {
             if (pos > 0) {
                 log.append(", ");
             }
-            log.append('\'').append(args[pos]).append('\'');
+            log.append(MethodLogger.text(args[pos]));
         }
-        log.append("):");
-        if (!"void".equals(method.getReturnType().getName())) {
-            log.append(" '").append(result).append('\'');
-        }
-        log.append(Logger.format(" in %[nano]s", System.nanoTime() - start));
-        this.log(
-            method.getAnnotation(Loggable.class).value(),
-            method.getDeclaringClass(),
-            log.toString()
-        );
-        return result;
+        log.append("): ").append(result);
+        return log.toString();
     }
 
     /**
@@ -103,6 +139,21 @@ public final class MethodLogger {
         } else if (level == Loggable.ERROR) {
             Logger.error(log, message);
         }
+    }
+
+    /**
+     * Argument to text.
+     * @param arg The argument
+     * @return Text representation of it
+     */
+    private static String text(final Object arg) {
+        String text;
+        if (arg == null) {
+            text = "NULL";
+        } else {
+            text = Logger.format("'%s'", arg);
+        }
+        return text;
     }
 
 }

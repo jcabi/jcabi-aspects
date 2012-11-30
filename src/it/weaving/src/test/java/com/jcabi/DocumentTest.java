@@ -48,4 +48,22 @@ public final class DocumentTest {
         doc.name();
     }
 
+    /**
+     * Document can throw and log.
+     * @throws Exception If something goes wrong
+     */
+    @Test(expected = IllegalStateException.class)
+    public void throwsAndLogs() throws Exception {
+        new Document("foo").exception();
+    }
+
+    /**
+     * Document can throw when NULL provided.
+     * @throws Exception If something goes wrong
+     */
+    @Test(expected = javax.validation.ConstraintViolationException.class)
+    public void throwsOnNullParameter() throws Exception {
+        new Document(null);
+    }
+
 }

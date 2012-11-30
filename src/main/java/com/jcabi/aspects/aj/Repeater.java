@@ -65,7 +65,7 @@ public final class Repeater {
             .getAnnotation(RetryOnFailure.class);
         int attempt = 0;
         while (true) {
-            final long start = System.currentTimeMillis();
+            final long start = System.nanoTime();
             try {
                 return point.proceed();
             } catch (InterruptedException ex) {
@@ -74,18 +74,31 @@ public final class Repeater {
             // @checkstyle IllegalCatch (1 line)
             } catch (Throwable ex) {
                 ++attempt;
-                Logger.warn(
-                    this,
-                    "attempt #%d of %d failed in %[ms]s: %[exception]s",
-                    attempt,
-                    rof.attempts(),
-                    System.currentTimeMillis() - start,
-                    ex
-                );
+                if (rof.verbose()) {
+                    Logger.warn(
+                        this,
+                        "attempt #%d of %d failed in %[nano]s: %[exception]s",
+                        attempt,
+                        rof.attempts(),
+                        System.nanoTime() - start,
+                        ex
+                    );
+                } else {
+                    Logger.warn(
+                        this,
+                        "attempt #%d/%d failed in %[nano]s: %s",
+                        attempt,
+                        rof.attempts(),
+                        System.nanoTime() - start,
+                        ex.getMessage()
+                    );
+                }
                 if (attempt >= rof.attempts()) {
                     throw ex;
                 }
-                TimeUnit.MILLISECONDS.sleep(rof.delay() * attempt);
+                if (rof.delay() > 0) {
+                    TimeUnit.MILLISECONDS.sleep(rof.delay() * attempt);
+                }
             }
         }
     }

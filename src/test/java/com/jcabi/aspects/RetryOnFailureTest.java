@@ -51,7 +51,7 @@ public final class RetryOnFailureTest {
         final AtomicInteger count = new AtomicInteger();
         new Runnable() {
             @Override
-            @RetryOnFailure
+            @RetryOnFailure(verbose = false)
             public void run() {
                 if (count.incrementAndGet() < 2) {
                     throw new IllegalArgumentException();
