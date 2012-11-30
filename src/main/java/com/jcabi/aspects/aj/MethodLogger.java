@@ -55,7 +55,7 @@ public final class MethodLogger {
      * @checkstyle IllegalThrows (5 lines)
      * @checkstyle LineLength (3 lines)
      */
-    @Around("(execution(* *(..)) || call(*.new(..))) && @annotation(com.jcabi.aspects.Loggable)")
+    @Around("(execution(* *(..)) || initialization(*.new(..))) && @annotation(com.jcabi.aspects.Loggable)")
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         final long start = System.nanoTime();
