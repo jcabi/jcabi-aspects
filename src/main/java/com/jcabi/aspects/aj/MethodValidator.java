@@ -73,8 +73,24 @@ public final class MethodValidator {
     /**
      * JSR-303 Validator.
      */
-    private final transient Validator validator =
-        Validation.buildDefaultValidatorFactory().getValidator();
+    private final transient Validator validator;
+
+    /**
+     * Default public ctor.
+     */
+    public MethodValidator() {
+        Validator val = null;
+        try {
+            val = Validation.buildDefaultValidatorFactory().getValidator();
+        } catch (javax.validation.ValidationException ex) {
+            Logger.error(
+                this,
+                "JSR-303 validator failed to initialize: %s",
+                ex.getMessage()
+            );
+        }
+        this.validator = val;
+    }
 
     /**
      * Catch exception and log it.
@@ -83,12 +99,14 @@ public final class MethodValidator {
      */
     @Before("execution(* *(.., @(javax.validation.Valid || javax.validation.constraints.*) (*), ..))")
     public void beforeMethod(final JoinPoint point) {
-        this.validate(
-            point,
-            MethodSignature.class.cast(point.getSignature())
-                .getMethod()
-                .getParameterAnnotations()
-        );
+        if (this.validator != null) {
+            this.validate(
+                point,
+                MethodSignature.class.cast(point.getSignature())
+                    .getMethod()
+                    .getParameterAnnotations()
+            );
+        }
     }
 
     /**
@@ -98,12 +116,14 @@ public final class MethodValidator {
      */
     @Before("initialization(*.new(.., @(javax.validation.Valid || javax.validation.constraints.*) (*), ..))")
     public void beforeCtor(final JoinPoint point) {
-        this.validate(
-            point,
-            ConstructorSignature.class.cast(point.getSignature())
-                .getConstructor()
-                .getParameterAnnotations()
-        );
+        if (this.validator != null) {
+            this.validate(
+                point,
+                ConstructorSignature.class.cast(point.getSignature())
+                    .getConstructor()
+                    .getParameterAnnotations()
+            );
+        }
     }
 
     /**

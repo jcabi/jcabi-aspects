@@ -54,7 +54,9 @@ public final class RetryOnFailureTest {
             @RetryOnFailure(verbose = false)
             public void run() {
                 if (count.incrementAndGet() < 2) {
-                    throw new IllegalArgumentException();
+                    throw new IllegalArgumentException(
+                        "this exception should be caught and swallowed"
+                    );
                 }
             }
         } .run();
