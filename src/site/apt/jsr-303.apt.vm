@@ -72,7 +72,8 @@ public class Foo {
 +--
 
   That's it. Every time you call <<<Foo.doSomething()>>> with <<<NULL>>>
-  a <<<javax.validation.ConstraintViolationException>>> will be thrown.
+  a {{{http://docs.oracle.com/javaee/6/api/javax/validation/ConstraintViolationException.html}<<<ConstraintViolationException>>>}}
+  will be thrown.
 
   And now a bit more complex example. Suppose you have a custom class <<<Bar>>>
   that should be able to validate itself:
@@ -136,3 +137,11 @@ public class Foo {
 
   Every time method <<<Foo.doSomethingElse()>>> is called
   <<<bar>>> will be validated with <<<Bar.Validator>>>.
+
+  At the moment we support only
+  {{{http://docs.oracle.com/javaee/6/api/javax/validation/constraints/NotNull.html}<<<@NotNull>>>}},
+  {{{http://docs.oracle.com/javaee/6/api/javax/validation/constraints/Pattern.html}<<<@Pattern>>>}}, and
+  {{{http://docs.oracle.com/javaee/6/api/javax/validation/Valid.html}<<<@Valid>>>}}
+  annotations. Mostly because
+  {{{http://beanvalidation.org/1.0/spec/#appendix-methodlevelvalidation}method level validation}}
+  is not supported in JSR-303 1.0.
