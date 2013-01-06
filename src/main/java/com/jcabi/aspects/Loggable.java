@@ -53,6 +53,16 @@ import java.lang.annotation.Target;
  *   // do something
  * }</pre>
  *
+ * <p>Besides that, you can specify a maximum execution time limit for
+ * a method. If such a limit is reached a logging message will be issued with
+ * a {@code WARN} priority. It is a very convenient mechanism for profiling
+ * applications in production. Default value of a limit is 50 milliseconds:
+ *
+ * <pre> &#64;Loggable(limit = 200)
+ * void save(String resource) throws IOException {
+ *   // do something, potentially slow
+ * }</pre>
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.2
@@ -93,5 +103,13 @@ public @interface Loggable {
      * Level of logging.
      */
     int value() default Loggable.INFO;
+
+    /**
+     * Maximum amount of milliseconds allowed for this method (a warning
+     * will be issued if it takes longer).
+     * @since 0.7.6
+     * @checkstyle MagicNumber (2 lines)
+     */
+    int limit() default 50;
 
 }

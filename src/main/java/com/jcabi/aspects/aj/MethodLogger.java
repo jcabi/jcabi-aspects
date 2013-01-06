@@ -68,16 +68,28 @@ public final class MethodLogger {
         ).getMethod();
         try {
             final Object result = point.proceed();
+            final long time = System.nanoTime() - start;
+            final int limit = method.getAnnotation(Loggable.class).limit();
+            int level = method.getAnnotation(Loggable.class).value();
+            String suffix;
+            // @checkstyle MagicNumber (1 line)
+            if (time / (1000 * 1000) > limit) {
+                level = Loggable.WARN;
+                suffix = " (too slow!)";
+            } else {
+                suffix = "";
+            }
             this.log(
-                method.getAnnotation(Loggable.class).value(),
+                level,
                 method.getDeclaringClass(),
                 this.compose(
                     method,
                     point,
                     Logger.format(
-                        "returned %s in %[nano]s",
+                        "returned %s in %[nano]s%s",
                         MethodLogger.text(result),
-                        System.nanoTime() - start
+                        time,
+                        suffix
                     )
                 )
             );
@@ -155,7 +167,7 @@ public final class MethodLogger {
         if (arg == null) {
             text = "NULL";
         } else {
-            text = Logger.format("'%s'", arg);
+            text = Logger.format("'%[text]s'", arg);
         }
         return text;
     }
