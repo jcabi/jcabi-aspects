@@ -27,50 +27,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi;
 
-import com.jcabi.aspects.Loggable;
-import java.util.concurrent.TimeUnit;
-import javax.validation.constraints.NotNull;
+def log = new File(basedir, 'build.log')
+assert log.text.contains('#name(): returned \'test\'')
+assert log.text.contains('(too slow!)')
+assert log.text.contains('#exception(): thrown java.lang.IllegalStateException')
+assert log.text.contains('com.jcabi.aspects.aj.Repeater: attempt #1/4 failed in')
 
-/**
- * Document.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
- */
-public final class Document {
-
-    /**
-     * Name of it.
-     */
-    private final String name;
-
-    /**
-     * Public ctor.
-     * @param txt Name of it
-     */
-    @Loggable
-    public Document(@NotNull String txt) {
-        this.name = txt;
-    }
-
-    /**
-     * Get name of it.
-     * @return Name of it
-     * @throws Exception If something is wrong
-     */
-    @Loggable
-    public String name() throws Exception {
-        TimeUnit.SECONDS.sleep(1);
-        return this.name;
-    }
-
-    /**
-     * Always throws an exception.
-     */
-    @Loggable
-    public void exception() {
-        throw new IllegalStateException();
-    }
-
-}
