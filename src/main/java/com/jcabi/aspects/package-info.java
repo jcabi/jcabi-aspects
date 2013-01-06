@@ -29,7 +29,7 @@
  */
 
 /**
- * Annotations for aspects.
+ * Annotations for Aspects.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$

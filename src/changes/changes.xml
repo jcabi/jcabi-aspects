@@ -31,6 +31,13 @@
  -->
 <document xmlns="http://maven.apache.org/changes/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
     <body>
+        <release version="0.7.6" date="6 Jan 2013" description="@Loggable annotation reports time limitations">
+            <action dev="yegor" issue="124" type="add">
+                @Loggable-annotated methods report warnings
+                when their execution time is above the specified
+                and configurable limit (50 msec by default)
+            </action>
+        </release>
         <release version="0.7.2" date="29 Aug 2012" description="@Loggable annotation and aspect">
             <action dev="yegor" issue="101" type="add">
                 @Loggable annotation introduced and an AOP aspect,

@@ -38,7 +38,7 @@ import java.lang.annotation.Target;
 /**
  * Makes a method loggable via {@link com.jcabi.log.Logger}.
  *
- * <p>For example, this {@code load()} method produce a log line
+ * <p>For example, this {@code load()} method produces a log line
  * on every call:
  *
  * <pre> &#64;Loggable
@@ -53,7 +53,7 @@ import java.lang.annotation.Target;
  *   // do something
  * }</pre>
  *
- * <p>Besides that, you can specify a maximum execution time limit for
+ * <p>Since version 0.7.6, you can specify a maximum execution time limit for
  * a method. If such a limit is reached a logging message will be issued with
  * a {@code WARN} priority. It is a very convenient mechanism for profiling
  * applications in production. Default value of a limit is 50 milliseconds:
