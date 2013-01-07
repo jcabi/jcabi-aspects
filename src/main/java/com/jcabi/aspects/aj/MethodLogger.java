@@ -66,40 +66,44 @@ public final class MethodLogger {
         final Method method = MethodSignature.class.cast(
             point.getSignature()
         ).getMethod();
+        final Class<?> type = method.getDeclaringClass();
+        final int limit = method.getAnnotation(Loggable.class).limit();
+        int level = method.getAnnotation(Loggable.class).value();
         try {
             final Object result = point.proceed();
-            final long time = System.nanoTime() - start;
-            final int limit = method.getAnnotation(Loggable.class).limit();
-            int level = method.getAnnotation(Loggable.class).value();
-            String suffix;
+            final long nano = System.nanoTime() - start;
             // @checkstyle MagicNumber (1 line)
-            if (time / (1000 * 1000) > limit) {
-                level = Loggable.WARN;
-                suffix = " (too slow!)";
-            } else {
-                suffix = "";
-            }
-            this.log(
-                level,
-                method.getDeclaringClass(),
-                this.compose(
-                    method,
-                    point,
-                    Logger.format(
-                        "returned %s in %[nano]s%s",
-                        MethodLogger.text(result),
-                        time,
-                        suffix
+            final long msec = nano / (1000 * 1000);
+            if (MethodLogger.enabled(level, type) || msec > limit) {
+                String suffix;
+                if (msec > limit) {
+                    level = Loggable.WARN;
+                    suffix = " (too slow!)";
+                } else {
+                    suffix = "";
+                }
+                MethodLogger.log(
+                    level,
+                    type,
+                    MethodLogger.compose(
+                        method,
+                        point,
+                        Logger.format(
+                            "returned %s in %[nano]s%s",
+                            MethodLogger.text(result),
+                            nano,
+                            suffix
+                        )
                     )
-                )
-            );
+                );
+            }
             return result;
         // @checkstyle IllegalCatch (1 line)
         } catch (Throwable ex) {
-            this.log(
+            MethodLogger.log(
                 Loggable.ERROR,
-                method.getDeclaringClass(),
-                this.compose(
+                type,
+                MethodLogger.compose(
                     method,
                     point,
                     Logger.format(
@@ -121,8 +125,8 @@ public final class MethodLogger {
      * @param result Result of execution
      * @return Composed log message
      */
-    private String compose(final Method method, final ProceedingJoinPoint point,
-        final String result) {
+    private static String compose(final Method method,
+        final ProceedingJoinPoint point, final String result) {
         final StringBuilder log = new StringBuilder();
         log.append('#').append(method.getName()).append('(');
         final Object[] args = point.getArgs();
@@ -142,7 +146,7 @@ public final class MethodLogger {
      * @param log Destination log
      * @param message Message to log
      */
-    private void log(final int level, final Class<?> log,
+    private static void log(final int level, final Class<?> log,
         final String message) {
         if (level == Loggable.TRACE) {
             Logger.trace(log, message);
@@ -155,6 +159,28 @@ public final class MethodLogger {
         } else if (level == Loggable.ERROR) {
             Logger.error(log, message);
         }
+    }
+
+    /**
+     * Log level is enabled?
+     * @param level Level of logging
+     * @param log Destination log
+     * @return TRUE if enabled
+     */
+    private static boolean enabled(final int level, final Class<?> log) {
+        boolean enabled;
+        if (level == Loggable.TRACE) {
+            enabled = Logger.isTraceEnabled(log);
+        } else if (level == Loggable.DEBUG) {
+            enabled = Logger.isDebugEnabled(log);
+        } else if (level == Loggable.INFO) {
+            enabled = Logger.isInfoEnabled(log);
+        } else if (level == Loggable.WARN) {
+            enabled = Logger.isWarnEnabled(log);
+        } else {
+            enabled = true;
+        }
+        return enabled;
     }
 
     /**
