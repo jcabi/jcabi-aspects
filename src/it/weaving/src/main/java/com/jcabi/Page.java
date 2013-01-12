@@ -1,6 +1,4 @@
-<?xml version="1.0"?>
-<!--
- *
+/**
  * Copyright (c) 2012-2013, JCabi.com
  * All rights reserved.
  *
@@ -28,23 +26,39 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
- -->
-<project xmlns="http://maven.apache.org/DECORATION/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0     http://maven.apache.org/xsd/decoration-1.0.0.xsd" name="jcabi-aspects">
-    <body>
-        <menu ref="parent"/>
-        <menu name="Overview">
-            <item name="Introduction" href="index.html"/>
-            <item name="JSR-303 validations" href="jsr-303.html"/>
-            <item name="API ${project.version} (JavaDoc)" href="./apidocs-${project.version}/index.html"/>
-            <item name="Test coverage" href="./cobertura/index.html"/>
-            <item name="Release History" href="./changes-report.html"/>
-        </menu>
-        <menu name="Annotations">
-            <item name="@Cacheable" href="annotation-cacheable.html"/>
-            <item name="@LogExceptions" href="annotation-logexceptions.html"/>
-            <item name="@Loggable" href="annotation-loggable.html"/>
-            <item name="@RetryOnFailure" href="annotation-retryonfailure.html"/>
-        </menu>
-        <menu ref="reports"/>
-    </body>
-</project>
+ */
+package com.jcabi;
+
+import com.jcabi.aspects.Cacheable;
+import java.util.concurrent.atomic.AtomicInteger;
+
+/**
+ * Page with content.
+ * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @version $Id$
+ */
+public final class Page {
+
+    /**
+     * Number of calls made.
+     */
+    private int cnt;
+    /**
+     * Download some text.
+     * @param text Some text
+     * @return Downloaded text
+     */
+    @Cacheable
+    public String download(final String text) {
+        ++this.cnt;
+        return "done";
+    }
+    /**
+     * Get counter.
+     * @return The number
+     */
+    public int counted() {
+        return this.cnt;
+    }
+
+}

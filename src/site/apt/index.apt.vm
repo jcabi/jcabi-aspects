@@ -58,16 +58,19 @@ public String load(URL url) {
   framework. At the moment we offer the following aspects
   (we extend this list every few months):
 
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/Cacheable.html}<<<@Cacheable>>>}}:
+     method results are cached for a few seconds to optimize performance;
+
    * {{{./apidocs-${project.version}/com/jcabi/aspects/LogExceptions.html}<<<@LogExceptions>>>}}:
      all exceptions thrown out of the method are automatically logged
      via {{{../jcabi-log/apidocs-${project.version}/com/jcabi/log/Logger.html}<<<Logger>>>}} to SLF4J;
 
-   * {{{./apidocs-${project.version}/com/jcabi/aspects/RetryOnFailure.html}<<<@RetryOnFailure>>>}}:
-     method call is repeated a few times if exception is thrown;
-
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Loggable.html}<<<@Loggable>>>}}:
      every call to a method is automatically logged via
      {{{../jcabi-log/apidocs-${project.version}/com/jcabi/log/Logger.html}<<<Logger>>>}}.
+
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/RetryOnFailure.html}<<<@RetryOnFailure>>>}}:
+     method call is repeated a few times if exception is thrown;
 
   All you need to do to start using our AOP aspects is to
   add these two artifacts to your <<<pom.xml>>>:

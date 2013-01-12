@@ -1,6 +1,4 @@
-<?xml version="1.0"?>
-<!--
- *
+/**
  * Copyright (c) 2012-2013, JCabi.com
  * All rights reserved.
  *
@@ -28,23 +26,39 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
- -->
-<project xmlns="http://maven.apache.org/DECORATION/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0     http://maven.apache.org/xsd/decoration-1.0.0.xsd" name="jcabi-aspects">
-    <body>
-        <menu ref="parent"/>
-        <menu name="Overview">
-            <item name="Introduction" href="index.html"/>
-            <item name="JSR-303 validations" href="jsr-303.html"/>
-            <item name="API ${project.version} (JavaDoc)" href="./apidocs-${project.version}/index.html"/>
-            <item name="Test coverage" href="./cobertura/index.html"/>
-            <item name="Release History" href="./changes-report.html"/>
-        </menu>
-        <menu name="Annotations">
-            <item name="@Cacheable" href="annotation-cacheable.html"/>
-            <item name="@LogExceptions" href="annotation-logexceptions.html"/>
-            <item name="@Loggable" href="annotation-loggable.html"/>
-            <item name="@RetryOnFailure" href="annotation-retryonfailure.html"/>
-        </menu>
-        <menu ref="reports"/>
-    </body>
-</project>
+ */
+package com.jcabi.aspects;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * Makes a method response cacheable in memory for some time.
+ *
+ * <p>For example, this {@code load()} method loads some data from the network
+ * and we want it to cache loaded data for 5 seconds (to avoid delays):
+ *
+ * <pre> &#64;Cacheable(msec = 5000)
+ * String load(String resource) throws IOException {
+ *   return "something";
+ * }</pre>
+ *
+ * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @version $Id$
+ * @since 0.8
+ */
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.METHOD, ElementType.CONSTRUCTOR })
+public @interface Cacheable {
+
+    /**
+     * Cache period in milliseconds.
+     * @checkstyle MagicNumber (2 lines)
+     */
+    int msec() default 5000;
+
+}

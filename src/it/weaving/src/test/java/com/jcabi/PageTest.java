@@ -1,6 +1,4 @@
-<?xml version="1.0"?>
-<!--
- *
+/**
  * Copyright (c) 2012-2013, JCabi.com
  * All rights reserved.
  *
@@ -28,23 +26,30 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
- -->
-<project xmlns="http://maven.apache.org/DECORATION/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0     http://maven.apache.org/xsd/decoration-1.0.0.xsd" name="jcabi-aspects">
-    <body>
-        <menu ref="parent"/>
-        <menu name="Overview">
-            <item name="Introduction" href="index.html"/>
-            <item name="JSR-303 validations" href="jsr-303.html"/>
-            <item name="API ${project.version} (JavaDoc)" href="./apidocs-${project.version}/index.html"/>
-            <item name="Test coverage" href="./cobertura/index.html"/>
-            <item name="Release History" href="./changes-report.html"/>
-        </menu>
-        <menu name="Annotations">
-            <item name="@Cacheable" href="annotation-cacheable.html"/>
-            <item name="@LogExceptions" href="annotation-logexceptions.html"/>
-            <item name="@Loggable" href="annotation-loggable.html"/>
-            <item name="@RetryOnFailure" href="annotation-retryonfailure.html"/>
-        </menu>
-        <menu ref="reports"/>
-    </body>
-</project>
+ */
+package com.jcabi;
+
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
+/**
+ * Test case for {@link Page}.
+ * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @version $Id$
+ */
+public final class PageTest {
+
+    /**
+     * Page can cache results.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void cachesResults() throws Exception {
+        final Page page = new Page();
+        page.download("a");
+        page.download("a");
+        MatcherAssert.assertThat(page.counted(), Matchers.equalTo(1));
+    }
+
+}
