@@ -35,7 +35,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test case for {@link Counter}.
+ * Test case for {@link Counter}, which is actually testing how
+ * {@link RetryOnFailure} annotation works.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */

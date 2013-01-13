@@ -34,6 +34,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Makes a method response cacheable in memory for some time.
@@ -41,7 +42,16 @@ import java.lang.annotation.Target;
  * <p>For example, this {@code load()} method loads some data from the network
  * and we want it to cache loaded data for 5 seconds (to avoid delays):
  *
- * <pre> &#64;Cacheable(msec = 5000)
+ * <pre> &#64;Cacheable(lifetime = 5, unit = TimeUnit.SECONDS)
+ * String load(String resource) throws IOException {
+ *   return "something";
+ * }</pre>
+ *
+ * <p>You can cache them forever, which means that once calculated and
+ * cached value will never expire (may be a nice alternative to static
+ * initializers):
+ *
+ * <pre> &#64;Cacheable(forever = true)
  * String load(String resource) throws IOException {
  *   return "something";
  * }</pre>
@@ -56,9 +66,18 @@ import java.lang.annotation.Target;
 public @interface Cacheable {
 
     /**
-     * Cache period in milliseconds.
-     * @checkstyle MagicNumber (2 lines)
+     * Lifetime of an object in cache, in time units.
      */
-    int msec() default 5000;
+    int lifetime() default 1;
+
+    /**
+     * Time units of object lifetime.
+     */
+    TimeUnit unit() default TimeUnit.MINUTES;
+
+    /**
+     * Keep in cache forever.
+     */
+    boolean forever() default false;
 
 }

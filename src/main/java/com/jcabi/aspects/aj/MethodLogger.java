@@ -85,15 +85,12 @@ public final class MethodLogger {
                 MethodLogger.log(
                     level,
                     type,
-                    MethodLogger.compose(
-                        method,
-                        point,
-                        Logger.format(
-                            "returned %s in %[nano]s%s",
-                            MethodLogger.text(result),
-                            nano,
-                            suffix
-                        )
+                    Logger.format(
+                        "%s: returned %s in %[nano]s%s",
+                        Mnemos.toString(point),
+                        Mnemos.toString(result),
+                        nano,
+                        suffix
                     )
                 );
             }
@@ -103,41 +100,16 @@ public final class MethodLogger {
             MethodLogger.log(
                 Loggable.ERROR,
                 type,
-                MethodLogger.compose(
-                    method,
-                    point,
-                    Logger.format(
-                        "thrown %[type]s (%s) in %[nano]s",
-                        ex,
-                        MethodLogger.text(ex.getMessage()),
-                        System.nanoTime() - start
-                    )
+                Logger.format(
+                    "%s: thrown %[type]s (%s) in %[nano]s",
+                    Mnemos.toString(point),
+                    ex,
+                    Mnemos.toString(ex.getMessage()),
+                    System.nanoTime() - start
                 )
             );
             throw ex;
         }
-    }
-
-    /**
-     * Compose a log message.
-     * @param method Method just called
-     * @param point Join point
-     * @param result Result of execution
-     * @return Composed log message
-     */
-    private static String compose(final Method method,
-        final ProceedingJoinPoint point, final String result) {
-        final StringBuilder log = new StringBuilder();
-        log.append('#').append(method.getName()).append('(');
-        final Object[] args = point.getArgs();
-        for (int pos = 0; pos < args.length; ++pos) {
-            if (pos > 0) {
-                log.append(", ");
-            }
-            log.append(MethodLogger.text(args[pos]));
-        }
-        log.append("): ").append(result);
-        return log.toString();
     }
 
     /**
@@ -181,21 +153,6 @@ public final class MethodLogger {
             enabled = true;
         }
         return enabled;
-    }
-
-    /**
-     * Argument to text.
-     * @param arg The argument
-     * @return Text representation of it
-     */
-    private static String text(final Object arg) {
-        String text;
-        if (arg == null) {
-            text = "NULL";
-        } else {
-            text = Logger.format("'%[text]s'", arg);
-        }
-        return text;
     }
 
 }

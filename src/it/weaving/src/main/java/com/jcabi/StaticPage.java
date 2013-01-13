@@ -27,24 +27,36 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.jcabi;
+
+import com.jcabi.aspects.Cacheable;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Annotations for Aspects.
- *
- * <p>The only dependency you need is (check our latest version available
- * at <a href="http://www.jcabi.com">www.jcabi.com</a>):
- *
- * <pre>&lt;depedency&gt;
- *   &lt;groupId&gt;com.jcabi&lt;/groupId&gt;
- *   &lt;artifactId&gt;jcabi-aspects&lt;/artifactId&gt;
- * &lt;/dependency&gt;</pre>
- *
- * <p>Rea how to use {@code jcabi-aspects}
- * <a href="http://www.jcabi.com/jcabi-aspects">with Maven</a>.
- *
+ * Page with content.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.1.10
- * @link <a href="http://www.jcabi.com/jcabi-aspects">project website</a>
  */
-package com.jcabi.aspects;
+public final class StaticPage {
+
+    /**
+     * Number of calls made.
+     */
+    private static int cnt;
+    /**
+     * Download some text.
+     * @param text Some text
+     */
+    @Cacheable
+    public static void download() {
+        ++StaticPage.cnt;
+    }
+    /**
+     * Get counter.
+     * @return The number
+     */
+    public static int counted() {
+        return StaticPage.cnt;
+    }
+
+}

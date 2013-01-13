@@ -44,15 +44,28 @@ Caching Java method results
   will be avoided):
 
 +--
-@Cacheable(msec = 5000)
+@Cacheable(lifetime = 5, unit = TimeUnit.SECONDS)
 public String load(URL url) {
   return url.openConnection().getContent();
 }
 +--
 
   If you call this method, say, every second, only every 5th call
-  will make a real HTTP connection. The other four will return the
+  will make a real HTTP connection. The other four will return a
   cached value.
+
+  You can make a valuable cacheable forever (method's result will
+  never expire):
+
++--
+@Cacheable(forever = true)
+public List<String> data() {
+  List<String> data = new ArrayList<String>();
+  // some heavy calculations to be done only
+  // once per JVM lifetime
+  return data;
+}
++--
 
   If a method throws an exception it is not cached.
 

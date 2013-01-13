@@ -30,6 +30,7 @@
 package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Cacheable;
+import com.jcabi.log.Logger;
 import com.jcabi.log.VerboseRunnable;
 import com.jcabi.log.VerboseThreads;
 import java.lang.reflect.Method;
@@ -39,6 +40,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -102,16 +104,12 @@ public final class MethodCacher {
         synchronized (this.tunnels) {
             tunnel = this.tunnels.get(key);
             if (tunnel == null || tunnel.expired()) {
-                final Cacheable annot = MethodSignature.class
-                    .cast(point.getSignature())
-                    .getMethod()
-                    .getAnnotation(Cacheable.class);
-                tunnel = new MethodCacher.Tunnel(point, annot.msec());
+                tunnel = new MethodCacher.Tunnel(point, key);
                 this.tunnels.put(key, tunnel);
             }
         }
         synchronized (tunnel) {
-            return tunnel.result();
+            return tunnel.through();
         }
     }
 
@@ -137,27 +135,41 @@ public final class MethodCacher {
          */
         private final transient Object cached;
         /**
+         * Key related to this tunnel.
+         */
+        private final transient Key key;
+        /**
          * When will it expire (moment in time).
          */
         private final transient long lifetime;
         /**
          * Public ctor.
          * @param point Joint point
-         * @param msec Milliseconds until expire
+         * @param akey The key related to it
          * @throws Throwable If something goes wrong inside
          * @checkstyle IllegalThrows (5 lines)
          */
-        public Tunnel(final ProceedingJoinPoint point, final long msec)
+        public Tunnel(final ProceedingJoinPoint point, final Key akey)
             throws Throwable {
             this.cached = point.proceed();
-            this.lifetime = System.currentTimeMillis() + msec;
+            this.key = akey;
+            final Cacheable annot = MethodSignature.class
+                .cast(point.getSignature())
+                .getMethod()
+                .getAnnotation(Cacheable.class);
+            if (annot.forever()) {
+                this.lifetime = Long.MAX_VALUE;
+            } else {
+                this.lifetime = System.currentTimeMillis()
+                    + annot.unit().toMillis(annot.lifetime());
+            }
         }
         /**
-         * Get a result.
+         * Get a result through the tunnel.
          * @return The result
          */
-        public Object result() {
-            return this.cached;
+        public Object through() {
+            return this.key.through(this.cached);
         }
         /**
          * Is it expired already?
@@ -172,6 +184,10 @@ public final class MethodCacher {
      * Key of a callable target.
      */
     private static final class Key {
+        /**
+         * How many times the key was already accessed.
+         */
+        private final transient AtomicInteger accessed = new AtomicInteger();
         /**
          * Method.
          */
@@ -221,6 +237,21 @@ public final class MethodCacher {
                 equals = false;
             }
             return equals;
+        }
+        /**
+         * Send a result through, with necessary logging.
+         * @param result The result to send through
+         * @return The same result/object
+         */
+        public Object through(final Object result) {
+            Logger.debug(
+                this,
+                "%s: %s from cache (hit #%d)",
+                Mnemos.toString(this.method),
+                Mnemos.toString(result),
+                this.accessed.incrementAndGet()
+            );
+            return result;
         }
     }
 

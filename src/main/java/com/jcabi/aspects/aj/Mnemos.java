@@ -27,44 +27,74 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi;
+package com.jcabi.aspects.aj;
 
-import org.junit.Test;
+import com.jcabi.log.Logger;
+import java.lang.reflect.Method;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.reflect.MethodSignature;
 
 /**
- * Test case for {@link Document}, which is actually testing how
- * {@link Loggable} annotation works.
+ * Utility class with text functions for making mnemos.
+ *
+ * <p>The class is immutable and thread-safe.
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
-public final class DocumentTest {
+final class Mnemos {
 
     /**
-     * Document can be instantiated.
-     * @throws Exception If something goes wrong
+     * Private ctor, it's a utility class.
      */
-    @Test
-    public void instantiates() throws Exception {
-        final Document doc = new Document("test");
-        doc.name();
+    private Mnemos() {
+        // intentionally empty
     }
 
     /**
-     * Document can throw and log.
-     * @throws Exception If something goes wrong
+     * Make a string out of point.
+     * @param point The point
+     * @return Text representation of it
      */
-    @Test(expected = IllegalStateException.class)
-    public void throwsAndLogs() throws Exception {
-        new Document("foo").exception();
+    public static String toString(final ProceedingJoinPoint point) {
+        return Mnemos.toString(
+            MethodSignature.class.cast(point.getSignature()).getMethod(),
+            point.getArgs()
+        );
     }
 
     /**
-     * Document can throw when NULL provided.
-     * @throws Exception If something goes wrong
+     * Make a string out of method.
+     * @param method The method
+     * @param args Actual arguments of the method
+     * @return Text representation of it
      */
-    @Test(expected = javax.validation.ConstraintViolationException.class)
-    public void throwsOnNullParameter() throws Exception {
-        new Document(null);
+    public static String toString(final Method method, final Object[] args) {
+        final StringBuilder log = new StringBuilder();
+        log.append('#').append(method.getName()).append('(');
+        for (int pos = 0; pos < args.length; ++pos) {
+            if (pos > 0) {
+                log.append(", ");
+            }
+            log.append(Mnemos.toString(args[pos]));
+        }
+        log.append(')');
+        return log.toString();
+    }
+
+    /**
+     * Make a string out of an object.
+     * @param arg The argument
+     * @return Text representation of it
+     */
+    public static String toString(final Object arg) {
+        String text;
+        if (arg == null) {
+            text = "NULL";
+        } else {
+            text = Logger.format("'%[text]s'", arg);
+        }
+        return text;
     }
 
 }
