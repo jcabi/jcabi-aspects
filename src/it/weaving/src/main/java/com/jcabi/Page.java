@@ -44,14 +44,24 @@ public final class Page {
      */
     private int cnt;
     /**
-     * Download some text.
+     * Download some text (use cache).
      * @param text Some text
      * @return Downloaded text
      */
     @Cacheable
-    public String download(final String text) {
+    public String downloadWithCache(final String text) {
         ++this.cnt;
-        return "done";
+        return "done with cache";
+    }
+    /**
+     * Download some text (don't cache).
+     * @param text Some text
+     * @return Downloaded text
+     */
+    @Cacheable(lifetime = 0)
+    public String downloadWithoutCache(final String text) {
+        ++this.cnt;
+        return "done without cache";
     }
     /**
      * Get counter.

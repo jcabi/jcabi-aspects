@@ -244,13 +244,15 @@ public final class MethodCacher {
          * @return The same result/object
          */
         public Object through(final Object result) {
-            Logger.debug(
-                this,
-                "%s: %s from cache (hit #%d)",
-                Mnemos.toString(this.method),
-                Mnemos.toString(result),
-                this.accessed.incrementAndGet()
-            );
+            if (Logger.isDebugEnabled(this)) {
+                Logger.debug(
+                    this,
+                    "%s: %s from cache (hit #%d)",
+                    Mnemos.toString(this.method),
+                    Mnemos.toString(result),
+                    this.accessed.incrementAndGet()
+                );
+            }
             return result;
         }
     }

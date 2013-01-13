@@ -48,9 +48,11 @@ public final class PageTest {
     @Test
     public void cachesResults() throws Exception {
         final Page page = new Page();
-        page.download("a");
-        page.download("a");
-        MatcherAssert.assertThat(page.counted(), Matchers.equalTo(1));
+        page.downloadWithCache("with");
+        page.downloadWithCache("with");
+        page.downloadWithoutCache("without");
+        page.downloadWithoutCache("without");
+        MatcherAssert.assertThat(page.counted(), Matchers.equalTo(3));
     }
 
 }
