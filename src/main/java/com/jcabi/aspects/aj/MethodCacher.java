@@ -246,9 +246,9 @@ public final class MethodCacher {
         public Object through(final Object result) {
             if (Logger.isDebugEnabled(this)) {
                 Logger.debug(
-                    this,
+                    this.method.getDeclaringClass(),
                     "%s: %s from cache (hit #%d)",
-                    Mnemos.toString(this.method),
+                    Mnemos.toString(this.method, this.arguments),
                     Mnemos.toString(result),
                     this.accessed.incrementAndGet()
                 );
