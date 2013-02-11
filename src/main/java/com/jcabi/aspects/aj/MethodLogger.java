@@ -45,8 +45,6 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.2
- * @todo #101 Doesn't work for constructors now, see
- *  http://stackoverflow.com/questions/13642646
  */
 @Aspect
 public final class MethodLogger {

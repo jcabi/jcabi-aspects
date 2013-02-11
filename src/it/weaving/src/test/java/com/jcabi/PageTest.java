@@ -55,4 +55,22 @@ public final class PageTest {
         MatcherAssert.assertThat(page.counted(), Matchers.equalTo(3));
     }
 
+    /**
+     * Page is equipped with three methods.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void equippedWithThreeMethods() throws Exception {
+        final Page first = new Page();
+        first.downloadWithoutCache("");
+        final Page second = new Page();
+        second.downloadWithoutCache("");
+        MatcherAssert.assertThat(first, Matchers.equalTo(second));
+        MatcherAssert.assertThat(
+            first.hashCode(),
+            Matchers.equalTo(second.hashCode())
+        );
+        MatcherAssert.assertThat(first, Matchers.hasToString("cnt=1"));
+    }
+
 }

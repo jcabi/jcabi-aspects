@@ -27,50 +27,46 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi;
+package com.jcabi.aspects.aj;
 
-import com.jcabi.aspects.Cacheable;
 import com.jcabi.aspects.Equipped;
-import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Page with content.
+ * Test case for {@link Equipper}.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
-@Equipped
-public final class Page {
+public final class EquipperTest {
 
     /**
-     * Number of calls made.
+     * Equipper can wrap classes.
+     * @throws Exception If something goes wrong
      */
-    private int cnt;
-    /**
-     * Download some text (use cache).
-     * @param text Some text
-     * @return Downloaded text
-     */
-    @Cacheable
-    public String downloadWithCache(final String text) {
-        ++this.cnt;
-        return "done with cache";
+    @Test
+    public void wrapsSimpleClass() throws Exception {
+        final Foo first = new Foo();
+        MatcherAssert.assertThat(first, Matchers.notNullValue());
+        final Foo second = new Foo();
+        MatcherAssert.assertThat(first, Matchers.equalTo(second));
+        MatcherAssert.assertThat(
+            first.hashCode(),
+            Matchers.equalTo(second.hashCode())
+        );
+        MatcherAssert.assertThat(first, Matchers.hasToString("data=1"));
     }
+
     /**
-     * Download some text (don't cache).
-     * @param text Some text
-     * @return Downloaded text
+     * Dummy class, for tests above.
      */
-    @Cacheable(lifetime = 0)
-    public String downloadWithoutCache(final String text) {
-        ++this.cnt;
-        return "done without cache";
-    }
-    /**
-     * Get counter.
-     * @return The number
-     */
-    public int counted() {
-        return this.cnt;
+    @Equipped
+    private static final class Foo {
+        /**
+         * Internal variable.
+         */
+        private final transient int data = 1;
     }
 
 }

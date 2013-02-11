@@ -27,50 +27,61 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi;
+package com.jcabi.aspects;
 
-import com.jcabi.aspects.Cacheable;
-import com.jcabi.aspects.Equipped;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Page with content.
+ * Equips a class with three methods {@code hashCode()}, {@code equals()},
+ * and {@code toString()}.
+ *
+ * <p>For example:
+ *
+ * <pre> &#64;Equipped
+ * public class Foo {
+ *   private final Bar bar;
+ *   private final Sample sample;
+ * }</pre>
+ *
+ * <p>Is equivalent to:
+ *
+ * <pre> public class Foo {
+ *   private final Bar bar;
+ *   private final Sample sample;
+ *   &#64;Override
+ *   public String toString() {
+ *     return String.format("bar=[%s], sample=[%s]", bar, sample);
+ *   }
+ *   &#64;Override
+ *   public int hashCode() {
+ *     return this.bar.hashCode() + this.sample.hashCode();
+ *   }
+ *   &#64;Override
+ *   public boolean equals(final Object obj) {
+ *     boolean equals;
+ *     if (this == obj) {
+ *        equals = true;
+ *     } else if (obj instanceof Foo) {
+ *        final Foo foo = Foo.class.cast(obj);
+ *        equals = foo.bar.equals(this.bar)
+ *          &amp;&amp; foo.sample.equals(this.sample);
+ *     } else {
+ *       equals = false;
+ *     }
+ *     return equals;
+ *   }
+ * }</pre>
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @since 0.7.8
  */
-@Equipped
-public final class Page {
-
-    /**
-     * Number of calls made.
-     */
-    private int cnt;
-    /**
-     * Download some text (use cache).
-     * @param text Some text
-     * @return Downloaded text
-     */
-    @Cacheable
-    public String downloadWithCache(final String text) {
-        ++this.cnt;
-        return "done with cache";
-    }
-    /**
-     * Download some text (don't cache).
-     * @param text Some text
-     * @return Downloaded text
-     */
-    @Cacheable(lifetime = 0)
-    public String downloadWithoutCache(final String text) {
-        ++this.cnt;
-        return "done without cache";
-    }
-    /**
-     * Get counter.
-     * @return The number
-     */
-    public int counted() {
-        return this.cnt;
-    }
-
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface Equipped {
 }
