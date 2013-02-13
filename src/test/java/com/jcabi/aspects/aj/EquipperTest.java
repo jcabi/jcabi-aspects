@@ -47,9 +47,13 @@ public final class EquipperTest {
      */
     @Test
     public void wrapsSimpleClass() throws Exception {
-        final Foo first = new Foo();
+        final EquipperTest.Foo first = new EquipperTest.Foo();
+        MatcherAssert.assertThat(
+            first.getClass().getName(),
+            Matchers.not(Matchers.equalTo(EquipperTest.Foo.class.getName()))
+        );
         MatcherAssert.assertThat(first, Matchers.notNullValue());
-        final Foo second = new Foo();
+        final EquipperTest.Foo second = new EquipperTest.Foo();
         MatcherAssert.assertThat(first, Matchers.equalTo(second));
         MatcherAssert.assertThat(
             first.hashCode(),
@@ -62,11 +66,25 @@ public final class EquipperTest {
      * Dummy class, for tests above.
      */
     @Equipped
-    private static final class Foo {
-        /**
-         * Internal variable.
-         */
-        private final transient int data = 1;
+    public static final class Foo {
+//        /**
+//         * Internal variable.
+//         */
+//        private final transient int data;
+//        /**
+//         * Public ctor.
+//         * @param input Input data
+//         */
+//        public Foo(final int input) {
+//            this.data = input;
+//        }
+//        /**
+//         * Test method.
+//         * @return The data encapsulated
+//         */
+//        public int get() {
+//            return this.data;
+//        }
     }
 
 }

@@ -29,13 +29,20 @@
  */
 package com.jcabi.aspects.aj;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
+import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.ConstructorSignature;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
+import org.objectweb.asm.commons.Remapper;
+import org.objectweb.asm.commons.RemappingClassAdapter;
 
 /**
  * Equips objects with three methods.
@@ -45,6 +52,10 @@ import org.aspectj.lang.annotation.Aspect;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.8
+ * @todo #132 We assume that every class is available in current classloader
+ *  as a resource (a binary file). In some cases this may be not true. The
+ *  implemenation should be refactored in the nearest future. We should start
+ *  building class skeleton according to its Reflection API information.
  */
 @Aspect
 public final class Equipper {
@@ -65,70 +76,87 @@ public final class Equipper {
      */
     @Around("call((@com.jcabi.aspects.Equipped *).new(..))")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
-        return this.proxy(point.proceed());
+        final ConstructorSignature signature =
+            ConstructorSignature.class.cast(point.getSignature());
+        final Class<?> proxy = this.proxy(signature.getDeclaringType());
+        Object output;
+        if (proxy.getConstructors().length == 0) {
+            output = proxy.newInstance();
+        } else {
+            output = proxy.getConstructor(signature.getParameterTypes())
+                .newInstance(point.getArgs());
+        }
+        return output;
     }
 
     /**
-     * Build a proxy for an object.
-     * @param object The object
+     * Build a proxy for a class.
+     * @param origin Origin class
      * @return The proxy
      * @throws Exception If something goes wrong
      */
-    private Object proxy(final Object object) throws Exception {
-        final Class<?> origin = object.getClass();
+    private Class<?> proxy(final Class<?> origin) throws Exception {
         synchronized (this.equipped) {
-            if (this.equipped.containsKey(origin)) {
+            if (!this.equipped.containsKey(origin)) {
                 this.equipped.put(origin, this.equip(origin));
             }
         }
-        return this.equipped.get(origin)
-            .getConstructor(Object.class)
-            .newInstance(object);
+        return this.equipped.get(origin);
     }
 
     /**
      * Equip given class and return an equipped one.
      * @param origin Original class
      * @return Equipped one
+     * @throws IOException If can't load class file
      */
-    private Class<?> equip(final Class<?> origin) {
+    private Class<?> equip(final Class<?> origin) throws IOException {
         final ClassLoader loader =
             Thread.currentThread().getContextClassLoader();
-        final String name = String.format(
-            "%s__%d",
-            origin.getName(),
-            origin.getName().hashCode()
+        final String suffix = String.format(
+            "__equipped__%d",
+            Math.abs(origin.getName().hashCode())
         );
-        final ClassReader reader = new ClassReader(bytes);
+        final String mnemo = Type.getInternalName(origin);
+        final String rename = new StringBuilder(mnemo)
+            .append(suffix).toString();
+        final ClassReader reader = new ClassReader(
+            loader.getResourceAsStream(String.format("%s.class", mnemo))
+        );
         final ClassWriter writer = new ClassWriter(reader, 0);
-        final ClassVisitor visitor = new ClassVisitor();
+        ClassVisitor visitor = new ClassVisitor(Opcodes.ASM4, writer) {
+//            @Override
+//            public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
+//                System.out.println("name: " + name + ", signature: " + signature + ", super: " + superName + ", interface" + interfaces.length);
+//                super.visit(version, access, name, signature, mnemo, interfaces);
+//                System.out.println("rename: " + rename + ", mnemo: " + mnemo);
+//            }
+        };
+        visitor = new RemappingClassAdapter(
+            visitor,
+            new Remapper() {
+//                @Override
+//                public String map(final String type) {
+//                    String mapped;
+//                    if (type.equals(Type.getInternalName(origin))) {
+//                        mapped = rename;
+//                    } else {
+//                        mapped = type;
+//                    }
+//                    return mapped;
+//                }
+            }
+        );
         reader.accept(visitor, 0);
         return new ClassLoader() {
             public Class<?> load(final String name, final byte[] bytes) {
                 return this.defineClass(name, bytes, 0, bytes.length);
             }
-        }.load(name, writer.toByteArray());
+        }.load(
+            origin.getName(),
+//            new StringBuilder(origin.getName()).append(suffix).toString(),
+            writer.toByteArray()
+        );
     }
-
-    /**
-     * Invocation handler.
-     */
-    private static final class Handler implements InvocationHandler {
-        /**
-         * Public ctor.
-         * @param object Original object
-         */
-        public Handler(final Object object) {
-            this.origin = object;
-        }
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Object invoke(final Object proxy, final Method method,
-            final Object[] args) throws Exception {
-            return method.invoke(this.origin, args);
-        }
-    };
 
 }
