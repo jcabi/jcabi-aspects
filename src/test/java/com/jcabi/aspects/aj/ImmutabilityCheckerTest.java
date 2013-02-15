@@ -30,6 +30,7 @@
 package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Immutable;
+import java.util.regex.Pattern;
 import org.junit.Test;
 
 /**
@@ -78,10 +79,18 @@ public final class ImmutabilityCheckerTest {
     @Immutable
     private static final class TruelyImmutable {
         /**
+         * Something static final.
+         */
+        private static final Pattern PATTERN = Pattern.compile(".*");
+        /**
+         * Something just static.
+         */
+        private static Pattern ptrn = Pattern.compile(".+");
+        /**
          * Immutable class member.
          */
         @SuppressWarnings("PMD.FinalFieldCouldBeStatic")
-        private final transient String data = "";
+        private final transient String data = null;
     }
 
 }

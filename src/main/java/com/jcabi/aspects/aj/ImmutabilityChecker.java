@@ -74,14 +74,17 @@ public final class ImmutabilityChecker {
      */
     private static boolean immutable(final Object object) throws Exception {
         boolean immutable;
-        final Class<?> type = object.getClass();
-        if (type.equals(Object.class) || type.equals(String.class)) {
-            immutable = true;
-        } else if (type.getName().startsWith("org.aspectj.runtime.reflect.")) {
+        if (object == null) {
             immutable = true;
         } else {
-            immutable = !type.isPrimitive()
-                && ImmutabilityChecker.fields(object, type);
+            final Class<?> type = object.getClass();
+            if (type.equals(Object.class) || type.equals(String.class)
+                || type.getName().startsWith("org.aspectj.runtime.reflect.")) {
+                immutable = true;
+            } else {
+                immutable = !type.isPrimitive()
+                    && ImmutabilityChecker.fields(object, type);
+            }
         }
         return immutable;
     }
@@ -98,6 +101,9 @@ public final class ImmutabilityChecker {
         boolean immutable = true;
         final Field[] fields = type.getDeclaredFields();
         for (int pos = 0; pos < fields.length; ++pos) {
+            if (Modifier.isStatic(fields[pos].getModifiers())) {
+                continue;
+            }
             fields[pos].setAccessible(true);
             immutable = Modifier.isFinal(fields[pos].getModifiers())
                 && Modifier.isPrivate(fields[pos].getModifiers())
