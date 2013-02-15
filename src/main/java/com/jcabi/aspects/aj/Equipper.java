@@ -125,26 +125,26 @@ public final class Equipper {
         );
         final ClassWriter writer = new ClassWriter(reader, 0);
         ClassVisitor visitor = new ClassVisitor(Opcodes.ASM4, writer) {
-//            @Override
-//            public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
-//                System.out.println("name: " + name + ", signature: " + signature + ", super: " + superName + ", interface" + interfaces.length);
-//                super.visit(version, access, name, signature, mnemo, interfaces);
-//                System.out.println("rename: " + rename + ", mnemo: " + mnemo);
-//            }
+            @Override
+            public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
+                System.out.println("name: " + name + ", signature: " + signature + ", super: " + superName + ", interface" + interfaces.length);
+                super.visit(version, access, name, signature, mnemo, interfaces);
+                System.out.println("rename: " + rename + ", mnemo: " + mnemo);
+            }
         };
         visitor = new RemappingClassAdapter(
             visitor,
             new Remapper() {
-//                @Override
-//                public String map(final String type) {
-//                    String mapped;
-//                    if (type.equals(Type.getInternalName(origin))) {
-//                        mapped = rename;
-//                    } else {
-//                        mapped = type;
-//                    }
-//                    return mapped;
-//                }
+                @Override
+                public String map(final String type) {
+                    String mapped;
+                    if (type.equals(Type.getInternalName(origin))) {
+                        mapped = rename;
+                    } else {
+                        mapped = type;
+                    }
+                    return mapped;
+                }
             }
         );
         reader.accept(visitor, 0);
@@ -153,8 +153,8 @@ public final class Equipper {
                 return this.defineClass(name, bytes, 0, bytes.length);
             }
         }.load(
-            origin.getName(),
-//            new StringBuilder(origin.getName()).append(suffix).toString(),
+//            origin.getName(),
+            new StringBuilder(origin.getName()).append(suffix).toString(),
             writer.toByteArray()
         );
     }
