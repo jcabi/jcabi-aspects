@@ -50,7 +50,6 @@ public final class ImmutabilityChecker {
     /**
      * Catch instantiation and validate class.
      * @param point Joint point
-     * @return The result of call
      * @throws Throwable If something goes wrong inside
      * @checkstyle IllegalThrows (5 lines)
      */

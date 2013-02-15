@@ -37,6 +37,7 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
+@SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.UnusedLocalVariable" })
 public final class ImmutabilityCheckerTest {
 
     /**
@@ -64,6 +65,10 @@ public final class ImmutabilityCheckerTest {
      */
     @Immutable
     private static final class Mutable {
+        /**
+         * Mutable class member.
+         */
+        @SuppressWarnings("PMD.ImmutableField")
         private transient String data = "";
     }
 
@@ -72,6 +77,10 @@ public final class ImmutabilityCheckerTest {
      */
     @Immutable
     private static final class TruelyImmutable {
+        /**
+         * Immutable class member.
+         */
+        @SuppressWarnings("PMD.FinalFieldCouldBeStatic")
         private final transient String data = "";
     }
 
