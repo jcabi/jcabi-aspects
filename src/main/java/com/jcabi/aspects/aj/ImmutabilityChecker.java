@@ -29,22 +29,14 @@
  */
 package com.jcabi.aspects.aj;
 
-import com.jcabi.aspects.Cacheable;
-import com.jcabi.log.Logger;
-import com.jcabi.log.VerboseRunnable;
-import com.jcabi.log.VerboseThreads;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.HashSet;
+import java.util.Set;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.reflect.ConstructorSignature;
 
 /**
  * Checks for class immutability.
@@ -61,8 +53,7 @@ public final class ImmutabilityChecker {
     /**
      * Checked classes.
      */
-    private final transient Set<Class<?>> checked =
-        new ConcurrentSkipListSet<Class<?>>();
+    private final transient Set<Class<?>> checked = new HashSet<Class<?>>();
 
     /**
      * Catch instantiation and validate class.
@@ -70,10 +61,51 @@ public final class ImmutabilityChecker {
      * @return The result of call
      * @throws Throwable If something goes wrong inside
      * @checkstyle IllegalThrows (5 lines)
-     * @checkstyle LineLength (3 lines)
      */
-    @Around("(call(* *(..)) || initialization(*.new(..))) && @annotation(com.jcabi.aspects.Cacheable)")
-    public Object wrap(final ProceedingJoinPoint point) throws Throwable {
+    @Before("initialization((@com.jcabi.aspects.Immutable *).new(..))")
+    public void before(final JoinPoint point) throws Throwable {
+        final Class<?> type = ConstructorSignature.class.cast(
+            point.getSignature()
+        ).getDeclaringType();
+        System.out.println("type: " + type.getName());
+        synchronized (this.checked) {
+            if (!this.checked.contains(type)) {
+                if (!ImmutabilityChecker.immutable(type)) {
+                    throw new IllegalStateException(
+                        String.format(
+                            "class %s is not immutable as expected",
+                            type.getName()
+                        )
+                    );
+                }
+                this.checked.add(type);
+            }
+        }
+    }
+
+    /**
+     * This type is immutable?
+     * @param type The type to check
+     * @return TRUE if it is immutable
+     */
+    private static boolean immutable(final Class<?> type) {
+        final Class<?> parent = type.getSuperclass();
+        boolean immutable = parent == null
+            || (ImmutabilityChecker.immutable(parent)
+            && Modifier.isFinal(type.getModifiers())
+            && !type.isPrimitive());
+        if (immutable) {
+            final Field[] fields = type.getDeclaredFields();
+            for (int pos = 0; pos < fields.length; ++pos) {
+                immutable = Modifier.isFinal(fields[pos].getModifiers())
+                    && Modifier.isPrivate(fields[pos].getModifiers())
+                    && ImmutabilityChecker.immutable(fields[pos].getType());
+                if (!immutable) {
+                    break;
+                }
+            }
+        }
+        return immutable;
     }
 
 }
