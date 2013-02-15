@@ -31,12 +31,9 @@ package com.jcabi.aspects.aj;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.HashSet;
-import java.util.Set;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.reflect.ConstructorSignature;
 
 /**
  * Checks for class immutability.
@@ -51,58 +48,63 @@ import org.aspectj.lang.reflect.ConstructorSignature;
 public final class ImmutabilityChecker {
 
     /**
-     * Checked classes.
-     */
-    private final transient Set<Class<?>> checked = new HashSet<Class<?>>();
-
-    /**
      * Catch instantiation and validate class.
      * @param point Joint point
      * @return The result of call
      * @throws Throwable If something goes wrong inside
      * @checkstyle IllegalThrows (5 lines)
      */
-    @Before("initialization((@com.jcabi.aspects.Immutable *).new(..))")
-    public void before(final JoinPoint point) throws Throwable {
-        final Class<?> type = ConstructorSignature.class.cast(
-            point.getSignature()
-        ).getDeclaringType();
-        System.out.println("type: " + type.getName());
-        synchronized (this.checked) {
-            if (!this.checked.contains(type)) {
-                if (!ImmutabilityChecker.immutable(type)) {
-                    throw new IllegalStateException(
-                        String.format(
-                            "class %s is not immutable as expected",
-                            type.getName()
-                        )
-                    );
-                }
-                this.checked.add(type);
-            }
+    @After("initialization((@com.jcabi.aspects.Immutable *).new(..))")
+    public void after(final JoinPoint point) throws Throwable {
+        final Object object = point.getTarget();
+        if (!ImmutabilityChecker.immutable(object)) {
+            throw new IllegalStateException(
+                String.format(
+                    "object of class %s is not @Immutable as expected",
+                    object.getClass().getName()
+                )
+            );
         }
     }
 
     /**
-     * This type is immutable?
-     * @param type The type to check
+     * This object is immutable?
+     * @param object The object to check
      * @return TRUE if it is immutable
+     * @throws Exception If some error
      */
-    private static boolean immutable(final Class<?> type) {
-        final Class<?> parent = type.getSuperclass();
-        boolean immutable = parent == null
-            || (ImmutabilityChecker.immutable(parent)
-            && Modifier.isFinal(type.getModifiers())
-            && !type.isPrimitive());
-        if (immutable) {
-            final Field[] fields = type.getDeclaredFields();
-            for (int pos = 0; pos < fields.length; ++pos) {
-                immutable = Modifier.isFinal(fields[pos].getModifiers())
-                    && Modifier.isPrivate(fields[pos].getModifiers())
-                    && ImmutabilityChecker.immutable(fields[pos].getType());
-                if (!immutable) {
-                    break;
-                }
+    private static boolean immutable(final Object object) throws Exception {
+        boolean immutable;
+        final Class<?> type = object.getClass();
+        if (type.equals(Object.class) || type.equals(String.class)) {
+            immutable = true;
+        } else if (type.getName().startsWith("org.aspectj.runtime.reflect.")) {
+            immutable = true;
+        } else {
+            immutable = !type.isPrimitive()
+                && ImmutabilityChecker.fields(object, type);
+        }
+        return immutable;
+    }
+
+    /**
+     * All its fields are safe?
+     * @param object The object to check
+     * @param type Its type
+     * @return TRUE if it is immutable
+     * @throws Exception If some error
+     */
+    private static boolean fields(final Object object, final Class<?> type)
+        throws Exception {
+        boolean immutable = true;
+        final Field[] fields = type.getDeclaredFields();
+        for (int pos = 0; pos < fields.length; ++pos) {
+            fields[pos].setAccessible(true);
+            immutable = Modifier.isFinal(fields[pos].getModifiers())
+                && Modifier.isPrivate(fields[pos].getModifiers())
+                && ImmutabilityChecker.immutable(fields[pos].get(object));
+            if (!immutable) {
+                break;
             }
         }
         return immutable;

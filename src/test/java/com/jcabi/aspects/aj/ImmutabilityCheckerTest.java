@@ -45,8 +45,18 @@ public final class ImmutabilityCheckerTest {
      * @checkstyle IllegalThrows (5 lines)
      */
     @Test(expected = IllegalStateException.class)
-    public void cachesSimpleCall() throws Throwable {
+    public void catchedMutableObjects() throws Throwable {
         final Object object = new Mutable();
+    }
+
+    /**
+     * ImmutabilityChecker can pass immutable classes.
+     * @throws Throwable If something goes wrong
+     * @checkstyle IllegalThrows (5 lines)
+     */
+    @Test
+    public void passesImmutableObjects() throws Throwable {
+        final Object object = new TruelyImmutable();
     }
 
     /**
@@ -55,6 +65,14 @@ public final class ImmutabilityCheckerTest {
     @Immutable
     private static final class Mutable {
         private transient String data = "";
+    }
+
+    /**
+     * Truely immutable class.
+     */
+    @Immutable
+    private static final class TruelyImmutable {
+        private final transient String data = "";
     }
 
 }
