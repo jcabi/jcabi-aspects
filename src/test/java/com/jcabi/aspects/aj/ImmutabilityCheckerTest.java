@@ -70,13 +70,14 @@ public final class ImmutabilityCheckerTest {
          * Mutable class member.
          */
         @SuppressWarnings("PMD.ImmutableField")
-        private transient String data = "";
+        private transient String data = "hello";
     }
 
     /**
      * Truely immutable class.
      */
     @Immutable
+    @SuppressWarnings("PMD.FinalFieldCouldBeStatic")
     private static final class TruelyImmutable {
         /**
          * Something static final.
@@ -89,8 +90,15 @@ public final class ImmutabilityCheckerTest {
         /**
          * Immutable class member.
          */
-        @SuppressWarnings("PMD.FinalFieldCouldBeStatic")
         private final transient String data = null;
+        /**
+         * Another immutable class member.
+         */
+        private final transient int number = 2;
+        /**
+         * Another immutable class member.
+         */
+        private final transient String text = "Hello, world!";
     }
 
 }

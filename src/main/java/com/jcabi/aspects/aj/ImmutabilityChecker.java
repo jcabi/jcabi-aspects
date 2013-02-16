@@ -29,8 +29,12 @@
  */
 package com.jcabi.aspects.aj;
 
+import com.jcabi.log.Logger;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -56,12 +60,19 @@ public final class ImmutabilityChecker {
     @After("initialization((@com.jcabi.aspects.Immutable *).new(..))")
     public void after(final JoinPoint point) throws Throwable {
         final Object object = point.getTarget();
-        if (!ImmutabilityChecker.immutable(object)) {
+        try {
+            ImmutabilityChecker.check(
+                object,
+                new HashSet<Object>(Arrays.asList(object))
+            );
+        } catch (ImmutabilityChecker.Violation ex) {
             throw new IllegalStateException(
-                String.format(
-                    "object of class %s is not @Immutable as expected",
-                    object.getClass().getName()
-                )
+                Logger.format(
+                    "object '%s' (%[type]s) is not @Immutable, can't use it",
+                    object,
+                    object
+                ),
+                ex
             );
         }
     }
@@ -69,50 +80,140 @@ public final class ImmutabilityChecker {
     /**
      * This object is immutable?
      * @param object The object to check
-     * @return TRUE if it is immutable
-     * @throws Exception If some error
+     * @param seen Array of seen values
+     * @throws ImmutabilityChecker.Violation If it is mutable
      */
-    private static boolean immutable(final Object object) throws Exception {
-        boolean immutable;
-        if (object == null) {
-            immutable = true;
-        } else {
-            final Class<?> type = object.getClass();
-            if (type.equals(Object.class) || type.equals(String.class)
-                || type.getName().startsWith("org.aspectj.runtime.reflect.")) {
-                immutable = true;
-            } else {
-                immutable = !type.isPrimitive()
-                    && ImmutabilityChecker.fields(object, type);
+    private static void check(final Object object, final Set<Object> seen)
+        throws ImmutabilityChecker.Violation {
+        final Class<?> type = object.getClass();
+        if (!ImmutabilityChecker.exceptional(type)) {
+            if (type.isPrimitive()) {
+                throw new ImmutabilityChecker.Violation(
+                    String.format("type %s is primitive", type)
+                );
+            }
+            try {
+                ImmutabilityChecker.fields(object, type, seen);
+            } catch (ImmutabilityChecker.Violation ex) {
+                throw new ImmutabilityChecker.Violation(
+                    String.format(
+                        "object '%s' of class '%s' is not @Immutable",
+                        object,
+                        type.getName()
+                    ),
+                    ex
+                );
             }
         }
-        return immutable;
+    }
+
+    /**
+     * This class is exceptional?
+     * @param type The type to check
+     * @return TRUE if this class is exceptional and shouldn't be checked
+     */
+    private static boolean exceptional(final Class<?> type) {
+        return type.equals(Object.class)
+            || type.equals(String.class)
+            || type.getName().startsWith("org.aspectj.runtime.reflect.");
     }
 
     /**
      * All its fields are safe?
      * @param object The object to check
      * @param type Its type
-     * @return TRUE if it is immutable
-     * @throws Exception If some error
+     * @param seen Array of seen values
+     * @throws ImmutabilityChecker.Violation If it is mutable
      */
-    private static boolean fields(final Object object, final Class<?> type)
-        throws Exception {
-        boolean immutable = true;
+    private static void fields(final Object object, final Class<?> type,
+        final Set<Object> seen)
+        throws ImmutabilityChecker.Violation {
         final Field[] fields = type.getDeclaredFields();
         for (int pos = 0; pos < fields.length; ++pos) {
-            if (Modifier.isStatic(fields[pos].getModifiers())) {
+            final Field field = fields[pos];
+            if (Modifier.isStatic(field.getModifiers())) {
                 continue;
             }
-            fields[pos].setAccessible(true);
-            immutable = Modifier.isFinal(fields[pos].getModifiers())
-                && Modifier.isPrivate(fields[pos].getModifiers())
-                && ImmutabilityChecker.immutable(fields[pos].get(object));
-            if (!immutable) {
-                break;
+            field.setAccessible(true);
+            if (!Modifier.isFinal(field.getModifiers())) {
+                throw new ImmutabilityChecker.Violation(
+                    String.format(
+                        "field '%s' of object '%s' ('%s') is not final",
+                        field,
+                        object,
+                        type.getName()
+                    )
+                );
+            }
+            if (!Modifier.isPrivate(field.getModifiers())) {
+                throw new ImmutabilityChecker.Violation(
+                    String.format(
+                        "field '%s' of object '%s' ('%s') is not private",
+                        field,
+                        object,
+                        type.getName()
+                    )
+                );
+            }
+            Object value;
+            try {
+                value = field.get(object);
+            } catch (IllegalAccessException ex) {
+                Logger.warn(
+                    object,
+                    "Can't validate immutability of field %s: %s",
+                    field,
+                    ex.getMessage()
+                );
+                continue;
+            }
+            if (value == null) {
+                continue;
+            }
+            if (seen.contains(value)) {
+                continue;
+            }
+            try {
+                seen.add(value);
+                ImmutabilityChecker.check(value, seen);
+            } catch (ImmutabilityChecker.Violation ex) {
+                throw new ImmutabilityChecker.Violation(
+                    String.format(
+                        "field '%s' of object '%s' ('%s') is not immutable",
+                        field,
+                        object,
+                        type.getName()
+                    ),
+                    ex
+                );
             }
         }
-        return immutable;
+    }
+
+    /**
+     * Immutability violation.
+     */
+    private static final class Violation extends Exception {
+        /**
+         * Serialization marker.
+         */
+        private static final long serialVersionUID = 1L;
+        /**
+         * Public ctor.
+         * @param msg Message
+         */
+        public Violation(final String msg) {
+            super(msg);
+        }
+        /**
+         * Public ctor.
+         * @param msg Message
+         * @param cause Cause of it
+         */
+        public Violation(final String msg,
+            final ImmutabilityChecker.Violation cause) {
+            super(msg, cause);
+        }
     }
 
 }
