@@ -68,7 +68,7 @@ public final class ImmutabilityChecker {
         } catch (ImmutabilityChecker.Violation ex) {
             throw new IllegalStateException(
                 Logger.format(
-                    "object '%s' (%[type]s) is not @Immutable, can't use it",
+                    "object '%s' (%[type]s) is not immutable, can't use it",
                     object,
                     object
                 ),
@@ -97,7 +97,7 @@ public final class ImmutabilityChecker {
             } catch (ImmutabilityChecker.Violation ex) {
                 throw new ImmutabilityChecker.Violation(
                     String.format(
-                        "object '%s' of class '%s' is not @Immutable",
+                        "object '%s' of class '%s' is mutable",
                         object,
                         type.getName()
                     ),
@@ -179,7 +179,7 @@ public final class ImmutabilityChecker {
             } catch (ImmutabilityChecker.Violation ex) {
                 throw new ImmutabilityChecker.Violation(
                     String.format(
-                        "field '%s' of object '%s' ('%s') is not immutable",
+                        "field '%s' of object '%s' ('%s') is mutable",
                         field,
                         object,
                         type.getName()
