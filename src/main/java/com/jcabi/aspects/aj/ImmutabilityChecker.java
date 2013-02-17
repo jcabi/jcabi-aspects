@@ -42,7 +42,7 @@ import org.aspectj.lang.annotation.Aspect;
 /**
  * Checks for class immutability.
  *
- * <p>The class is immutable and thread-safe.
+ * <p>The class is thread-safe.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
