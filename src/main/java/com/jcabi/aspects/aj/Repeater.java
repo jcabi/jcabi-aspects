@@ -99,7 +99,7 @@ public final class Repeater {
                     throw ex;
                 }
                 if (rof.delay() > 0) {
-                    TimeUnit.MILLISECONDS.sleep(rof.delay() * attempt);
+                    rof.unit().sleep(rof.delay() * attempt);
                 }
             }
         }
