@@ -73,24 +73,7 @@ public final class MethodValidator {
     /**
      * JSR-303 Validator.
      */
-    private final transient Validator validator;
-
-    /**
-     * Default public ctor.
-     */
-    public MethodValidator() {
-        Validator val = null;
-        try {
-            val = Validation.buildDefaultValidatorFactory().getValidator();
-        } catch (javax.validation.ValidationException ex) {
-            Logger.error(
-                this,
-                "JSR-303 validator failed to initialize: %s",
-                ex.getMessage()
-            );
-        }
-        this.validator = val;
-    }
+    private final transient Validator validator = MethodValidator.build();
 
     /**
      * Catch exception and log it.
@@ -259,6 +242,32 @@ public final class MethodValidator {
             text.append(violation.getMessage());
         }
         return text.toString();
+    }
+
+    /**
+     * Build validator.
+     * @return Validator to use in the singleton
+     */
+    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    private static Validator build() {
+        Validator val = null;
+        try {
+            val = Validation.buildDefaultValidatorFactory().getValidator();
+        } catch (javax.validation.ValidationException ex) {
+            Logger.error(
+                MethodValidator.class,
+                "JSR-303 validator failed to initialize: %s",
+                ex.getMessage()
+            );
+        // @checkstyle IllegalCatch (1 line)
+        } catch (Throwable ex) {
+            Logger.error(
+                MethodValidator.class,
+                "JSR-303 validator thrown during initialization: %[exception]s",
+                ex
+            );
+        }
+        return val;
     }
 
 }
