@@ -73,8 +73,8 @@ public class Foo {
 }
 +--
 
-  Although in Java a <<<final>>> array can change its elements we assume
-  that it is immutable:
+  Although in Java a <<<final>>> array can change its elements, we assume
+  that private final arrays are immutable:
 
 +--
 @Immutable

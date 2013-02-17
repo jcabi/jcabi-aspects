@@ -67,6 +67,7 @@ import java.lang.annotation.Target;
  * @version $Id$
  * @since 0.7.2
  * @see com.jcabi.log.Logger
+ * @see <a href="www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

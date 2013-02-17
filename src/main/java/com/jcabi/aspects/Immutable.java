@@ -46,11 +46,12 @@ import java.lang.annotation.Target;
  * }</pre>
  *
  * <p>As soon as you try to instantiate this class a runtime exception
- * will be thrown, because this class is mutable:
+ * will be thrown, because this class is mutable.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.8
+ * @see <a href="www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

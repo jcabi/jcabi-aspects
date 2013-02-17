@@ -49,6 +49,7 @@ import java.lang.annotation.Target;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1.10
+ * @see <a href="www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
