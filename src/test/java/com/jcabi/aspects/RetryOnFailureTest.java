@@ -29,6 +29,7 @@
  */
 package com.jcabi.aspects;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -51,7 +52,7 @@ public final class RetryOnFailureTest {
         final AtomicInteger count = new AtomicInteger();
         new Runnable() {
             @Override
-            @RetryOnFailure(verbose = false)
+            @RetryOnFailure(verbose = false, unit = TimeUnit.SECONDS, delay = 1)
             public void run() {
                 if (count.incrementAndGet() < 2) {
                     throw new IllegalArgumentException(

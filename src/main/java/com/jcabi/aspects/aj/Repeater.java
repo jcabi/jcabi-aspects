@@ -31,7 +31,6 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.RetryOnFailure;
 import com.jcabi.log.Logger;
-import java.util.concurrent.TimeUnit;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
