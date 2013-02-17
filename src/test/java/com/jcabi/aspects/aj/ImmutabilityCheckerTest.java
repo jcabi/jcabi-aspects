@@ -38,27 +38,46 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
-@SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.UnusedLocalVariable" })
+@SuppressWarnings({
+    "PMD.UnusedPrivateField",
+    "PMD.UnusedLocalVariable",
+    "PMD.FinalFieldCouldBeStatic"
+})
 public final class ImmutabilityCheckerTest {
 
     /**
      * ImmutabilityChecker can catch mutable classes.
-     * @throws Throwable If something goes wrong
-     * @checkstyle IllegalThrows (5 lines)
      */
     @Test(expected = IllegalStateException.class)
-    public void catchedMutableObjects() throws Throwable {
-        final Object object = new Mutable();
+    public void catchedMutableTypes() {
+        new Mutable();
+    }
+
+    /**
+     * ImmutabilityChecker can catch mutable classes with arrays.
+     * @todo #133 The test is disabled since in Java final arrays can still be
+     *  modified (bloody Java!)
+     */
+    @Test(expected = IllegalStateException.class)
+    @org.junit.Ignore
+    public void catchedMutableTypesWithArrays() {
+        new MutableWithArray();
+    }
+
+    /**
+     * ImmutabilityChecker can catch mutable classes with interfaces.
+     */
+    @Test(expected = IllegalStateException.class)
+    public void catchedMutableTypesWithInterfaces() {
+        new MutableWithInterface();
     }
 
     /**
      * ImmutabilityChecker can pass immutable classes.
-     * @throws Throwable If something goes wrong
-     * @checkstyle IllegalThrows (5 lines)
      */
     @Test
-    public void passesImmutableObjects() throws Throwable {
-        final Object object = new TruelyImmutable();
+    public void passesImmutableObjects() {
+        new TruelyImmutable();
     }
 
     /**
@@ -74,10 +93,37 @@ public final class ImmutabilityCheckerTest {
     }
 
     /**
+     * Mutable class because of array.
+     */
+    @Immutable
+    private static final class MutableWithArray {
+        /**
+         * Mutable class member.
+         */
+        private final transient int[] data = null;
+    }
+
+    /**
+     * Vague interface.
+     */
+    private interface MutableInterface {
+    }
+
+    /**
+     * Mutable class because of mutable interface.
+     */
+    @Immutable
+    private static final class MutableWithInterface {
+        /**
+         * Vague class member.
+         */
+        private final transient MutableInterface data = null;
+    }
+
+    /**
      * Truely immutable class.
      */
     @Immutable
-    @SuppressWarnings("PMD.FinalFieldCouldBeStatic")
     private static final class TruelyImmutable {
         /**
          * Something static final.
@@ -99,6 +145,10 @@ public final class ImmutabilityCheckerTest {
          * Another immutable class member.
          */
         private final transient String text = "Hello, world!";
+        /**
+         * Another immutable class member.
+         */
+        private final transient String[] texts = new String[] {"foo"};
     }
 
 }

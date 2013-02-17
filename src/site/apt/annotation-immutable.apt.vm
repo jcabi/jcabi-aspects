@@ -52,5 +52,13 @@ public class Foo {
   During instantion of this class a runtime exception will be thrown,
   because it is mutable.
 
+  Keep in mind, that although JDK requires some classes to be immutable,
+  most of them are mutable in reality, for example
+  {{{http://docs.oracle.com/javase/7/docs/api/java/util/Date.html}<<<java.util.Date>>>}} and
+  {{{http://docs.oracle.com/javase/7/docs/api/java/math/BigDecimal.html}<<<java.math.BigDecimal>>>}}
+  (well, at least in OpenJDK 7 they are mutable). Our immutability checker
+  is rather strict and doesn't allow classes to have any non-private non-final
+  properties in order to be called truly immutable.
+
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.
