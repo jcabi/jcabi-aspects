@@ -66,7 +66,7 @@ public final class EquipperTest {
      * Dummy class, for tests above.
      */
     @Equipped
-    public static class Foo {
+    public final static class Foo {
         /**
          * Internal variable.
          */

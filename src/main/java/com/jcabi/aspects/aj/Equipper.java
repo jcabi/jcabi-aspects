@@ -29,7 +29,7 @@
  */
 package com.jcabi.aspects.aj;
 
-import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -86,6 +86,7 @@ public final class Equipper {
             output = proxy.getConstructor(signature.getParameterTypes())
                 .newInstance(point.getArgs());
         }
+        System.out.println("returning " + output.getClass().getName());
         return output;
     }
 
@@ -108,15 +109,12 @@ public final class Equipper {
      * Equip given class and return an equipped one.
      * @param origin Original class
      * @return Equipped one
-     * @throws IOException If can't load class file
+     * @throws Exception If something goes wrong
      */
-    private Class<?> equip(final Class<?> origin) throws IOException {
+    private Class<?> equip(final Class<?> origin) throws Exception {
         final ClassLoader loader =
             Thread.currentThread().getContextClassLoader();
-        final String suffix = String.format(
-            "__equipped__%d",
-            Math.abs(origin.getName().hashCode())
-        );
+        final String suffix = "__equipped";
         final String mnemo = Type.getInternalName(origin);
         final String rename = new StringBuilder(mnemo)
             .append(suffix).toString();
@@ -124,16 +122,15 @@ public final class Equipper {
             loader.getResourceAsStream(String.format("%s.class", mnemo))
         );
         final ClassWriter writer = new ClassWriter(reader, 0);
-        ClassVisitor visitor = new ClassVisitor(Opcodes.ASM4, writer) {
-            @Override
-            public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
-                System.out.println("name: " + name + ", signature: " + signature + ", super: " + superName + ", interface" + interfaces.length);
-                super.visit(version, access, name, signature, mnemo, interfaces);
-                System.out.println("rename: " + rename + ", mnemo: " + mnemo);
-            }
-        };
-        visitor = new RemappingClassAdapter(
-            visitor,
+        final ClassVisitor visitor = new RemappingClassAdapter(
+            new ClassVisitor(Opcodes.ASM4, writer) {
+                @Override
+                public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
+                    System.out.println("name: " + name + ", signature: " + signature + ", super: " + superName + ", interface" + interfaces.length);
+                    super.visit(version, access, name, signature, mnemo, interfaces);
+                    System.out.println("rename: " + rename + ", mnemo: " + mnemo);
+                }
+            },
             new Remapper() {
                 @Override
                 public String map(final String type) {
@@ -157,7 +154,7 @@ public final class Equipper {
         );
         method.setAccessible(true);
         final byte[] bytes = writer.toByteArray();
-        return method.invoke(
+        return (Class<?>) method.invoke(
             getClass().getClassLoader(),
             new StringBuilder(origin.getName()).append(suffix).toString(),
             bytes,
