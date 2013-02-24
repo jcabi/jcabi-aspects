@@ -41,6 +41,7 @@
         </menu>
         <menu name="Annotations">
             <item name="@Cacheable" href="annotation-cacheable.html"/>
+            <item name="@Immutable" href="annotation-immutable.html"/>
             <item name="@LogExceptions" href="annotation-logexceptions.html"/>
             <item name="@Loggable" href="annotation-loggable.html"/>
             <item name="@RetryOnFailure" href="annotation-retryonfailure.html"/>

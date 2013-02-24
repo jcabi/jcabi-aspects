@@ -27,41 +27,53 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.aspects;
+package com.jcabi;
 
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.jcabi.aspects.Immutable;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link RetryOnFailure}.
+ * Test case for {@link Immutable} annotation.
+ * {@link RetryOnFailure} annotation works.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
-public final class RetryOnFailureTest {
+public final class ImmutableAnnotationTest {
 
     /**
-     * RetryOnFailure can force duplicate execution of the same method.
+     * Immutable annotation validate class mutability.
+     * @throws Exception If something goes wrong
+     */
+    @Test(expected = IllegalStateException.class)
+    public void validatesClassImmutability() throws Exception {
+        final Object object = new Mutable();
+    }
+
+    /**
+     * Immutable annotation validate class mutability.
      * @throws Exception If something goes wrong
      */
     @Test
-    public void executesMethodManyTimes() throws Exception {
-        final AtomicInteger count = new AtomicInteger();
-        new Runnable() {
-            @Override
-            @RetryOnFailure(verbose = false, unit = TimeUnit.SECONDS, delay = 1)
-            public void run() {
-                if (count.incrementAndGet() < 2) {
-                    throw new IllegalArgumentException(
-                        "this exception should be caught and swallowed"
-                    );
-                }
-            }
-        } .run();
-        MatcherAssert.assertThat(count.get(), Matchers.greaterThan(0));
+    public void validatesClassWithTrueImmutability() throws Exception {
+        final Object object = new TruelyImmutable();
+    }
+
+    /**
+     * Supposedly immutable class.
+     */
+    @Immutable
+    private static final class Mutable {
+        private transient String data = "";
+    }
+
+    /**
+     * Truely immutable class.
+     */
+    @Immutable
+    private static final class TruelyImmutable {
+        private final transient String data = "";
     }
 
 }

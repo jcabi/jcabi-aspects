@@ -1,0 +1,92 @@
+ ------
+ Check Java Classes Immutability in Runtime
+ ------
+ Yegor Bugayenko
+ ------
+ 2013-02-15
+ ------
+
+~~
+~~ Copyright (c) 2013, jcabi.com
+~~ All rights reserved.
+~~
+~~ Redistribution and use in source and binary forms, with or without
+~~ modification, are permitted provided that the following conditions
+~~ are met: 1) Redistributions of source code must retain the above
+~~ copyright notice, this list of conditions and the following
+~~ disclaimer. 2) Redistributions in binary form must reproduce the above
+~~ copyright notice, this list of conditions and the following
+~~ disclaimer in the documentation and/or other materials provided
+~~ with the distribution. 3) Neither the name of the jcabi.com nor
+~~ the names of its contributors may be used to endorse or promote
+~~ products derived from this software without specific prior written
+~~ permission.
+~~
+~~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+~~ NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+~~ FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+~~ THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+~~ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+~~ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+~~ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+~~ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+~~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+~~ OF THE POSSIBILITY OF SUCH DAMAGE.
+~~
+
+Check Java Classes Immutability in Runtime
+
+  Annotate your class with
+  {{{./apidocs-${project.version}/com/jcabi/aspects/Immutable.html}<<<@Immutable>>>}}
+  annotation and its immutability will be checked when instantiated:
+
++--
+@Immutable
+public class Foo {
+  private String data; // this class is NOT immutable
+}
++--
+
+  During instantion of this class a runtime exception will be thrown,
+  because it is mutable.
+
+  Keep in mind, that although JDK requires some classes to be immutable,
+  most of them are mutable in reality, for example
+  {{{http://docs.oracle.com/javase/7/docs/api/java/util/Date.html}<<<java.util.Date>>>}} and
+  {{{http://docs.oracle.com/javase/7/docs/api/java/math/BigDecimal.html}<<<java.math.BigDecimal>>>}}
+  (well, at least in OpenJDK 7 they are mutable). Our immutability checker
+  is rather strict and doesn't allow classes to have any non-private non-final
+  properties in order to be called truly immutable.
+
+  If your class/interface has a property, which type is an interface, that
+  child interface has to be <<<@Immutable>>> annotated, for example:
+
++--
+@Immutable
+public class Foo {
+  // this class is NOT immutable because we can't guarantee
+  // that an immutable implemenation of DateFormat will be
+  // used in all its implementations.
+  private final DateFormat format;
+}
++--
+
+  Although in Java a <<<final>>> array can change its elements, we assume
+  that private final arrays are immutable:
+
++--
+@Immutable
+public class Foo {
+  // this class is immutable, although Java allows you to change
+  // elements of this array in runtime
+  private final int[] data = new int[] {1, 2, 3};
+  public void set(int idx, int value) {
+    this.data[idx] = value;
+  }
+}
++--
+
+  The mechanism is implemented with AOP/AspectJ. Read
+  {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.

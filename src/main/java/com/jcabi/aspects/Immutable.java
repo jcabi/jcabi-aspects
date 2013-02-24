@@ -29,39 +29,32 @@
  */
 package com.jcabi.aspects;
 
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Test case for {@link RetryOnFailure}.
+ * Annotates an immutable class.
+ *
+ * <p>For example:
+ *
+ * <pre> &#64;Immutable
+ * public class Foo {
+ *   private String data;
+ * }</pre>
+ *
+ * <p>As soon as you try to instantiate this class a runtime exception
+ * will be thrown, because this class is mutable.
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @since 0.7.8
+ * @see <a href="www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
-public final class RetryOnFailureTest {
-
-    /**
-     * RetryOnFailure can force duplicate execution of the same method.
-     * @throws Exception If something goes wrong
-     */
-    @Test
-    public void executesMethodManyTimes() throws Exception {
-        final AtomicInteger count = new AtomicInteger();
-        new Runnable() {
-            @Override
-            @RetryOnFailure(verbose = false, unit = TimeUnit.SECONDS, delay = 1)
-            public void run() {
-                if (count.incrementAndGet() < 2) {
-                    throw new IllegalArgumentException(
-                        "this exception should be caught and swallowed"
-                    );
-                }
-            }
-        } .run();
-        MatcherAssert.assertThat(count.get(), Matchers.greaterThan(0));
-    }
-
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface Immutable {
 }

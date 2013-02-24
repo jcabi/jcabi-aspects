@@ -34,6 +34,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Retry the method in case of exception.
@@ -49,6 +50,7 @@ import java.lang.annotation.Target;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1.10
+ * @see <a href="www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
@@ -62,10 +64,15 @@ public @interface RetryOnFailure {
     int attempts() default 3;
 
     /**
-     * Delay between attempts, in milliseconds.
+     * Delay between attempts, in time units.
      * @checkstyle MagicNumber (2 lines)
      */
     long delay() default 50;
+
+    /**
+     * Time units.
+     */
+    TimeUnit unit() default TimeUnit.MILLISECONDS;
 
     /**
      * When to retry (in case of what exception types).
