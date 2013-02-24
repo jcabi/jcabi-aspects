@@ -31,6 +31,13 @@
  -->
 <document xmlns="http://maven.apache.org/changes/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
     <body>
+        <release version="0.7.9" date="24 Feb 2013" description="@Equipped annotation added">
+            <action dev="yegor" issue="132" type="add">
+                @Equipped annotation added to extend classes in
+                runtime with hashCode(), equals(), and toString()
+                methods
+            </action>
+        </release>
         <release version="0.7.8" date="17 Feb 2013" description="@Immutable annotation added">
             <action dev="yegor" issue="133" type="add">
                 @Immutable annotation added to control class

@@ -148,14 +148,21 @@ public final class Equipper {
             }
         );
         reader.accept(visitor, 0);
-        return new ClassLoader() {
-            public Class<?> load(final String name, final byte[] bytes) {
-                return this.defineClass(name, bytes, 0, bytes.length);
-            }
-        }.load(
-//            origin.getName(),
+        final Method method = ClassLoader.class.getDeclaredMethod(
+            "defineClass",
+            String.class,
+            byte[].class,
+            int.class,
+            int.class
+        );
+        method.setAccessible(true);
+        final byte[] bytes = writer.toByteArray();
+        return method.invoke(
+            getClass().getClassLoader(),
             new StringBuilder(origin.getName()).append(suffix).toString(),
-            writer.toByteArray()
+            bytes,
+            0,
+            bytes.length
         );
     }
 
