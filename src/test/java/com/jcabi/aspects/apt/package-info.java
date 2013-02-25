@@ -29,22 +29,10 @@
  */
 
 /**
- * Annotations for Aspects.
- *
- * <p>The only dependency you need is (check our latest version available
- * at <a href="http://www.jcabi.com">www.jcabi.com</a>):
- *
- * <pre>&lt;depedency&gt;
- *   &lt;groupId&gt;com.jcabi&lt;/groupId&gt;
- *   &lt;artifactId&gt;jcabi-aspects&lt;/artifactId&gt;
- * &lt;/dependency&gt;</pre>
- *
- * <p>Read how to use {@code jcabi-aspects}
- * <a href="http://www.jcabi.com/jcabi-aspects">with Maven</a>.
+ * Annotations processors, tests.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.1.10
- * @link <a href="http://www.jcabi.com/jcabi-aspects">project website</a>
+ * @since 0.7.9
  */
-package com.jcabi.aspects;
+package com.jcabi.aspects.apt;

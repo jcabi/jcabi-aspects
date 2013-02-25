@@ -27,24 +27,33 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.jcabi.aspects.apt;
+
+import java.util.Set;
+import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.lang.model.element.TypeElement;
 
 /**
- * Annotations for Aspects.
+ * Annotation processor for {@link Equipped} classes.
  *
- * <p>The only dependency you need is (check our latest version available
- * at <a href="http://www.jcabi.com">www.jcabi.com</a>):
- *
- * <pre>&lt;depedency&gt;
- *   &lt;groupId&gt;com.jcabi&lt;/groupId&gt;
- *   &lt;artifactId&gt;jcabi-aspects&lt;/artifactId&gt;
- * &lt;/dependency&gt;</pre>
- *
- * <p>Read how to use {@code jcabi-aspects}
- * <a href="http://www.jcabi.com/jcabi-aspects">with Maven</a>.
+ * <p>The class is immutable and thread-safe.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.1.10
- * @link <a href="http://www.jcabi.com/jcabi-aspects">project website</a>
+ * @since 0.7.9
  */
-package com.jcabi.aspects;
+@SupportedAnnotationTypes("com.jcabi.aspects.Equipped")
+public final class EquipProcessor extends AbstractProcessor {
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean process(final Set<? extends TypeElement> annotations,
+        final RoundEnvironment roundEnv) {
+    }
+
+}

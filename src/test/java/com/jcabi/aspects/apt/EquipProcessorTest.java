@@ -27,9 +27,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.aspects.aj;
+package com.jcabi.aspects.apt;
 
 import com.jcabi.aspects.Equipped;
+import lombok.EqualsAndHashCode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -39,26 +40,21 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
-public final class EquipperTest {
+public final class EquipProcessorTest {
 
     /**
-     * Equipper can wrap classes.
+     * EquipProcessor can equip classes.
      * @throws Exception If something goes wrong
      */
     @Test
     public void wrapsSimpleClass() throws Exception {
-        final EquipperTest.Foo first = new EquipperTest.Foo(1);
-        MatcherAssert.assertThat(
-            first.getClass().getName(),
-            Matchers.not(Matchers.equalTo(EquipperTest.Foo.class.getName()))
-        );
-        MatcherAssert.assertThat(first, Matchers.notNullValue());
-        final EquipperTest.Foo second = new EquipperTest.Foo(1);
-        MatcherAssert.assertThat(first, Matchers.equalTo(second));
+        final EquipProcessorTest.Foo first = new EquipProcessorTest.Foo(1);
+        final EquipProcessorTest.Foo second = new EquipProcessorTest.Foo(1);
         MatcherAssert.assertThat(
             first.hashCode(),
             Matchers.equalTo(second.hashCode())
         );
+        MatcherAssert.assertThat(first, Matchers.equalTo(second));
         MatcherAssert.assertThat(first, Matchers.hasToString("data=1"));
     }
 
@@ -66,6 +62,7 @@ public final class EquipperTest {
      * Dummy class, for tests above.
      */
     @Equipped
+    @EqualsAndHashCode
     public final static class Foo {
         /**
          * Internal variable.
