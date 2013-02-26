@@ -30,7 +30,6 @@
 package com.jcabi.aspects.apt;
 
 import com.jcabi.aspects.Equipped;
-import lombok.EqualsAndHashCode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -62,7 +61,6 @@ public final class EquipProcessorTest {
      * Dummy class, for tests above.
      */
     @Equipped
-    @EqualsAndHashCode
     public final static class Foo {
         /**
          * Internal variable.

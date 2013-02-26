@@ -1,1 +1,2 @@
 com.jcabi.aspects.apt.EquipProcessor
+com.jcabi.aspects.apt.EmptyProcessor

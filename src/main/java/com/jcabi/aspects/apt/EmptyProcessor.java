@@ -36,10 +36,7 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
-import javax.tools.Diagnostic;
 
 /**
  * Annotation processor for {@link Equipped} classes.
@@ -49,11 +46,10 @@ import javax.tools.Diagnostic;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.9
- * @link <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/Processor.html">Annotation Processing</a>
  */
-@SupportedAnnotationTypes("com.jcabi.aspects.Equipped")
+@SupportedAnnotationTypes("*")
 @SupportedSourceVersion(SourceVersion.RELEASE_6)
-public final class EquipProcessor extends AbstractProcessor {
+public final class EmptyProcessor extends AbstractProcessor {
 
     /**
      * {@inheritDoc}
@@ -61,36 +57,7 @@ public final class EquipProcessor extends AbstractProcessor {
     @Override
     public boolean process(final Set<? extends TypeElement> annotations,
         final RoundEnvironment env) {
-        for (Element elm : env.getElementsAnnotatedWith(Equipped.class)) {
-            if (!elm.getKind().equals(ElementKind.CLASS)) {
-                throw new IllegalStateException(
-                    String.format(
-                        "illegal element submitted for processing: %s",
-                        elm
-                    )
-                );
-            }
-            final String name = TypeElement.class.cast(elm)
-                .getQualifiedName().toString();
-            this.equip(name);
-            this.processingEnv.getMessager().printMessage(
-                Diagnostic.Kind.NOTE,
-                String.format(
-                    "added hashCode(), equals(), and toString() methods to %s",
-                    name
-                ),
-                elm
-            );
-        }
         return true;
-    }
-
-    /**
-     * Equip given class.
-     * @param type The type to equip
-     */
-    private void equip(final String type) {
-        System.out.println("type: " + type);
     }
 
 }
