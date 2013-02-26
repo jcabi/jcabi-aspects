@@ -29,7 +29,6 @@
  */
 package com.jcabi.aspects.apt;
 
-import com.jcabi.aspects.Equipped;
 import java.util.Set;
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;

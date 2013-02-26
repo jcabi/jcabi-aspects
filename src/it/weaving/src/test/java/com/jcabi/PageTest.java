@@ -60,6 +60,7 @@ public final class PageTest {
      * @throws Exception If something goes wrong
      */
     @Test
+    @org.junit.Ignore
     public void equippedWithThreeMethods() throws Exception {
         final Page first = new Page();
         first.downloadWithoutCache("");

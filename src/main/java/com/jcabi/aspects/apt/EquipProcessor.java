@@ -90,7 +90,13 @@ public final class EquipProcessor extends AbstractProcessor {
      * @param type The type to equip
      */
     private void equip(final String type) {
-        System.out.println("type: " + type);
+        this.processingEnv.getMessager().printMessage(
+            Diagnostic.Kind.NOTE,
+            String.format(
+                "@Equip annotation is not implemented yet: %s",
+                type
+            )
+        );
     }
 
 }
