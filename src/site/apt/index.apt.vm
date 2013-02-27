@@ -61,10 +61,6 @@ public String load(URL url) {
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Cacheable.html}<<<@Cacheable>>>}}:
      method results are cached for a few seconds to optimize performance;
 
-   * {{{./apidocs-${project.version}/com/jcabi/aspects/Equipped.html}<<<@Equipped>>>}}:
-     extends classes with <<<hashCode()>>>, <<<equals()>>>,
-     and <<<toString()>>> methods in runtime;
-
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Immutable.html}<<<@Immutable>>>}}:
      checks for class immutability in runtime;
 

@@ -31,11 +31,10 @@
  -->
 <document xmlns="http://maven.apache.org/changes/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
     <body>
-        <release version="0.7.9" date="24 Feb 2013" description="@Equipped annotation added">
+        <release version="0.7.9" date="27 Feb 2013" description="APT works together with AspectJ">
             <action dev="yegor" issue="132" type="add">
-                @Equipped annotation added to extend classes in
-                runtime with hashCode(), equals(), and toString()
-                methods
+                Integrated Annotation Processing Tool (APT) with
+                AspectJ, now they work together without conflicts
             </action>
         </release>
         <release version="0.7.8" date="17 Feb 2013" description="@Immutable annotation added">
