@@ -30,15 +30,17 @@
 package com.jcabi;
 
 import com.jcabi.aspects.Cacheable;
-import com.jcabi.aspects.Equipped;
 import java.util.concurrent.atomic.AtomicInteger;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * Page with content.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
-@Equipped
+@ToString
+@EqualsAndHashCode(callSuper = false)
 public final class Page {
 
     /**

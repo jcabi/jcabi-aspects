@@ -38,7 +38,7 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 
 /**
- * Annotation processor for {@link Equipped} classes.
+ * Dummy annotation processor.
  *
  * <p>The class is immutable and thread-safe.
  *
@@ -46,7 +46,7 @@ import javax.lang.model.element.TypeElement;
  * @version $Id$
  * @since 0.7.9
  */
-@SupportedAnnotationTypes("*")
+@SupportedAnnotationTypes("com.jcabi.aspects.*")
 @SupportedSourceVersion(SourceVersion.RELEASE_6)
 public final class EmptyProcessor extends AbstractProcessor {
 
