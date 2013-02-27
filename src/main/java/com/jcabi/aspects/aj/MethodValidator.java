@@ -225,6 +225,18 @@ public final class MethodValidator {
             public Class<String> getRootBeanClass() {
                 return String.class;
             }
+            @Override
+            public Object[] getExecutableParameters() {
+                return new Object[] {};
+            }
+            @Override
+            public Object getExecutableReturnValue() {
+                return null;
+            }
+            @Override
+            public <U> U unwrap(final Class<U> type) {
+                return null;
+            }
         };
     }
 
