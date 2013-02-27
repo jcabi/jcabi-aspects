@@ -48,7 +48,7 @@ public final class ImmutableAnnotationTest {
      */
     @Test(expected = IllegalStateException.class)
     public void validatesClassImmutability() throws Exception {
-        final Object object = new Mutable();
+        new Mutable();
     }
 
     /**
@@ -57,7 +57,7 @@ public final class ImmutableAnnotationTest {
      */
     @Test
     public void validatesClassWithTrueImmutability() throws Exception {
-        final Object object = new TruelyImmutable();
+        new TruelyImmutable();
     }
 
     /**

@@ -36,6 +36,7 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
+import javax.tools.Diagnostic;
 
 /**
  * Dummy annotation processor.
@@ -46,7 +47,7 @@ import javax.lang.model.element.TypeElement;
  * @version $Id$
  * @since 0.7.9
  */
-@SupportedAnnotationTypes("com.jcabi.aspects.*")
+@SupportedAnnotationTypes("*")
 @SupportedSourceVersion(SourceVersion.RELEASE_6)
 public final class EmptyProcessor extends AbstractProcessor {
 
@@ -56,7 +57,15 @@ public final class EmptyProcessor extends AbstractProcessor {
     @Override
     public boolean process(final Set<? extends TypeElement> annotations,
         final RoundEnvironment env) {
-        return true;
+        this.processingEnv.getMessager().printMessage(
+            Diagnostic.Kind.NOTE,
+            String.format(
+                "jcabi-aspects: APT #process() with %d annotation(s): %s",
+                annotations.size(),
+                annotations
+            )
+        );
+        return false;
     }
 
 }

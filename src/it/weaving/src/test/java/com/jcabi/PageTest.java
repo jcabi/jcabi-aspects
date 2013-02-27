@@ -70,7 +70,7 @@ public final class PageTest {
             first.hashCode(),
             Matchers.equalTo(second.hashCode())
         );
-        MatcherAssert.assertThat(first, Matchers.hasToString("cnt=1"));
+        MatcherAssert.assertThat(first, Matchers.hasToString("Page(cnt=1)"));
     }
 
 }
