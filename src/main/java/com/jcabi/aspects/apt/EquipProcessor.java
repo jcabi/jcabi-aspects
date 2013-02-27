@@ -30,7 +30,6 @@
 package com.jcabi.aspects.apt;
 
 import com.jcabi.aspects.Equipped;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Set;
 import javax.annotation.processing.AbstractProcessor;
@@ -40,10 +39,8 @@ import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
-import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
-import javax.tools.JavaFileObject;
 
 /**
  * Annotation processor for {@link Equipped} classes.
@@ -98,13 +95,6 @@ public final class EquipProcessor extends AbstractProcessor {
      * @throws IOException If something goes wrong
      */
     private void equip(final TypeElement element) throws IOException {
-        final String name = this.processingEnv
-            .getElementUtils().getBinaryName(element).toString();
-        final JavaFileObject jfo = this.processingEnv
-            .getFiler().createSourceFile(name, element);
-        final BufferedWriter writer = new BufferedWriter(jfo.openWriter());
-        writer.append("public class EquipProcessorTest$Foo {public int hashCode() { throw new IllegalArgumentException(\"boom\"); } }");
-        writer.close();
         this.processingEnv.getMessager().printMessage(
             Diagnostic.Kind.NOTE,
             String.format(

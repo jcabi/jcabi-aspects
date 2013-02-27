@@ -87,6 +87,22 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
+                <version>1.4</version>
+                <configuration>
+                    <complianceLevel>1.6</complianceLevel>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <deprecation>true</deprecation>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <showWeaveInfo>true</showWeaveInfo>
+                    <forceAjcCompile>true</forceAjcCompile>
+                    <verbose>false</verbose>
+                    <Xlint>warning</Xlint>
+                    <argumentFileName>builddef-${project.name}.lst</argumentFileName>
+                    <excludes>
+                        <exclude>**/package-info.java</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <id>jcabi-weave-classes</id>
