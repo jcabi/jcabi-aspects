@@ -49,7 +49,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Cache method results.
  *
- * <p>The class is immutable and thread-safe.
+ * <p>The class is thread-safe.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$

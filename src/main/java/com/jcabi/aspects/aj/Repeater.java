@@ -29,6 +29,7 @@
  */
 package com.jcabi.aspects.aj;
 
+import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.RetryOnFailure;
 import com.jcabi.log.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -39,14 +40,13 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Repeat execution in case of exception.
  *
- * <p>The class is immutable and thread-safe.
- *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1.10
  * @see com.jcabi.aspects.RetryOnFailure
  */
 @Aspect
+@Immutable
 public final class Repeater {
 
     /**

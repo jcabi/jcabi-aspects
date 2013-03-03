@@ -29,6 +29,7 @@
  */
 package com.jcabi.aspects.aj;
 
+import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
 import java.lang.reflect.Method;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -37,11 +38,10 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Utility class with text functions for making mnemos.
  *
- * <p>The class is immutable and thread-safe.
- *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
+@Immutable
 final class Mnemos {
 
     /**

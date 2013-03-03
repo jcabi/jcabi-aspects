@@ -29,6 +29,7 @@
  */
 package com.jcabi.aspects.aj;
 
+import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -37,14 +38,13 @@ import org.aspectj.lang.annotation.Aspect;
 /**
  * Logs all exceptions thrown out of a method.
  *
- * <p>The class is immutable and thread-safe.
- *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1.10
  * @see com.jcabi.aspects.LogExceptions
  */
 @Aspect
+@Immutable
 public final class ExceptionsLogger {
 
     /**

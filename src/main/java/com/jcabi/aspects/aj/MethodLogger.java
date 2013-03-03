@@ -29,6 +29,7 @@
  */
 package com.jcabi.aspects.aj;
 
+import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.log.Logger;
 import java.lang.reflect.Method;
@@ -40,13 +41,12 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Logs method calls.
  *
- * <p>The class is immutable and thread-safe.
- *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.2
  */
 @Aspect
+@Immutable
 public final class MethodLogger {
 
     /**
