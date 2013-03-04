@@ -44,7 +44,7 @@ Useful Java AOP Aspects
   resource downloading in case of failure. You can implement a full
   <<<do/while>>> cycle yourself, or you can annotate your method with
   {{{./apidocs-${project.version}/com/jcabi/aspects/RetryOnFailure.html}<<<@RetryOnFailure>>>}}
-  and let one of our AOP aspects to the work for you:
+  and let one of our AOP aspects do the work for you:
 
 +--
 @RetryOnFailure
