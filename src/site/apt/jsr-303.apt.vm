@@ -75,6 +75,20 @@ public class Foo {
   a {{{http://docs.oracle.com/javaee/6/api/javax/validation/ConstraintViolationException.html}<<<ConstraintViolationException>>>}}
   will be thrown.
 
+  Since 0.7.11 you can also annotate methods with
+  {{{http://docs.oracle.com/javaee/6/api/javax/validation/constraints/NotNull.html}<<<@NotNull>>>}}
+  in order to validate their output (an exception will be thrown
+  if <<<null>>> is returned by the method):
+
++--
+public class Foo {
+  @NotNull
+  public Data get() {
+    // ...
+  }
+}
++--
+
   And now a bit more complex example. Suppose you have a custom class <<<Bar>>>
   that should be able to validate itself:
 
