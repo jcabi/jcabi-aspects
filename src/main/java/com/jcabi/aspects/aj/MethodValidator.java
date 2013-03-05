@@ -116,7 +116,8 @@ public final class MethodValidator {
     /**
      * Validate method response.
      * @param point Join point
-     * @checkstyle LineLength (3 lines)
+     * @param result Result of the method
+     * @checkstyle LineLength (4 lines)
      * @since 0.7.11
      */
     @AfterReturning(

@@ -29,13 +29,9 @@
  */
 package com.jcabi.aspects.aj;
 
-import java.lang.reflect.Method;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 /**
  * Test case for {@link MethodValidator}.
