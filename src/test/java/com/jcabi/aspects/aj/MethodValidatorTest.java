@@ -50,7 +50,7 @@ public final class MethodValidatorTest {
      */
     @Test(expected = javax.validation.ConstraintViolationException.class)
     public void throwsWhenMethodParametersAreInvalid() throws Exception {
-        this.call(new Object[] {null});
+        new MethodValidatorTest.Foo().foo(null);
     }
 
     /**
@@ -59,7 +59,7 @@ public final class MethodValidatorTest {
      */
     @Test(expected = javax.validation.ConstraintViolationException.class)
     public void throwsWhenRegularExpressionDoesntMatch() throws Exception {
-        this.call(new Object[] {"some text"});
+        new MethodValidatorTest.Foo().foo("some text");
     }
 
     /**
@@ -68,24 +68,16 @@ public final class MethodValidatorTest {
      */
     @Test
     public void passesWhenMethodParametersAreValid() throws Exception {
-        this.call(new Object[] {"123"});
+        new MethodValidatorTest.Foo().foo("123");
     }
 
     /**
-     * Call it with the provided params.
-     * @param args The args
+     * MethodValidator can validate method output.
      * @throws Exception If something goes wrong
      */
-    private void call(final Object[] args) throws Exception {
-        final MethodValidator validator = new MethodValidator();
-        final Method method = MethodValidatorTest.Foo.class
-            .getMethod("foo", String.class);
-        final MethodSignature sig = Mockito.mock(MethodSignature.class);
-        Mockito.doReturn(method).when(sig).getMethod();
-        final JoinPoint point = Mockito.mock(JoinPoint.class);
-        Mockito.doReturn(sig).when(point).getSignature();
-        Mockito.doReturn(args).when(point).getArgs();
-        validator.beforeMethod(point);
+    @Test(expected = javax.validation.ConstraintViolationException.class)
+    public void validatesOutputForNonNull() throws Exception {
+        new MethodValidatorTest.Foo().nullValue();
     }
 
     /**
@@ -95,9 +87,19 @@ public final class MethodValidatorTest {
         /**
          * Do nothing.
          * @param text Some text
+         * @return Some data
          */
-        public void foo(@NotNull @Pattern(regexp = "\\d+") final String text) {
-            // nothing to do
+        public int foo(
+            @NotNull @Pattern(regexp = "\\d+") final String text) {
+            return -1;
+        }
+        /**
+         * Always return null.
+         * @return Some data
+         */
+        @NotNull
+        public Integer nullValue() {
+            return null;
         }
     }
 

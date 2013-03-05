@@ -31,6 +31,8 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.log.Logger;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -44,6 +46,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.metadata.ConstraintDescriptor;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.ConstructorSignature;
@@ -76,7 +80,7 @@ public final class MethodValidator {
     private final transient Validator validator = MethodValidator.build();
 
     /**
-     * Catch exception and log it.
+     * Validate arguments of a method.
      * @param point Join point
      * @checkstyle LineLength (3 lines)
      */
@@ -93,7 +97,7 @@ public final class MethodValidator {
     }
 
     /**
-     * Catch exception and log it.
+     * Validate arguments of constructor.
      * @param point Join point
      * @checkstyle LineLength (3 lines)
      */
@@ -105,6 +109,34 @@ public final class MethodValidator {
                 ConstructorSignature.class.cast(point.getSignature())
                     .getConstructor()
                     .getParameterAnnotations()
+            );
+        }
+    }
+
+    /**
+     * Validate method response.
+     * @param point Join point
+     * @checkstyle LineLength (3 lines)
+     * @since 0.7.11
+     */
+    @AfterReturning(
+        pointcut = "execution(@(javax.validation.* || javax.validation.constraints.*) * *(..))",
+        returning = "result"
+    )
+    public void after(final JoinPoint point, final Object result) {
+        final Method method = MethodSignature.class.cast(
+            point.getSignature()
+        ).getMethod();
+        if (method.isAnnotationPresent(NotNull.class) && result == null) {
+            throw new ConstraintViolationException(
+                new HashSet<ConstraintViolation<?>>(
+                    Arrays.<ConstraintViolation<?>>asList(
+                        MethodValidator.violation(
+                            result,
+                            method.getAnnotation(NotNull.class).message()
+                        )
+                    )
+                )
             );
         }
     }
