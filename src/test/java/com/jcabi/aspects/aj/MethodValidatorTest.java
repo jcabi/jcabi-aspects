@@ -29,6 +29,7 @@
  */
 package com.jcabi.aspects.aj;
 
+import com.jcabi.aspects.Loggable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -96,6 +97,7 @@ public final class MethodValidatorTest {
          * @return Some data
          */
         @NotNull
+        @Loggable(Loggable.INFO)
         public int foo(
             @NotNull @Pattern(regexp = "\\d+") final String text) {
             return -1;
@@ -106,6 +108,7 @@ public final class MethodValidatorTest {
          */
         @NotNull
         @Valid
+        @Loggable(Loggable.INFO)
         public Integer nullValue() {
             return null;
         }
@@ -113,6 +116,7 @@ public final class MethodValidatorTest {
          * Ignores when void.
          */
         @NotNull
+        @Loggable(Loggable.INFO)
         public void voidAlways() {
             // nothing to do
         }

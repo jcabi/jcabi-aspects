@@ -73,24 +73,17 @@ public final class MethodLogger {
             // @checkstyle MagicNumber (1 line)
             final long msec = nano / (1000 * 1000);
             if (MethodLogger.enabled(level, type) || msec > limit) {
-                String suffix;
+                final StringBuilder msg = new StringBuilder();
+                msg.append(Mnemos.toString(point)).append(':');
+                if (!method.getReturnType().equals(Void.TYPE)) {
+                    msg.append(" returned ").append(Mnemos.toString(result));
+                }
+                msg.append(Logger.format(" in %[nano]s", nano));
                 if (msec > limit) {
                     level = Loggable.WARN;
-                    suffix = " (too slow!)";
-                } else {
-                    suffix = "";
+                    msg.append(" (too slow!)");
                 }
-                MethodLogger.log(
-                    level,
-                    type,
-                    Logger.format(
-                        "%s: returned %s in %[nano]s%s",
-                        Mnemos.toString(point),
-                        Mnemos.toString(result),
-                        nano,
-                        suffix
-                    )
-                );
+                MethodLogger.log(level, type, msg.toString());
             }
             return result;
         // @checkstyle IllegalCatch (1 line)
