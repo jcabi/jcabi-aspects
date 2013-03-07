@@ -70,7 +70,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @link <a href="http://www.jcabi.com/jcabi-aspects/jsr-303.html">How it works</a>
  */
 @Aspect
-@SuppressWarnings("PMD.CyclomaticComplexity")
+@SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.TooManyMethods" })
 public final class MethodValidator {
 
     /**
@@ -188,7 +188,7 @@ public final class MethodValidator {
                     );
                 }
             } else if (antn.annotationType().equals(Valid.class)) {
-                violations.addAll(this.validator.validate(arg));
+                violations.addAll(this.validate(arg));
             } else if (antn.annotationType().equals(Pattern.class)) {
                 if (arg != null && !arg.toString()
                     .matches(Pattern.class.cast(antn).regexp())) {
@@ -312,6 +312,32 @@ public final class MethodValidator {
             );
         }
         return val;
+    }
+
+    /**
+     * Check validity of an object, when it is annotated with {@link Valid}.
+     * @param object The object to validate
+     * @return Found violations
+     * @param <T> Type of violations
+     */
+    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    private <T> Set<ConstraintViolation<T>> validate(final T object) {
+        Set<ConstraintViolation<T>> violations;
+        try {
+            violations = this.validator.validate(object);
+        // @checkstyle IllegalCatch (1 line)
+        } catch (Throwable ex) {
+            Logger.error(
+                this,
+                // @checkstyle LineLength (1 line)
+                "JSR-303 validator thrown %[type]s while validating %[type]s: %s",
+                ex,
+                object,
+                ex.getMessage()
+            );
+            violations = new HashSet<ConstraintViolation<T>>();
+        }
+        return violations;
     }
 
 }
