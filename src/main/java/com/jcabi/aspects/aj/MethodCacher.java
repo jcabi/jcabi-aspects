@@ -248,8 +248,8 @@ public final class MethodCacher {
                 Logger.debug(
                     this.method.getDeclaringClass(),
                     "%s: %s from cache (hit #%d)",
-                    Mnemos.toString(this.method, this.arguments),
-                    Mnemos.toString(result),
+                    Mnemos.toString(this.method, this.arguments, true),
+                    Mnemos.toString(result, true),
                     this.accessed.incrementAndGet()
                 );
             }

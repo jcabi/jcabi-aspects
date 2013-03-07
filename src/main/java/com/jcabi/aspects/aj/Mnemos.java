@@ -54,12 +54,15 @@ final class Mnemos {
     /**
      * Make a string out of point.
      * @param point The point
+     * @param trim Shall we trim long texts?
      * @return Text representation of it
      */
-    public static String toString(final ProceedingJoinPoint point) {
+    public static String toString(final ProceedingJoinPoint point,
+        final boolean trim) {
         return Mnemos.toString(
             MethodSignature.class.cast(point.getSignature()).getMethod(),
-            point.getArgs()
+            point.getArgs(),
+            trim
         );
     }
 
@@ -67,16 +70,18 @@ final class Mnemos {
      * Make a string out of method.
      * @param method The method
      * @param args Actual arguments of the method
+     * @param trim Shall we trim long texts?
      * @return Text representation of it
      */
-    public static String toString(final Method method, final Object[] args) {
+    public static String toString(final Method method, final Object[] args,
+        final boolean trim) {
         final StringBuilder log = new StringBuilder();
         log.append('#').append(method.getName()).append('(');
         for (int pos = 0; pos < args.length; ++pos) {
             if (pos > 0) {
                 log.append(", ");
             }
-            log.append(Mnemos.toString(args[pos]));
+            log.append(Mnemos.toString(args[pos], trim));
         }
         log.append(')');
         return log.toString();
@@ -85,14 +90,19 @@ final class Mnemos {
     /**
      * Make a string out of an object.
      * @param arg The argument
+     * @param trim Shall we trim long texts?
      * @return Text representation of it
      */
-    public static String toString(final Object arg) {
+    public static String toString(final Object arg, final boolean trim) {
         String text;
         if (arg == null) {
             text = "NULL";
         } else {
-            text = Logger.format("'%[text]s'", arg);
+            if (trim) {
+                text = Logger.format("'%[text]s'", arg);
+            } else {
+                text = arg.toString();
+            }
         }
         return text;
     }

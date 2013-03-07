@@ -41,6 +41,10 @@
                 @Loggable can annotate entire class to enable
                 logging of every method in a class (private, protected, and private)
             </action>
+            <action dev="yegor" issue="156" type="add">
+                @Loggable trimming mechanism is configurable with
+                an extra parameter
+            </action>
         </release>
         <release version="0.7.11" date="5 Mar 2013" description="@NotNull for method response validation">
             <action dev="yegor" issue="132" type="add">

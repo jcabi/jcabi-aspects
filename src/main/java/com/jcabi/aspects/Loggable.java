@@ -113,4 +113,10 @@ public @interface Loggable {
      */
     int limit() default 50;
 
+    /**
+     * Shall we trim long texts in order to make log lines more readable?
+     * @since 0.7.13
+     */
+    boolean trim() default true;
+
 }

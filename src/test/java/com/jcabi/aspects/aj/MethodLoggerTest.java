@@ -59,7 +59,7 @@ public final class MethodLoggerTest {
          * @param text Some text
          * @return Reverted text
          */
-        @Loggable(Loggable.INFO)
+        @Loggable(value = Loggable.INFO, trim = false)
         public String revert(final String text) {
             return new StringBuffer(text).reverse().toString();
         }

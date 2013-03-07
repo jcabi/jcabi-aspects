@@ -107,9 +107,11 @@ public final class MethodLogger {
             final long msec = nano / (1000 * 1000);
             if (MethodLogger.enabled(level, type) || msec > limit) {
                 final StringBuilder msg = new StringBuilder();
-                msg.append(Mnemos.toString(point)).append(':');
+                msg.append(Mnemos.toString(point, annotation.trim()))
+                    .append(':');
                 if (!method.getReturnType().equals(Void.TYPE)) {
-                    msg.append(" returned ").append(Mnemos.toString(result));
+                    msg.append(" returned ")
+                        .append(Mnemos.toString(result, annotation.trim()));
                 }
                 msg.append(Logger.format(" in %[nano]s", nano));
                 if (msec > limit) {
@@ -130,9 +132,9 @@ public final class MethodLogger {
                 method.getDeclaringClass(),
                 Logger.format(
                     "%s: thrown %[type]s (%s) in %[nano]s",
-                    Mnemos.toString(point),
+                    Mnemos.toString(point, annotation.trim()),
                     ex,
-                    Mnemos.toString(ex.getMessage()),
+                    Mnemos.toString(ex.getMessage(), false),
                     System.nanoTime() - start
                 )
             );

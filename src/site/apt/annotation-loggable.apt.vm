@@ -61,7 +61,9 @@ public String load(URL url) {
 
   Method <<<toString()>>> of your method arguments and its return value is
   used to compose a log line. Too long texts are trimmed to 100 characters,
-  in order to make log lines compact.
+  in order to make log lines compact. Since version 0.7.13 it's possible
+  to disable this trimming mechanism with an extra <<<trim>>> argument
+  of the annotation.
 
   Since version 0.7.13 an entire class can be annotated. In this case all
   methods will be logged:
