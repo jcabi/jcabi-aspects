@@ -29,6 +29,7 @@
  */
 package com.jcabi.aspects.aj;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import org.junit.Test;
@@ -77,6 +78,15 @@ public final class MethodValidatorTest {
     }
 
     /**
+     * MethodValidator can ignore methods that return VOID.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void ignoresVoidResponses() throws Exception {
+        new MethodValidatorTest.Foo().voidAlways();
+    }
+
+    /**
      * Dummy class, for tests above.
      */
     private static final class Foo {
@@ -85,6 +95,7 @@ public final class MethodValidatorTest {
          * @param text Some text
          * @return Some data
          */
+        @NotNull
         public int foo(
             @NotNull @Pattern(regexp = "\\d+") final String text) {
             return -1;
@@ -94,8 +105,16 @@ public final class MethodValidatorTest {
          * @return Some data
          */
         @NotNull
+        @Valid
         public Integer nullValue() {
             return null;
+        }
+        /**
+         * Ignores when void.
+         */
+        @NotNull
+        public void voidAlways() {
+            // nothing to do
         }
     }
 

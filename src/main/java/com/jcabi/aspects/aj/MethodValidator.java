@@ -127,7 +127,8 @@ public final class MethodValidator {
         final Method method = MethodSignature.class.cast(
             point.getSignature()
         ).getMethod();
-        if (method.isAnnotationPresent(NotNull.class) && result == null) {
+        if (method.isAnnotationPresent(NotNull.class) && result == null
+            && !method.getReturnType().equals(Void.TYPE)) {
             throw new ConstraintViolationException(
                 new HashSet<ConstraintViolation<?>>(
                     Arrays.<ConstraintViolation<?>>asList(
@@ -138,6 +139,13 @@ public final class MethodValidator {
                     )
                 )
             );
+        }
+        if (method.isAnnotationPresent(Valid.class)) {
+            final Set<ConstraintViolation<Object>> violations =
+                this.validate(result);
+            if (!violations.isEmpty()) {
+                throw new ConstraintViolationException(violations);
+            }
         }
     }
 

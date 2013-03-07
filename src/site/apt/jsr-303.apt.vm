@@ -89,6 +89,19 @@ public class Foo {
 }
 +--
 
+  Since 0.7.13 you can also annotate methods with
+  {{{http://docs.oracle.com/javaee/6/api/javax/validation/Valid.html}<<<@Valid>>>}}
+  in order to validate their output:
+
++--
+public class Foo {
+  @Valid
+  public Data get() {
+    // ...
+  }
+}
++--
+
   And now a bit more complex example. Suppose you have a custom class <<<Bar>>>
   that should be able to validate itself:
 
