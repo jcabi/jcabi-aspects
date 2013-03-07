@@ -63,5 +63,15 @@ public String load(URL url) {
   used to compose a log line. Too long texts are trimmed to 100 characters,
   in order to make log lines compact.
 
+  Since version 0.7.13 an entire class can be annotated. In this case all
+  methods will be logged:
+
++--
+@Loggable(Loggable.DEBUG)
+public class Foo {
+  // all methods of the class will be logged
+}
++--
+
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.

@@ -37,6 +37,10 @@
                 for validness of their responses, just like method
                 arguments are validated with the same JSR-303 annotation
             </action>
+            <action dev="yegor" issue="129" type="add">
+                @Loggable can annotate entire class to enable
+                logging of every method in a class (private, protected, and private)
+            </action>
         </release>
         <release version="0.7.11" date="5 Mar 2013" description="@NotNull for method response validation">
             <action dev="yegor" issue="132" type="add">
