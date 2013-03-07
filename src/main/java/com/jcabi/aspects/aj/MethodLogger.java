@@ -58,7 +58,7 @@ public final class MethodLogger {
      * @checkstyle IllegalThrows (5 lines)
      * @checkstyle LineLength (3 lines)
      */
-    @Around("(execution(* *(..)) || initialization(*.new(..))) && @this(com.jcabi.aspects.Loggable)")
+    @Around("(execution(* (@com.jcabi.aspects.Loggable *).*(..)) || initialization((@com.jcabi.aspects.Loggable *).new(..)))")
     public Object wrapClass(final ProceedingJoinPoint point) throws Throwable {
         final Method method =
             MethodSignature.class.cast(point.getSignature()).getMethod();
