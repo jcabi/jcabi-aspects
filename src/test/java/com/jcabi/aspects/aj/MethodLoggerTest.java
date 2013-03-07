@@ -30,11 +30,7 @@
 package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Loggable;
-import java.lang.reflect.Method;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 /**
  * Test case for {@link MethodLogger}.
@@ -50,31 +46,13 @@ public final class MethodLoggerTest {
      */
     @Test
     public void logsSimpleCall() throws Throwable {
-        this.call(new Object[] {null});
-    }
-
-    /**
-     * Call it with the provided params.
-     * @param args The args
-     * @throws Throwable If something goes wrong
-     * @checkstyle IllegalThrows (5 lines)
-     */
-    private void call(final Object[] args) throws Throwable {
-        final MethodLogger logger = new MethodLogger();
-        final Method method = MethodLoggerTest.Foo.class
-            .getMethod("revert", String.class);
-        final MethodSignature sig = Mockito.mock(MethodSignature.class);
-        Mockito.doReturn(method).when(sig).getMethod();
-        final ProceedingJoinPoint point =
-            Mockito.mock(ProceedingJoinPoint.class);
-        Mockito.doReturn(sig).when(point).getSignature();
-        Mockito.doReturn(args).when(point).getArgs();
-        logger.wrap(point);
+        new MethodLoggerTest.Foo().revert("hello");
     }
 
     /**
      * Dummy class, for tests above.
      */
+    @Loggable(Loggable.INFO)
     private static final class Foo {
         /**
          * Revert string.

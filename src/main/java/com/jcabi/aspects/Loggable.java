@@ -71,7 +71,7 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.CONSTRUCTOR })
+@Target({ ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.TYPE })
 @SuppressWarnings("PMD.VariableNamingConventions")
 public @interface Loggable {
 

@@ -47,10 +47,30 @@ import org.aspectj.lang.reflect.MethodSignature;
  */
 @Aspect
 @Immutable
+@SuppressWarnings("PMD.AvoidCatchingThrowable")
 public final class MethodLogger {
 
     /**
-     * Catch exception and re-call the method.
+     * Log methods in a class.
+     * @param point Joint point
+     * @return The result of call
+     * @throws Throwable If something goes wrong inside
+     * @checkstyle IllegalThrows (5 lines)
+     * @checkstyle LineLength (3 lines)
+     */
+    @Around("(execution(* *(..)) || initialization(*.new(..))) && @this(com.jcabi.aspects.Loggable)")
+    public Object wrapClass(final ProceedingJoinPoint point) throws Throwable {
+        final Method method =
+            MethodSignature.class.cast(point.getSignature()).getMethod();
+        return this.wrap(
+            point,
+            method,
+            point.getTarget().getClass().getAnnotation(Loggable.class)
+        );
+    }
+
+    /**
+     * Log individual methods.
      * @param point Joint point
      * @return The result of call
      * @throws Throwable If something goes wrong inside
@@ -59,16 +79,29 @@ public final class MethodLogger {
      */
     @Around("(execution(* *(..)) || initialization(*.new(..))) && @annotation(com.jcabi.aspects.Loggable)")
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    public Object wrap(final ProceedingJoinPoint point) throws Throwable {
+    public Object wrapMethod(final ProceedingJoinPoint point) throws Throwable {
+        final Method method =
+            MethodSignature.class.cast(point.getSignature()).getMethod();
+        return this.wrap(point, method, method.getAnnotation(Loggable.class));
+    }
+
+    /**
+     * Catch exception and re-call the method.
+     * @param point Joint point
+     * @param method The method
+     * @param annotation The annotation
+     * @return The result of call
+     * @throws Throwable If something goes wrong inside
+     * @checkstyle IllegalThrows (3 lines)
+     */
+    private Object wrap(final ProceedingJoinPoint point, final Method method,
+        final Loggable annotation) throws Throwable {
         final long start = System.nanoTime();
-        final Method method = MethodSignature.class.cast(
-            point.getSignature()
-        ).getMethod();
-        final Class<?> type = method.getDeclaringClass();
-        final int limit = method.getAnnotation(Loggable.class).limit();
-        int level = method.getAnnotation(Loggable.class).value();
         try {
             final Object result = point.proceed();
+            final Class<?> type = method.getDeclaringClass();
+            final int limit = annotation.limit();
+            int level = annotation.value();
             final long nano = System.nanoTime() - start;
             // @checkstyle MagicNumber (1 line)
             final long msec = nano / (1000 * 1000);
@@ -83,14 +116,18 @@ public final class MethodLogger {
                     level = Loggable.WARN;
                     msg.append(" (too slow!)");
                 }
-                MethodLogger.log(level, type, msg.toString());
+                MethodLogger.log(
+                    level,
+                    type,
+                    msg.toString()
+                );
             }
             return result;
         // @checkstyle IllegalCatch (1 line)
         } catch (Throwable ex) {
             MethodLogger.log(
                 Loggable.ERROR,
-                type,
+                method.getDeclaringClass(),
                 Logger.format(
                     "%s: thrown %[type]s (%s) in %[nano]s",
                     Mnemos.toString(point),
