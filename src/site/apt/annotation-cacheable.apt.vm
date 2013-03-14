@@ -69,6 +69,23 @@ public List<String> data() {
 
   If a method throws an exception it is not cached.
 
+  Since version 0.7.14 you can also annotate methods that should flush
+  cache of the object, for example:
+
++--
+public class Page {
+  @Cacheable
+  public String get() {
+    // load data from external source, e.g. the network
+    return data;
+  }
+  @Cacheable.Flush
+  public void set(String data) {
+    // save data to the network
+  }
+}
++--
+
   If you need a more fine-tunable mechanism we recommend to use
   {{{http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/cache/package-summary.html}Google Guava}}.
 

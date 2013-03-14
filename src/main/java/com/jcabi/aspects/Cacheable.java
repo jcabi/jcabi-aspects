@@ -56,6 +56,21 @@ import java.util.concurrent.TimeUnit;
  *   return "something";
  * }</pre>
  *
+ * Since version 0.7.14 you can also annotate methods that should flush
+ * cache of the object, for example:
+ *
+ * <pre>public class Page {
+ *   &#64;Cacheable
+ *   public String get() {
+ *     // load data from external source, e.g. the network
+ *     return data;
+ *   }
+ *   &#64;Cacheable.Flush
+ *   public void set(String data) {
+ *     // save data to the network
+ *   }
+ * }
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.7
@@ -84,6 +99,7 @@ public @interface Cacheable {
     /**
      * Identifies a method that should flush all cached entities of
      * this class/object.
+     * @since 0.7.14
      */
     @Documented
     @Retention(RetentionPolicy.RUNTIME)
