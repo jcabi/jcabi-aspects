@@ -63,7 +63,8 @@ public final class MethodLogger {
         final Method method =
             MethodSignature.class.cast(point.getSignature()).getMethod();
         Object output;
-        if (method.isAnnotationPresent(Loggable.class)) {
+        if (method.isAnnotationPresent(Loggable.class)
+            || "toString".equals(method.getName())) {
             output = point.proceed();
         } else {
             output = this.wrap(
