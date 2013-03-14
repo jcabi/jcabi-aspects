@@ -90,7 +90,7 @@ public final class MethodLoggerTest {
          * @return Some text
          */
         public static String text() {
-            return "some static text";
+            return MethodLoggerTest.Foo.hiddenText();
         }
         /**
          * Revert string.
@@ -100,6 +100,13 @@ public final class MethodLoggerTest {
         @Loggable(value = Loggable.INFO, trim = false)
         public String revert(final String text) {
             return new StringBuffer(text).reverse().toString();
+        }
+        /**
+         * Private static method.
+         * @return Some text
+         */
+        private static String hiddenText() {
+            return "some static text";
         }
     }
 
