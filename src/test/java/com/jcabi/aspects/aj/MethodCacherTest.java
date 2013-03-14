@@ -30,11 +30,10 @@
 package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Cacheable;
-import java.lang.reflect.Method;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.reflect.MethodSignature;
+import java.util.Random;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 /**
  * Test case for {@link MethodCacher}.
@@ -50,26 +49,14 @@ public final class MethodCacherTest {
      */
     @Test
     public void cachesSimpleCall() throws Throwable {
-        this.call(new Object[] {null});
-    }
-
-    /**
-     * Call it with the provided params.
-     * @param args The args
-     * @throws Throwable If something goes wrong
-     * @checkstyle IllegalThrows (5 lines)
-     */
-    private void call(final Object[] args) throws Throwable {
-        final MethodCacher cacher = new MethodCacher();
-        final Method method = MethodCacherTest.Foo.class
-            .getMethod("download", String.class);
-        final MethodSignature sig = Mockito.mock(MethodSignature.class);
-        Mockito.doReturn(method).when(sig).getMethod();
-        final ProceedingJoinPoint point =
-            Mockito.mock(ProceedingJoinPoint.class);
-        Mockito.doReturn(sig).when(point).getSignature();
-        Mockito.doReturn(args).when(point).getArgs();
-        cacher.wrap(point);
+        final MethodCacherTest.Foo foo = new MethodCacherTest.Foo();
+        final String first = foo.get();
+        MatcherAssert.assertThat(first, Matchers.equalTo(foo.get()));
+        foo.flush();
+        MatcherAssert.assertThat(
+            foo.get(),
+            Matchers.not(Matchers.equalTo(first))
+        );
     }
 
     /**
@@ -77,13 +64,23 @@ public final class MethodCacherTest {
      */
     private static final class Foo {
         /**
+         * Random.
+         */
+        private final transient Random random = new Random();
+        /**
          * Download some text.
-         * @param text Some text
          * @return Downloaded text
          */
         @Cacheable
-        public String download(final String text) {
-            return "done";
+        public String get() {
+            return Long.toString(this.random.nextLong());
+        }
+        /**
+         * Flush it.
+         */
+        @Cacheable.Flush
+        public void flush() {
+            assert true == true;
         }
     }
 

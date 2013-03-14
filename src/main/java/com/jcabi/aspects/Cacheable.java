@@ -63,7 +63,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.CONSTRUCTOR })
+@Target(ElementType.METHOD)
 public @interface Cacheable {
 
     /**
@@ -80,5 +80,15 @@ public @interface Cacheable {
      * Keep in cache forever.
      */
     boolean forever() default false;
+
+    /**
+     * Identifies a method that should flush all cached entities of
+     * this class/object.
+     */
+    @Documented
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    public @interface Flush {
+    }
 
 }
