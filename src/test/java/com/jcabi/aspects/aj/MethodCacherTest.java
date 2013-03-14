@@ -60,27 +60,61 @@ public final class MethodCacherTest {
     }
 
     /**
+     * MethodCacher can cache static calls.
+     * @throws Throwable If something goes wrong
+     * @checkstyle IllegalThrows (5 lines)
+     */
+    @Test
+    public void cachesSimpleStaticCall() throws Throwable {
+        final String first = MethodCacherTest.Foo.staticGet();
+        MatcherAssert.assertThat(
+            first,
+            Matchers.equalTo(MethodCacherTest.Foo.staticGet())
+        );
+        MethodCacherTest.Foo.staticFlush();
+        MatcherAssert.assertThat(
+            MethodCacherTest.Foo.staticGet(),
+            Matchers.not(Matchers.equalTo(first))
+        );
+    }
+
+    /**
      * Dummy class, for tests above.
      */
     private static final class Foo {
         /**
          * Random.
          */
-        private final transient Random random = new Random();
+        private static final Random RANDOM = new Random();
         /**
          * Download some text.
          * @return Downloaded text
          */
         @Cacheable
         public String get() {
-            return Long.toString(this.random.nextLong());
+            return Long.toString(MethodCacherTest.Foo.RANDOM.nextLong());
         }
         /**
          * Flush it.
          */
         @Cacheable.Flush
         public void flush() {
-            assert true == true;
+            // nothing to do
+        }
+        /**
+         * Download some text.
+         * @return Downloaded text
+         */
+        @Cacheable
+        public static String staticGet() {
+            return Long.toString(MethodCacherTest.Foo.RANDOM.nextLong());
+        }
+        /**
+         * Flush it.
+         */
+        @Cacheable.Flush
+        public static void staticFlush() {
+            // nothing to do
         }
     }
 

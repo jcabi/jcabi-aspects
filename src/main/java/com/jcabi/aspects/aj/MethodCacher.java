@@ -34,6 +34,7 @@ import com.jcabi.log.Logger;
 import com.jcabi.log.VerboseRunnable;
 import com.jcabi.log.VerboseThreads;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -56,7 +57,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @since 0.8
  */
 @Aspect
-@SuppressWarnings("PMD.DoNotUseThreads")
+@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
 public final class MethodCacher {
 
     /**
@@ -90,15 +91,14 @@ public final class MethodCacher {
     }
 
     /**
-     * Catch exception and re-call the method.
+     * Call the method or fetch from cache.
      * @param point Joint point
      * @return The result of call
      * @throws Throwable If something goes wrong inside
-     * @checkstyle IllegalThrows (5 lines)
-     * @checkstyle LineLength (3 lines)
+     * @checkstyle IllegalThrows (4 lines)
      */
-    @Around("(execution(* *(..)) || initialization(*.new(..))) && @annotation(com.jcabi.aspects.Cacheable)")
-    public Object wrap(final ProceedingJoinPoint point) throws Throwable {
+    @Around("execution(* *(..)) && @annotation(com.jcabi.aspects.Cacheable)")
+    public Object cache(final ProceedingJoinPoint point) throws Throwable {
         final Key key = new MethodCacher.Key(point);
         Tunnel tunnel;
         synchronized (this.tunnels) {
@@ -111,6 +111,39 @@ public final class MethodCacher {
         synchronized (tunnel) {
             return tunnel.through();
         }
+    }
+
+    /**
+     * Flush cache.
+     * @param point Joint point
+     * @return The result of call
+     * @throws Throwable If something goes wrong inside
+     * @checkstyle IllegalThrows (5 lines)
+     * @checkstyle LineLength (3 lines)
+     */
+    @Around("execution(* *(..)) && @annotation(com.jcabi.aspects.Cacheable.Flush)")
+    public Object flush(final ProceedingJoinPoint point) throws Throwable {
+        synchronized (this.tunnels) {
+            for (MethodCacher.Key key : this.tunnels.keySet()) {
+                if (!key.sameTarget(point)) {
+                    continue;
+                }
+                final Tunnel removed = this.tunnels.remove(key);
+                final Method method = MethodSignature.class
+                    .cast(point.getSignature())
+                    .getMethod();
+                if (Logger.isDebugEnabled(this)) {
+                    Logger.debug(
+                        method.getDeclaringClass(),
+                        "%s: %s:%s removed from cache",
+                        Mnemos.toString(method, point.getArgs(), true),
+                        key,
+                        removed
+                    );
+                }
+            }
+        }
+        return point.proceed();
     }
 
     /**
@@ -165,6 +198,13 @@ public final class MethodCacher {
             }
         }
         /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String toString() {
+            return Mnemos.toString(this.cached, true);
+        }
+        /**
          * Get a result through the tunnel.
          * @return The result
          */
@@ -193,9 +233,9 @@ public final class MethodCacher {
          */
         private final transient Method method;
         /**
-         * Object callable.
+         * Object callable (or class, if static method).
          */
-        private final transient Object object;
+        private final transient Object target;
         /**
          * Arguments.
          */
@@ -207,8 +247,15 @@ public final class MethodCacher {
         public Key(final ProceedingJoinPoint point) {
             this.method = MethodSignature.class
                 .cast(point.getSignature()).getMethod();
-            this.object = point.getTarget();
+            this.target = MethodCacher.Key.targetize(point);
             this.arguments = point.getArgs();
+        }
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String toString() {
+            return Mnemos.toString(this.method, this.arguments, true);
         }
         /**
          * {@inheritDoc}
@@ -228,10 +275,7 @@ public final class MethodCacher {
             } else if (obj instanceof MethodCacher.Key) {
                 final MethodCacher.Key key = MethodCacher.Key.class.cast(obj);
                 equals = key.method.equals(this.method)
-                    && (
-                        (key.object == null && this.object == null)
-                        || this.object.equals(key.object)
-                    )
+                    && this.target.equals(key.target)
                     && Arrays.deepEquals(key.arguments, this.arguments);
             } else {
                 equals = false;
@@ -248,12 +292,36 @@ public final class MethodCacher {
                 Logger.debug(
                     this.method.getDeclaringClass(),
                     "%s: %s from cache (hit #%d)",
-                    Mnemos.toString(this.method, this.arguments, true),
+                    this,
                     Mnemos.toString(result, true),
                     this.accessed.incrementAndGet()
                 );
             }
             return result;
+        }
+        /**
+         * Is it related to the same target?
+         * @param point Proceeding point
+         * @return True if the target is the same
+         */
+        public boolean sameTarget(final ProceedingJoinPoint point) {
+            return MethodCacher.Key.targetize(point).equals(this.target);
+        }
+        /**
+         * Calculate its target.
+         * @param point Proceeding point
+         * @return The target
+         */
+        private static Object targetize(final ProceedingJoinPoint point) {
+            Object tgt;
+            final Method method = MethodSignature.class
+                .cast(point.getSignature()).getMethod();
+            if (Modifier.isStatic(method.getModifiers())) {
+                tgt = method.getDeclaringClass();
+            } else {
+                tgt = point.getTarget();
+            }
+            return tgt;
         }
     }
 
