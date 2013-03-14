@@ -58,6 +58,15 @@ public final class MethodLoggerTest {
     }
 
     /**
+     * MethodLogger can log static methods.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void logsStaticMethods() throws Exception {
+        MethodLoggerTest.Foo.text();
+    }
+
+    /**
      * Dummy class, for tests above.
      */
     @Loggable(Loggable.INFO)
@@ -75,6 +84,13 @@ public final class MethodLoggerTest {
          */
         public Foo self() {
             return this;
+        }
+        /**
+         * Static method.
+         * @return Some text
+         */
+        public static String text() {
+            return "some text";
         }
         /**
          * Revert string.
