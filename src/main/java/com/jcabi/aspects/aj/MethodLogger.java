@@ -77,7 +77,7 @@ public final class MethodLogger {
      * @checkstyle IllegalThrows (5 lines)
      * @checkstyle LineLength (3 lines)
      */
-    @Around("(execution(public * *(..)) || initialization(*.new(..))) && @annotation(com.jcabi.aspects.Loggable)")
+    @Around("(execution(* *(..)) || initialization(*.new(..))) && @annotation(com.jcabi.aspects.Loggable)")
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrapMethod(final ProceedingJoinPoint point) throws Throwable {
         final Method method =
