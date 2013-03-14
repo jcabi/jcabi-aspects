@@ -66,7 +66,8 @@ public String load(URL url) {
   of the annotation.
 
   Since version 0.7.13 an entire class can be annotated. In this case all
-  methods will be logged:
+  methods will be logged (except <<<toString()>>>, <<<hashCode()>>>,
+  and <<<equals(Object)>>>):
 
 +--
 @Loggable(Loggable.DEBUG)
