@@ -75,6 +75,9 @@ public class Foo {
 }
 +--
 
+  If both a class and a method are annotated, method annotation has a higher
+  priority.
+
   Since version 0.7.6 you can specify a time limit in seconds, as a maximum
   execution time of a method. If this limit is reached a logging level is
   increased to WARN and method slowness is reported. Since version 0.7.14 you
