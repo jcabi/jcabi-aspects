@@ -58,13 +58,12 @@ public final class MethodLogger {
      * @checkstyle IllegalThrows (5 lines)
      * @checkstyle LineLength (3 lines)
      */
-    @Around("(execution(public * (@com.jcabi.aspects.Loggable *).*(..)) || initialization((@com.jcabi.aspects.Loggable *).new(..)))")
+    @Around("((execution(public * (@com.jcabi.aspects.Loggable *).*(..)) || initialization((@com.jcabi.aspects.Loggable *).new(..))) && !execution(String *.toString()) && !execution(int *.hashCode()) && !execution(boolean *.equals(Object)))")
     public Object wrapClass(final ProceedingJoinPoint point) throws Throwable {
         final Method method =
             MethodSignature.class.cast(point.getSignature()).getMethod();
         Object output;
-        if (method.isAnnotationPresent(Loggable.class)
-            || "toString".equals(method.getName())) {
+        if (method.isAnnotationPresent(Loggable.class)) {
             output = point.proceed();
         } else {
             output = this.wrap(

@@ -37,6 +37,7 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public final class MethodLoggerTest {
 
     /**
@@ -67,10 +68,32 @@ public final class MethodLoggerTest {
     }
 
     /**
+     * MethodLogger can ignore inherited methods.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void doesntLogInheritedMethods() throws Exception {
+        new MethodLoggerTest.Foo().parentText();
+    }
+
+    /**
+     * Parent class, without logging.
+     */
+    private static class Parent {
+        /**
+         * Get some text.
+         * @return The text
+         */
+        public String parentText() {
+            return "some parent text";
+        }
+    }
+
+    /**
      * Dummy class, for tests above.
      */
     @Loggable(Loggable.DEBUG)
-    private static final class Foo {
+    private static final class Foo extends MethodLoggerTest.Parent {
         /**
          * {@inheritDoc}
          */
