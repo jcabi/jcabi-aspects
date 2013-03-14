@@ -65,7 +65,7 @@ public final class MethodLogger {
         return this.wrap(
             point,
             method,
-            point.getTarget().getClass().getAnnotation(Loggable.class)
+            method.getDeclaringClass().getAnnotation(Loggable.class)
         );
     }
 

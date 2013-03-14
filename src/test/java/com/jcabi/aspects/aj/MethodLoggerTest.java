@@ -90,7 +90,7 @@ public final class MethodLoggerTest {
          * @return Some text
          */
         public static String text() {
-            return "some text";
+            return "some static text";
         }
         /**
          * Revert string.
