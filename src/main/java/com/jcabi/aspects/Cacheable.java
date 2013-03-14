@@ -69,7 +69,7 @@ import java.util.concurrent.TimeUnit;
  *   public void set(String data) {
  *     // save data to the network
  *   }
- * }
+ * }</pre>
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
