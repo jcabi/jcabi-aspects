@@ -34,6 +34,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Makes a method loggable via {@link com.jcabi.log.Logger}.
@@ -56,9 +57,17 @@ import java.lang.annotation.Target;
  * <p>Since version 0.7.6, you can specify a maximum execution time limit for
  * a method. If such a limit is reached a logging message will be issued with
  * a {@code WARN} priority. It is a very convenient mechanism for profiling
- * applications in production. Default value of a limit is 50 milliseconds:
+ * applications in production. Default value of a limit is 1 second.
  *
- * <pre> &#64;Loggable(limit = 200)
+ * <pre> &#64;Loggable(limit = 2)
+ * void save(String resource) throws IOException {
+ *   // do something, potentially slow
+ * }</pre>
+ *
+ * <p>Since version 0.7.14 you can change the time unit for the "limit"
+ * parameter. Default unit of measurement is a second:
+ *
+ * <pre> &#64;Loggable(limit = 200, unit = TimeUnit.MILLISECONDS)
  * void save(String resource) throws IOException {
  *   // do something, potentially slow
  * }</pre>
@@ -106,12 +115,18 @@ public @interface Loggable {
     int value() default Loggable.INFO;
 
     /**
-     * Maximum amount of milliseconds allowed for this method (a warning
-     * will be issued if it takes longer).
+     * Maximum amount allowed for this method (a warning will be
+     * issued if it takes longer).
      * @since 0.7.6
      * @checkstyle MagicNumber (2 lines)
      */
-    int limit() default 50;
+    int limit() default 1;
+
+    /**
+     * Time unit for the limit.
+     * @since 0.7.14
+     */
+    TimeUnit unit() default TimeUnit.SECONDS;
 
     /**
      * Shall we trim long texts in order to make log lines more readable?

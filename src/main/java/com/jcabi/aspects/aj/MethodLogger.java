@@ -103,9 +103,8 @@ public final class MethodLogger {
             final int limit = annotation.limit();
             int level = annotation.value();
             final long nano = System.nanoTime() - start;
-            // @checkstyle MagicNumber (1 line)
-            final long msec = nano / (1000 * 1000);
-            if (MethodLogger.enabled(level, type) || msec > limit) {
+            final boolean over = nano > annotation.unit().toNanos(limit);
+            if (MethodLogger.enabled(level, type) || over) {
                 final StringBuilder msg = new StringBuilder();
                 msg.append(Mnemos.toString(point, annotation.trim()))
                     .append(':');
@@ -114,7 +113,7 @@ public final class MethodLogger {
                         .append(Mnemos.toString(result, annotation.trim()));
                 }
                 msg.append(Logger.format(" in %[nano]s", nano));
-                if (msec > limit) {
+                if (over) {
                     level = Loggable.WARN;
                     msg.append(" (too slow!)");
                 }

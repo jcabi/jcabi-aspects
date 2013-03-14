@@ -75,5 +75,17 @@ public class Foo {
 }
 +--
 
+  Since version 0.7.6 you can specify a time limit in seconds, as a maximum
+  execution time of a method. If this limit is reached a logging level is
+  increased to WARN and method slowness is reported. Since version 0.7.14 you
+  can change time unit as well:
+
++--
+@Loggable(limit = 200, unit = TimeUnit.MILLISECONDS)
+public void run() {
+  // something that should not take more than 200 msec
+}
++--
+
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.

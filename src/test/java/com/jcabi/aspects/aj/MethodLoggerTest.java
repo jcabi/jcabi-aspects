@@ -41,12 +41,20 @@ public final class MethodLoggerTest {
 
     /**
      * MethodLogger can log simple calls.
-     * @throws Throwable If something goes wrong
-     * @checkstyle IllegalThrows (5 lines)
+     * @throws Exception If something goes wrong
      */
     @Test
-    public void logsSimpleCall() throws Throwable {
+    public void logsSimpleCall() throws Exception {
         new MethodLoggerTest.Foo().revert("hello");
+    }
+
+    /**
+     * MethodLogger can ignore toString() methods.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void ignoresToStringMethods() throws Exception {
+        new MethodLoggerTest.Foo().self();
     }
 
     /**
@@ -54,6 +62,20 @@ public final class MethodLoggerTest {
      */
     @Loggable(Loggable.INFO)
     private static final class Foo {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String toString() {
+            return "some text";
+        }
+        /**
+         * Get self instance.
+         * @return Self
+         */
+        public Foo self() {
+            return this;
+        }
         /**
          * Revert string.
          * @param text Some text
