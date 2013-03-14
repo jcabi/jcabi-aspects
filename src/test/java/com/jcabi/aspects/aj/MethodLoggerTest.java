@@ -69,7 +69,7 @@ public final class MethodLoggerTest {
     /**
      * Dummy class, for tests above.
      */
-    @Loggable(Loggable.INFO)
+    @Loggable(Loggable.DEBUG)
     private static final class Foo {
         /**
          * {@inheritDoc}
@@ -82,6 +82,7 @@ public final class MethodLoggerTest {
          * Get self instance.
          * @return Self
          */
+        @Loggable(Loggable.INFO)
         public Foo self() {
             return this;
         }

@@ -62,11 +62,17 @@ public final class MethodLogger {
     public Object wrapClass(final ProceedingJoinPoint point) throws Throwable {
         final Method method =
             MethodSignature.class.cast(point.getSignature()).getMethod();
-        return this.wrap(
-            point,
-            method,
-            method.getDeclaringClass().getAnnotation(Loggable.class)
-        );
+        Object output;
+        if (method.isAnnotationPresent(Loggable.class)) {
+            output = point.proceed();
+        } else {
+            output = this.wrap(
+                point,
+                method,
+                method.getDeclaringClass().getAnnotation(Loggable.class)
+            );
+        }
+        return output;
     }
 
     /**
