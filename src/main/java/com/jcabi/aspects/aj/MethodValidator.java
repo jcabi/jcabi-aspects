@@ -66,8 +66,8 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1.10
- * @link <a href="http://beanvalidation.org/1.0/spec/#appendix-methodlevelvalidation">Appendix C</a>
- * @link <a href="http://www.jcabi.com/jcabi-aspects/jsr-303.html">How it works</a>
+ * @see <a href="http://beanvalidation.org/1.0/spec/#appendix-methodlevelvalidation">Appendix C</a>
+ * @see <a href="http://www.jcabi.com/jcabi-aspects/jsr-303.html">How it works</a>
  */
 @Aspect
 @SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.TooManyMethods" })
