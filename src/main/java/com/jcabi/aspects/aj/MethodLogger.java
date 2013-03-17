@@ -51,6 +51,17 @@ import org.aspectj.lang.reflect.MethodSignature;
 public final class MethodLogger {
 
     /**
+     * Public default ctor.
+     */
+    public MethodLogger() {
+        Logger.info(
+            this,
+            // @checkstyle LineLength (1 line)
+            "instantiated: ${project.version}/${buildNumber}"
+        );
+    }
+
+    /**
      * Log methods in a class.
      * @param point Joint point
      * @return The result of call

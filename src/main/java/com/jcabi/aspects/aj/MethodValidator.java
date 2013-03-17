@@ -79,6 +79,17 @@ public final class MethodValidator {
     private final transient Validator validator = MethodValidator.build();
 
     /**
+     * Public default ctor.
+     */
+    public MethodValidator() {
+        Logger.info(
+            this,
+            // @checkstyle LineLength (1 line)
+            "instantiated: ${project.version}/${buildNumber}"
+        );
+    }
+
+    /**
      * Validate arguments of a method.
      * @param point Join point
      * @checkstyle LineLength (3 lines)

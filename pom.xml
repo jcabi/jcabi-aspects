@@ -68,6 +68,18 @@
         </dependency>
     </dependencies>
     <build>
+        <sourceDirectory>${project.build.directory}/filtered-sources/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/java</directory>
+                <filtering>true</filtering>
+                <targetPath>${project.build.directory}/filtered-sources/java</targetPath>
+            </resource>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <pluginManagement>
             <plugins>
                 <plugin>

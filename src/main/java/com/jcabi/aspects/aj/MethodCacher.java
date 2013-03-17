@@ -88,6 +88,11 @@ public final class MethodCacher {
             ),
             1, TimeUnit.MINUTES
         );
+        Logger.info(
+            this,
+            // @checkstyle LineLength (1 line)
+            "instantiated: ${project.version}/${buildNumber}"
+        );
     }
 
     /**

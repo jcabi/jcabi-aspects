@@ -57,6 +57,17 @@ public final class ImmutabilityChecker {
     private final transient Set<Class<?>> immutable = new HashSet<Class<?>>();
 
     /**
+     * Public default ctor.
+     */
+    public ImmutabilityChecker() {
+        Logger.info(
+            this,
+            // @checkstyle LineLength (1 line)
+            "instantiated: ${project.version}/${buildNumber}"
+        );
+    }
+
+    /**
      * Catch instantiation and validate class.
      * @param point Joint point
      * @throws Throwable If something goes wrong inside
