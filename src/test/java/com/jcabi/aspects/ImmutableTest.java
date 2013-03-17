@@ -27,9 +27,8 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.aspects.aj;
+package com.jcabi.aspects;
 
-import com.jcabi.aspects.Immutable;
 import java.util.regex.Pattern;
 import org.junit.Test;
 
@@ -43,7 +42,7 @@ import org.junit.Test;
     "PMD.UnusedLocalVariable",
     "PMD.FinalFieldCouldBeStatic"
 })
-public final class ImmutabilityCheckerTest {
+public final class ImmutableTest {
 
     /**
      * ImmutabilityChecker can catch mutable classes.

@@ -27,9 +27,8 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.aspects.aj;
+package com.jcabi.aspects;
 
-import com.jcabi.aspects.Cacheable;
 import java.util.Random;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -40,7 +39,7 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
-public final class MethodCacherTest {
+public final class CacheableTest {
 
     /**
      * MethodCacher can cache calls.
@@ -49,7 +48,7 @@ public final class MethodCacherTest {
      */
     @Test
     public void cachesSimpleCall() throws Throwable {
-        final MethodCacherTest.Foo foo = new MethodCacherTest.Foo();
+        final CacheableTest.Foo foo = new CacheableTest.Foo();
         final String first = foo.get();
         MatcherAssert.assertThat(first, Matchers.equalTo(foo.get()));
         foo.flush();
@@ -66,14 +65,14 @@ public final class MethodCacherTest {
      */
     @Test
     public void cachesSimpleStaticCall() throws Throwable {
-        final String first = MethodCacherTest.Foo.staticGet();
+        final String first = CacheableTest.Foo.staticGet();
         MatcherAssert.assertThat(
             first,
-            Matchers.equalTo(MethodCacherTest.Foo.staticGet())
+            Matchers.equalTo(CacheableTest.Foo.staticGet())
         );
-        MethodCacherTest.Foo.staticFlush();
+        CacheableTest.Foo.staticFlush();
         MatcherAssert.assertThat(
-            MethodCacherTest.Foo.staticGet(),
+            CacheableTest.Foo.staticGet(),
             Matchers.not(Matchers.equalTo(first))
         );
     }
@@ -92,7 +91,7 @@ public final class MethodCacherTest {
          */
         @Cacheable
         public String get() {
-            return Long.toString(MethodCacherTest.Foo.RANDOM.nextLong());
+            return Long.toString(CacheableTest.Foo.RANDOM.nextLong());
         }
         /**
          * Flush it.
@@ -107,7 +106,7 @@ public final class MethodCacherTest {
          */
         @Cacheable
         public static String staticGet() {
-            return Long.toString(MethodCacherTest.Foo.RANDOM.nextLong());
+            return Long.toString(CacheableTest.Foo.RANDOM.nextLong());
         }
         /**
          * Flush it.

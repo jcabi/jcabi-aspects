@@ -27,96 +27,109 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.aspects.aj;
+package com.jcabi.aspects;
 
-import com.jcabi.aspects.Loggable;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import org.junit.Test;
 
 /**
- * Test case for {@link MethodValidator}.
+ * Test case for {@link MethodLogger}.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
-public final class MethodValidatorTest {
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
+public final class LoggableTest {
 
     /**
-     * MethodValidator can throw when invalid method parameters.
-     * @throws Exception If something goes wrong
-     */
-    @Test(expected = javax.validation.ConstraintViolationException.class)
-    public void throwsWhenMethodParametersAreInvalid() throws Exception {
-        new MethodValidatorTest.Foo().foo(null);
-    }
-
-    /**
-     * MethodValidator can throw when regex doesn't match.
-     * @throws Exception If something goes wrong
-     */
-    @Test(expected = javax.validation.ConstraintViolationException.class)
-    public void throwsWhenRegularExpressionDoesntMatch() throws Exception {
-        new MethodValidatorTest.Foo().foo("some text");
-    }
-
-    /**
-     * MethodValidator can pass for valid parameters.
+     * MethodLogger can log simple calls.
      * @throws Exception If something goes wrong
      */
     @Test
-    public void passesWhenMethodParametersAreValid() throws Exception {
-        new MethodValidatorTest.Foo().foo("123");
+    public void logsSimpleCall() throws Exception {
+        new LoggableTest.Foo().revert("hello");
     }
 
     /**
-     * MethodValidator can validate method output.
-     * @throws Exception If something goes wrong
-     */
-    @Test(expected = javax.validation.ConstraintViolationException.class)
-    public void validatesOutputForNonNull() throws Exception {
-        new MethodValidatorTest.Foo().nullValue();
-    }
-
-    /**
-     * MethodValidator can ignore methods that return VOID.
+     * MethodLogger can ignore toString() methods.
      * @throws Exception If something goes wrong
      */
     @Test
-    public void ignoresVoidResponses() throws Exception {
-        new MethodValidatorTest.Foo().voidAlways();
+    public void ignoresToStringMethods() throws Exception {
+        new LoggableTest.Foo().self();
+    }
+
+    /**
+     * MethodLogger can log static methods.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void logsStaticMethods() throws Exception {
+        LoggableTest.Foo.text();
+    }
+
+    /**
+     * MethodLogger can ignore inherited methods.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void doesntLogInheritedMethods() throws Exception {
+        new LoggableTest.Foo().parentText();
+    }
+
+    /**
+     * Parent class, without logging.
+     */
+    private static class Parent {
+        /**
+         * Get some text.
+         * @return The text
+         */
+        public String parentText() {
+            return "some parent text";
+        }
     }
 
     /**
      * Dummy class, for tests above.
      */
-    @Loggable(Loggable.INFO)
-    private static final class Foo {
+    @Loggable(Loggable.DEBUG)
+    private static final class Foo extends LoggableTest.Parent {
         /**
-         * Do nothing.
+         * {@inheritDoc}
+         */
+        @Override
+        public String toString() {
+            return "some text";
+        }
+        /**
+         * Get self instance.
+         * @return Self
+         */
+        @Loggable(Loggable.INFO)
+        public Foo self() {
+            return this;
+        }
+        /**
+         * Static method.
+         * @return Some text
+         */
+        public static String text() {
+            return LoggableTest.Foo.hiddenText();
+        }
+        /**
+         * Revert string.
          * @param text Some text
-         * @return Some data
+         * @return Reverted text
          */
-        @NotNull
-        public int foo(
-            @NotNull @Pattern(regexp = "\\d+") final String text) {
-            return -1;
+        @Loggable(value = Loggable.INFO, trim = false)
+        public String revert(final String text) {
+            return new StringBuffer(text).reverse().toString();
         }
         /**
-         * Always return null.
-         * @return Some data
+         * Private static method.
+         * @return Some text
          */
-        @NotNull
-        @Valid
-        public Integer nullValue() {
-            return null;
-        }
-        /**
-         * Ignores when void.
-         */
-        @NotNull
-        public void voidAlways() {
-            // nothing to do
+        private static String hiddenText() {
+            return "some static text";
         }
     }
 
