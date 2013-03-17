@@ -29,7 +29,6 @@
  */
 package com.jcabi.aspects.aj;
 
-import com.jcabi.aspects.Loggable;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -64,11 +63,11 @@ public final class MnemosTest {
                 new Object() {
                     @Override
                     public String toString() {
-                        throw new IllegalArgumentException("some text");
+                        throw new IllegalArgumentException("boom");
                     }
                 }, true
             ),
-            Matchers.equalTo("ff")
+            Matchers.equalTo("'[java.lang.IllegalArgumentException: boom]'")
         );
     }
 

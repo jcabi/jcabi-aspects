@@ -93,18 +93,26 @@ final class Mnemos {
      * @param trim Shall we trim long texts?
      * @return Text representation of it
      */
+    @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public static String toString(final Object arg, final boolean trim) {
-        String text;
+        final StringBuilder text = new StringBuilder();
         if (arg == null) {
-            text = "NULL";
+            text.append("NULL");
         } else {
-            if (trim) {
-                text = Logger.format("'%[text]s'", arg);
-            } else {
-                text = arg.toString();
+            text.append('\'');
+            try {
+                if (trim) {
+                    text.append(Logger.format("%[text]s", arg));
+                } else {
+                    text.append(arg);
+                }
+            // @checkstyle IllegalCatch (1 line)
+            } catch (Throwable ex) {
+                text.append(String.format("[%s]", ex));
             }
+            text.append('\'');
         }
-        return text;
+        return text.toString();
     }
 
 }
