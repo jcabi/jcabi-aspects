@@ -79,17 +79,6 @@ public final class MethodValidator {
     private final transient Validator validator = MethodValidator.build();
 
     /**
-     * Public default ctor.
-     */
-    public MethodValidator() {
-        Logger.info(
-            this,
-            // @checkstyle LineLength (1 line)
-            "instantiated: ${project.version}/${buildNumber}"
-        );
-    }
-
-    /**
      * Validate arguments of a method.
      * @param point Join point
      * @checkstyle LineLength (3 lines)
@@ -316,6 +305,12 @@ public final class MethodValidator {
         Validator val = null;
         try {
             val = Validation.buildDefaultValidatorFactory().getValidator();
+            Logger.info(
+                MethodValidator.class,
+                // @checkstyle LineLength (1 line)
+                "JSR-303 validator %[type]s instantiated by jcabi-aspects ${project.version}/${buildNumber}",
+                val
+            );
         } catch (javax.validation.ValidationException ex) {
             Logger.error(
                 MethodValidator.class,
