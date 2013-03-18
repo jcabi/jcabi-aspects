@@ -184,17 +184,35 @@ public final class MethodCacher {
          */
         public Tunnel(final ProceedingJoinPoint point, final Key akey)
             throws Throwable {
+            final long start = System.nanoTime();
             this.cached = point.proceed();
             this.key = akey;
-            final Cacheable annot = MethodSignature.class
+            final Method method = MethodSignature.class
                 .cast(point.getSignature())
-                .getMethod()
-                .getAnnotation(Cacheable.class);
+                .getMethod();
+            final Cacheable annot = method.getAnnotation(Cacheable.class);
+            String suffix;
             if (annot.forever()) {
                 this.lifetime = Long.MAX_VALUE;
+                suffix = "valid forever";
+            } else if (annot.lifetime() == 0) {
+                this.lifetime = 0;
+                suffix = "invalid immediately";
             } else {
-                this.lifetime = System.currentTimeMillis()
-                    + annot.unit().toMillis(annot.lifetime());
+                final long nano = annot.unit().toNanos(annot.lifetime());
+                this.lifetime = start + nano;
+                suffix = Logger.format("valid for %[nano]s", nano);
+            }
+            final Class<?> type = method.getDeclaringClass();
+            if (Logger.isDebugEnabled(type)) {
+                Logger.debug(
+                    type,
+                    "%s: %s cached in %[nano]s, %s",
+                    Mnemos.toString(method, point.getArgs(), true),
+                    Mnemos.toString(this.cached, true),
+                    System.nanoTime() - start,
+                    suffix
+                );
             }
         }
         /**
@@ -224,6 +242,10 @@ public final class MethodCacher {
      * Key of a callable target.
      */
     private static final class Key {
+        /**
+         * When instantiated.
+         */
+        private final transient long start = System.nanoTime();
         /**
          * How many times the key was already accessed.
          */
@@ -288,13 +310,16 @@ public final class MethodCacher {
          * @return The same result/object
          */
         public Object through(final Object result) {
-            if (Logger.isDebugEnabled(this)) {
+            final int hit = this.accessed.getAndIncrement();
+            final Class<?> type = this.method.getDeclaringClass();
+            if (hit > 0 && Logger.isDebugEnabled(type)) {
                 Logger.debug(
-                    this.method.getDeclaringClass(),
-                    "%s: %s from cache (hit #%d)",
+                    type,
+                    "%s: %s from cache (hit #%d, %[nano]s old)",
                     this,
                     Mnemos.toString(result, true),
-                    this.accessed.incrementAndGet()
+                    hit,
+                    System.nanoTime() - this.start
                 );
             }
             return result;
