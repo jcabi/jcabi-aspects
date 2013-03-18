@@ -86,6 +86,20 @@ public final class CacheableTest {
          */
         private static final Random RANDOM = new Random();
         /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int hashCode() {
+            return this.get().hashCode();
+        }
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean equals(final Object obj) {
+            return obj == this;
+        }
+        /**
          * Download some text.
          * @return Downloaded text
          */
