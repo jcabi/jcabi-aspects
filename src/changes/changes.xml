@@ -31,6 +31,18 @@
  -->
 <document xmlns="http://maven.apache.org/changes/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
     <body>
+        <release version="0.7.15" date="19 Mar 2013" description="bug fixes and small improvements">
+            <action dev="yegor" issue="175" type="add">
+                Logging messages improved in MethodCacher, now they
+                contain execution time and an age of cached object
+            </action>
+            <action dev="yegor" issue="173" type="fix">
+                Cyclic reference problem fixed in Immutability checker
+            </action>
+            <action dev="yegor" issue="172" type="fix">
+                Entire package is more exception safe
+            </action>
+        </release>
         <release version="0.7.13" date="7 Mar 2013" description="@Valid for method responses">
             <action dev="yegor" issue="155" type="add">
                 Methods annotated with @Valid are validated
