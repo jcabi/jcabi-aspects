@@ -29,10 +29,16 @@
  */
 package com.jcabi.aspects.aj;
 
-import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.log.Logger;
+import com.jcabi.log.VerboseRunnable;
+import com.jcabi.log.VerboseThreads;
 import java.lang.reflect.Method;
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -46,12 +52,48 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @since 0.7.2
  */
 @Aspect
-@Immutable
 @SuppressWarnings("PMD.AvoidCatchingThrowable")
 public final class MethodLogger {
 
     /**
+     * Currently running methods.
+     */
+    private final transient Set<MethodLogger.Marker> running =
+        new ConcurrentSkipListSet<MethodLogger.Marker>();
+
+    /**
+     * Service that monitors.
+     */
+    private final transient ScheduledExecutorService monitor =
+        Executors.newScheduledThreadPool(1, new VerboseThreads());
+
+    /**
+     * Public ctor.
+     */
+    @SuppressWarnings("PMD.DoNotUseThreads")
+    public MethodLogger() {
+        this.monitor.scheduleWithFixedDelay(
+            new VerboseRunnable(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        for (MethodLogger.Marker marker
+                            : MethodLogger.this.running) {
+                            marker.monitor();
+                        }
+                    }
+                }
+            ),
+            1, 1, TimeUnit.SECONDS
+        );
+    }
+
+    /**
      * Log methods in a class.
+     *
+     * <p>Try NOT to change the signature of this method, in order to keep
+     * it backward compatible.
+     *
      * @param point Joint point
      * @return The result of call
      * @throws Throwable If something goes wrong inside
@@ -77,6 +119,10 @@ public final class MethodLogger {
 
     /**
      * Log individual methods.
+     *
+     * <p>Try NOT to change the signature of this method, in order to keep
+     * it backward compatible.
+     *
      * @param point Joint point
      * @return The result of call
      * @throws Throwable If something goes wrong inside
@@ -98,11 +144,14 @@ public final class MethodLogger {
      * @param annotation The annotation
      * @return The result of call
      * @throws Throwable If something goes wrong inside
+     * @checkstyle ExecutableStatementCount (50 lines)
      * @checkstyle IllegalThrows (3 lines)
      */
     private Object wrap(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation) throws Throwable {
         final long start = System.nanoTime();
+        final MethodLogger.Marker marker = new MethodLogger.Marker(point);
+        this.running.add(marker);
         try {
             final Object result = point.proceed();
             final Class<?> type = method.getDeclaringClass();
@@ -144,6 +193,8 @@ public final class MethodLogger {
                 )
             );
             throw ex;
+        } finally {
+            this.running.remove(marker);
         }
     }
 
@@ -188,6 +239,77 @@ public final class MethodLogger {
             enabled = true;
         }
         return enabled;
+    }
+
+    /**
+     * Marker of a running method.
+     */
+    private static final class Marker
+        implements Comparable<MethodLogger.Marker> {
+        /**
+         * When started.
+         */
+        private final transient long start;
+        /**
+         * Joint point.
+         */
+        private final transient ProceedingJoinPoint point;
+        /**
+         * Public ctor.
+         * @param pnt Joint point
+         */
+        public Marker(final ProceedingJoinPoint pnt) {
+            this.start = System.currentTimeMillis();
+            this.point = pnt;
+        }
+        /**
+         * Monitor it's status and log the problem, if any.
+         */
+        public void monitor() {
+            final long age = System.currentTimeMillis() - this.start;
+            // @checkstyle MagicNumber (1 line)
+            if (age > 5 * 1000) {
+                final Method method = MethodSignature.class.cast(
+                    this.point.getSignature()
+                ).getMethod();
+                Logger.warn(
+                    method.getDeclaringClass(),
+                    "%s: takes too long, %[ms]s already",
+                    Mnemos.toString(this.point, true),
+                    age
+                );
+            }
+        }
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int hashCode() {
+            return this.point.hashCode();
+        }
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean equals(final Object obj) {
+            return obj == this || MethodLogger.Marker.class.cast(obj)
+                .point.equals(this.point);
+        }
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int compareTo(final Marker marker) {
+            int diff;
+            if (marker.start > this.start) {
+                diff = 1;
+            } else if (marker.start < this.start) {
+                diff = -1;
+            } else {
+                diff = 0;
+            }
+            return diff;
+        }
     }
 
 }

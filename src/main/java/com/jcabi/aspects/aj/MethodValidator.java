@@ -80,6 +80,10 @@ public final class MethodValidator {
 
     /**
      * Validate arguments of a method.
+     *
+     * <p>Try NOT to change the signature of this method, in order to keep
+     * it backward compatible.
+     *
      * @param point Join point
      * @checkstyle LineLength (3 lines)
      */
@@ -97,6 +101,10 @@ public final class MethodValidator {
 
     /**
      * Validate arguments of constructor.
+     *
+     * <p>Try NOT to change the signature of this method, in order to keep
+     * it backward compatible.
+     *
      * @param point Join point
      * @checkstyle LineLength (3 lines)
      */
@@ -114,6 +122,10 @@ public final class MethodValidator {
 
     /**
      * Validate method response.
+     *
+     * <p>Try NOT to change the signature of this method, in order to keep
+     * it backward compatible.
+     *
      * @param point Join point
      * @param result Result of the method
      * @checkstyle LineLength (4 lines)

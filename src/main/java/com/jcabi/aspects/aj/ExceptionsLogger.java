@@ -49,6 +49,10 @@ public final class ExceptionsLogger {
 
     /**
      * Catch exception and log it.
+     *
+     * <p>Try NOT to change the signature of this method, in order to keep
+     * it backward compatible.
+     *
      * @param point Joint point
      * @return The result of call
      * @throws Throwable If something goes wrong inside

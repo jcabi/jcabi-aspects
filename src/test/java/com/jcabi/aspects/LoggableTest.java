@@ -29,6 +29,7 @@
  */
 package com.jcabi.aspects;
 
+import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 
 /**
@@ -111,8 +112,10 @@ public final class LoggableTest {
         /**
          * Static method.
          * @return Some text
+         * @throws Exception If terminated
          */
-        public static String text() {
+        public static String text() throws Exception {
+            TimeUnit.SECONDS.sleep(2);
             return LoggableTest.Foo.hiddenText();
         }
         /**

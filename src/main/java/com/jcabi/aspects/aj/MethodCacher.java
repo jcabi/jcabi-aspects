@@ -77,7 +77,7 @@ public final class MethodCacher {
      * Public ctor.
      */
     public MethodCacher() {
-        this.cleaner.schedule(
+        this.cleaner.scheduleWithFixedDelay(
             new VerboseRunnable(
                 new Runnable() {
                     @Override
@@ -86,12 +86,16 @@ public final class MethodCacher {
                     }
                 }
             ),
-            1, TimeUnit.MINUTES
+            1, 1, TimeUnit.MINUTES
         );
     }
 
     /**
      * Call the method or fetch from cache.
+     *
+     * <p>Try NOT to change the signature of this method, in order to keep
+     * it backward compatible.
+     *
      * @param point Joint point
      * @return The result of call
      * @throws Throwable If something goes wrong inside
@@ -115,6 +119,10 @@ public final class MethodCacher {
 
     /**
      * Flush cache.
+     *
+     * <p>Try NOT to change the signature of this method, in order to keep
+     * it backward compatible.
+     *
      * @param point Joint point
      * @return The result of call
      * @throws Throwable If something goes wrong inside

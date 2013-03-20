@@ -58,6 +58,10 @@ public final class ImmutabilityChecker {
 
     /**
      * Catch instantiation and validate class.
+     *
+     * <p>Try NOT to change the signature of this method, in order to keep
+     * it backward compatible.
+     *
      * @param point Joint point
      * @throws Throwable If something goes wrong inside
      * @checkstyle IllegalThrows (5 lines)
