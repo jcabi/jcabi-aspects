@@ -146,7 +146,8 @@ public final class MethodLogger {
     private Object wrap(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation) throws Throwable {
         final long start = System.nanoTime();
-        final MethodLogger.Marker marker = new MethodLogger.Marker(point);
+        final MethodLogger.Marker marker =
+            new MethodLogger.Marker(point, annotation);
         this.running.add(marker);
         try {
             final Object result = point.proceed();
@@ -251,27 +252,37 @@ public final class MethodLogger {
          */
         private final transient ProceedingJoinPoint point;
         /**
+         * Annotation.
+         */
+        private final transient Loggable annotation;
+        /**
          * Public ctor.
          * @param pnt Joint point
+         * @param annt Annotation
          */
-        public Marker(final ProceedingJoinPoint pnt) {
+        public Marker(final ProceedingJoinPoint pnt,
+            final Loggable annt) {
             this.start = System.currentTimeMillis();
             this.point = pnt;
+            this.annotation = annt;
         }
         /**
          * Monitor it's status and log the problem, if any.
          */
         public void monitor() {
             final long age = System.currentTimeMillis() - this.start;
-            // @checkstyle MagicNumber (1 line)
-            if (age > 5 * 1000) {
+            final long threshold = this.annotation.unit().toMillis(
+                this.annotation.limit()
+            );
+            if (age > threshold) {
                 final Method method = MethodSignature.class.cast(
                     this.point.getSignature()
                 ).getMethod();
                 Logger.warn(
                     method.getDeclaringClass(),
-                    "%s: takes too long, %[ms]s already",
+                    "%s: takes more than %[ms]s (%[ms]s already)",
                     Mnemos.toString(this.point, true),
+                    threshold,
                     age
                 );
             }
