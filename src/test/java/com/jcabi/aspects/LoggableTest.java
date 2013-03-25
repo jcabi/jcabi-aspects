@@ -92,7 +92,7 @@ public final class LoggableTest {
     /**
      * Dummy class, for tests above.
      */
-    @Loggable(Loggable.DEBUG)
+    @Loggable(value = Loggable.DEBUG, prepend = true)
     private static final class Foo extends LoggableTest.Parent {
         /**
          * {@inheritDoc}

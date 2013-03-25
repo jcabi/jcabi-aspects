@@ -150,10 +150,18 @@ public final class MethodLogger {
             new MethodLogger.Marker(point, annotation);
         this.running.add(marker);
         try {
-            final Object result = point.proceed();
             final Class<?> type = method.getDeclaringClass();
-            final int limit = annotation.limit();
             int level = annotation.value();
+            final int limit = annotation.limit();
+            if (annotation.prepend()) {
+                MethodLogger.log(
+                    level,
+                    type,
+                    new StringBuilder(Mnemos.toString(point, annotation.trim()))
+                        .append(": entered").toString()
+                );
+            }
+            final Object result = point.proceed();
             final long nano = System.nanoTime() - start;
             final boolean over = nano > annotation.unit().toNanos(limit);
             if (MethodLogger.enabled(level, type) || over) {

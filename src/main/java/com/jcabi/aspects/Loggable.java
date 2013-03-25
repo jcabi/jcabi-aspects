@@ -76,7 +76,7 @@ import java.util.concurrent.TimeUnit;
  * @version $Id$
  * @since 0.7.2
  * @see com.jcabi.log.Logger
- * @see <a href="www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
+ * @see <a href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
@@ -133,5 +133,12 @@ public @interface Loggable {
      * @since 0.7.13
      */
     boolean trim() default true;
+
+    /**
+     * Method entry moment should be reported as well (by default only
+     * an exit moment is reported).
+     * @since 0.7.16
+     */
+    boolean prepend() default false;
 
 }
