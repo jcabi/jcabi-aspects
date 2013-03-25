@@ -91,5 +91,18 @@ public void run() {
 }
 +--
 
+  Since version 0.7.16 you can get log lines not only when method
+  execution is done, but also when it is just started:
+
++--
+@Loggable(prepend = true)
+public void run() {
+  // something that takes too long
+}
++--
+
+  In this case two log lines will be recorded, one when the method is
+  just started and another one when it returns the output.
+
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.
