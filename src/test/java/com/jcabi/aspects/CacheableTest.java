@@ -30,6 +30,7 @@
 package com.jcabi.aspects;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -43,11 +44,10 @@ public final class CacheableTest {
 
     /**
      * MethodCacher can cache calls.
-     * @throws Throwable If something goes wrong
-     * @checkstyle IllegalThrows (5 lines)
+     * @throws Exception If something goes wrong
      */
     @Test
-    public void cachesSimpleCall() throws Throwable {
+    public void cachesSimpleCall() throws Exception {
         final CacheableTest.Foo foo = new CacheableTest.Foo();
         final String first = foo.get();
         MatcherAssert.assertThat(first, Matchers.equalTo(foo.get()));
@@ -60,11 +60,10 @@ public final class CacheableTest {
 
     /**
      * MethodCacher can cache static calls.
-     * @throws Throwable If something goes wrong
-     * @checkstyle IllegalThrows (5 lines)
+     * @throws Exception If something goes wrong
      */
     @Test
-    public void cachesSimpleStaticCall() throws Throwable {
+    public void cachesSimpleStaticCall() throws Exception {
         final String first = CacheableTest.Foo.staticGet();
         MatcherAssert.assertThat(
             first,
@@ -73,6 +72,22 @@ public final class CacheableTest {
         CacheableTest.Foo.staticFlush();
         MatcherAssert.assertThat(
             CacheableTest.Foo.staticGet(),
+            Matchers.not(Matchers.equalTo(first))
+        );
+    }
+
+    /**
+     * MethodCacher can clean cache after timeout.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void cleansCacheWhenExpired() throws Exception {
+        final CacheableTest.Foo foo = new CacheableTest.Foo();
+        final String first = foo.get();
+        // @checkstyle MagicNumber (1 line)
+        TimeUnit.SECONDS.sleep(3);
+        MatcherAssert.assertThat(
+            foo.get(),
             Matchers.not(Matchers.equalTo(first))
         );
     }
@@ -103,7 +118,7 @@ public final class CacheableTest {
          * Download some text.
          * @return Downloaded text
          */
-        @Cacheable
+        @Cacheable(lifetime = 1, unit = TimeUnit.SECONDS)
         public String get() {
             return Long.toString(CacheableTest.Foo.RANDOM.nextLong());
         }

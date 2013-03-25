@@ -86,7 +86,7 @@ public final class MethodCacher {
                     }
                 }
             ),
-            1, 1, TimeUnit.MINUTES
+            1, 1, TimeUnit.SECONDS
         );
     }
 
@@ -159,9 +159,9 @@ public final class MethodCacher {
      */
     private void clean() {
         synchronized (this.tunnels) {
-            for (Key key : this.tunnels.keySet()) {
-                if (this.tunnels.get(key).expired()) {
-                    this.tunnels.remove(key);
+            for (Key tunnel : this.tunnels.keySet()) {
+                if (this.tunnels.get(tunnel).expired()) {
+                    this.tunnels.remove(tunnel);
                 }
             }
         }
@@ -207,9 +207,9 @@ public final class MethodCacher {
                 this.lifetime = 0;
                 suffix = "invalid immediately";
             } else {
-                final long nano = annot.unit().toNanos(annot.lifetime());
-                this.lifetime = start + nano;
-                suffix = Logger.format("valid for %[nano]s", nano);
+                final long msec = annot.unit().toMillis(annot.lifetime());
+                this.lifetime = System.currentTimeMillis() + msec;
+                suffix = Logger.format("valid for %[ms]s", msec);
             }
             final Class<?> type = method.getDeclaringClass();
             if (Logger.isDebugEnabled(type)) {
