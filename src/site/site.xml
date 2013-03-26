@@ -34,10 +34,12 @@
         <menu ref="parent"/>
         <menu name="Overview">
             <item name="Introduction" href="index.html"/>
-            <item name="JSR-303 validations" href="jsr-303.html"/>
             <item name="API ${project.version} (JavaDoc)" href="./apidocs-${project.version}/index.html"/>
             <item name="Test coverage" href="./cobertura/index.html"/>
             <item name="Release History" href="./changes-report.html"/>
+        </menu>
+        <menu name="Examples">
+            <item name="JSR-303 validations" href="jsr-303.html"/>
         </menu>
         <menu name="Annotations">
             <item name="@Cacheable" href="annotation-cacheable.html"/>
@@ -45,6 +47,7 @@
             <item name="@LogExceptions" href="annotation-logexceptions.html"/>
             <item name="@Loggable" href="annotation-loggable.html"/>
             <item name="@RetryOnFailure" href="annotation-retryonfailure.html"/>
+            <item name="@Timeable" href="annotation-timeable.html"/>
         </menu>
         <menu ref="reports"/>
     </body>

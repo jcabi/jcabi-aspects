@@ -75,6 +75,9 @@ public String load(URL url) {
    * {{{./apidocs-${project.version}/com/jcabi/aspects/RetryOnFailure.html}<<<@RetryOnFailure>>>}}:
      method call is repeated a few times if exception is thrown;
 
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/Timeable.html}<<<@Timeable>>>}}:
+     terminates a long-running method if it exceeds an allowed time frame;
+
   All you need to do to start using our AOP aspects is to
   add these two artifacts to your <<<pom.xml>>>:
 

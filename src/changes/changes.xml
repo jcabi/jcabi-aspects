@@ -31,7 +31,11 @@
  -->
 <document xmlns="http://maven.apache.org/changes/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
     <body>
-        <release version="0.7.16" date="?" description="small improvements">
+        <release version="0.7.16" date="?" description="@Timeable annotation">
+            <action dev="yegor" issue="186" type="add">
+                @Timeable annotation added to terminate long-running
+                Java methods
+            </action>
             <action dev="yegor" issue="184" type="add">
                 "prepend" attribute for Loggable annotations to log
                 method both entry and exit points
