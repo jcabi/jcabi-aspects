@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 
 /**
- * Test case for {@link MethodLogger}.
+ * Test case for {@link Loggable} annotation and its implementation.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
@@ -41,7 +41,7 @@ import org.junit.Test;
 public final class LoggableTest {
 
     /**
-     * MethodLogger can log simple calls.
+     * Loggable can log simple calls.
      * @throws Exception If something goes wrong
      */
     @Test
@@ -50,7 +50,7 @@ public final class LoggableTest {
     }
 
     /**
-     * MethodLogger can ignore toString() methods.
+     * Loggable can ignore toString() methods.
      * @throws Exception If something goes wrong
      */
     @Test
@@ -59,7 +59,7 @@ public final class LoggableTest {
     }
 
     /**
-     * MethodLogger can log static methods.
+     * Loggable can log static methods.
      * @throws Exception If something goes wrong
      */
     @Test
@@ -68,7 +68,7 @@ public final class LoggableTest {
     }
 
     /**
-     * MethodLogger can ignore inherited methods.
+     * Loggable can ignore inherited methods.
      * @throws Exception If something goes wrong
      */
     @Test
@@ -114,6 +114,7 @@ public final class LoggableTest {
          * @return Some text
          * @throws Exception If terminated
          */
+        @Timeable(limit = 1, unit = TimeUnit.HOURS)
         public static String text() throws Exception {
             TimeUnit.SECONDS.sleep(2);
             return LoggableTest.Foo.hiddenText();
@@ -123,6 +124,7 @@ public final class LoggableTest {
          * @param text Some text
          * @return Reverted text
          */
+        @Timeable
         @Loggable(value = Loggable.INFO, trim = false)
         public String revert(final String text) {
             return new StringBuffer(text).reverse().toString();

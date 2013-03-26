@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 import org.junit.Test;
 
 /**
- * Test case for {@link ImmutabilityChecker}.
+ * Test case for {@link Immutable} annotation and its implementation.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
@@ -45,7 +45,7 @@ import org.junit.Test;
 public final class ImmutableTest {
 
     /**
-     * ImmutabilityChecker can catch mutable classes.
+     * Immutable can catch mutable classes.
      */
     @Test(expected = IllegalStateException.class)
     public void catchedMutableTypes() {
@@ -64,7 +64,7 @@ public final class ImmutableTest {
     }
 
     /**
-     * ImmutabilityChecker can catch mutable classes with interfaces.
+     * Immutable can catch mutable classes with interfaces.
      */
     @Test(expected = IllegalStateException.class)
     public void catchedMutableTypesWithInterfaces() {
@@ -72,7 +72,7 @@ public final class ImmutableTest {
     }
 
     /**
-     * ImmutabilityChecker can pass immutable classes.
+     * Immutable can pass immutable classes.
      */
     @Test
     public void passesImmutableObjects() {

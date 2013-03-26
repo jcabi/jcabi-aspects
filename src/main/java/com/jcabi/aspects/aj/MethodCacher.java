@@ -192,7 +192,7 @@ public final class MethodCacher {
          */
         public Tunnel(final ProceedingJoinPoint point, final Key akey)
             throws Throwable {
-            final long start = System.nanoTime();
+            final long start = System.currentTimeMillis();
             this.cached = point.proceed();
             this.key = akey;
             final Method method = MethodSignature.class
@@ -208,17 +208,17 @@ public final class MethodCacher {
                 suffix = "invalid immediately";
             } else {
                 final long msec = annot.unit().toMillis(annot.lifetime());
-                this.lifetime = System.currentTimeMillis() + msec;
+                this.lifetime = start + msec;
                 suffix = Logger.format("valid for %[ms]s", msec);
             }
             final Class<?> type = method.getDeclaringClass();
             if (Logger.isDebugEnabled(type)) {
                 Logger.debug(
                     type,
-                    "%s: %s cached in %[nano]s, %s",
+                    "%s: %s cached in %[ms]s, %s",
                     Mnemos.toString(method, point.getArgs(), true),
                     Mnemos.toString(this.cached, true),
-                    System.nanoTime() - start,
+                    System.currentTimeMillis() - start,
                     suffix
                 );
             }
@@ -253,7 +253,7 @@ public final class MethodCacher {
         /**
          * When instantiated.
          */
-        private final transient long start = System.nanoTime();
+        private final transient long start = System.currentTimeMillis();
         /**
          * How many times the key was already accessed.
          */
@@ -323,11 +323,11 @@ public final class MethodCacher {
             if (hit > 0 && Logger.isDebugEnabled(type)) {
                 Logger.debug(
                     type,
-                    "%s: %s from cache (hit #%d, %[nano]s old)",
+                    "%s: %s from cache (hit #%d, %[ms]s old)",
                     this,
                     Mnemos.toString(result, true),
                     hit,
-                    System.nanoTime() - this.start
+                    System.currentTimeMillis() - this.start
                 );
             }
             return result;

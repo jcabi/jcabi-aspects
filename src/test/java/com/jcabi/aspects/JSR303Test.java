@@ -35,14 +35,14 @@ import javax.validation.constraints.Pattern;
 import org.junit.Test;
 
 /**
- * Test case for {@link MethodValidator}.
+ * Test case for {@link JSR-303} annotations and their implementations.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
 public final class JSR303Test {
 
     /**
-     * MethodValidator can throw when invalid method parameters.
+     * NotNull can throw when invalid method parameters.
      * @throws Exception If something goes wrong
      */
     @Test(expected = javax.validation.ConstraintViolationException.class)
@@ -51,7 +51,7 @@ public final class JSR303Test {
     }
 
     /**
-     * MethodValidator can throw when regex doesn't match.
+     * NotNull can throw when regex doesn't match.
      * @throws Exception If something goes wrong
      */
     @Test(expected = javax.validation.ConstraintViolationException.class)
@@ -60,7 +60,7 @@ public final class JSR303Test {
     }
 
     /**
-     * MethodValidator can pass for valid parameters.
+     * NotNull can pass for valid parameters.
      * @throws Exception If something goes wrong
      */
     @Test
@@ -69,7 +69,7 @@ public final class JSR303Test {
     }
 
     /**
-     * MethodValidator can validate method output.
+     * NotNull can validate method output.
      * @throws Exception If something goes wrong
      */
     @Test(expected = javax.validation.ConstraintViolationException.class)
@@ -78,7 +78,7 @@ public final class JSR303Test {
     }
 
     /**
-     * MethodValidator can ignore methods that return VOID.
+     * NotNull can ignore methods that return VOID.
      * @throws Exception If something goes wrong
      */
     @Test

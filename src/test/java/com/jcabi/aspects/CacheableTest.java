@@ -36,14 +36,14 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link MethodCacher}.
+ * Test case for {@link Cacheable} annotation and its implementation.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
 public final class CacheableTest {
 
     /**
-     * MethodCacher can cache calls.
+     * Cacheable can cache calls.
      * @throws Exception If something goes wrong
      */
     @Test
@@ -59,7 +59,7 @@ public final class CacheableTest {
     }
 
     /**
-     * MethodCacher can cache static calls.
+     * Cacheable can cache static calls.
      * @throws Exception If something goes wrong
      */
     @Test
@@ -77,7 +77,7 @@ public final class CacheableTest {
     }
 
     /**
-     * MethodCacher can clean cache after timeout.
+     * Cacheable can clean cache after timeout.
      * @throws Exception If something goes wrong
      */
     @Test

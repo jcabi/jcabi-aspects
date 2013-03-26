@@ -30,38 +30,32 @@
 package com.jcabi.aspects;
 
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link RetryOnFailure} annotation and its implementation.
+ * Test case for {@link Timeable} annotation.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
-public final class RetryOnFailureTest {
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
+public final class TimeableTest {
 
     /**
-     * RetryOnFailure can force duplicate execution of the same method.
+     * Timeable annotation can interrupt a long method.
      * @throws Exception If something goes wrong
      */
-    @Test
-    public void executesMethodManyTimes() throws Exception {
-        final AtomicInteger count = new AtomicInteger();
-        new Runnable() {
-            @Override
-            @RetryOnFailure(verbose = false, unit = TimeUnit.SECONDS, delay = 1)
-            public void run() {
-                if (count.incrementAndGet() < 2) {
-                    throw new IllegalArgumentException(
-                        "this exception should be caught and swallowed"
-                    );
-                }
-            }
-        } .run();
-        MatcherAssert.assertThat(count.get(), Matchers.greaterThan(0));
+    @Test(expected = InterruptedException.class)
+    public void interruptsLongRunningMethod() throws Exception {
+        this.slow();
+    }
+
+    /**
+     * Long running method.
+     * @throws Exception If terminated
+     */
+    @Timeable(limit = 1, unit = TimeUnit.MILLISECONDS)
+    public void slow() throws Exception {
+        TimeUnit.MINUTES.sleep(1);
     }
 
 }

@@ -88,6 +88,9 @@ public @interface Cacheable {
 
     /**
      * Time units of object lifetime.
+     *
+     * <p>The minimum unit you can use is a second. We simply can't cache for
+     * less than a second, because cache is being cleaned every second.
      */
     TimeUnit unit() default TimeUnit.MINUTES;
 

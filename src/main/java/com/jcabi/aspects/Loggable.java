@@ -118,7 +118,6 @@ public @interface Loggable {
      * Maximum amount allowed for this method (a warning will be
      * issued if it takes longer).
      * @since 0.7.6
-     * @checkstyle MagicNumber (2 lines)
      */
     int limit() default 1;
 
