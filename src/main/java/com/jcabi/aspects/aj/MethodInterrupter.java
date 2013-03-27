@@ -115,8 +115,7 @@ public final class MethodInterrupter {
     private void interrupt() {
         synchronized (this.interrupter) {
             for (MethodInterrupter.Call call : this.calls) {
-                if (call.expired()) {
-                    call.interrupt();
+                if (call.expired() && call.interrupted()) {
                     this.calls.remove(call);
                 }
             }
@@ -179,19 +178,28 @@ public final class MethodInterrupter {
             return this.deadline < System.currentTimeMillis();
         }
         /**
-         * Interrupt the thread.
+         * This thread is stopped already (interrupt if not)?
+         * @return TRUE if it's already dead
          */
-        public void interrupt() {
-            this.thread.interrupt();
-            final Method method = MethodSignature.class
-                .cast(this.point.getSignature())
-                .getMethod();
-            Logger.warn(
-                method.getDeclaringClass(),
-                "%s: interrupted on timeout (over %[ms]s)",
-                Mnemos.toString(this.point, true),
-                this.deadline - this.start
-            );
+        public boolean interrupted() {
+            boolean dead;
+            if (this.thread.isAlive()) {
+                this.thread.interrupt();
+                final Method method = MethodSignature.class
+                    .cast(this.point.getSignature())
+                    .getMethod();
+                Logger.warn(
+                    method.getDeclaringClass(),
+                    "%s: interrupted on %[ms]s timeout (over %[ms]s)",
+                    Mnemos.toString(this.point, true),
+                    System.currentTimeMillis() - this.start,
+                    this.deadline - this.start
+                );
+                dead = false;
+            } else {
+                dead = true;
+            }
+            return dead;
         }
     }
 
