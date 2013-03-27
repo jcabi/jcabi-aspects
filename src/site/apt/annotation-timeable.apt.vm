@@ -53,5 +53,33 @@ public String load(URL url) {
   The thread running this method will be terminated if it takes more
   than five seconds.
 
+  Important to note that in Java 1.5+ it is impossible to force thread
+  termination:
+  {{{http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html}}Why Are
+  Thread.stop, Thread.suspend, Thread.resume and Runtime.runFinalizersOnExit Deprecated?}}.
+  Thus, we can't just call {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#stop()}<<<Thread.stop()>>>}},
+  when a thread is over a specified time limit. The best thing we can do is to
+  call
+  {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#interrupt()}<<<Thread#interrupt()>>>}}
+  and hope that the thread itself
+  is checking its
+  {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#isInterrupted()}<<<Thread#isInterrupted()>>>}} status.
+  If you want to design your long-running methods in a way that
+  {{{./apidocs-${project.version}/com/jcabi/aspects/Timeable.html}<<<@Timeable>>>}}
+  can terminate them, embed
+  a checker into your most intessively used place, for example:
+
++--
+@Timeable(limit = 1, unit = TimeUnit.SECONDS)
+public String load(String resource) {
+  while (true) {
+    if (Thread.currentThread.isInterrupted()) {
+      throw new IllegalStateException("time out");
+    }
+    // execution as usual
+  }
+}
++--
+
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.

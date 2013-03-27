@@ -47,10 +47,30 @@ import java.util.concurrent.TimeUnit;
  *   // something that runs potentially long
  * }</pre>
  *
+ * <p>Important to note that in Java 1.5+ it is impossible to force thread
+ * termination, for many reasons. Thus, we can't just call {@code Thread.stop()},
+ * when a thread is over a specified time limit. The best thing we can do is to
+ * call {@link Thread#interrupt()} and hope that the thread itself
+ * is checking its
+ * {@link Thread#isInterrupted()} status. If you want to design your long
+ * running methods in a way that {@link Timeable} can terminate them, embed
+ * a checker into your most intessively used place, for example:
+ *
+ * <pre> &#64;Timeable(limit = 1, unit = TimeUnit.SECONDS)
+ * String load(String resource) {
+ *   while (true) {
+ *     if (Thread.currentThread.isInterrupted()) {
+ *       throw new IllegalStateException("time out");
+ *     }
+ *     // execution as usual
+ *   }
+ * }</pre>
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.16
  * @see <a href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
+ * @see <a href="http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html">Why Are Thread.stop, Thread.suspend, Thread.resume and Runtime.runFinalizersOnExit Deprecated?</a>a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
