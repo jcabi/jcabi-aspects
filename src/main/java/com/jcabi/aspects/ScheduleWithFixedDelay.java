@@ -37,59 +37,52 @@ import java.lang.annotation.Target;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Makes a method time constrained.
+ * Schedules the method to run with fixed delay, automatically.
  *
- * <p>For example, this {@code load()} method should not take more than
- * a second, and should be interrupted if it takes more:
+ * <p>For example, you want a method to do something every minute:
  *
- * <pre> &#64;Timeable(limit = 1, unit = TimeUnit.SECONDS)
- * String load(String resource) {
- *   // something that runs potentially long
- * }</pre>
- *
- * <p>Important to note that in Java 1.5+ it is impossible to force thread
- * termination, for many reasons. Thus, we can't
- * just call {@code Thread.stop()},
- * when a thread is over a specified time limit. The best thing we can do is to
- * call {@link Thread#interrupt()} and hope that the thread itself
- * is checking its
- * {@link Thread#isInterrupted()} status. If you want to design your long
- * running methods in a way that {@link Timeable} can terminate them, embed
- * a checker into your most intessively used place, for example:
- *
- * <pre> &#64;Timeable(limit = 1, unit = TimeUnit.SECONDS)
- * String load(String resource) {
- *   while (true) {
- *     if (Thread.currentThread.isInterrupted()) {
- *       throw new IllegalStateException("time out");
- *     }
- *     // execution as usual
+ * <pre> &#64;ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.MINUTES)
+ * public class Bucket implements Runnable, Closeable {
+ *   &#64;Override
+ *   void run() {
+ *     // do some routine job
+ *   }
+ *   &#64;Override
+ *   void close() {
+ *     // close operations
  *   }
  * }</pre>
+ *
+ * <p>Execution will be started as soon as you make an instance of the class,
+ * and will be stopped when you call {@code close()}:
+ *
+ * <pre>Bucket bucket = new Bucket();
+ * // some time later
+ * bucket.close();</pre>
+ *
+ * <p>In order to be executed the class should implement either
+ * {@link Runnable} or {@link java.util.concurrent.Callable}. In order to
+ * be closed and stopped your the class should implement
+ * {@link java.io.Closeable}.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.16
  * @see <a href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
- * @see <a href="http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html">Why Are Thread.stop, Thread.suspend, Thread.resume and Runtime.runFinalizersOnExit Deprecated?</a>a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Timeable {
+@Target(ElementType.TYPE)
+public @interface ScheduleWithFixedDelay {
 
     /**
-     * Maximum amount allowed for this method.
-     * @checkstyle MagicNumber (2 lines)
+     * Delay, in time units.
      */
-    int limit() default 15;
+    int delay() default 1;
 
     /**
-     * Time unit for the limit.
-     *
-     * <p>The minimum unit you can use is a second. We simply can't monitor with
-     * a frequency higher than a second.
+     * Time units of delay.
      */
-    TimeUnit unit() default TimeUnit.SECONDS;
+    TimeUnit unit() default TimeUnit.MINUTES;
 
 }

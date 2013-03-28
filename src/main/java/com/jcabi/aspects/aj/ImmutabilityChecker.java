@@ -63,11 +63,9 @@ public final class ImmutabilityChecker {
      * it backward compatible.
      *
      * @param point Joint point
-     * @throws Throwable If something goes wrong inside
-     * @checkstyle IllegalThrows (5 lines)
      */
     @After("initialization((@com.jcabi.aspects.Immutable *).new(..))")
-    public void after(final JoinPoint point) throws Throwable {
+    public void after(final JoinPoint point) {
         final Class<?> type = point.getTarget().getClass();
         try {
             this.check(type);

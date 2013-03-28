@@ -1,0 +1,71 @@
+ ------
+ Schedule With Fixed Delay without Executor or Thread Manipulations
+ ------
+ Yegor Bugayenko
+ ------
+ 2013-03-26
+ ------
+
+~~
+~~ Copyright (c) 2011-2013, jcabi.com
+~~ All rights reserved.
+~~
+~~ Redistribution and use in source and binary forms, with or without
+~~ modification, are permitted provided that the following conditions
+~~ are met: 1) Redistributions of source code must retain the above
+~~ copyright notice, this list of conditions and the following
+~~ disclaimer. 2) Redistributions in binary form must reproduce the above
+~~ copyright notice, this list of conditions and the following
+~~ disclaimer in the documentation and/or other materials provided
+~~ with the distribution. 3) Neither the name of the jcabi.com nor
+~~ the names of its contributors may be used to endorse or promote
+~~ products derived from this software without specific prior written
+~~ permission.
+~~
+~~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+~~ NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+~~ FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+~~ THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+~~ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+~~ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+~~ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+~~ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+~~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+~~ OF THE POSSIBILITY OF SUCH DAMAGE.
+~~
+
+Schedule With Fixed Delay without Executor or Thread Manipulations
+
+  Make your class implement
+  {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.html}<<<Runnable>>>}}
+  (or {{{http://docs.oracle.com/javase/7/docs/api/java/lang/concurrent/Callable.html}<<<Callable>>>}})
+  and annotate it with
+  {{{./apidocs-${project.version}/com/jcabi/aspects/ScheduleWithFixedDelay.html}<<<@ScheduleWithFixedDelay>>>}}
+  annotation:
+
++--
+@ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.SECONDS)
+public class Clock implements Runnable {
+  @Override
+  public void run() {
+    System.out.println("tick tick..");
+  }
+}
++--
+
+  Now, make an instance of this class and it will start ticking immediately:
+
++--
+Clock clock = new Clock();
++--
+
+  If you class implements
+  {{{http://docs.oracle.com/javase/7/docs/api/java/io/Closeable.html}<<<Closeable>>>}}
+  you can stop a routine thread by calling its
+  {{{http://docs.oracle.com/javase/7/docs/api/java/io/Closeable.html#close()}<<<close()>>>}}
+  method.
+
+  The mechanism is implemented with AOP/AspectJ. Read
+  {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.

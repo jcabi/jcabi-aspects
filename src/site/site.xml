@@ -47,6 +47,7 @@
             <item name="@LogExceptions" href="annotation-logexceptions.html"/>
             <item name="@Loggable" href="annotation-loggable.html"/>
             <item name="@RetryOnFailure" href="annotation-retryonfailure.html"/>
+            <item name="@ScheduleWithFixedDelay" href="annotation-schedulewithfixeddelay.html"/>
             <item name="@Timeable" href="annotation-timeable.html"/>
         </menu>
         <menu ref="reports"/>
