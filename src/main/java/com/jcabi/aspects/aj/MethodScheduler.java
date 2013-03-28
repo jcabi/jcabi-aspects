@@ -117,6 +117,7 @@ public final class MethodScheduler {
         final Object object = point.getTarget();
         final ScheduledExecutorService service = this.services.get(object);
         service.shutdownNow();
+        this.services.remove(object);
         Logger.debug(object, "scheduled execution terminated");
     }
 
