@@ -96,7 +96,7 @@ public final class MethodScheduler {
             annt.unit()
         );
         this.services.put(object, service);
-        Logger.debug(
+        Logger.info(
             object,
             "#run() method scheduled for execution every %d %s",
             annt.delay(),
@@ -118,7 +118,7 @@ public final class MethodScheduler {
         final ScheduledExecutorService service = this.services.get(object);
         service.shutdownNow();
         this.services.remove(object);
-        Logger.debug(object, "scheduled execution terminated");
+        Logger.info(object, "scheduled execution terminated");
     }
 
 }
