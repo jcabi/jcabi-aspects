@@ -62,8 +62,10 @@ import java.util.concurrent.TimeUnit;
  *
  * <p>In order to be executed the class should implement either
  * {@link Runnable} or {@link java.util.concurrent.Callable}. In order to
- * be closed and stopped your the class should implement
- * {@link java.io.Closeable}.
+ * be closed and stopped, your the class should implement
+ * {@link java.io.Closeable} and its {@code close()}
+ * method should be explicitly called
+ * at the moment you want it to stop.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
