@@ -145,6 +145,9 @@ public final class MethodLogger {
      */
     private Object wrap(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation) throws Throwable {
+        if (Thread.interrupted()) {
+            throw new IllegalStateException("time out");
+        }
         final long start = System.nanoTime();
         final MethodLogger.Marker marker =
             new MethodLogger.Marker(point, annotation);
