@@ -30,6 +30,11 @@
 package com.jcabi.aspects;
 
 import java.util.Random;
+import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -90,6 +95,34 @@ public final class CacheableTest {
             foo.get(),
             Matchers.not(Matchers.equalTo(first))
         );
+    }
+
+    /**
+     * Cacheable can cache just once.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void cachesJustOnceInParallelThreads() throws Exception {
+        final CacheableTest.Foo foo = new CacheableTest.Foo();
+        final Set<String> values = new ConcurrentSkipListSet<String>();
+        final int threads = Runtime.getRuntime().availableProcessors() * 2;
+        final CountDownLatch start = new CountDownLatch(1);
+        final CountDownLatch done = new CountDownLatch(threads);
+        final Callable<Boolean> task = new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                start.await(1, TimeUnit.SECONDS);
+                values.add(foo.get());
+                done.countDown();
+                return true;
+            }
+        };
+        for (int pos = 0; pos < threads; ++pos) {
+            Executors.newFixedThreadPool(threads).submit(task);
+        }
+        start.countDown();
+        done.await(1, TimeUnit.SECONDS);
+        MatcherAssert.assertThat(values.size(), Matchers.equalTo(1));
     }
 
     /**
