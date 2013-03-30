@@ -181,7 +181,7 @@ public final class MethodScheduler {
             this.executor.shutdownNow();
             Logger.info(
                 this.object,
-                "execution stopped after %[ms]s and %d ticks",
+                "execution stopped after %[ms]s and %d tick(s)",
                 System.currentTimeMillis() - this.start,
                 this.counter.get()
             );
