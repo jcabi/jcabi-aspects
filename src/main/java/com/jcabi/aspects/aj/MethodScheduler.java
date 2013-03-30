@@ -168,7 +168,7 @@ public final class MethodScheduler {
             );
             Logger.info(
                 this.object,
-                "scheduled for execution every %d %s",
+                "scheduled for execution with %d %s interval",
                 annt.delay(),
                 annt.unit()
             );
