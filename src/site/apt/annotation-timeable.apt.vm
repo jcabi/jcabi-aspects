@@ -1,5 +1,5 @@
  ------
- Terminate Long Running Java Methods
+ Limit Java Method Execution Time
  ------
  Yegor Bugayenko
  ------
@@ -37,7 +37,7 @@
 ~~ OF THE POSSIBILITY OF SUCH DAMAGE.
 ~~
 
-Terminate Long Running Java Methods
+Limit Java Method Execution Time
 
   Annotate your methods with
   {{{./apidocs-${project.version}/com/jcabi/aspects/Timeable.html}<<<@Timeable>>>}}
