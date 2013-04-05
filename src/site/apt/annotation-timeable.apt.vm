@@ -7,6 +7,7 @@
  ------
 
 ~~
+~~ #set($hash="#")
 ~~ Copyright (c) 2011-2013, jcabi.com
 ~~ All rights reserved.
 ~~
@@ -55,15 +56,14 @@ public String load(URL url) {
 
   Important to note that in Java 1.5+ it is impossible to force thread
   termination:
-  {{{http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html}}Why Are
-  Thread.stop, Thread.suspend, Thread.resume and Runtime.runFinalizersOnExit Deprecated?}}.
-  Thus, we can't just call {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#stop()}<<<Thread.stop()>>>}},
+  {{{http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html}Why Are Thread.stop, Thread.suspend, Thread.resume and Runtime.runFinalizersOnExit Deprecated?}}.
+  Thus, we can't just call {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html${hash}stop()}<<<Thread.stop()>>>}},
   when a thread is over a specified time limit. The best thing we can do is to
   call
-  {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#interrupt()}<<<Thread#interrupt()>>>}}
+  {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html${hash}interrupt()}<<<Thread${hash}interrupt()>>>}}
   and hope that the thread itself
   is checking its
-  {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#isInterrupted()}<<<Thread#isInterrupted()>>>}} status.
+  {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html${hash}isInterrupted()}<<<Thread${hash}isInterrupted()>>>}} status.
   If you want to design your long-running methods in a way that
   {{{./apidocs-${project.version}/com/jcabi/aspects/Timeable.html}<<<@Timeable>>>}}
   can terminate them, embed
