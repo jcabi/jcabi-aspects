@@ -56,7 +56,7 @@ import java.util.concurrent.TimeUnit;
  * <p>Execution will be started as soon as you make an instance of the class,
  * and will be stopped when you call {@code close()}:
  *
- * <pre>Bucket bucket = new Bucket();
+ * <pre> Bucket bucket = new Bucket();
  * // some time later
  * bucket.close();</pre>
  *

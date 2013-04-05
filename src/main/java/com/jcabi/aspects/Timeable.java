@@ -71,7 +71,7 @@ import java.util.concurrent.TimeUnit;
  * @version $Id$
  * @since 0.7.16
  * @see <a href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
- * @see <a href="http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html">Why Are Thread.stop, Thread.suspend, Thread.resume and Runtime.runFinalizersOnExit Deprecated?</a>a>
+ * @see <a href="http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html">Why Are Thread.stop, Thread.suspend, Thread.resume and Runtime.runFinalizersOnExit Deprecated?</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
