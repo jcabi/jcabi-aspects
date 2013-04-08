@@ -29,6 +29,10 @@
  */
 package com.jcabi.aspects;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -86,6 +90,11 @@ public final class JSR303Test {
         new JSR303Test.Foo().voidAlways();
     }
 
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.PARAMETER)
+    private @interface NoMeaning {
+    }
+
     /**
      * Dummy class, for tests above.
      */
@@ -98,7 +107,7 @@ public final class JSR303Test {
          */
         @NotNull
         public int foo(
-            @NotNull @Pattern(regexp = "\\d+") final String text) {
+            @NotNull @Pattern(regexp = "\\d+") @NoMeaning final String text) {
             return -1;
         }
         /**
