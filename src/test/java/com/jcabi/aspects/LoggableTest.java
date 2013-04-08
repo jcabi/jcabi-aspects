@@ -29,6 +29,7 @@
  */
 package com.jcabi.aspects;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 
@@ -148,7 +149,7 @@ public final class LoggableTest {
         /**
          * Always throw.
          */
-        @Loggable(ignore = RuntimeException.class)
+        @Loggable(ignore = { IOException.class, RuntimeException.class })
         private void doThrow() {
             throw new IllegalStateException();
         }
