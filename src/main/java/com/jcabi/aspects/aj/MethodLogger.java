@@ -360,7 +360,8 @@ public final class MethodLogger {
     private static boolean instanceOf(final Class<?> child,
         final Class<?> parent) {
         boolean instance = child.equals(parent)
-            || MethodLogger.instanceOf(child.getSuperclass(), parent);
+            || (child.getSuperclass() != null
+            && MethodLogger.instanceOf(child.getSuperclass(), parent));
         if (!instance) {
             for (Class<?> iface : child.getInterfaces()) {
                 instance = MethodLogger.instanceOf(iface, parent);
