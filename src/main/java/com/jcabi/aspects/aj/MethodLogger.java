@@ -281,11 +281,12 @@ public final class MethodLogger {
          * Monitor it's status and log the problem, if any.
          */
         public void monitor() {
-            final long age = System.currentTimeMillis() - this.start;
-            final long threshold = this.annotation.unit().toMillis(
-                this.annotation.limit()
+            final TimeUnit unit = this.annotation.unit();
+            final long threshold = this.annotation.limit();
+            final long age = unit.convert(
+                System.currentTimeMillis() - this.start, TimeUnit.MILLISECONDS
             );
-            if (age > threshold) {
+            if (age > threshold && ((age - threshold) % threshold == 0)) {
                 final Method method = MethodSignature.class.cast(
                     this.point.getSignature()
                 ).getMethod();
@@ -293,8 +294,8 @@ public final class MethodLogger {
                     method.getDeclaringClass(),
                     "%s: takes more than %[ms]s (%[ms]s already)",
                     Mnemos.toString(this.point, true),
-                    threshold,
-                    age
+                    TimeUnit.MILLISECONDS.convert(threshold, unit),
+                    TimeUnit.MILLISECONDS.convert(age, unit)
                 );
             }
         }
