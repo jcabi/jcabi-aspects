@@ -42,9 +42,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 
 /**
@@ -119,18 +121,29 @@ public final class MethodCacher {
 
     /**
      * Flush cache.
+     * @param point Join point
+     * @return Value of the method
+     * @deprecated Since 0.7.17, and preflush() should be used
+     * @throws Throwable If something goes wrong inside
+     * @checkstyle IllegalThrows (3 lines)
+     */
+    @Deprecated
+    public Object flush(final ProceedingJoinPoint point) throws Throwable {
+        this.preflush(point);
+        return point.proceed();
+    }
+
+    /**
+     * Flush cache.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
      * it backward compatible.
      *
      * @param point Joint point
-     * @return The result of call
-     * @throws Throwable If something goes wrong inside
-     * @checkstyle IllegalThrows (5 lines)
      * @checkstyle LineLength (3 lines)
      */
-    @Around("execution(* *(..)) && @annotation(com.jcabi.aspects.Cacheable.Flush)")
-    public Object flush(final ProceedingJoinPoint point) throws Throwable {
+    @Before("execution(* *(..)) && @annotation(com.jcabi.aspects.Cacheable.Flush)")
+    public void preflush(final JoinPoint point) {
         synchronized (this.tunnels) {
             for (MethodCacher.Key key : this.tunnels.keySet()) {
                 if (!key.sameTarget(point)) {
@@ -151,7 +164,6 @@ public final class MethodCacher {
                 }
             }
         }
-        return point.proceed();
     }
 
     /**
@@ -337,7 +349,7 @@ public final class MethodCacher {
          * @param point Proceeding point
          * @return True if the target is the same
          */
-        public boolean sameTarget(final ProceedingJoinPoint point) {
+        public boolean sameTarget(final JoinPoint point) {
             return MethodCacher.Key.targetize(point).equals(this.target);
         }
         /**
@@ -345,7 +357,7 @@ public final class MethodCacher {
          * @param point Proceeding point
          * @return The target
          */
-        private static Object targetize(final ProceedingJoinPoint point) {
+        private static Object targetize(final JoinPoint point) {
             Object tgt;
             final Method method = MethodSignature.class
                 .cast(point.getSignature()).getMethod();
