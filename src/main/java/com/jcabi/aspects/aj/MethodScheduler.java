@@ -40,6 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -178,13 +179,38 @@ public final class MethodScheduler {
          */
         @Override
         public void close() throws IOException {
-            this.executor.shutdownNow();
+            this.executor.shutdown();
+            if (!this.terminated()) {
+                this.executor.shutdownNow();
+                if (!this.terminated()) {
+                    throw new IllegalStateException(
+                        Logger.format(
+                            "failed to shutdown %[type]s of %[type]s",
+                            this.executor,
+                            this.object
+                        )
+                    );
+                }
+            }
             Logger.info(
                 this.object,
                 "execution stopped after %[ms]s and %d tick(s)",
                 System.currentTimeMillis() - this.start,
                 this.counter.get()
             );
+        }
+        /**
+         * Is it already terminated?
+         * @return TRUE if terminated
+         */
+        private boolean terminated() {
+            try {
+                // @checkstyle MagicNumber (1 line)
+                return this.executor.awaitTermination(5, TimeUnit.SECONDS);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                throw new IllegalStateException(ex);
+            }
         }
     }
 
