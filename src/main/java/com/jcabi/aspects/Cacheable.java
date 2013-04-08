@@ -82,36 +82,6 @@ import java.util.concurrent.TimeUnit;
 public @interface Cacheable {
 
     /**
-     * Five.
-     * @since 0.7.17
-     */
-    int FIVE = 5;
-
-    /**
-     * Ten.
-     * @since 0.7.17
-     */
-    int TEN = 10;
-
-    /**
-     * Fifteen.
-     * @since 0.7.17
-     */
-    int FIFTEEN = 15;
-
-    /**
-     * Thirty.
-     * @since 0.7.17
-     */
-    int THIRTY = 30;
-
-    /**
-     * Fourty.
-     * @since 0.7.17
-     */
-    int FORTY = 40;
-
-    /**
      * Lifetime of an object in cache, in time units.
      */
     int lifetime() default 1;
