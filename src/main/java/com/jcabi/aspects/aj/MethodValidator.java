@@ -36,6 +36,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import javax.validation.Constraint;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
@@ -219,12 +220,12 @@ public final class MethodValidator {
                         )
                     );
                 }
-            } else {
-                throw new IllegalStateException(
-                    Logger.format(
-                        "%[type]s annotation is not supported at the moment",
-                        antn
-                    )
+            } else if (antn.annotationType()
+                .isAnnotationPresent(Constraint.class)) {
+                Logger.warn(
+                    this,
+                    "%[type]s annotation is not supported at the moment",
+                    antn.annotationType()
                 );
             }
         }
