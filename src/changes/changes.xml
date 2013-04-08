@@ -31,7 +31,13 @@
  -->
 <document xmlns="http://maven.apache.org/changes/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
     <body>
-        <release version="0.7.16" date="?" description="@Timeable annotation">
+        <release version="0.7.17" date="8 Apr 2013" description="better behavior of @Loggable">
+            <action dev="yegor" issue="200" type="add">
+                "ignore" attribute added to @Loggable annotation to allow
+                filtering out of valid exceptions
+            </action>
+        </release>
+        <release version="0.7.16" date="6 Apr 2013" description="@Timeable annotation">
             <action dev="yegor" issue="186" type="add">
                 @Timeable annotation added to terminate long-running
                 Java methods

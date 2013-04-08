@@ -50,7 +50,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @since 0.7.2
  */
 @Aspect
-@SuppressWarnings("PMD.AvoidCatchingThrowable")
+@SuppressWarnings({ "PMD.AvoidCatchingThrowable", "PMD.TooManyMethods" })
 public final class MethodLogger {
 
     /**
@@ -189,17 +189,19 @@ public final class MethodLogger {
             return result;
         // @checkstyle IllegalCatch (1 line)
         } catch (Throwable ex) {
-            MethodLogger.log(
-                Loggable.ERROR,
-                method.getDeclaringClass(),
-                Logger.format(
-                    "%s: thrown %[type]s (%s) in %[nano]s",
-                    Mnemos.toString(point, annotation.trim()),
-                    ex,
-                    Mnemos.toString(ex.getMessage(), false),
-                    System.nanoTime() - start
-                )
-            );
+            if (!MethodLogger.contains(annotation.ignore(), ex)) {
+                MethodLogger.log(
+                    Loggable.ERROR,
+                    method.getDeclaringClass(),
+                    Logger.format(
+                        "%s: thrown %[type]s (%s) in %[nano]s",
+                        Mnemos.toString(point, annotation.trim()),
+                        ex,
+                        Mnemos.toString(ex.getMessage(), false),
+                        System.nanoTime() - start
+                    )
+                );
+            }
             throw ex;
         } finally {
             this.running.remove(marker);
@@ -329,6 +331,45 @@ public final class MethodLogger {
             }
             return diff;
         }
+    }
+
+    /**
+     * Checks whether array of types contains given type.
+     * @param array Array of them
+     * @param exp The exception to find
+     * @return TRUE if it's there
+     */
+    private static boolean contains(final Class<? extends Throwable>[] array,
+        final Throwable exp) {
+        boolean contains = false;
+        for (Class<? extends Throwable> type : array) {
+            if (MethodLogger.instanceOf(exp.getClass(), type)) {
+                contains = true;
+                break;
+            }
+        }
+        return contains;
+    }
+
+    /**
+     * The type is an instance of another type?
+     * @param child The child type
+     * @param parent Parent type
+     * @return TRUE if child is really a child of a parent
+     */
+    private static boolean instanceOf(final Class<?> child,
+        final Class<?> parent) {
+        boolean instance = child.equals(parent)
+            || MethodLogger.instanceOf(child.getSuperclass(), parent);
+        if (!instance) {
+            for (Class<?> iface : child.getInterfaces()) {
+                instance = MethodLogger.instanceOf(iface, parent);
+                if (instance) {
+                    break;
+                }
+            }
+        }
+        return instance;
     }
 
 }

@@ -72,6 +72,18 @@ import java.util.concurrent.TimeUnit;
  *   // do something, potentially slow
  * }</pre>
  *
+ * <p>Since version 0.7.17 you can ignore certain exception types, and they
+ * won't be logged when thrown. It is very useful when exceptions are used
+ * to control flow (which is not a good practice, but is still used in
+ * some frameworks, for example in JAX-RS):
+ *
+ * <pre> &#64;Loggable(ignore = WebApplicationException.class)
+ * String get() {
+ *   if (not_logged_in()) {
+ *     throw new WebApplicationException(forward_to_login_page());
+ *   }
+ * }</pre>
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.2
@@ -139,5 +151,11 @@ public @interface Loggable {
      * @since 0.7.16
      */
     boolean prepend() default false;
+
+    /**
+     * List of exception types, which should not be logged if thrown.
+     * @since 0.7.17
+     */
+    Class<? extends Throwable>[] ignore() default { };
 
 }

@@ -37,7 +37,7 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
-@SuppressWarnings("PMD.TestClassWithoutTestCases")
+@SuppressWarnings({ "PMD.TestClassWithoutTestCases", "PMD.TooManyMethods" })
 public final class LoggableTest {
 
     /**
@@ -74,6 +74,15 @@ public final class LoggableTest {
     @Test
     public void doesntLogInheritedMethods() throws Exception {
         new LoggableTest.Foo().parentText();
+    }
+
+    /**
+     * Loggable can ignore some exceptions.
+     * @throws Exception If something goes wrong
+     */
+    @Test(expected = IllegalStateException.class)
+    public void ignoresSomeExceptions() throws Exception {
+        new LoggableTest.Foo().doThrow();
     }
 
     /**
@@ -135,6 +144,13 @@ public final class LoggableTest {
          */
         private static String hiddenText() {
             return "some static text";
+        }
+        /**
+         * Always throw.
+         */
+        @Loggable(ignore = RuntimeException.class)
+        private void doThrow() {
+            throw new IllegalStateException();
         }
     }
 
