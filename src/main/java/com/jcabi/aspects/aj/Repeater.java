@@ -87,11 +87,12 @@ public final class Repeater {
                 } else {
                     Logger.warn(
                         this,
-                        "attempt #%d/%d failed in %[nano]s: %s",
+                        "attempt #%d/%d failed with %[type]s in %[nano]s: %s",
                         attempt,
                         rof.attempts(),
+                        ex,
                         System.nanoTime() - start,
-                        ex.getMessage()
+                        Repeater.message(ex)
                     );
                 }
                 if (attempt >= rof.attempts()) {
@@ -102,6 +103,21 @@ public final class Repeater {
                 }
             }
         }
+    }
+
+    /**
+     * Get a message out of a potentially chained exception (recursively
+     * calls itself in order to reproduce a chain of messages).
+     * @param exp The exception
+     * @return The message
+     */
+    private static String message(final Throwable exp) {
+        final StringBuilder text = new StringBuilder();
+        text.append(exp.getMessage());
+        if (exp.getCause() != null) {
+            text.append("; ").append(Repeater.message(exp.getCause()));
+        }
+        return text.toString();
     }
 
 }
