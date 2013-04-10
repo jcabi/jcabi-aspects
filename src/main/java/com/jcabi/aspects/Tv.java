@@ -30,11 +30,12 @@
 package com.jcabi.aspects;
 
 /**
- * Convenient holder of numeric constants for annotations.
+ * Convenient holder of numeric constants for annotations
+ * (TV means "time values").
  *
  * <p>For example, you can use it like this:
  *
- * <pre> &#64;Cacheable(lifetime = T.FIVE, unit = TimeUnit.SECONDS)
+ * <pre> &#64;Cacheable(lifetime = Tv.FIVE, unit = TimeUnit.SECONDS)
  * String load(String resource) throws IOException {
  * }</pre>
  *
@@ -45,7 +46,7 @@ package com.jcabi.aspects;
  * @checkstyle InterfaceIsType (500 lines)
  */
 @SuppressWarnings("PMD.AvoidConstantsInterface")
-public interface T {
+public interface Tv {
 
     /**
      * Five.
