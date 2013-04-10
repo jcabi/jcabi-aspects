@@ -137,7 +137,7 @@ public @interface Loggable {
      * Time unit for the limit.
      * @since 0.7.14
      */
-    TimeUnit unit() default TimeUnit.SECONDS;
+    TimeUnit unit() default TimeUnit.MINUTES;
 
     /**
      * Shall we trim long texts in order to make log lines more readable?
