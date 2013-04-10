@@ -37,6 +37,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -257,9 +258,13 @@ public final class MethodLogger {
     private static final class Marker
         implements Comparable<MethodLogger.Marker> {
         /**
-         * When started.
+         * When the method was started, in milliseconds.
          */
-        private final transient long start;
+        private final transient long started = System.currentTimeMillis();
+        /**
+         * Which monitoring cycle was logged recently.
+         */
+        private final transient AtomicInteger logged = new AtomicInteger();
         /**
          * Joint point.
          */
@@ -275,7 +280,6 @@ public final class MethodLogger {
          */
         public Marker(final ProceedingJoinPoint pnt,
             final Loggable annt) {
-            this.start = System.currentTimeMillis();
             this.point = pnt;
             this.annotation = annt;
         }
@@ -286,19 +290,22 @@ public final class MethodLogger {
             final TimeUnit unit = this.annotation.unit();
             final long threshold = this.annotation.limit();
             final long age = unit.convert(
-                System.currentTimeMillis() - this.start, TimeUnit.MILLISECONDS
+                System.currentTimeMillis() - this.started, TimeUnit.MILLISECONDS
             );
-            if (age > threshold && ((age - threshold) % threshold == 0)) {
+            final int cycle = (int) ((age - threshold) / threshold);
+            if (cycle > this.logged.get()) {
                 final Method method = MethodSignature.class.cast(
                     this.point.getSignature()
                 ).getMethod();
                 Logger.warn(
                     method.getDeclaringClass(),
-                    "%s: takes more than %[ms]s (%[ms]s already)",
+                    "%s: takes more than %[ms]s (%[ms]s already, notice #%d)",
                     Mnemos.toString(this.point, true),
                     TimeUnit.MILLISECONDS.convert(threshold, unit),
-                    TimeUnit.MILLISECONDS.convert(age, unit)
+                    TimeUnit.MILLISECONDS.convert(age, unit),
+                    cycle
                 );
+                this.logged.set(cycle);
             }
         }
         /**
@@ -322,9 +329,9 @@ public final class MethodLogger {
         @Override
         public int compareTo(final Marker marker) {
             int diff;
-            if (marker.start > this.start) {
+            if (marker.started > this.started) {
                 diff = 1;
-            } else if (marker.start < this.start) {
+            } else if (marker.started < this.started) {
                 diff = -1;
             } else {
                 diff = 0;
