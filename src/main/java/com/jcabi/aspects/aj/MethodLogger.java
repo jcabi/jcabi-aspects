@@ -266,6 +266,11 @@ public final class MethodLogger {
          */
         private final transient AtomicInteger logged = new AtomicInteger();
         /**
+         * The thread it's running in.
+         */
+        @SuppressWarnings("PMD.DoNotUseThreads")
+        private final transient Thread thread = Thread.currentThread();
+        /**
          * Joint point.
          */
         private final transient ProceedingJoinPoint point;
@@ -278,8 +283,7 @@ public final class MethodLogger {
          * @param pnt Joint point
          * @param annt Annotation
          */
-        public Marker(final ProceedingJoinPoint pnt,
-            final Loggable annt) {
+        public Marker(final ProceedingJoinPoint pnt, final Loggable annt) {
             this.point = pnt;
             this.annotation = annt;
         }
@@ -299,11 +303,14 @@ public final class MethodLogger {
                 ).getMethod();
                 Logger.warn(
                     method.getDeclaringClass(),
-                    "%s: takes more than %[ms]s (%[ms]s already, notice #%d)",
+                    // @checkstyle LineLength (1 line)
+                    "%s: takes more than %[ms]s (%[ms]s already, notice #%d, thread=%s/%s)",
                     Mnemos.toString(this.point, true),
                     TimeUnit.MILLISECONDS.convert(threshold, unit),
                     TimeUnit.MILLISECONDS.convert(age, unit),
-                    cycle
+                    cycle,
+                    this.thread.getName(),
+                    this.thread.getState()
                 );
                 this.logged.set(cycle);
             }
