@@ -31,7 +31,6 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Loggable;
 import com.jcabi.log.Logger;
-import com.jcabi.log.VerboseThreads;
 import java.lang.reflect.Method;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -62,16 +61,16 @@ public final class MethodLogger {
         new ConcurrentSkipListSet<MethodLogger.Marker>();
 
     /**
-     * Service that monitors.
+     * Service that monitors all running methods.
      */
-    private final transient ScheduledExecutorService monitor =
-        Executors.newSingleThreadScheduledExecutor(new VerboseThreads("jcabi"));
+    private final transient ScheduledExecutorService monitor;
 
     /**
      * Public ctor.
      */
     @SuppressWarnings("PMD.DoNotUseThreads")
     public MethodLogger() {
+        this.monitor = Executors.newSingleThreadScheduledExecutor();
         this.monitor.scheduleWithFixedDelay(
             new Runnable() {
                 @Override
