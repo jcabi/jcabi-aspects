@@ -73,7 +73,7 @@ public final class MethodCacher {
      * Service that cleans cache.
      */
     private final transient ScheduledExecutorService cleaner =
-        Executors.newScheduledThreadPool(1, new VerboseThreads());
+        Executors.newSingleThreadScheduledExecutor(new VerboseThreads("jcabi"));
 
     /**
      * Public ctor.
