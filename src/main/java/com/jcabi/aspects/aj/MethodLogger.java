@@ -303,15 +303,21 @@ public final class MethodLogger {
                 ).getMethod();
                 Logger.warn(
                     method.getDeclaringClass(),
-                    // @checkstyle LineLength (1 line)
-                    "%s: takes more than %[ms]s (%[ms]s already, notice #%d, thread=%s/%s)",
+                    "%s: takes more than %[ms]s (%[ms]s already, thread=%s/%s)",
                     Mnemos.toString(this.point, true),
                     TimeUnit.MILLISECONDS.convert(threshold, unit),
                     TimeUnit.MILLISECONDS.convert(age, unit),
-                    cycle,
                     this.thread.getName(),
                     this.thread.getState()
                 );
+                if (this.thread.getState().equals(Thread.State.BLOCKED)) {
+                    Logger.warn(
+                        method.getDeclaringClass(),
+                        "%s: stacktrace of a BLOCKED thread %s: %s",
+                        Mnemos.toString(this.point, true),
+                        MethodLogger.textualize(this.thread.getStackTrace())
+                    );
+                }
                 this.logged.set(cycle);
             }
         }
@@ -385,6 +391,29 @@ public final class MethodLogger {
             }
         }
         return instance;
+    }
+
+    /**
+     * Textualize a stacktrace.
+     * @param trace Array of stacktrace elements
+     * @return The text
+     */
+    private static String textualize(final StackTraceElement[] trace) {
+        final StringBuilder text = new StringBuilder();
+        for (StackTraceElement element : trace) {
+            if (text.length() > 0) {
+                text.append("; ");
+            }
+            text.append(
+                String.format(
+                    "%s#%s[%d]",
+                    element.getClassName(),
+                    element.getMethodName(),
+                    element.getLineNumber()
+                )
+            );
+        }
+        return text.toString();
     }
 
 }
