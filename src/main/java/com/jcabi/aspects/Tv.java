@@ -49,6 +49,16 @@ package com.jcabi.aspects;
 public interface Tv {
 
     /**
+     * Three.
+     */
+    int THREE = 3;
+
+    /**
+     * Four.
+     */
+    int FOUR = 4;
+
+    /**
      * Five.
      */
     int FIVE = 5;

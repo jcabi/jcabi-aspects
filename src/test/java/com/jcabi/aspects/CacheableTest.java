@@ -29,13 +29,18 @@
  */
 package com.jcabi.aspects;
 
+import com.jcabi.log.VerboseRunnable;
+import com.jcabi.log.VerboseThreads;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -44,7 +49,9 @@ import org.junit.Test;
  * Test case for {@link Cacheable} annotation and its implementation.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @checkstyle ClassDataAbstractionCoupling (500 lines)
  */
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.DoNotUseThreads" })
 public final class CacheableTest {
 
     /**
@@ -89,8 +96,7 @@ public final class CacheableTest {
     public void cleansCacheWhenExpired() throws Exception {
         final CacheableTest.Foo foo = new CacheableTest.Foo();
         final String first = foo.get();
-        // @checkstyle MagicNumber (1 line)
-        TimeUnit.SECONDS.sleep(3);
+        TimeUnit.SECONDS.sleep(Tv.FIVE);
         MatcherAssert.assertThat(
             foo.get(),
             Matchers.not(Matchers.equalTo(first))
@@ -104,6 +110,15 @@ public final class CacheableTest {
     @Test
     public void cachesJustOnceInParallelThreads() throws Exception {
         final CacheableTest.Foo foo = new CacheableTest.Foo();
+        final Thread never = new Thread(
+            new Runnable() {
+                @Override
+                public void run() {
+                    foo.never();
+                }
+            }
+        );
+        never.start();
         final Set<String> values = new ConcurrentSkipListSet<String>();
         final int threads = Runtime.getRuntime().availableProcessors() * 2;
         final CountDownLatch start = new CountDownLatch(1);
@@ -123,6 +138,7 @@ public final class CacheableTest {
         start.countDown();
         done.await(1, TimeUnit.SECONDS);
         MatcherAssert.assertThat(values.size(), Matchers.equalTo(1));
+        never.interrupt();
     }
 
     /**
@@ -154,6 +170,17 @@ public final class CacheableTest {
         @Cacheable(lifetime = 1, unit = TimeUnit.SECONDS)
         public String get() {
             return Long.toString(CacheableTest.Foo.RANDOM.nextLong());
+        }
+        /**
+         * Sleep forever, to abuse caching system.
+         */
+        @Cacheable(lifetime = 1, unit = TimeUnit.SECONDS)
+        public void never() {
+            try {
+                TimeUnit.HOURS.sleep(1);
+            } catch (InterruptedException ex) {
+                throw new IllegalStateException(ex);
+            }
         }
         /**
          * Flush it.

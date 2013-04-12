@@ -87,7 +87,7 @@ public final class MethodInterrupter {
         Logger.info(
             MethodInterrupter.class,
             // @checkstyle LineLength (1 line)
-            "\u0040Timeable annotated methods are being watched by jcabi-aspects @{project.version}/${buildNumber}"
+            "\u0040Timeable annotated methods are being watched by jcabi-aspects ${project.version}/${buildNumber}"
         );
     }
 

@@ -114,7 +114,7 @@ public final class MethodCacher {
     public Object cache(final ProceedingJoinPoint point) throws Throwable {
         final Key key = new MethodCacher.Key(point);
         Tunnel tunnel;
-        synchronized (this.tunnels) {
+        synchronized (this.cleaner) {
             tunnel = this.tunnels.get(key);
             if (tunnel == null || tunnel.expired()) {
                 tunnel = new MethodCacher.Tunnel(point, key);
@@ -151,7 +151,7 @@ public final class MethodCacher {
      */
     @Before("execution(* *(..)) && @annotation(com.jcabi.aspects.Cacheable.Flush)")
     public void preflush(final JoinPoint point) {
-        synchronized (this.tunnels) {
+        synchronized (this.cleaner) {
             for (MethodCacher.Key key : this.tunnels.keySet()) {
                 if (!key.sameTarget(point)) {
                     continue;
@@ -177,10 +177,16 @@ public final class MethodCacher {
      * Clean cache.
      */
     private void clean() {
-        synchronized (this.tunnels) {
-            for (Key tunnel : this.tunnels.keySet()) {
-                if (this.tunnels.get(tunnel).expired()) {
-                    this.tunnels.remove(tunnel);
+        synchronized (this.cleaner) {
+            for (Key key : this.tunnels.keySet()) {
+                if (this.tunnels.get(key).expired()) {
+                    final Tunnel tunnel = this.tunnels.remove(key);
+                    Logger.debug(
+                        this,
+                        "%s:%s expired in cache",
+                        key,
+                        tunnel
+                    );
                 }
             }
         }
