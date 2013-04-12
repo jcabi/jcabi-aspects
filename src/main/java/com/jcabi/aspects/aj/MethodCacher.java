@@ -114,16 +114,14 @@ public final class MethodCacher {
     public Object cache(final ProceedingJoinPoint point) throws Throwable {
         final Key key = new MethodCacher.Key(point);
         Tunnel tunnel;
-        synchronized (this.cleaner) {
+        synchronized (this.tunnels) {
             tunnel = this.tunnels.get(key);
             if (tunnel == null || tunnel.expired()) {
                 tunnel = new MethodCacher.Tunnel(point, key);
                 this.tunnels.put(key, tunnel);
             }
         }
-        synchronized (tunnel) {
-            return tunnel.through();
-        }
+        return tunnel.through();
     }
 
     /**
@@ -151,7 +149,7 @@ public final class MethodCacher {
      */
     @Before("execution(* *(..)) && @annotation(com.jcabi.aspects.Cacheable.Flush)")
     public void preflush(final JoinPoint point) {
-        synchronized (this.cleaner) {
+        synchronized (this.tunnels) {
             for (MethodCacher.Key key : this.tunnels.keySet()) {
                 if (!key.sameTarget(point)) {
                     continue;
@@ -177,7 +175,7 @@ public final class MethodCacher {
      * Clean cache.
      */
     private void clean() {
-        synchronized (this.cleaner) {
+        synchronized (this.tunnels) {
             for (Key key : this.tunnels.keySet()) {
                 if (this.tunnels.get(key).expired()) {
                     final Tunnel tunnel = this.tunnels.remove(key);
@@ -193,60 +191,37 @@ public final class MethodCacher {
     }
 
     /**
-     * Immutable caching/calling tunnel.
+     * Mutable caching/calling tunnel, it is thread-safe.
      */
     private static final class Tunnel {
         /**
-         * Cached value.
+         * Proceeding join point.
          */
-        private final transient Object cached;
+        private final transient ProceedingJoinPoint point;
         /**
          * Key related to this tunnel.
          */
         private final transient Key key;
         /**
+         * Was it already executed?
+         */
+        private transient boolean executed;
+        /**
          * When will it expire (moment in time).
          */
-        private final transient long lifetime;
+        private transient long lifetime;
+        /**
+         * Cached value.
+         */
+        private transient Object cached;
         /**
          * Public ctor.
-         * @param point Joint point
+         * @param pnt Joint point
          * @param akey The key related to it
-         * @throws Throwable If something goes wrong inside
-         * @checkstyle IllegalThrows (5 lines)
          */
-        public Tunnel(final ProceedingJoinPoint point, final Key akey)
-            throws Throwable {
-            final long start = System.currentTimeMillis();
-            this.cached = point.proceed();
+        public Tunnel(final ProceedingJoinPoint pnt, final Key akey) {
+            this.point = pnt;
             this.key = akey;
-            final Method method = MethodSignature.class
-                .cast(point.getSignature())
-                .getMethod();
-            final Cacheable annot = method.getAnnotation(Cacheable.class);
-            String suffix;
-            if (annot.forever()) {
-                this.lifetime = Long.MAX_VALUE;
-                suffix = "valid forever";
-            } else if (annot.lifetime() == 0) {
-                this.lifetime = 0;
-                suffix = "invalid immediately";
-            } else {
-                final long msec = annot.unit().toMillis(annot.lifetime());
-                this.lifetime = start + msec;
-                suffix = Logger.format("valid for %[ms]s", msec);
-            }
-            final Class<?> type = method.getDeclaringClass();
-            if (Logger.isDebugEnabled(type)) {
-                Logger.debug(
-                    type,
-                    "%s: %s cached in %[ms]s, %s",
-                    Mnemos.toString(method, point.getArgs(), true),
-                    Mnemos.toString(this.cached, true),
-                    System.currentTimeMillis() - start,
-                    suffix
-                );
-            }
         }
         /**
          * {@inheritDoc}
@@ -258,8 +233,43 @@ public final class MethodCacher {
         /**
          * Get a result through the tunnel.
          * @return The result
+         * @throws Throwable If something goes wrong inside
+         * @checkstyle IllegalThrows (5 lines)
          */
-        public Object through() {
+        @SuppressWarnings("PMD.AvoidSynchronizedAtMethodLevel")
+        public synchronized Object through() throws Throwable {
+            if (!this.executed) {
+                final long start = System.currentTimeMillis();
+                this.cached = this.point.proceed();
+                final Method method = MethodSignature.class
+                    .cast(this.point.getSignature())
+                    .getMethod();
+                final Cacheable annot = method.getAnnotation(Cacheable.class);
+                String suffix;
+                if (annot.forever()) {
+                    this.lifetime = Long.MAX_VALUE;
+                    suffix = "valid forever";
+                } else if (annot.lifetime() == 0) {
+                    this.lifetime = 0;
+                    suffix = "invalid immediately";
+                } else {
+                    final long msec = annot.unit().toMillis(annot.lifetime());
+                    this.lifetime = start + msec;
+                    suffix = Logger.format("valid for %[ms]s", msec);
+                }
+                final Class<?> type = method.getDeclaringClass();
+                if (Logger.isDebugEnabled(type)) {
+                    Logger.debug(
+                        type,
+                        "%s: %s cached in %[ms]s, %s",
+                        Mnemos.toString(method, this.point.getArgs(), true),
+                        Mnemos.toString(this.cached, true),
+                        System.currentTimeMillis() - start,
+                        suffix
+                    );
+                }
+                this.executed = true;
+            }
             return this.key.through(this.cached);
         }
         /**
@@ -267,7 +277,7 @@ public final class MethodCacher {
          * @return TRUE if expired
          */
         public boolean expired() {
-            return this.lifetime < System.currentTimeMillis();
+            return this.executed && this.lifetime < System.currentTimeMillis();
         }
     }
 

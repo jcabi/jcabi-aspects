@@ -29,18 +29,13 @@
  */
 package com.jcabi.aspects;
 
-import com.jcabi.log.VerboseRunnable;
-import com.jcabi.log.VerboseThreads;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicLong;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -193,7 +188,7 @@ public final class CacheableTest {
          * Download some text.
          * @return Downloaded text
          */
-        @Cacheable
+        @Cacheable(lifetime = 1, unit = TimeUnit.SECONDS)
         public static String staticGet() {
             return Long.toString(CacheableTest.Foo.RANDOM.nextLong());
         }
