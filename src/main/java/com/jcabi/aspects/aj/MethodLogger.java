@@ -83,6 +83,11 @@ public final class MethodLogger {
             },
             1, 1, TimeUnit.SECONDS
         );
+        Logger.info(
+            MethodInterrupter.class,
+            // @checkstyle LineLength (1 line)
+            "\u0040Loggable annotated methods are being watched by jcabi-aspects ${project.version}/${buildNumber}"
+        );
     }
 
     /**
@@ -97,7 +102,7 @@ public final class MethodLogger {
      * @checkstyle IllegalThrows (5 lines)
      * @checkstyle LineLength (3 lines)
      */
-    @Around("((execution(public * (@com.jcabi.aspects.Loggable *).*(..)) || initialization((@com.jcabi.aspects.Loggable *).new(..))) && !execution(String *.toString()) && !execution(int *.hashCode()) && !execution(boolean *.equals(Object)))")
+    @Around("(execution(public * (@com.jcabi.aspects.Loggable *).*(..)) || initialization((@com.jcabi.aspects.Loggable *).new(..))) && !execution(String *.toString()) && !execution(int *.hashCode()) && !execution(boolean *.equals(Object)) && !cflow(call(com.jcabi.aspects.aj.MethodLogger.new()))")
     public Object wrapClass(final ProceedingJoinPoint point) throws Throwable {
         final Method method =
             MethodSignature.class.cast(point.getSignature()).getMethod();

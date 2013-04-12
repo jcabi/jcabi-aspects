@@ -73,7 +73,9 @@ public final class MethodCacher {
      * Service that cleans cache.
      */
     private final transient ScheduledExecutorService cleaner =
-        Executors.newSingleThreadScheduledExecutor(new VerboseThreads("jcabi"));
+        Executors.newSingleThreadScheduledExecutor(
+            new VerboseThreads("jcabi-cacheable")
+        );
 
     /**
      * Public ctor.
@@ -89,6 +91,11 @@ public final class MethodCacher {
                 }
             ),
             1, 1, TimeUnit.SECONDS
+        );
+        Logger.info(
+            MethodInterrupter.class,
+            // @checkstyle LineLength (1 line)
+            "\u0040Cacheable annotated methods are being watched by jcabi-aspects ${project.version}/${buildNumber}"
         );
     }
 

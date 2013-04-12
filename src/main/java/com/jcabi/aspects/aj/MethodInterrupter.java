@@ -65,7 +65,9 @@ public final class MethodInterrupter {
      * Service that interrupts threads.
      */
     private final transient ScheduledExecutorService interrupter =
-        Executors.newScheduledThreadPool(1, new VerboseThreads());
+        Executors.newSingleThreadScheduledExecutor(
+            new VerboseThreads("jcabi-timeable")
+        );
 
     /**
      * Public ctor.
@@ -81,6 +83,11 @@ public final class MethodInterrupter {
                 }
             ),
             1, 1, TimeUnit.SECONDS
+        );
+        Logger.info(
+            MethodInterrupter.class,
+            // @checkstyle LineLength (1 line)
+            "\u0040Timeable annotated methods are being watched by jcabi-aspects @{project.version}/${buildNumber}"
         );
     }
 
