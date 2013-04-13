@@ -45,9 +45,11 @@ Limit Java Method Execution Time
   their thread will be interrupted:
 
 +--
-@Timeable(limit = 5, unit = TimeUnit.SECONDS)
-public String load(URL url) {
-  return url.openConnection().getContent();
+public class Resource {
+  @Timeable(limit = 5, unit = TimeUnit.SECONDS)
+  public String load(URL url) {
+    return url.openConnection().getContent();
+  }
 }
 +--
 

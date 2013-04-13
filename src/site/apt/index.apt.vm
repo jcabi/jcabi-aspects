@@ -105,8 +105,32 @@ public String load(URL url) {
 </dependency>
 +--
 
-  And then this Maven plugin, in order to apply AOP aspects to your
-  code during compile time:
+  Then, we recommend to use our own plugin for AspectJ weaving:
+  {{{../jcabi-maven-plugin/example-ajc.html}jcabi-maven-plugin:ajc}}:
+
++--
+<project>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.jcabi</groupId>
+        <artifactId>jcabi-maven-plugin</artifactId>
+        <version>${project.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>ajc</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
++--
+
+  However, you can use <<<aspectj-maven-plugin>>>,
+  in order to apply AOP aspects to your code during compile time:
 
 +--
 <plugin>

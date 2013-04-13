@@ -44,33 +44,37 @@ Caching Java method results
   will be avoided):
 
 +--
-@Cacheable(lifetime = 5, unit = TimeUnit.SECONDS)
-public String load(URL url) {
-  return url.openConnection().getContent();
+public class Resource {
+  @Cacheable(lifetime = 5, unit = TimeUnit.SECONDS)
+  public String load(URL url) {
+    return url.openConnection().getContent();
+  }
 }
 +--
 
   If you call this method, say, every second, only every 5th call
-  will make a real HTTP connection. The other four will return a
-  cached value.
+  will make a real HTTP connection. The other four will return
+  cached value. Cache is maintained in memory in a hash map.
 
-  You can make a valuable cacheable forever (method's result will
+  You can make a value cacheable forever (method's result will
   never expire):
 
 +--
-@Cacheable(forever = true)
-public List<String> data() {
-  List<String> data = new ArrayList<String>();
-  // some heavy calculations to be done only
-  // once per JVM lifetime
-  return data;
+public class MyResource {
+  @Cacheable(forever = true)
+  public List<String> data() {
+    List<String> data = new ArrayList<String>();
+    // some heavy calculations to be done only
+    // once per JVM lifetime
+    return data;
+  }
 }
 +--
 
-  If a method throws an exception it is not cached.
+  If a method throws an exception, it is not cached.
 
   Since version 0.7.14 you can also annotate methods that should flush
-  cache of the object, for example:
+  object's cache, for example:
 
 +--
 public class Page {
@@ -88,6 +92,8 @@ public class Page {
 
   If you need a more fine-tunable mechanism we recommend to use
   {{{http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/cache/package-summary.html}Google Guava}}.
+  Also, pay attention to {{{https://github.com/jsr107/jsr107spec}JSR-107}}, which is
+  a new coming Java caching standard.
 
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.

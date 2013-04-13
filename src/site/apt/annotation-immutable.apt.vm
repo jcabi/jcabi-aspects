@@ -54,9 +54,8 @@ public class Foo {
 
   Keep in mind, that although JDK requires some classes to be immutable,
   most of them are mutable in reality, for example
-  {{{http://docs.oracle.com/javase/7/docs/api/java/util/Date.html}<<<java.util.Date>>>}} and
   {{{http://docs.oracle.com/javase/7/docs/api/java/math/BigDecimal.html}<<<java.math.BigDecimal>>>}}
-  (well, at least in OpenJDK 7 they are mutable). Our immutability checker
+  (well, at least in OpenJDK 7 it is mutable). Our immutability checker
   is rather strict and doesn't allow classes to have any non-private non-final
   properties in order to be called truly immutable.
 
@@ -74,7 +73,7 @@ public class Foo {
 +--
 
   Although in Java a <<<final>>> array can change its elements, we assume
-  that private final arrays are immutable:
+  that <<<private>>> and <<<final>>> arrays are immutable:
 
 +--
 @Immutable

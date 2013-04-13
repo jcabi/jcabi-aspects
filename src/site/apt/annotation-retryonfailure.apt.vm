@@ -44,9 +44,11 @@ Repeating Java methods on exception
   will be repeated a few times:
 
 +--
-@RetryOnFailure(attempts = 2, delay = 10, verbose = false)
-public String load(URL url) {
-  return url.openConnection().getContent();
+public class Resource {
+  @RetryOnFailure(attempts = 2, delay = 10, verbose = false)
+  public String load(URL url) {
+    return url.openConnection().getContent();
+  }
 }
 +--
 
@@ -58,8 +60,12 @@ public String load(URL url) {
   will wait for two minutes between attempts:
 
 +--
-@RetryOnFailure(delay = 2, unit = TimeUnit.MINUTES)
-public String load(URL url)
+public class Resource {
+  @RetryOnFailure(delay = 2, unit = TimeUnit.MINUTES)
+  public String load(URL url) {
+    // loading of resource
+  }
+}
 +--
 
   The mechanism is implemented with AOP/AspectJ. Read

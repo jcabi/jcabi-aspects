@@ -36,7 +36,7 @@
 ~~ OF THE POSSIBILITY OF SUCH DAMAGE.
 ~~
 
-Logging exceptions thrown out of Java methods
+Logging Exceptions Thrown out of Java Methods
 
   Annotate your methods with
   {{{./apidocs-${project.version}/com/jcabi/aspects/LogExceptions.html}<<<@LogExceptions>>>}}
@@ -44,13 +44,16 @@ Logging exceptions thrown out of Java methods
   will be logged through SLF4J:
 
 +--
-@LogExceptions
-public String load(URL url) {
-  return url.openConnection().getContent();
+public class Resource {
+  @LogExceptions
+  public String load(URL url) {
+    return url.openConnection().getContent();
+  }
 }
 +--
 
-  In an exception occurs it will be logged.
+  In an exception occurs it will be logged through
+  {{{http://www.slf4j.org/}SLF4J}} logging factility.
 
   Also, take a look at {{{./annotation-loggable.html}<<<@Loggable>>>}}
   annotation which does the same but also logs non-exceptional situations.

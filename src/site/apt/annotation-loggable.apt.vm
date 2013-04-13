@@ -45,9 +45,11 @@ Logging Java method executions
   execution time:
 
 +--
-@Loggable(Loggable.DEBUG)
-public String load(URL url) {
-  return url.openConnection().getContent();
+public class Resource {
+  @Loggable(Loggable.DEBUG)
+  public String load(URL url) {
+    return url.openConnection().getContent();
+  }
 }
 +--
 
