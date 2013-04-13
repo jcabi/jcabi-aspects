@@ -32,7 +32,6 @@ package com.jcabi.aspects.aj;
 import com.jcabi.aspects.Timeable;
 import com.jcabi.log.Logger;
 import com.jcabi.log.VerboseRunnable;
-import com.jcabi.log.VerboseThreads;
 import java.lang.reflect.Method;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -46,6 +45,12 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Interrupts long-running methods.
+ *
+ * <p>It is an AspectJ aspect and you are not supposed to use it directly. It
+ * is instantiated by AspectJ runtime framework when your code is annotated
+ * with {@link Timeable} annotation.
+ *
+ * <p>The class is thread-safe.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
@@ -66,7 +71,7 @@ public final class MethodInterrupter {
      */
     private final transient ScheduledExecutorService interrupter =
         Executors.newSingleThreadScheduledExecutor(
-            new VerboseThreads("jcabi-timeable")
+            new NamedThreads("timeable")
         );
 
     /**

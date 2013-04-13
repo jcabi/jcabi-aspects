@@ -32,7 +32,6 @@ package com.jcabi.aspects.aj;
 import com.jcabi.aspects.Cacheable;
 import com.jcabi.log.Logger;
 import com.jcabi.log.VerboseRunnable;
-import com.jcabi.log.VerboseThreads;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -51,6 +50,10 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Cache method results.
+ *
+ * <p>It is an AspectJ aspect and you are not supposed to use it directly. It
+ * is instantiated by AspectJ runtime framework when your code is annotated
+ * with {@link Cacheable} annotation.
  *
  * <p>The class is thread-safe.
  *
@@ -74,7 +77,7 @@ public final class MethodCacher {
      */
     private final transient ScheduledExecutorService cleaner =
         Executors.newSingleThreadScheduledExecutor(
-            new VerboseThreads("jcabi-cacheable")
+            new NamedThreads("cacheable")
         );
 
     /**

@@ -46,6 +46,10 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Logs method calls.
  *
+ * <p>It is an AspectJ aspect and you are not supposed to use it directly. It
+ * is instantiated by AspectJ runtime framework when your code is annotated
+ * with {@link Loggable} annotation.
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.2
@@ -70,7 +74,9 @@ public final class MethodLogger {
      */
     @SuppressWarnings("PMD.DoNotUseThreads")
     public MethodLogger() {
-        this.monitor = Executors.newSingleThreadScheduledExecutor();
+        this.monitor = Executors.newSingleThreadScheduledExecutor(
+            new NamedThreads("loggable")
+        );
         this.monitor.scheduleWithFixedDelay(
             new Runnable() {
                 @Override
