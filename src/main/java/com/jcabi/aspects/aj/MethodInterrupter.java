@@ -71,7 +71,10 @@ public final class MethodInterrupter {
      */
     private final transient ScheduledExecutorService interrupter =
         Executors.newSingleThreadScheduledExecutor(
-            new NamedThreads("timeable")
+            new NamedThreads(
+                "timeable",
+                "interrupting of @Timeable annotated methods"
+            )
         );
 
     /**
@@ -88,11 +91,6 @@ public final class MethodInterrupter {
                 }
             ),
             1, 1, TimeUnit.SECONDS
-        );
-        Logger.info(
-            MethodInterrupter.class,
-            // @checkstyle LineLength (1 line)
-            "\u0040Timeable annotated methods are being watched by jcabi-aspects ${project.version}/${buildNumber}"
         );
     }
 

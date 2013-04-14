@@ -75,7 +75,10 @@ public final class MethodLogger {
     @SuppressWarnings("PMD.DoNotUseThreads")
     public MethodLogger() {
         this.monitor = Executors.newSingleThreadScheduledExecutor(
-            new NamedThreads("loggable")
+            new NamedThreads(
+                "loggable",
+                "watching of @Loggable annotated methods"
+            )
         );
         this.monitor.scheduleWithFixedDelay(
             new Runnable() {
@@ -88,11 +91,6 @@ public final class MethodLogger {
                 }
             },
             1, 1, TimeUnit.SECONDS
-        );
-        Logger.info(
-            MethodInterrupter.class,
-            // @checkstyle LineLength (1 line)
-            "\u0040Loggable annotated methods are being watched by jcabi-aspects ${project.version}/${buildNumber}"
         );
     }
 

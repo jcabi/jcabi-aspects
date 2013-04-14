@@ -29,6 +29,7 @@
  */
 package com.jcabi.aspects.aj;
 
+import com.jcabi.log.Logger;
 import java.util.concurrent.ThreadFactory;
 
 /**
@@ -51,6 +52,11 @@ final class NamedThreads implements ThreadFactory {
     private final transient String name;
 
     /**
+     * Purpose of these threads.
+     */
+    private final transient String purpose;
+
+    /**
      * Thread group to use.
      */
     private final transient ThreadGroup group = new ThreadGroup("jcabi");
@@ -58,9 +64,11 @@ final class NamedThreads implements ThreadFactory {
     /**
      * Public ctor.
      * @param suffix Suffix of thread names
+     * @param desc Description of purpose
      */
-    public NamedThreads(final String suffix) {
+    public NamedThreads(final String suffix, final String desc) {
         this.name = String.format("jcabi-%s", suffix);
+        this.purpose = desc;
     }
 
     /**
@@ -71,6 +79,13 @@ final class NamedThreads implements ThreadFactory {
         final Thread thread = new Thread(this.group, runnable);
         thread.setName(this.name);
         thread.setDaemon(true);
+        Logger.info(
+            this,
+            // @checkstyle LineLength (1 line)
+            "jcabi-aspects ${project.version}/${buildNumber} started new daemon thread %s for %s",
+            this.name,
+            this.purpose
+        );
         return thread;
     }
 

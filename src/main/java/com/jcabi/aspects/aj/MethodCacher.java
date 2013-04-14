@@ -77,7 +77,10 @@ public final class MethodCacher {
      */
     private final transient ScheduledExecutorService cleaner =
         Executors.newSingleThreadScheduledExecutor(
-            new NamedThreads("cacheable")
+            new NamedThreads(
+                "cacheable",
+                "automated cleaning of expired @Cacheable values"
+            )
         );
 
     /**
@@ -94,11 +97,6 @@ public final class MethodCacher {
                 }
             ),
             1, 1, TimeUnit.SECONDS
-        );
-        Logger.info(
-            MethodInterrupter.class,
-            // @checkstyle LineLength (1 line)
-            "\u0040Cacheable annotated methods are being watched by jcabi-aspects ${project.version}/${buildNumber}"
         );
     }
 
