@@ -58,7 +58,7 @@ public final class ScheduleWithFixedDelayTest {
         TimeUnit.SECONDS.sleep(1);
         MatcherAssert.assertThat(counter.get(), Matchers.greaterThan(0L));
         sample.close();
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.MILLISECONDS.sleep(Tv.TEN);
         MatcherAssert.assertThat(counter.get(), Matchers.lessThan(0L));
     }
 

@@ -45,6 +45,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 
 /**
  * Schedules methods.
@@ -115,8 +116,9 @@ public final class MethodScheduler {
      *
      * @param point Joint point
      * @throws IOException If can't close
+     * @checkstyle LineLength (2 lines)
      */
-    @After("execution(* (@com.jcabi.aspects.ScheduleWithFixedDelay *).close())")
+    @Before("execution(* (@com.jcabi.aspects.ScheduleWithFixedDelay *).close())")
     public void close(final JoinPoint point) throws IOException {
         final Object object = point.getTarget();
         this.services.get(object).close();
