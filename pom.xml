@@ -40,13 +40,13 @@
     <name>jcabi-aspects</name>
     <dependencies>
         <dependency>
-            <groupId>com.jcabi</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>jcabi-log</artifactId>
             <!-- version is set in order to avoid a cyclic reference -->
             <version>0.7</version>
             <exclusions>
                 <exclusion>
-                    <groupId>com.jcabi</groupId>
+                    <groupId>${project.groupId}</groupId>
                     <artifactId>jcabi-aspects</artifactId>
                 </exclusion>
             </exclusions>
