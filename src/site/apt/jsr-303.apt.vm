@@ -38,7 +38,7 @@
 
 JSR-303 Annotations with AspectJ
 
-  First, configure your pom.xml as explained {{{./index.html}here}}.
+  First, configure your <<<pom.xml>>> as explained {{{./index.html}here}}.
 
   Then, include JSR-303 API and
   one of its reference implementations (for example,
@@ -49,7 +49,7 @@ JSR-303 Annotations with AspectJ
 <dependency>
   <groupId>javax.validation</groupId>
   <artifactId>validation-api</artifactId>
-  <version>1.1.0.Beta3</version>
+  <version>1.1.0.CR3</version>
   <scope>provided</scope>
 </dependency>
 <dependency>
@@ -129,20 +129,16 @@ public class Bar {
   }
   class Validator implements ConstraintValidator<Bar.Valid, Bar> {
     @Override
-    public void initialize(final Bar.Valid annotation) {
-        //nothing to do
-    }
+    public void initialize(Bar.Valid annotation) {}
     @Override
-    public boolean isValid(final Bar bar,
-      final ConstraintValidatorContext ctx) {
-      boolean isValid = true;
+    public boolean isValid(Bar bar, ConstraintValidatorContext ctx) {
       if (!bar.name().matches("\\d+")) {
-        ctx.buildConstraintViolationWithTemplate("invalid name")
-          .addNode("name")
-          .addConstraintViolation();
-        isValid = false;
+        ctx.buildConstraintViolationWithTemplate(
+          String.format("invalid name %s", bar.name())
+        .addPropertyNode("name").addConstraintViolation();
+        return false;
       }
-      return isValid;
+      return true;
     }
   }
   public String name() {

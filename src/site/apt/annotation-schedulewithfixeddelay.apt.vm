@@ -47,10 +47,14 @@ Schedule With Fixed Delay without Executor or Thread Manipulations
 
 +--
 @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.SECONDS)
-public class Clock implements Runnable {
+public class Clock implements Runnable, Closeable {
   @Override
   public void run() {
     System.out.println("tick tick..");
+  }
+  @Override
+  public void close() {
+    System.out.println("done with ticking");
   }
 }
 +--
@@ -58,7 +62,13 @@ public class Clock implements Runnable {
   Now, make an instance of this class and it will start ticking immediately:
 
 +--
-Clock clock = new Clock();
+public class Main {
+  public static void main(String[] args) {
+    Clock clock = new Clock();
+    TimeUnit.SECONDS.sleep(5); // wait for five seconds
+    clock.close();
+  }
+}
 +--
 
   If you class implements

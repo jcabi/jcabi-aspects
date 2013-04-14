@@ -72,13 +72,15 @@ public class Resource {
   a checker into your most intessively used place, for example:
 
 +--
-@Timeable(limit = 1, unit = TimeUnit.SECONDS)
-public String load(String resource) {
-  while (true) {
-    if (Thread.currentThread.isInterrupted()) {
-      throw new IllegalStateException("time out");
+public class Resource {
+  @Timeable(limit = 1, unit = TimeUnit.SECONDS)
+  public String load(String resource) {
+    while (true) {
+      if (Thread.currentThread.isInterrupted()) {
+        throw new IllegalStateException("time out");
+      }
+      // execution as usual
     }
-    // execution as usual
   }
 }
 +--
