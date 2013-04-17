@@ -46,10 +46,19 @@ public final class MnemosTest {
      */
     @Test
     public void buildsTextFromObject() throws Exception {
-        MatcherAssert.assertThat(
-            Mnemos.toString(1, true),
-            Matchers.equalTo("'1'")
-        );
+        final Object[][] pairs = new Object[][] {
+            new Object[] {1, "'1'"},
+            new Object[] {"test", "'test'"},
+            new Object[] {null, "NULL"},
+            new Object[] {new String[] {"abc", "x"}, "['abc', 'x']"},
+            new Object[] {new Object[] {null, 5}, "[NULL, '5']"},
+        };
+        for (Object[] pair : pairs) {
+            MatcherAssert.assertThat(
+                Mnemos.toString(pair[0], true),
+                Matchers.equalTo(pair[1].toString())
+            );
+        }
     }
 
     /**
