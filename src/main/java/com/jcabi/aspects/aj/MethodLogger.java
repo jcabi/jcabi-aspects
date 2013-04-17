@@ -30,7 +30,6 @@
 package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Loggable;
-import com.jcabi.aspects.Tv;
 import com.jcabi.log.Logger;
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -317,11 +316,17 @@ public final class MethodLogger {
                 ).getMethod();
                 Logger.warn(
                     method.getDeclaringClass(),
-                    // @checkstyle LineLength (1 line)
-                    "%s: takes more than %[ms]s, %[ms]s already, thread=%s/%s, trace=[%s]",
+                    "%s: takes more than %[ms]s, %[ms]s already, thread=%s/%s",
                     Mnemos.toText(this.point, true),
                     TimeUnit.MILLISECONDS.convert(threshold, unit),
                     TimeUnit.MILLISECONDS.convert(age, unit),
+                    this.thread.getName(),
+                    this.thread.getState()
+                );
+                Logger.debug(
+                    method.getDeclaringClass(),
+                    "%s: thread %s/%s stacktrace: %s",
+                    Mnemos.toText(this.point, true),
                     this.thread.getName(),
                     this.thread.getState(),
                     MethodLogger.textualize(this.thread.getStackTrace())
@@ -411,10 +416,6 @@ public final class MethodLogger {
         for (int pos = 0; pos < trace.length; ++pos) {
             if (text.length() > 0) {
                 text.append(", ");
-            }
-            if (pos > Tv.FIVE) {
-                text.append("...");
-                break;
             }
             text.append(
                 String.format(
