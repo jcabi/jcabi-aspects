@@ -47,15 +47,18 @@ public final class MnemosTest {
     @Test
     public void buildsTextFromObject() throws Exception {
         final Object[][] pairs = new Object[][] {
-            new Object[] {1, "'1'"},
-            new Object[] {"test", "'test'"},
+            new Object[] {1, "1"},
+            new Object[] {1.43f, "1.43"},
+            new Object[] {"\u20ac-plain", "'\u20ac-plain'"},
+            new Object[] {"test ", "'test '"},
             new Object[] {null, "NULL"},
+            new Object[] {new String[0], "[]"},
             new Object[] {new String[] {"abc", "x"}, "['abc', 'x']"},
-            new Object[] {new Object[] {null, 5}, "[NULL, '5']"},
+            new Object[] {new Object[] {null, 5}, "[NULL, 5]"},
         };
         for (Object[] pair : pairs) {
             MatcherAssert.assertThat(
-                Mnemos.toString(pair[0], true),
+                Mnemos.toText(pair[0], false),
                 Matchers.equalTo(pair[1].toString())
             );
         }
@@ -68,7 +71,7 @@ public final class MnemosTest {
     @Test
     public void handlesToxicObjectsGracefully() throws Exception {
         MatcherAssert.assertThat(
-            Mnemos.toString(
+            Mnemos.toText(
                 new Object() {
                     @Override
                     public String toString() {
@@ -76,7 +79,7 @@ public final class MnemosTest {
                     }
                 }, true
             ),
-            Matchers.equalTo("'[java.lang.IllegalArgumentException: boom]'")
+            Matchers.equalTo("[java.lang.IllegalArgumentException: boom]")
         );
     }
 

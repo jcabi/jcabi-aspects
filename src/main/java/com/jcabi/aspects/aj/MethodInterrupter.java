@@ -201,7 +201,7 @@ public final class MethodInterrupter {
                 Logger.warn(
                     method.getDeclaringClass(),
                     "%s: interrupted on %[ms]s timeout (over %[ms]s)",
-                    Mnemos.toString(this.point, true),
+                    Mnemos.toText(this.point, true),
                     System.currentTimeMillis() - this.start,
                     this.deadline - this.start
                 );

@@ -163,7 +163,7 @@ public final class MethodCacher {
                     Logger.debug(
                         method.getDeclaringClass(),
                         "%s: %s:%s removed from cache",
-                        Mnemos.toString(method, point.getArgs(), true),
+                        Mnemos.toText(method, point.getArgs(), true),
                         key,
                         removed
                     );
@@ -229,7 +229,7 @@ public final class MethodCacher {
          */
         @Override
         public String toString() {
-            return Mnemos.toString(this.cached, true);
+            return Mnemos.toText(this.cached, true);
         }
         /**
          * Get a result through the tunnel.
@@ -263,8 +263,8 @@ public final class MethodCacher {
                     Logger.debug(
                         type,
                         "%s: %s cached in %[ms]s, %s",
-                        Mnemos.toString(method, this.point.getArgs(), true),
-                        Mnemos.toString(this.cached, true),
+                        Mnemos.toText(method, this.point.getArgs(), true),
+                        Mnemos.toText(this.cached, true),
                         System.currentTimeMillis() - start,
                         suffix
                     );
@@ -321,7 +321,7 @@ public final class MethodCacher {
          */
         @Override
         public String toString() {
-            return Mnemos.toString(this.method, this.arguments, true);
+            return Mnemos.toText(this.method, this.arguments, true);
         }
         /**
          * {@inheritDoc}
@@ -361,7 +361,7 @@ public final class MethodCacher {
                     type,
                     "%s: %s from cache (hit #%d, %[ms]s old)",
                     this,
-                    Mnemos.toString(result, true),
+                    Mnemos.toText(result, true),
                     hit,
                     System.currentTimeMillis() - this.start
                 );

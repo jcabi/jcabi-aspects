@@ -107,7 +107,7 @@ public class MyResource {
 </dependency>
 +--
 
-  Then, we recommend to use our own plugin for AspectJ weaving:
+  Then, we recommend to use our own plugin for AspectJ weaving
   {{{../jcabi-maven-plugin/example-ajc.html}jcabi-maven-plugin:ajc}}:
 
 +--
@@ -133,7 +133,7 @@ public class MyResource {
 
   Actually, the best way to get all these configurations in one package
   is to use our
-  {{{./parent/index.html}<<<com.jcabi:parent>>>}} parent <<<pom.xml>>>.
+  {{{../parent/index.html}<<<com.jcabi:parent>>>}} parent <<<pom.xml>>>.
 
   However, you can use <<<aspectj-maven-plugin>>>,
   in order to apply AOP aspects to your code during compile time:

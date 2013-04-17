@@ -45,6 +45,11 @@ import org.aspectj.lang.reflect.MethodSignature;
 final class Mnemos {
 
     /**
+     * Comma between elements.
+     */
+    private static final String COMMA = ", ";
+
+    /**
      * Private ctor, it's a utility class.
      */
     private Mnemos() {
@@ -57,13 +62,26 @@ final class Mnemos {
      * @param trim Shall we trim long texts?
      * @return Text representation of it
      */
-    public static String toString(final ProceedingJoinPoint point,
+    public static String toText(final ProceedingJoinPoint point,
         final boolean trim) {
-        return Mnemos.toString(
+        return Mnemos.toText(
             MethodSignature.class.cast(point.getSignature()).getMethod(),
             point.getArgs(),
             trim
         );
+    }
+
+    /**
+     * Make a string out of point.
+     * @param point The point
+     * @param trim Shall we trim long texts?
+     * @return Text representation of it
+     * @deprecated Use toText() instead
+     */
+    @Deprecated
+    public static String toString(final ProceedingJoinPoint point,
+        final boolean trim) {
+        return Mnemos.toText(point, trim);
     }
 
     /**
@@ -73,18 +91,32 @@ final class Mnemos {
      * @param trim Shall we trim long texts?
      * @return Text representation of it
      */
-    public static String toString(final Method method, final Object[] args,
+    public static String toText(final Method method, final Object[] args,
         final boolean trim) {
         final StringBuilder log = new StringBuilder();
         log.append('#').append(method.getName()).append('(');
         for (int pos = 0; pos < args.length; ++pos) {
             if (pos > 0) {
-                log.append(", ");
+                log.append(Mnemos.COMMA);
             }
-            log.append(Mnemos.toString(args[pos], trim));
+            log.append(Mnemos.toText(args[pos], trim));
         }
         log.append(')');
         return log.toString();
+    }
+
+    /**
+     * Make a string out of method.
+     * @param method The method
+     * @param args Actual arguments of the method
+     * @param trim Shall we trim long texts?
+     * @return Text representation of it
+     * @deprecated Use toText() instead
+     */
+    @Deprecated
+    public static String toString(final Method method, final Object[] args,
+        final boolean trim) {
+        return Mnemos.toText(method, args, trim);
     }
 
     /**
@@ -94,25 +126,64 @@ final class Mnemos {
      * @return Text representation of it
      */
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    public static String toString(final Object arg, final boolean trim) {
+    public static String toText(final Object arg, final boolean trim) {
         final StringBuilder text = new StringBuilder();
         if (arg == null) {
             text.append("NULL");
         } else {
-            text.append('\'');
             try {
+                final String mnemo = Mnemos.toText(arg);
                 if (trim) {
-                    text.append(Logger.format("%[text]s", arg));
+                    text.append(Logger.format("%[text]s", mnemo));
                 } else {
-                    text.append(arg);
+                    text.append(mnemo);
                 }
             // @checkstyle IllegalCatch (1 line)
             } catch (Throwable ex) {
                 text.append(String.format("[%s]", ex));
             }
-            text.append('\'');
         }
         return text.toString();
+    }
+
+    /**
+     * Make a string out of an object.
+     * @param arg The argument
+     * @param trim Shall we trim long texts?
+     * @return Text representation of it
+     * @deprecated Use toText() instead
+     */
+    @Deprecated
+    public static String toString(final Object arg, final boolean trim) {
+        return Mnemos.toText(arg, trim);
+    }
+
+    /**
+     * Make a string out of an object.
+     * @param arg The argument
+     * @return Text representation of it
+     */
+    private static String toText(final Object arg) {
+        String text;
+        if (arg.getClass().isArray()) {
+            final StringBuilder bldr = new StringBuilder();
+            bldr.append('[');
+            for (Object item : (Object[]) arg) {
+                if (bldr.length() > 1) {
+                    bldr.append(Mnemos.COMMA);
+                }
+                bldr.append(Mnemos.toText(item, false));
+            }
+            text = bldr.append(']').toString();
+        } else {
+            final String origin = arg.toString();
+            if (arg instanceof String || origin.contains(" ")) {
+                text = String.format("'%s'", origin);
+            } else {
+                text = origin;
+            }
+        }
+        return text;
     }
 
 }
