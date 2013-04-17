@@ -30,6 +30,7 @@
 package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Loggable;
+import com.jcabi.aspects.Tv;
 import com.jcabi.log.Logger;
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -316,21 +317,15 @@ public final class MethodLogger {
                 ).getMethod();
                 Logger.warn(
                     method.getDeclaringClass(),
-                    "%s: takes more than %[ms]s (%[ms]s already, thread=%s/%s)",
+                    // @checkstyle LineLength (1 line)
+                    "%s: takes more than %[ms]s, %[ms]s already, thread=%s/%s, trace=[%s]",
                     Mnemos.toText(this.point, true),
                     TimeUnit.MILLISECONDS.convert(threshold, unit),
                     TimeUnit.MILLISECONDS.convert(age, unit),
                     this.thread.getName(),
-                    this.thread.getState()
+                    this.thread.getState(),
+                    MethodLogger.textualize(this.thread.getStackTrace())
                 );
-                if (this.thread.getState().equals(Thread.State.BLOCKED)) {
-                    Logger.warn(
-                        method.getDeclaringClass(),
-                        "%s: stacktrace of a BLOCKED thread %s: %s",
-                        Mnemos.toText(this.point, true),
-                        MethodLogger.textualize(this.thread.getStackTrace())
-                    );
-                }
                 this.logged.set(cycle);
             }
         }
@@ -413,16 +408,20 @@ public final class MethodLogger {
      */
     private static String textualize(final StackTraceElement[] trace) {
         final StringBuilder text = new StringBuilder();
-        for (StackTraceElement element : trace) {
+        for (int pos = 0; pos < trace.length; ++pos) {
             if (text.length() > 0) {
-                text.append("; ");
+                text.append(", ");
+            }
+            if (pos > Tv.FIVE) {
+                text.append("...");
+                break;
             }
             text.append(
                 String.format(
                     "%s#%s[%d]",
-                    element.getClassName(),
-                    element.getMethodName(),
-                    element.getLineNumber()
+                    trace[pos].getClassName(),
+                    trace[pos].getMethodName(),
+                    trace[pos].getLineNumber()
                 )
             );
         }

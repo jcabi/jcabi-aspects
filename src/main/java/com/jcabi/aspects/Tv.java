@@ -93,4 +93,44 @@ public interface Tv {
      */
     int FIFTY = 50;
 
+    /**
+     * Sixty.
+     */
+    int SIXTY = 60;
+
+    /**
+     * Seventy.
+     */
+    int SEVENTY = 70;
+
+    /**
+     * Eighty.
+     */
+    int EIGHTY = 80;
+
+    /**
+     * Ninety.
+     */
+    int NINETY = 90;
+
+    /**
+     * Hundren.
+     */
+    int HUNDRED = 100;
+
+    /**
+     * Thousand.
+     */
+    int THOUSAND = 1000;
+
+    /**
+     * Million.
+     */
+    int MILLION = 1000000;
+
+    /**
+     * Billion.
+     */
+    int BILLION = 1000000000;
+
 }
