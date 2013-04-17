@@ -200,14 +200,18 @@ public final class MethodLogger {
         // @checkstyle IllegalCatch (1 line)
         } catch (Throwable ex) {
             if (!MethodLogger.contains(annotation.ignore(), ex)) {
+                final StackTraceElement trace = ex.getStackTrace()[0];
                 MethodLogger.log(
                     Loggable.ERROR,
                     method.getDeclaringClass(),
                     Logger.format(
-                        "%s: thrown %[type]s (%s) in %[nano]s",
+                        "%s: thrown %[type]s(%s) out of %s#%s[%d] in %[nano]s",
                         Mnemos.toString(point, annotation.trim()),
                         ex,
                         Mnemos.toString(ex.getMessage(), false),
+                        trace.getClassName(),
+                        trace.getMethodName(),
+                        trace.getLineNumber(),
                         System.nanoTime() - start
                     )
                 );
