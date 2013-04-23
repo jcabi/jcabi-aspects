@@ -357,10 +357,10 @@ public final class MethodValidator {
             Logger.error(
                 this,
                 // @checkstyle LineLength (1 line)
-                "JSR-303 validator thrown %[type]s while validating %[type]s: %s",
+                "JSR-303 validator %[type]s thrown %s while validating %[type]s",
+                this.validator,
                 ex,
-                object,
-                ex.getMessage()
+                object
             );
             violations = new HashSet<ConstraintViolation<T>>();
         }
