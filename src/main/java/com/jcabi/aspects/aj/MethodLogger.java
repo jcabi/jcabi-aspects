@@ -205,10 +205,9 @@ public final class MethodLogger {
                     Loggable.ERROR,
                     method.getDeclaringClass(),
                     Logger.format(
-                        "%s: thrown %[type]s(%s) out of %s#%s[%d] in %[nano]s",
+                        "%s: thrown %s out of %s#%s[%d] in %[nano]s",
                         Mnemos.toText(point, annotation.trim()),
                         ex,
-                        Mnemos.toText(ex.getMessage(), false),
                         trace.getClassName(),
                         trace.getMethodName(),
                         trace.getLineNumber(),
