@@ -140,7 +140,13 @@ final class Mnemos {
                 }
             // @checkstyle IllegalCatch (1 line)
             } catch (Throwable ex) {
-                text.append(String.format("[%s]", ex));
+                text.append(
+                    String.format(
+                        "[%s thrown %s]",
+                        arg.getClass().getName(),
+                        ex
+                    )
+                );
             }
         }
         return text.toString();
