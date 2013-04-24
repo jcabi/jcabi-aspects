@@ -55,12 +55,12 @@ public final class CacheableTest {
      */
     @Test
     public void cachesSimpleCall() throws Exception {
-        final CacheableTest.Foo foo = new CacheableTest.Foo();
-        final String first = foo.get();
-        MatcherAssert.assertThat(first, Matchers.equalTo(foo.get()));
+        final CacheableTest.Foo foo = new CacheableTest.Foo(1);
+        final String first = foo.get().toString();
+        MatcherAssert.assertThat(first, Matchers.equalTo(foo.get().toString()));
         foo.flush();
         MatcherAssert.assertThat(
-            foo.get(),
+            foo.get().toString(),
             Matchers.not(Matchers.equalTo(first))
         );
     }
@@ -89,11 +89,11 @@ public final class CacheableTest {
      */
     @Test
     public void cleansCacheWhenExpired() throws Exception {
-        final CacheableTest.Foo foo = new CacheableTest.Foo();
-        final String first = foo.get();
+        final CacheableTest.Foo foo = new CacheableTest.Foo(1);
+        final String first = foo.get().toString();
         TimeUnit.SECONDS.sleep(Tv.FIVE);
         MatcherAssert.assertThat(
-            foo.get(),
+            foo.get().toString(),
             Matchers.not(Matchers.equalTo(first))
         );
     }
@@ -104,7 +104,7 @@ public final class CacheableTest {
      */
     @Test
     public void cachesJustOnceInParallelThreads() throws Exception {
-        final CacheableTest.Foo foo = new CacheableTest.Foo();
+        final CacheableTest.Foo foo = new CacheableTest.Foo(1);
         final Thread never = new Thread(
             new Runnable() {
                 @Override
@@ -122,7 +122,7 @@ public final class CacheableTest {
             @Override
             public Boolean call() throws Exception {
                 start.await(1, TimeUnit.SECONDS);
-                values.add(foo.get());
+                values.add(foo.get().toString());
                 done.countDown();
                 return true;
             }
@@ -145,6 +145,17 @@ public final class CacheableTest {
          */
         private static final Random RANDOM = new Random();
         /**
+         * Encapsulated long.
+         */
+        private final transient long number;
+        /**
+         * Public ctor.
+         * @param num Number to encapsulate
+         */
+        public Foo(final long num) {
+            this.number = num;
+        }
+        /**
          * {@inheritDoc}
          */
         @Override
@@ -159,23 +170,36 @@ public final class CacheableTest {
             return obj == this;
         }
         /**
+         * {@inheritDoc}
+         */
+        @Override
+        @Cacheable(forever = true)
+        @Loggable(Loggable.DEBUG)
+        public String toString() {
+            return Long.toString(this.number);
+        }
+        /**
          * Download some text.
          * @return Downloaded text
          */
         @Cacheable(lifetime = 1, unit = TimeUnit.SECONDS)
-        public String get() {
-            return Long.toString(CacheableTest.Foo.RANDOM.nextLong());
+        @Loggable(Loggable.DEBUG)
+        public CacheableTest.Foo get() {
+            return new CacheableTest.Foo(CacheableTest.Foo.RANDOM.nextLong());
         }
         /**
          * Sleep forever, to abuse caching system.
+         * @return The same object
          */
         @Cacheable(lifetime = 1, unit = TimeUnit.SECONDS)
-        public void never() {
+        @Loggable(Loggable.DEBUG)
+        public CacheableTest.Foo never() {
             try {
                 TimeUnit.HOURS.sleep(1);
             } catch (InterruptedException ex) {
                 throw new IllegalStateException(ex);
             }
+            return this;
         }
         /**
          * Flush it.
