@@ -183,7 +183,8 @@ final class Mnemos {
             text = bldr.append(']').toString();
         } else {
             final String origin = arg.toString();
-            if (arg instanceof String || origin.contains(" ")) {
+            if (arg instanceof String || origin.contains(" ")
+                || origin.isEmpty()) {
                 text = String.format("'%s'", origin);
             } else {
                 text = origin;
