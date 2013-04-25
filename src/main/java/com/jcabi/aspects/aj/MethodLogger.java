@@ -216,7 +216,7 @@ public final class MethodLogger {
                     Logger.format(
                         "%s: thrown %s out of %s#%s[%d] in %[nano]s",
                         Mnemos.toText(point, annotation.trim()),
-                        ex,
+                        Mnemos.toText(ex),
                         trace.getClassName(),
                         trace.getMethodName(),
                         trace.getLineNumber(),

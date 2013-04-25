@@ -120,6 +120,21 @@ final class Mnemos {
     }
 
     /**
+     * Make a string out of an exception.
+     * @param exp The exception
+     * @return Text representation of it
+     */
+    public static String toText(final Throwable exp) {
+        final StringBuilder text = new StringBuilder();
+        text.append(exp.getClass().getName());
+        final String msg = exp.getMessage();
+        if (msg != null) {
+            text.append('(').append(msg).append(')');
+        }
+        return text.toString();
+    }
+
+    /**
      * Make a string out of an object.
      * @param arg The argument
      * @param trim Shall we trim long texts?
@@ -144,7 +159,7 @@ final class Mnemos {
                     String.format(
                         "[%s thrown %s]",
                         arg.getClass().getName(),
-                        ex
+                        Mnemos.toText(ex)
                     )
                 );
             }

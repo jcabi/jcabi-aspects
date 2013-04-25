@@ -81,7 +81,7 @@ public final class MnemosTest {
             ),
             Matchers.equalTo(
                 // @checkstyle LineLength (1 line)
-                "[com.jcabi.aspects.aj.MnemosTest$1 thrown java.lang.IllegalArgumentException: boom]"
+                "[com.jcabi.aspects.aj.MnemosTest$1 thrown java.lang.IllegalArgumentException(boom)]"
             )
         );
     }
