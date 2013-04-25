@@ -53,6 +53,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.2
+ * @checkstyle IllegalThrows (500 lines)
  */
 @Aspect
 @SuppressWarnings({ "PMD.AvoidCatchingThrowable", "PMD.TooManyMethods" })
@@ -103,10 +104,17 @@ public final class MethodLogger {
      * @param point Joint point
      * @return The result of call
      * @throws Throwable If something goes wrong inside
-     * @checkstyle IllegalThrows (5 lines)
-     * @checkstyle LineLength (3 lines)
      */
-    @Around("(execution(public * (@com.jcabi.aspects.Loggable *).*(..)) || initialization((@com.jcabi.aspects.Loggable *).new(..))) && !execution(String *.toString()) && !execution(int *.hashCode()) && !execution(boolean *.equals(Object)) && !cflow(call(com.jcabi.aspects.aj.MethodLogger.new()))")
+    @Around(
+        // @checkstyle StringLiteralsConcatenation (7 lines)
+        "(execution(public * (@com.jcabi.aspects.Loggable *).*(..))"
+        + " || initialization((@com.jcabi.aspects.Loggable *).new(..)))"
+        + " && !execution(String *.toString())"
+        + " && !execution(int *.hashCode())"
+        + " && !execution(boolean *.canEqual(Object))"
+        + " && !execution(boolean *.equals(Object))"
+        + " && !cflow(call(com.jcabi.aspects.aj.MethodLogger.new()))"
+    )
     public Object wrapClass(final ProceedingJoinPoint point) throws Throwable {
         final Method method =
             MethodSignature.class.cast(point.getSignature()).getMethod();
@@ -132,10 +140,12 @@ public final class MethodLogger {
      * @param point Joint point
      * @return The result of call
      * @throws Throwable If something goes wrong inside
-     * @checkstyle IllegalThrows (5 lines)
-     * @checkstyle LineLength (3 lines)
      */
-    @Around("(execution(* *(..)) || initialization(*.new(..))) && @annotation(com.jcabi.aspects.Loggable)")
+    @Around(
+        // @checkstyle StringLiteralsConcatenation (2 lines)
+        "(execution(* *(..)) || initialization(*.new(..)))"
+        + " && @annotation(com.jcabi.aspects.Loggable)"
+    )
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrapMethod(final ProceedingJoinPoint point) throws Throwable {
         final Method method =
@@ -151,7 +161,6 @@ public final class MethodLogger {
      * @return The result of call
      * @throws Throwable If something goes wrong inside
      * @checkstyle ExecutableStatementCount (50 lines)
-     * @checkstyle IllegalThrows (3 lines)
      */
     private Object wrap(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation) throws Throwable {
