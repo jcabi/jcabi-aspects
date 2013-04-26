@@ -90,6 +90,11 @@ public class Page {
 }
 +--
 
+  Since 0.7.18 you can flush before or after the call using
+  {{{./apidocs-${project.version}/com/jcabi/aspects/Cacheable.html}<<<@Cacheable.FlushBefore>>>}}
+  and
+  {{{./apidocs-${project.version}/com/jcabi/aspects/Cacheable.html}<<<@Cacheable.FlushAfter>>>}}.
+
   If you need a more fine-tunable mechanism we recommend to use
   {{{http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/cache/package-summary.html}Google Guava}}.
   Also, pay attention to {{{https://github.com/jsr107/jsr107spec}JSR-107}}, which is
