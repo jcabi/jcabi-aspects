@@ -73,7 +73,7 @@ public final class ImmutabilityChecker {
             throw new IllegalStateException(
                 String.format(
                     // @checkstyle LineLength (1 line)
-                    "Class %s is not immutable, can't use it (jcabi-aspects ${project.version}/${buildNumber})",
+                    "%s is not immutable, can't use it (jcabi-aspects ${project.version}/${buildNumber})",
                     type
                 ),
                 ex
