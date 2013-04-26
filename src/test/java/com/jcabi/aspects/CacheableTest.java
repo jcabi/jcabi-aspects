@@ -204,7 +204,7 @@ public final class CacheableTest {
         /**
          * Flush it.
          */
-        @Cacheable.Flush
+        @Cacheable.FlushBefore
         public void flush() {
             // nothing to do
         }
@@ -219,7 +219,7 @@ public final class CacheableTest {
         /**
          * Flush it.
          */
-        @Cacheable.Flush
+        @Cacheable.FlushBefore
         public static void staticFlush() {
             // nothing to do
         }

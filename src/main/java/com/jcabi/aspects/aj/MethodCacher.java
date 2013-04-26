@@ -43,6 +43,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -129,6 +130,7 @@ public final class MethodCacher {
      * Flush cache.
      * @param point Join point
      * @return Value of the method
+     * @since 0.7.14
      * @deprecated Since 0.7.17, and preflush() should be used
      * @throws Throwable If something goes wrong inside
      * @checkstyle IllegalThrows (3 lines)
@@ -146,10 +148,43 @@ public final class MethodCacher {
      * it backward compatible.
      *
      * @param point Joint point
-     * @checkstyle LineLength (3 lines)
+     * @since 0.7.14
      */
-    @Before("execution(* *(..)) && @annotation(com.jcabi.aspects.Cacheable.Flush)")
+    @Before(
+        // @checkstyle StringLiteralsConcatenation (3 lines)
+        "execution(* *(..))"
+        + " && (@annotation(com.jcabi.aspects.Cacheable.Flush)"
+        + " || @annotation(com.jcabi.aspects.Cacheable.FlushBefore))"
+    )
     public void preflush(final JoinPoint point) {
+        this.flush(point, "before the call");
+    }
+
+    /**
+     * Flush cache after method execution.
+     *
+     * <p>Try NOT to change the signature of this method, in order to keep
+     * it backward compatible.
+     *
+     * @param point Joint point
+     * @since 0.7.18
+     */
+    @After(
+        // @checkstyle StringLiteralsConcatenation (2 lines)
+        "execution(* *(..))"
+        + " && @annotation(com.jcabi.aspects.Cacheable.FlushAfter)"
+    )
+    public void postflush(final JoinPoint point) {
+        this.flush(point, "after the call");
+    }
+
+    /**
+     * Flush cache.
+     * @param point Joint point
+     * @param when When it happens
+     * @since 0.7.18
+     */
+    private void flush(final JoinPoint point, final String when) {
         synchronized (this.tunnels) {
             for (MethodCacher.Key key : this.tunnels.keySet()) {
                 if (!key.sameTarget(point)) {
@@ -162,10 +197,11 @@ public final class MethodCacher {
                 if (Logger.isDebugEnabled(method.getDeclaringClass())) {
                     Logger.debug(
                         method.getDeclaringClass(),
-                        "%s: %s:%s removed from cache",
+                        "%s: %s:%s removed from cache %s",
                         Mnemos.toText(method, point.getArgs(), true),
                         key,
-                        removed
+                        removed,
+                        when
                     );
                 }
             }

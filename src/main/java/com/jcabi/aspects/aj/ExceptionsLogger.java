@@ -42,6 +42,7 @@ import org.aspectj.lang.annotation.Aspect;
  * @version $Id$
  * @since 0.1.10
  * @see com.jcabi.aspects.LogExceptions
+ * @checkstyle IllegalThrows (500 lines)
  */
 @Aspect
 @Immutable
@@ -56,10 +57,12 @@ public final class ExceptionsLogger {
      * @param point Joint point
      * @return The result of call
      * @throws Throwable If something goes wrong inside
-     * @checkstyle IllegalThrows (5 lines)
-     * @checkstyle LineLength (4 lines)
      */
-    @Around("execution(* * (..)) && @annotation(com.jcabi.aspects.LogExceptions)")
+    @Around(
+        // @checkstyle StringLiteralsConcatenation (2 lines)
+        "execution(* * (..))"
+        + " && @annotation(com.jcabi.aspects.LogExceptions)"
+    )
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         try {

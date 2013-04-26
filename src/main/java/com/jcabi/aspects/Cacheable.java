@@ -56,7 +56,7 @@ import java.util.concurrent.TimeUnit;
  *   return "something";
  * }</pre>
  *
- * Since version 0.7.14 you can also annotate methods that should flush
+ * <p>Since version 0.7.14 you can also annotate methods that should flush
  * cache of the object, for example:
  *
  * <pre>public class Page {
@@ -70,6 +70,10 @@ import java.util.concurrent.TimeUnit;
  *     // save data to the network
  *   }
  * }</pre>
+ *
+ * <p>Since 0.7.18 you can control when exactly flushing happens, with
+ * {@link Cacheable.FlushBefore} and {@link Cacheable.FlushAfter} annotations
+ * ({@link Cacheable.Flush} is deprecated).
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
@@ -103,11 +107,35 @@ public @interface Cacheable {
      * Identifies a method that should flush all cached entities of
      * this class/object.
      * @since 0.7.14
+     * @deprecated It is identical to {@link FlushBefore}
      */
     @Documented
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
+    @Deprecated
     public @interface Flush {
+    }
+
+    /**
+     * Identifies a method that should flush all cached entities of
+     * this class/object, before being executed.
+     * @since 0.7.18
+     */
+    @Documented
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    public @interface FlushBefore {
+    }
+
+    /**
+     * Identifies a method that should flush all cached entities of
+     * this class/object, after being executed.
+     * @since 0.7.18
+     */
+    @Documented
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    public @interface FlushAfter {
     }
 
 }
