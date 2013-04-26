@@ -159,7 +159,7 @@ public final class MethodCacher {
                 final Method method = MethodSignature.class
                     .cast(point.getSignature())
                     .getMethod();
-                if (Logger.isDebugEnabled(this)) {
+                if (Logger.isDebugEnabled(method.getDeclaringClass())) {
                     Logger.debug(
                         method.getDeclaringClass(),
                         "%s: %s:%s removed from cache",
