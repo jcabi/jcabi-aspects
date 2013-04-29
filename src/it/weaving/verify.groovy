@@ -29,7 +29,7 @@
  */
 
 def log = new File(basedir, 'build.log')
-assert log.text.contains('#name(): returned \'test\'')
+assert log.text.contains('#name(): \'test\'')
 assert log.text.contains('#exception(): thrown java.lang.IllegalStateException')
 assert log.text.contains('com.jcabi.aspects.aj.Repeater: attempt #1/4 failed with java.lang.IllegalStateException in')
 

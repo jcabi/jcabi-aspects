@@ -191,8 +191,9 @@ public final class MethodLogger {
                 msg.append(Mnemos.toText(point, annotation.trim()))
                     .append(':');
                 if (!method.getReturnType().equals(Void.TYPE)) {
-                    msg.append(" returned ")
-                        .append(Mnemos.toText(result, annotation.trim()));
+                    msg.append(' ').append(
+                        Mnemos.toText(result, annotation.trim())
+                    );
                 }
                 msg.append(Logger.format(" in %[nano]s", nano));
                 if (over) {
