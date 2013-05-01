@@ -95,6 +95,23 @@ public class Page {
   and
   {{{./apidocs-${project.version}/com/jcabi/aspects/Cacheable.html}<<<@Cacheable.FlushAfter>>>}}.
 
+  Be aware of a potential problem with caching of mutable object. For example,
+  if a method return a <<<HashSet>>> and then you change it, a new call to
+  the same method will return a modified set. Not the one originally cached.
+  We strongly recommend to make sure that you cache only immutable objects:
+
++--
+public class Employees {
+  @Cacheable
+  public Set<Employee> all() {
+    Set<Employee> employees = new HashSet<Employee>();
+    // pay attention to the use of unmodifiableSet(), which
+    // turns a mutable HashSet into an immutable one
+    return Collections.unmodifiableSet(employees);
+  }
+}
++--
+
   If you need a more fine-tunable mechanism we recommend to use
   {{{http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/cache/package-summary.html}Google Guava}}.
   Also, pay attention to {{{https://github.com/jsr107/jsr107spec}JSR-107}}, which is
