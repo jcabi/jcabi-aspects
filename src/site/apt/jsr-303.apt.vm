@@ -135,7 +135,7 @@ public class Bar {
       if (!bar.name().matches("\\d+")) {
         ctx.buildConstraintViolationWithTemplate(
           String.format("invalid name %s", bar.name())
-        .addPropertyNode("name").addConstraintViolation();
+        ).addPropertyNode("name").addConstraintViolation();
         return false;
       }
       return true;
