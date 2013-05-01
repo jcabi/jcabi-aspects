@@ -72,9 +72,11 @@ public class Resource {
   and <<<equals(Object)>>>):
 
 +--
-@Loggable(Loggable.DEBUG)
-public class Foo {
-  // all methods of the class will be logged
+public class Resource {
+  @Loggable(Loggable.DEBUG)
+  public class Foo {
+    // all methods of the class will be logged
+  }
 }
 +--
 
@@ -87,9 +89,11 @@ public class Foo {
   can change time unit as well:
 
 +--
-@Loggable(limit = 200, unit = TimeUnit.MILLISECONDS)
-public void run() {
-  // something that should not take more than 200 msec
+public class Resource {
+  @Loggable(limit = 200, unit = TimeUnit.MILLISECONDS)
+  public void run() {
+    // something that should not take more than 200 msec
+  }
 }
 +--
 
@@ -97,14 +101,37 @@ public void run() {
   execution is done, but also when it is just started:
 
 +--
-@Loggable(prepend = true)
-public void run() {
-  // something that takes too long
+public class Resource {
+  @Loggable(prepend = true)
+  public void run() {
+    // something that takes too long
+  }
 }
 +--
 
   In this case two log lines will be recorded, one when the method is
   just started and another one when it returns the output.
+
+  Since version 0.7.18 you can ignore certain exception types. They won't
+  be logged when thrown and won't polute the log. Sometimes exceptions don't
+  mean fatal errors and should not be visible in logs, for example in
+  JAX-RS applications where
+  {{{http://docs.oracle.com/javaee/6/api/javax/ws/rs/WebApplicationException.html}<<<WebApplicationException>>>}}
+  is used to redirect a user
+  to another page and is not an indicator of an application error:
+
++--
+@Path("/")
+public class JaxRsResource {
+  @GET
+  @Loggable(ignore = WebApplicationException.class)
+  public String get() {
+    if (/* not a logged in user */) {
+      throw new WebApplicationException(Response.seeOther(/* URI */));
+    }
+  }
+}
++--
 
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.

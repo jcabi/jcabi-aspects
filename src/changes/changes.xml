@@ -31,6 +31,21 @@
  -->
 <document xmlns="http://maven.apache.org/changes/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
     <body>
+        <release version="0.7.18" date="1 May 2013" description="bug fixes in @Loggable">
+            <action dev="yegor" issue="234" type="add">
+                @Cacheable.FlushBefore and @Cacheable.FlushAfter replaced
+                @Cacheable.Flush
+            </action>
+            <action dev="yegor" issue="227" type="add">
+                full stack trace is reported when waiting for a thread
+            </action>
+            <action dev="yegor" issue="209" type="add">
+                thread name is reported when waiting
+            </action>
+            <action dev="yegor" issue="207" type="add">
+                default time limit set to one minute
+            </action>
+        </release>
         <release version="0.7.17" date="8 Apr 2013" description="better behavior of @Loggable">
             <action dev="yegor" issue="200" type="add">
                 "ignore" attribute added to @Loggable annotation to allow
