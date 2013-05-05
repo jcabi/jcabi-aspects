@@ -179,8 +179,13 @@ public final class MethodLogger {
                 MethodLogger.log(
                     level,
                     type,
-                    new StringBuilder(Mnemos.toText(point, annotation.trim()))
-                        .append(": entered").toString()
+                    new StringBuilder(
+                        Mnemos.toText(
+                            point,
+                            annotation.trim(),
+                            annotation.skipArgs()
+                        )
+                    ).append(": entered").toString()
                 );
             }
             final Object result = point.proceed();
@@ -188,11 +193,20 @@ public final class MethodLogger {
             final boolean over = nano > annotation.unit().toNanos(limit);
             if (MethodLogger.enabled(level, type) || over) {
                 final StringBuilder msg = new StringBuilder();
-                msg.append(Mnemos.toText(point, annotation.trim()))
-                    .append(':');
+                msg.append(
+                    Mnemos.toText(
+                        point,
+                        annotation.trim(),
+                        annotation.skipArgs()
+                    )
+                ).append(':');
                 if (!method.getReturnType().equals(Void.TYPE)) {
                     msg.append(' ').append(
-                        Mnemos.toText(result, annotation.trim())
+                        Mnemos.toText(
+                            result,
+                            annotation.trim(),
+                            annotation.skipResult()
+                        )
                     );
                 }
                 msg.append(Logger.format(" in %[nano]s", nano));
@@ -216,7 +230,11 @@ public final class MethodLogger {
                     method.getDeclaringClass(),
                     Logger.format(
                         "%s: thrown %s out of %s#%s[%d] in %[nano]s",
-                        Mnemos.toText(point, annotation.trim()),
+                        Mnemos.toText(
+                            point,
+                            annotation.trim(),
+                            annotation.skipArgs()
+                        ),
                         Mnemos.toText(ex),
                         trace.getClassName(),
                         trace.getMethodName(),
@@ -326,7 +344,7 @@ public final class MethodLogger {
                 Logger.warn(
                     method.getDeclaringClass(),
                     "%s: takes more than %[ms]s, %[ms]s already, thread=%s/%s",
-                    Mnemos.toText(this.point, true),
+                    Mnemos.toText(this.point, true, this.annotation.skipArgs()),
                     TimeUnit.MILLISECONDS.convert(threshold, unit),
                     TimeUnit.MILLISECONDS.convert(age, unit),
                     this.thread.getName(),
@@ -335,7 +353,7 @@ public final class MethodLogger {
                 Logger.debug(
                     method.getDeclaringClass(),
                     "%s: thread %s/%s stacktrace: %s",
-                    Mnemos.toText(this.point, true),
+                    Mnemos.toText(this.point, true, this.annotation.skipArgs()),
                     this.thread.getName(),
                     this.thread.getState(),
                     MethodLogger.textualize(this.thread.getStackTrace())

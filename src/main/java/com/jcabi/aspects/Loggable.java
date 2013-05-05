@@ -158,4 +158,16 @@ public @interface Loggable {
      */
     Class<? extends Throwable>[] ignore() default { };
 
+    /**
+     * Skip logging of result, replacing it with dots?
+     * @since 0.7.19
+     */
+    boolean skipResult() default false;
+
+    /**
+     * Skip logging of arguments, replacing them all with dots?
+     * @since 0.7.19
+     */
+    boolean skipArgs() default false;
+
 }

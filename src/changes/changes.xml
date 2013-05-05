@@ -31,6 +31,12 @@
  -->
 <document xmlns="http://maven.apache.org/changes/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
     <body>
+        <release version="0.7.19" date="?" description="extra features in @Loggable, some fixes">
+            <action dev="yegor" issue="240" type="add">
+                @Loggable.skipArgs and @Loggable.skipResult arguments
+                for more compact logging
+            </action>
+        </release>
         <release version="0.7.18" date="1 May 2013" description="bug fixes in @Loggable">
             <action dev="yegor" issue="234" type="add">
                 @Cacheable.FlushBefore and @Cacheable.FlushAfter replaced

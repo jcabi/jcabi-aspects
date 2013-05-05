@@ -58,7 +58,7 @@ public final class MnemosTest {
         };
         for (Object[] pair : pairs) {
             MatcherAssert.assertThat(
-                Mnemos.toText(pair[0], false),
+                Mnemos.toText(pair[0], false, false),
                 Matchers.equalTo(pair[1].toString())
             );
         }
@@ -77,7 +77,7 @@ public final class MnemosTest {
                     public String toString() {
                         throw new IllegalArgumentException("boom");
                     }
-                }, true
+                }, true, false
             ),
             Matchers.equalTo(
                 // @checkstyle LineLength (1 line)

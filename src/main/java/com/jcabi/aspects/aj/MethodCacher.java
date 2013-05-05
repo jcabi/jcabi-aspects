@@ -198,7 +198,7 @@ public final class MethodCacher {
                     Logger.debug(
                         method.getDeclaringClass(),
                         "%s: %s:%s removed from cache %s",
-                        Mnemos.toText(method, point.getArgs(), true),
+                        Mnemos.toText(method, point.getArgs(), true, false),
                         key,
                         removed,
                         when
@@ -265,7 +265,7 @@ public final class MethodCacher {
          */
         @Override
         public String toString() {
-            return Mnemos.toText(this.cached, true);
+            return Mnemos.toText(this.cached, true, false);
         }
         /**
          * Get a result through the tunnel.
@@ -299,8 +299,10 @@ public final class MethodCacher {
                     Logger.debug(
                         type,
                         "%s: %s cached in %[ms]s, %s",
-                        Mnemos.toText(method, this.point.getArgs(), true),
-                        Mnemos.toText(this.cached, true),
+                        Mnemos.toText(
+                            method, this.point.getArgs(), true, false
+                        ),
+                        Mnemos.toText(this.cached, true, false),
                         System.currentTimeMillis() - start,
                         suffix
                     );
@@ -357,7 +359,7 @@ public final class MethodCacher {
          */
         @Override
         public String toString() {
-            return Mnemos.toText(this.method, this.arguments, true);
+            return Mnemos.toText(this.method, this.arguments, true, false);
         }
         /**
          * {@inheritDoc}
@@ -397,7 +399,7 @@ public final class MethodCacher {
                     type,
                     "%s: %s from cache (hit #%d, %[ms]s old)",
                     this,
-                    Mnemos.toText(result, true),
+                    Mnemos.toText(result, true, false),
                     hit,
                     System.currentTimeMillis() - this.start
                 );

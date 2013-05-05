@@ -42,12 +42,18 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @version $Id$
  */
 @Immutable
+@SuppressWarnings("PMD.TooManyMethods")
 final class Mnemos {
 
     /**
      * Comma between elements.
      */
     private static final String COMMA = ", ";
+
+    /**
+     * Dots that skip.
+     */
+    private static final String DOTS = "...";
 
     /**
      * Private ctor, it's a utility class.
@@ -60,15 +66,30 @@ final class Mnemos {
      * Make a string out of point.
      * @param point The point
      * @param trim Shall we trim long texts?
+     * @param skip Shall we skip details and output just dots?
      * @return Text representation of it
+     * @since 0.7.19
      */
     public static String toText(final ProceedingJoinPoint point,
-        final boolean trim) {
+        final boolean trim, final boolean skip) {
         return Mnemos.toText(
             MethodSignature.class.cast(point.getSignature()).getMethod(),
             point.getArgs(),
-            trim
+            trim, skip
         );
+    }
+
+    /**
+     * Make a string out of point.
+     * @param point The point
+     * @param trim Shall we trim long texts?
+     * @return Text representation of it
+     * @deprecated Use toText(Method,Object,boolean,boolean) instead
+     */
+    @Deprecated
+    public static String toText(final ProceedingJoinPoint point,
+        final boolean trim) {
+        return Mnemos.toText(point, trim, false);
     }
 
     /**
@@ -81,7 +102,35 @@ final class Mnemos {
     @Deprecated
     public static String toString(final ProceedingJoinPoint point,
         final boolean trim) {
-        return Mnemos.toText(point, trim);
+        return Mnemos.toText(point, trim, false);
+    }
+
+    /**
+     * Make a string out of method.
+     * @param method The method
+     * @param args Actual arguments of the method
+     * @param trim Shall we trim long texts?
+     * @param skip Shall we skip details and output just dots?
+     * @return Text representation of it
+     * @since 0.7.19
+     * @checkstyle ParameterNumber (4 lines)
+     */
+    public static String toText(final Method method, final Object[] args,
+        final boolean trim, final boolean skip) {
+        final StringBuilder log = new StringBuilder();
+        log.append('#').append(method.getName()).append('(');
+        if (skip) {
+            log.append(Mnemos.DOTS);
+        } else {
+            for (int pos = 0; pos < args.length; ++pos) {
+                if (pos > 0) {
+                    log.append(Mnemos.COMMA);
+                }
+                log.append(Mnemos.toText(args[pos], trim, false));
+            }
+        }
+        log.append(')');
+        return log.toString();
     }
 
     /**
@@ -90,19 +139,12 @@ final class Mnemos {
      * @param args Actual arguments of the method
      * @param trim Shall we trim long texts?
      * @return Text representation of it
+     * @deprecated Use toText(Method,Object,boolean,boolean) instead
      */
+    @Deprecated
     public static String toText(final Method method, final Object[] args,
         final boolean trim) {
-        final StringBuilder log = new StringBuilder();
-        log.append('#').append(method.getName()).append('(');
-        for (int pos = 0; pos < args.length; ++pos) {
-            if (pos > 0) {
-                log.append(Mnemos.COMMA);
-            }
-            log.append(Mnemos.toText(args[pos], trim));
-        }
-        log.append(')');
-        return log.toString();
+        return Mnemos.toText(method, args, trim, false);
     }
 
     /**
@@ -116,7 +158,7 @@ final class Mnemos {
     @Deprecated
     public static String toString(final Method method, final Object[] args,
         final boolean trim) {
-        return Mnemos.toText(method, args, trim);
+        return Mnemos.toText(method, args, trim, false);
     }
 
     /**
@@ -138,13 +180,18 @@ final class Mnemos {
      * Make a string out of an object.
      * @param arg The argument
      * @param trim Shall we trim long texts?
+     * @param skip Shall we skip it with dots?
      * @return Text representation of it
+     * @since 0.7.19
      */
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    public static String toText(final Object arg, final boolean trim) {
+    public static String toText(final Object arg, final boolean trim,
+        final boolean skip) {
         final StringBuilder text = new StringBuilder();
         if (arg == null) {
             text.append("NULL");
+        } else if (skip) {
+            text.append(Mnemos.DOTS);
         } else {
             try {
                 final String mnemo = Mnemos.toText(arg);
@@ -172,11 +219,23 @@ final class Mnemos {
      * @param arg The argument
      * @param trim Shall we trim long texts?
      * @return Text representation of it
+     * @deprecated Use toText(Object,boolean,boolean) instead
+     */
+    @Deprecated
+    public static String toText(final Object arg, final boolean trim) {
+        return Mnemos.toText(arg, trim, false);
+    }
+
+    /**
+     * Make a string out of an object.
+     * @param arg The argument
+     * @param trim Shall we trim long texts?
+     * @return Text representation of it
      * @deprecated Use toText() instead
      */
     @Deprecated
     public static String toString(final Object arg, final boolean trim) {
-        return Mnemos.toText(arg, trim);
+        return Mnemos.toText(arg, trim, false);
     }
 
     /**
@@ -193,7 +252,7 @@ final class Mnemos {
                 if (bldr.length() > 1) {
                     bldr.append(Mnemos.COMMA);
                 }
-                bldr.append(Mnemos.toText(item, false));
+                bldr.append(Mnemos.toText(item, false, false));
             }
             text = bldr.append(']').toString();
         } else {
