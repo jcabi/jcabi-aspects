@@ -153,7 +153,7 @@ public final class MethodValidator {
                 )
             );
         }
-        if (method.isAnnotationPresent(Valid.class)) {
+        if (method.isAnnotationPresent(Valid.class) && result != null) {
             final Set<ConstraintViolation<Object>> violations =
                 this.validate(result);
             if (!violations.isEmpty()) {
@@ -208,7 +208,8 @@ public final class MethodValidator {
                         )
                     );
                 }
-            } else if (antn.annotationType().equals(Valid.class)) {
+            } else if (antn.annotationType().equals(Valid.class)
+                && arg != null) {
                 violations.addAll(this.validate(arg));
             } else if (antn.annotationType().equals(Pattern.class)) {
                 if (arg != null && !arg.toString()
