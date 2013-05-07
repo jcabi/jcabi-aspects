@@ -33,7 +33,7 @@
     <parent>
         <groupId>com.jcabi</groupId>
         <artifactId>jcabi</artifactId>
-        <version>0.7.19</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>jcabi-aspects</artifactId>
     <packaging>jar</packaging>
