@@ -102,14 +102,14 @@ public @interface Loggable {
     int TRACE = 0;
 
     /**
-     * INFO level of logging.
-     */
-    int INFO = 1;
-
-    /**
      * DEBUG level of logging.
      */
-    int DEBUG = 2;
+    int DEBUG = 1;
+
+    /**
+     * INFO level of logging.
+     */
+    int INFO = 2;
 
     /**
      * WARN level of logging.

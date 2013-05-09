@@ -31,9 +31,13 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Logs all exceptions thrown out of a method.
@@ -70,12 +74,29 @@ public final class ExceptionsLogger {
         // @checkstyle IllegalCatch (1 line)
         } catch (Throwable ex) {
             Logger.warn(
-                this,
+                this.targetize(point),
                 "%[exception]s",
                 ex
             );
             throw ex;
         }
+    }
+
+    /**
+     * Calculate log target.
+     * @param point Proceeding point
+     * @return The target
+     */
+    private Object targetize(final JoinPoint point) {
+        Object tgt;
+        final Method method = MethodSignature.class
+            .cast(point.getSignature()).getMethod();
+        if (Modifier.isStatic(method.getModifiers())) {
+            tgt = method.getDeclaringClass();
+        } else {
+            tgt = point.getTarget();
+        }
+        return tgt;
     }
 
 }
