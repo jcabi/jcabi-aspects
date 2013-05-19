@@ -64,6 +64,26 @@ public interface Tv {
     int FIVE = 5;
 
     /**
+     * Six.
+     */
+    int SIX = 6;
+
+    /**
+     * Seven.
+     */
+    int SEVEN = 7;
+
+    /**
+     * Eight.
+     */
+    int EIGHT = 8;
+
+    /**
+     * Nine.
+     */
+    int NINE = 9;
+
+    /**
      * Ten.
      */
     int TEN = 10;
