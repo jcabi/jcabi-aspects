@@ -56,7 +56,11 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @checkstyle IllegalThrows (500 lines)
  */
 @Aspect
-@SuppressWarnings({ "PMD.AvoidCatchingThrowable", "PMD.TooManyMethods" })
+@SuppressWarnings({
+    "PMD.AvoidCatchingThrowable",
+    "PMD.TooManyMethods",
+    "PMD.CyclomaticComplexity"
+})
 public final class MethodLogger {
 
     /**
@@ -223,7 +227,8 @@ public final class MethodLogger {
             return result;
         // @checkstyle IllegalCatch (1 line)
         } catch (Throwable ex) {
-            if (!MethodLogger.contains(annotation.ignore(), ex)) {
+            if (!MethodLogger.contains(annotation.ignore(), ex)
+                && !ex.getClass().isAnnotationPresent(Loggable.Quiet.class)) {
                 final StackTraceElement trace = ex.getStackTrace()[0];
                 MethodLogger.log(
                     Loggable.ERROR,

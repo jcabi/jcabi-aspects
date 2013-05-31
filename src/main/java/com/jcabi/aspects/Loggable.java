@@ -84,6 +84,9 @@ import java.util.concurrent.TimeUnit;
  *   }
  * }</pre>
  *
+ * <p>Since version 0.8 you can mark some exceptions as "always to be ignored",
+ * using {@link Loggable.Quiet} annotation.
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.2
@@ -154,6 +157,10 @@ public @interface Loggable {
 
     /**
      * List of exception types, which should not be logged if thrown.
+     *
+     * <p>You can also mark some exception types as "always to be ignored",
+     * using {@link Loggable.Quiet} annotation.
+     *
      * @since 0.7.17
      */
     Class<? extends Throwable>[] ignore() default { };
@@ -169,5 +176,25 @@ public @interface Loggable {
      * @since 0.7.19
      */
     boolean skipArgs() default false;
+
+    /**
+     * Identifies an exception that is never logged by {@link Loggable} if/when
+     * being thrown out of an annotated method.
+     *
+     * <p>Sometimes exceptions are used as flow control instruments (although
+     * this may be considered as a bad practice in most casts). In such
+     * situations we don't want to flood log console with error messages. One
+     * of the options is to use {@link Loggable#ignore()} attribute to list
+     * all exception types that should be ignored. However, this
+     * {@link Loggable.Quiet} annotation is more convenient when we want to
+     * ignore one specific exception type in all situations.
+     *
+     * @since 0.8
+     */
+    @Documented
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    public @interface Quiet {
+    }
 
 }
