@@ -31,6 +31,7 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Loggable;
 import com.jcabi.log.Logger;
+import com.jcabi.log.VerboseRunnable;
 import java.lang.reflect.Method;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -86,15 +87,17 @@ public final class MethodLogger {
             )
         );
         this.monitor.scheduleWithFixedDelay(
-            new Runnable() {
-                @Override
-                public void run() {
-                    for (MethodLogger.Marker marker
-                        : MethodLogger.this.running) {
-                        marker.monitor();
+            new VerboseRunnable(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        for (MethodLogger.Marker marker
+                            : MethodLogger.this.running) {
+                            marker.monitor();
+                        }
                     }
                 }
-            },
+            ),
             1, 1, TimeUnit.SECONDS
         );
     }
@@ -328,7 +331,7 @@ public final class MethodLogger {
          * @param pnt Joint point
          * @param annt Annotation
          */
-        public Marker(final ProceedingJoinPoint pnt, final Loggable annt) {
+        protected Marker(final ProceedingJoinPoint pnt, final Loggable annt) {
             this.point = pnt;
             this.annotation = annt;
         }
@@ -386,15 +389,7 @@ public final class MethodLogger {
          */
         @Override
         public int compareTo(final Marker marker) {
-            int diff;
-            if (marker.started > this.started) {
-                diff = 1;
-            } else if (marker.started < this.started) {
-                diff = -1;
-            } else {
-                diff = 0;
-            }
-            return diff;
+            return Long.compare(this.started, marker.started);
         }
     }
 

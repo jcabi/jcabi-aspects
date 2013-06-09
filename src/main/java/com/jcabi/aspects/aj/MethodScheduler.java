@@ -42,6 +42,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -63,7 +65,7 @@ public final class MethodScheduler {
      * @checkstyle LineLength (2 lines)
      */
     private final transient ConcurrentMap<Object, MethodScheduler.Service> services =
-        new ConcurrentHashMap<Object, MethodScheduler.Service>();
+        new ConcurrentHashMap<Object, MethodScheduler.Service>(0);
 
     /**
      * Instantiate a new routine task.
@@ -128,6 +130,8 @@ public final class MethodScheduler {
     /**
      * Running service.
      */
+    @ToString
+    @EqualsAndHashCode(of = { "executor", "object" })
     private static final class Service implements Closeable {
         /**
          * Running scheduled service.
@@ -151,7 +155,7 @@ public final class MethodScheduler {
          * @param obj Object
          * @param annt Annotation
          */
-        public Service(final Runnable runnable, final Object obj,
+        protected Service(final Runnable runnable, final Object obj,
             final ScheduleWithFixedDelay annt) {
             this.object = obj;
             this.executor = Executors.newSingleThreadScheduledExecutor(

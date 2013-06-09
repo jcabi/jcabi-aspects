@@ -71,7 +71,7 @@ public final class MethodCacher {
      * @checkstyle LineLength (2 lines)
      */
     private final transient ConcurrentMap<MethodCacher.Key, MethodCacher.Tunnel> tunnels =
-        new ConcurrentHashMap<MethodCacher.Key, MethodCacher.Tunnel>();
+        new ConcurrentHashMap<MethodCacher.Key, MethodCacher.Tunnel>(0);
 
     /**
      * Service that cleans cache.
@@ -256,7 +256,7 @@ public final class MethodCacher {
          * @param pnt Joint point
          * @param akey The key related to it
          */
-        public Tunnel(final ProceedingJoinPoint pnt, final Key akey) {
+        protected Tunnel(final ProceedingJoinPoint pnt, final Key akey) {
             this.point = pnt;
             this.key = akey;
         }
@@ -348,7 +348,7 @@ public final class MethodCacher {
          * Public ctor.
          * @param point Joint point
          */
-        public Key(final ProceedingJoinPoint point) {
+        protected Key(final ProceedingJoinPoint point) {
             this.method = MethodSignature.class
                 .cast(point.getSignature()).getMethod();
             this.target = MethodCacher.Key.targetize(point);
