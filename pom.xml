@@ -66,6 +66,10 @@
             <artifactId>hibernate-validator</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <sourceDirectory>${project.build.directory}/filtered-sources/java</sourceDirectory>
