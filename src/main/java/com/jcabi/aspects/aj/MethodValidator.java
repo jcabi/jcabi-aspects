@@ -328,7 +328,8 @@ public final class MethodValidator {
         } catch (javax.validation.ValidationException ex) {
             Logger.error(
                 MethodValidator.class,
-                "JSR-303 validator failed to initialize: %s",
+                // @checkstyle LineLength (1 line)
+                "JSR-303 validator failed to initialize: %s (see http://www.jcabi.com/jcabi-aspects/jsr-303.html)",
                 ex.getMessage()
             );
         // @checkstyle IllegalCatch (1 line)
