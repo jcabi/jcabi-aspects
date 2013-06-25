@@ -172,7 +172,13 @@ public final class MethodLogger {
     private Object wrap(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation) throws Throwable {
         if (Thread.interrupted()) {
-            throw new IllegalStateException("thread interrupted");
+            throw new IllegalStateException(
+                String.format(
+                    "thread '%s' in group '%s' interrupted",
+                    Thread.currentThread().getName(),
+                    Thread.currentThread().getThreadGroup().getName()
+                )
+            );
         }
         final long start = System.nanoTime();
         final MethodLogger.Marker marker =
