@@ -143,6 +143,7 @@ public final class MethodValidator {
         if (method.isAnnotationPresent(NotNull.class) && result == null
             && !method.getReturnType().equals(Void.TYPE)) {
             throw new ConstraintViolationException(
+                method.getAnnotation(NotNull.class).message(),
                 new HashSet<ConstraintViolation<?>>(
                     Arrays.<ConstraintViolation<?>>asList(
                         MethodValidator.violation(
