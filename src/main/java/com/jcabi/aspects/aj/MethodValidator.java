@@ -170,7 +170,7 @@ public final class MethodValidator {
      */
     private void validate(final JoinPoint point, final Annotation[][] params) {
         final Set<ConstraintViolation<?>> violations =
-            new HashSet<ConstraintViolation<?>>();
+            new HashSet<ConstraintViolation<?>>(0);
         for (int pos = 0; pos < params.length; ++pos) {
             violations.addAll(
                 this.validate(pos, point.getArgs()[pos], params[pos])
@@ -198,7 +198,7 @@ public final class MethodValidator {
     private Set<ConstraintViolation<?>> validate(final int pos,
         final Object arg, final Annotation[] annotations) {
         final Set<ConstraintViolation<?>> violations =
-            new HashSet<ConstraintViolation<?>>();
+            new HashSet<ConstraintViolation<?>>(0);
         for (Annotation antn : annotations) {
             if (antn.annotationType().equals(NotNull.class)) {
                 if (arg == null) {
