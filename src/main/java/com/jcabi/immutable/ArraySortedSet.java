@@ -81,6 +81,17 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
                 return 1;
             }
         };
+        /**
+         * Reverse comparator.
+         * @param <T> Type of argument
+         */
+        @Immutable
+        final class Reverse<T> implements ArraySortedSet.Comparator<T> {
+            @Override
+            public int compare(final T left, final T right) {
+                return Comparable.class.cast(right).compareTo(left);
+            }
+        };
     };
 
     /**
