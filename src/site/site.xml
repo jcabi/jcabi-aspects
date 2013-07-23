@@ -40,6 +40,7 @@
         </menu>
         <menu name="Examples">
             <item name="JSR-303 validations" href="jsr-303.html"/>
+            <item name="Immutable collections" href="immutable-collections.html"/>
         </menu>
         <menu name="Annotations">
             <item name="@Cacheable" href="annotation-cacheable.html"/>
