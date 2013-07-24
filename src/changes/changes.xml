@@ -31,7 +31,7 @@
  -->
 <document xmlns="http://maven.apache.org/changes/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
     <body>
-        <release version="0.7.21" date="23 Jul 2013" description="com.jcabi.immutable">
+        <release version="0.7.21" date="24 Jul 2013" description="com.jcabi.immutable">
             <action dev="yegor" issue="274" type="add">
                 com.jcabi.immutable.* classes added
             </action>
