@@ -123,4 +123,21 @@ public final class ArrayMapTest {
         );
     }
 
+    /**
+     * ArrayMap can sort entries.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void sortsEntries() throws Exception {
+        MatcherAssert.assertThat(
+            new ArrayMap<Integer, String>()
+                .with(Tv.FIVE, "")
+                .with(Tv.FOUR, "")
+                .with(1, "")
+                .with(Tv.TEN, "")
+                .entrySet(),
+            Matchers.hasToString("[1=, 4=, 5=, 10=]")
+        );
+    }
+
 }
