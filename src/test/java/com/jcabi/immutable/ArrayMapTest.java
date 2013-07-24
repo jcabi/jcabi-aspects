@@ -106,4 +106,21 @@ public final class ArrayMapTest {
         );
     }
 
+    /**
+     * ArrayMap can sort keys.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void sortsKeys() throws Exception {
+        MatcherAssert.assertThat(
+            new ArrayMap<Integer, String>()
+                .with(Tv.FIVE, "")
+                .with(Tv.FOUR, "")
+                .with(1, "")
+                .with(Tv.TEN, "")
+                .keySet(),
+            Matchers.hasToString("[1, 4, 5, 10]")
+        );
+    }
+
 }
