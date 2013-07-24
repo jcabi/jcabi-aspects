@@ -37,7 +37,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -304,7 +304,7 @@ public final class ArrayMap<K, V> implements ConcurrentMap<K, V> {
     @Override
     @NotNull
     public Set<K> keySet() {
-        final Set<K> keys = new HashSet<K>(this.entries.length);
+        final Set<K> keys = new LinkedHashSet<K>(this.entries.length);
         for (Map.Entry<K, V> entry : this.entries) {
             keys.add(entry.getKey());
         }
@@ -331,7 +331,7 @@ public final class ArrayMap<K, V> implements ConcurrentMap<K, V> {
     @NotNull
     public Set<Map.Entry<K, V>> entrySet() {
         return Collections.unmodifiableSet(
-            new HashSet<Map.Entry<K, V>>(Arrays.asList(this.entries))
+            new LinkedHashSet<Map.Entry<K, V>>(Arrays.asList(this.entries))
         );
     }
 
