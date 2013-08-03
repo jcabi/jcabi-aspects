@@ -395,7 +395,13 @@ public final class MethodLogger {
          */
         @Override
         public int compareTo(final Marker marker) {
-            return Long.compare(this.started, marker.started);
+            int cmp = 0;
+            if (this.started < marker.started) {
+                cmp = 1;
+            } else if (this.started > marker.started) {
+                cmp = -1;
+            }
+            return cmp;
         }
     }
 
