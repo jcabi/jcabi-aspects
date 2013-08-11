@@ -154,7 +154,8 @@ public final class MethodScheduler {
         protected Service(final Runnable runnable, final Object obj,
             final ScheduleWithFixedDelay annt) {
             this.object = obj;
-            this.executor = Executors.newSingleThreadScheduledExecutor(
+            this.executor = Executors.newScheduledThreadPool(
+                annt.threads(),
                 new VerboseThreads(this.object)
             );
             this.executor.scheduleWithFixedDelay(

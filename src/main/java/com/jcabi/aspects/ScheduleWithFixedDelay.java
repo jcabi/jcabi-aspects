@@ -87,4 +87,9 @@ public @interface ScheduleWithFixedDelay {
      */
     TimeUnit unit() default TimeUnit.MINUTES;
 
+    /**
+     * Total number of fixed threads.
+     */
+    int threads() default 1;
+
 }
