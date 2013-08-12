@@ -158,18 +158,18 @@ public final class MethodScheduler {
                 annt.threads(),
                 new VerboseThreads(this.object)
             );
-            this.executor.scheduleWithFixedDelay(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        runnable.run();
-                        MethodScheduler.Service.this.counter.incrementAndGet();
-                    }
-                },
-                annt.delay(),
-                annt.delay(),
-                annt.unit()
-            );
+            final Runnable job = new Runnable() {
+                @Override
+                public void run() {
+                    runnable.run();
+                    MethodScheduler.Service.this.counter.incrementAndGet();
+                }
+            };
+            for (int thread = 0; thread < annt.threads(); ++thread) {
+                this.executor.scheduleWithFixedDelay(
+                    job, annt.delay(), annt.delay(), annt.unit()
+                );
+            }
             Logger.info(
                 this.object,
                 "scheduled for execution with %d %s interval",
