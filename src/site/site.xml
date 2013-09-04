@@ -30,7 +30,24 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  -->
 <project xmlns="http://maven.apache.org/DECORATION/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0     http://maven.apache.org/xsd/decoration-1.0.0.xsd" name="jcabi-aspects">
+    <skin>
+        <groupId>com.jcabi</groupId>
+        <artifactId>jcabi-maven-skin</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </skin>
+    <bannerLeft>
+        <name>jcabi</name>
+        <src>http://img.jcabi.com/logo.png</src>
+        <href>http://www.jcabi.com/</href>
+        <width>200</width>
+        <height>48</height>
+    </bannerLeft>
+    <googleAnalyticsAccountId>UA-1963507-23</googleAnalyticsAccountId>
     <body>
+        <head>
+            <link href="http://img.jcabi.com/favicon.ico" rel="shortcut icon"/>
+            <link href="https://plus.google.com/u/0/114792568016408327418?rel=author" rel="author"/>
+        </head>
         <menu ref="parent"/>
         <menu name="Overview">
             <item name="Introduction" href="index.html"/>
