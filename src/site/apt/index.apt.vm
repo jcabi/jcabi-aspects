@@ -73,6 +73,11 @@ public class MyResource {
      via {{{../jcabi-log/apidocs-${project.version}/com/jcabi/log/Logger.html}<<<Logger>>>}} to SLF4J,
      {{{./annotation-logexceptions.html}read more}};
 
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/Quietly.html}<<<@Quietly>>>}}:
+     all exceptions thrown out of the method are automatically logged and swallowed
+     via {{{../jcabi-log/apidocs-${project.version}/com/jcabi/log/Logger.html}<<<Logger>>>}} to SLF4J,
+     {{{./annotation-quietly.html}read more}};
+
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Loggable.html}<<<@Loggable>>>}}:
      every call to a method is automatically logged via
      {{{../jcabi-log/apidocs-${project.version}/com/jcabi/log/Logger.html}<<<Logger>>>}},
