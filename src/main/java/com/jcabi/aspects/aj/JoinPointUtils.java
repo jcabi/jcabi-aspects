@@ -29,52 +29,41 @@
  */
 package com.jcabi.aspects.aj;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.log.Logger;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.reflect.MethodSignature;
 
 /**
- * Logs all exceptions thrown out of a method.
+ * Utility methods that deal with JoinPoints.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.1.10
- * @see com.jcabi.aspects.LogExceptions
- * @checkstyle IllegalThrows (500 lines)
+ * @since 0.7.22
  */
-@Aspect
-@Immutable
-public final class ExceptionsLogger {
+final class JoinPointUtils {
 
     /**
-     * Catch exception and log it.
-     *
-     * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
-     *
-     * @param point Joint point
-     * @return The result of call
-     * @throws Throwable If something goes wrong inside
+     * Utility class constructor.
      */
-    @Around(
-        // @checkstyle StringLiteralsConcatenation (2 lines)
-        "execution(* * (..))"
-        + " && @annotation(com.jcabi.aspects.LogExceptions)"
-    )
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    public Object wrap(final ProceedingJoinPoint point) throws Throwable {
-        try {
-            return point.proceed();
-        // @checkstyle IllegalCatch (1 line)
-        } catch (Throwable ex) {
-            Logger.warn(
-                JoinPointUtils.targetize(point),
-                "%[exception]s",
-                ex
-            );
-            throw ex;
+    private JoinPointUtils() {
+        // intentionally left empty
+    }
+
+    /**
+     * Calculate log target.
+     * @param point Proceeding point
+     * @return The target
+     */
+    protected static Object targetize(final JoinPoint point) {
+        Object tgt;
+        final Method method = MethodSignature.class
+            .cast(point.getSignature()).getMethod();
+        if (Modifier.isStatic(method.getModifiers())) {
+            tgt = method.getDeclaringClass();
+        } else {
+            tgt = point.getTarget();
         }
+        return tgt;
     }
 }
