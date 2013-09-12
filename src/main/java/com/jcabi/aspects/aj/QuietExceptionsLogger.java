@@ -36,9 +36,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 /**
- * Logs all exceptions thrown out of a method.
+ * Logs all exceptions thrown out of a method and swallow exception.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @since 0.1.10
  * @see com.jcabi.aspects.LogExceptions
@@ -46,10 +46,12 @@ import org.aspectj.lang.annotation.Aspect;
  */
 @Aspect
 @Immutable
-public final class ExceptionsLogger {
+public final class QuietExceptionsLogger {
 
     /**
-     * Catch exception and log it.
+     * Catch exception and log it, the exception will be swallowed.
+     *
+     * <p>This aspect should be used only on void returning methods.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
      * it backward compatible.
@@ -61,12 +63,13 @@ public final class ExceptionsLogger {
     @Around(
         // @checkstyle StringLiteralsConcatenation (2 lines)
         "execution(* * (..))"
-        + " && @annotation(com.jcabi.aspects.LogExceptions)"
+        + " && @annotation(com.jcabi.aspects.Quietly)"
     )
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
+        Object result = null;
         try {
-            return point.proceed();
+            result = point.proceed();
         // @checkstyle IllegalCatch (1 line)
         } catch (Throwable ex) {
             Logger.warn(
@@ -74,7 +77,7 @@ public final class ExceptionsLogger {
                 "%[exception]s",
                 ex
             );
-            throw ex;
         }
+        return result;
     }
 }

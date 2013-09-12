@@ -27,54 +27,32 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.aspects.aj;
+package com.jcabi.aspects;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.log.Logger;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Logs all exceptions thrown out of a method.
+ * Log all exceptions thrown out of this method and swallow them.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * <p>This annotation should be applied only to methods that return void, in
+ * other cases the behavior might be unexpected.
+ *
+ * @todo #1 This annotation has to be on methods returning void only.
+ *  A compile-time APT processor needs to be created that will verify that only
+ *  void methods have @Quietly annotations. In runtime it should throw an
+ *  exception before executing of method body, if its return type is not void.
+ *
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.1.10
- * @see com.jcabi.aspects.LogExceptions
- * @checkstyle IllegalThrows (500 lines)
+ * @since 0.7.22
+ * @see <a href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
  */
-@Aspect
-@Immutable
-public final class ExceptionsLogger {
-
-    /**
-     * Catch exception and log it.
-     *
-     * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
-     *
-     * @param point Joint point
-     * @return The result of call
-     * @throws Throwable If something goes wrong inside
-     */
-    @Around(
-        // @checkstyle StringLiteralsConcatenation (2 lines)
-        "execution(* * (..))"
-        + " && @annotation(com.jcabi.aspects.LogExceptions)"
-    )
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    public Object wrap(final ProceedingJoinPoint point) throws Throwable {
-        try {
-            return point.proceed();
-        // @checkstyle IllegalCatch (1 line)
-        } catch (Throwable ex) {
-            Logger.warn(
-                JoinPointUtils.targetize(point),
-                "%[exception]s",
-                ex
-            );
-            throw ex;
-        }
-    }
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface Quietly {
 }

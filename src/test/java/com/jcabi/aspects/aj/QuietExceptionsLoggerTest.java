@@ -29,52 +29,49 @@
  */
 package com.jcabi.aspects.aj;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.log.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
- * Logs all exceptions thrown out of a method.
+ * Tests for {@see QuietExceptionsLogger}.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @since 0.1.10
- * @see com.jcabi.aspects.LogExceptions
  * @checkstyle IllegalThrows (500 lines)
  */
-@Aspect
-@Immutable
-public final class ExceptionsLogger {
+@SuppressWarnings("PMD.AvoidCatchingThrowable")
+public final class QuietExceptionsLoggerTest {
+    /**
+     * Call method that doesn't throw exception.
+     * @throws Throwable In case of error.
+     */
+    @Test
+    public void withoutException() throws Throwable {
+        final ProceedingJoinPoint point = Mockito
+            .mock(ProceedingJoinPoint.class);
+        new QuietExceptionsLogger().wrap(point);
+        Mockito.verify(point).proceed();
+    }
 
     /**
-     * Catch exception and log it.
-     *
-     * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
-     *
-     * @param point Joint point
-     * @return The result of call
-     * @throws Throwable If something goes wrong inside
+     * Call method that throws exception.
+     * @throws Throwable In case of error.
      */
-    @Around(
-        // @checkstyle StringLiteralsConcatenation (2 lines)
-        "execution(* * (..))"
-        + " && @annotation(com.jcabi.aspects.LogExceptions)"
-    )
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    public Object wrap(final ProceedingJoinPoint point) throws Throwable {
-        try {
-            return point.proceed();
-        // @checkstyle IllegalCatch (1 line)
-        } catch (Throwable ex) {
-            Logger.warn(
-                JoinPointUtils.targetize(point),
-                "%[exception]s",
-                ex
-            );
-            throw ex;
-        }
+    @Test
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
+    public void exception() throws Throwable {
+        final ProceedingJoinPoint point = Mockito
+            .mock(ProceedingJoinPoint.class);
+        Mockito.when(point.proceed()).thenThrow(new Exception());
+        Mockito.when(point.getTarget()).thenReturn(new Object());
+        final MethodSignature signature = Mockito.mock(MethodSignature.class);
+        Mockito.when(point.getSignature()).thenReturn(signature);
+        Mockito.when(signature.getMethod())
+            .thenReturn(this.getClass().getMethods()[0]);
+        new QuietExceptionsLogger().wrap(point);
+        Mockito.verify(point).proceed();
     }
 }

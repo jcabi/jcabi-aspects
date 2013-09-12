@@ -1,0 +1,65 @@
+ ------
+ Logging exceptions thrown out of Java methods
+ ------
+ Krzysztof Krason
+ ------
+ 2013-09-11
+ ------
+
+~~
+~~ Copyright (c) 2011, jcabi.com
+~~ All rights reserved.
+~~
+~~ Redistribution and use in source and binary forms, with or without
+~~ modification, are permitted provided that the following conditions
+~~ are met: 1) Redistributions of source code must retain the above
+~~ copyright notice, this list of conditions and the following
+~~ disclaimer. 2) Redistributions in binary form must reproduce the above
+~~ copyright notice, this list of conditions and the following
+~~ disclaimer in the documentation and/or other materials provided
+~~ with the distribution. 3) Neither the name of the jcabi.com nor
+~~ the names of its contributors may be used to endorse or promote
+~~ products derived from this software without specific prior written
+~~ permission.
+~~
+~~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+~~ NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+~~ FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+~~ THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+~~ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+~~ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+~~ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+~~ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+~~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+~~ OF THE POSSIBILITY OF SUCH DAMAGE.
+~~
+
+Logging Exceptions Thrown out of Java Methods and Swallowing Them
+
+  Annotate your methods with
+  {{{./apidocs-${project.version}/com/jcabi/aspects/Quietly.html}<<<@Quietly>>>}}
+  annotation and every exception thrown out of the method
+  will not be propagated, but it will be logged through SLF4J:
+
++--
+public class Resource {
+  private Object content;
+
+  @Quietly
+  public void load(URL url) {
+    return this.content = url.openConnection().getContent();
+  }
+}
++--
+
+  If an exception occurs it will not be thrown to the caller and it will
+  be logged through {{{http://www.slf4j.org/}SLF4J}} logging facility.
+
+  Also, take a look at {{{./annotation-logexceptions.html}<<<@LogExceptions>>>}}
+  annotation which does the same but it it propagates exceptions thrown to the
+  caller.
+
+  The mechanism is implemented with AOP/AspectJ. Read
+  {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.
