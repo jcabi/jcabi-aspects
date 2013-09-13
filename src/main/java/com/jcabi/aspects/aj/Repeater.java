@@ -65,6 +65,7 @@ public final class Repeater {
             .getMethod()
             .getAnnotation(RetryOnFailure.class);
         int attempt = 0;
+        final long begin = System.nanoTime();
         while (true) {
             final long start = System.nanoTime();
             try {
@@ -78,21 +79,18 @@ public final class Repeater {
                 if (rof.verbose()) {
                     Logger.warn(
                         this,
-                        "attempt #%d of %d failed in %[nano]s: %[exception]s",
-                        attempt,
-                        rof.attempts(),
-                        System.nanoTime() - start,
-                        ex
+                        // @checkstyle LineLength (1 line)
+                        "attempt #%d of %d failed in %[nano]s (%[nano]s waiting already): %[exception]s",
+                        attempt, rof.attempts(), System.nanoTime() - start,
+                        System.nanoTime() - begin, ex
                     );
                 } else {
                     Logger.warn(
                         this,
-                        "attempt #%d/%d failed with %[type]s in %[nano]s: %s",
-                        attempt,
-                        rof.attempts(),
-                        ex,
-                        System.nanoTime() - start,
-                        Repeater.message(ex)
+                        // @checkstyle LineLength (1 line)
+                        "attempt #%d/%d failed with %[type]s in %[nano]s (%[nano]s in total): %s",
+                        attempt, rof.attempts(), ex, System.nanoTime() - start,
+                        System.nanoTime() - begin, Repeater.message(ex)
                     );
                 }
                 if (attempt >= rof.attempts()) {
