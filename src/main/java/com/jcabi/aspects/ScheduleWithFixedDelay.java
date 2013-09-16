@@ -88,6 +88,16 @@ public @interface ScheduleWithFixedDelay {
     TimeUnit unit() default TimeUnit.MINUTES;
 
     /**
+     * How long to wait for the task to finish after shutdown in limit units.
+     */
+    int limit() default 2;
+
+    /**
+     * Time units of time limit.
+     */
+    TimeUnit limitUnit() default TimeUnit.HOURS;
+
+    /**
      * Total number of fixed threads.
      */
     int threads() default 1;
