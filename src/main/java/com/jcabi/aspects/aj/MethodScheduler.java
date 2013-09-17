@@ -153,7 +153,11 @@ public final class MethodScheduler {
         /**
          * How long to wait for the task to finish.
          */
-        private final transient long limit;
+        private final transient long await;
+        /**
+         * Shutdown attempts count.
+         */
+        private final transient long attempts;
         /**
          * Public ctor.
          * @param runnable The runnable to schedule
@@ -167,7 +171,8 @@ public final class MethodScheduler {
                 annt.threads(),
                 new VerboseThreads(this.object)
             );
-            this.limit = annt.limitUnit().toMillis(annt.limit());
+            this.await = annt.awaitUnit().toMillis(annt.await());
+            this.attempts = annt.shutdownAttempts();
             final Runnable job = new Runnable() {
                 @Override
                 public void run() {
@@ -194,22 +199,22 @@ public final class MethodScheduler {
         public void close() throws IOException {
             this.executor.shutdown();
             final long begin = System.currentTimeMillis();
-            int attempt = 0;
             try {
                 while (true) {
-                    if (this.executor.awaitTermination(2, TimeUnit.SECONDS)
-                        || attempt >= MethodScheduler.SHUTDOWN_ATTEMPTS) {
+                    if (this.executor.awaitTermination(1, TimeUnit.SECONDS)) {
                         break;
                     }
                     final long age = System.currentTimeMillis() - begin;
-                    if (age > this.limit) {
-                        this.executor.shutdownNow();
-                        attempt += 1;
+                    if (age > this.await) {
+                        break;
                     }
                     Logger.info(
                         this, "waiting %[ms]s for threads termination", age
                     );
-                    TimeUnit.SECONDS.sleep(1);
+                }
+                for (int attempt = 0; attempt < attempts; ++attempt) {
+                    this.executor.shutdownNow();
+                    this.executor.awaitTermination(1, TimeUnit.SECONDS);
                 }
                 if (!this.executor.isTerminated()) {
                     throw new IllegalStateException(

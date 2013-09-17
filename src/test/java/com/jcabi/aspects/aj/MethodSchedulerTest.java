@@ -48,11 +48,11 @@ import org.junit.Test;
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class MethodSchedulerTest {
     /**
-     * Annotated class should gracefully finish the task.
+     * MethodScheduler should wait for the task to finish.
      * @throws Exception When there is a problem.
      */
     @Test
-    public void withinLimit() throws Exception {
+    public void shortRunningTaskShouldBeAllowedToFinish() throws Exception {
         final ShortRun target = new ShortRun();
         Thread.sleep(1);
         target.close();
@@ -60,11 +60,11 @@ public final class MethodSchedulerTest {
     }
 
     /**
-     * Annotated class should be interrupted if it is running to long.
+     * MethodScheduler should interrupt long running task.
      * @throws Exception When there is a problem.
      */
     @Test
-    public void limitExceeded() throws Exception {
+    public void interruptLongRunningTask() throws Exception {
         final LongRun target = new LongRun();
         target.close();
         MatcherAssert.assertThat(target.finished, Matchers.equalTo(false));
@@ -103,7 +103,7 @@ public final class MethodSchedulerTest {
      * Long running task.
      */
     @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.NANOSECONDS,
-        limit = Tv.TEN, limitUnit = TimeUnit.SECONDS)
+        await = Tv.TEN, awaitUnit = TimeUnit.SECONDS)
     private static class LongRun implements Runnable, Closeable {
         /**
          * Have we finished?
