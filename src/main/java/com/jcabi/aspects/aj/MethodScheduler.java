@@ -59,11 +59,6 @@ import org.aspectj.lang.annotation.Before;
 public final class MethodScheduler {
 
     /**
-     * How many times to try to do a shutdownNow on executor.
-     */
-    private static final int SHUTDOWN_ATTEMPTS = 3;
-
-    /**
      * Objects and their running services.
      * @checkstyle LineLength (2 lines)
      */
@@ -212,7 +207,7 @@ public final class MethodScheduler {
                         this, "waiting %[ms]s for threads termination", age
                     );
                 }
-                for (int attempt = 0; attempt < attempts; ++attempt) {
+                for (int attempt = 0; attempt < this.attempts; ++attempt) {
                     this.executor.shutdownNow();
                     this.executor.awaitTermination(1, TimeUnit.SECONDS);
                 }
