@@ -59,6 +59,11 @@ import org.aspectj.lang.annotation.Before;
 public final class MethodScheduler {
 
     /**
+     * How many times to try to do a shutdownNow on executor.
+     */
+    private static final int SHUTDOWN_ATTEMPTS = 3;
+
+    /**
      * Objects and their running services.
      * @checkstyle LineLength (2 lines)
      */
@@ -189,43 +194,42 @@ public final class MethodScheduler {
         public void close() throws IOException {
             this.executor.shutdown();
             final long begin = System.currentTimeMillis();
-            while (true) {
-                if (this.terminated()) {
-                    break;
-                }
-                final long age = System.currentTimeMillis() - begin;
-                if (age > this.limit) {
-                    break;
-                }
-                Logger.info(
-                    this, "waiting %[ms]s for threads termination", age
-                );
-                try {
+            int attempt = 0;
+            try {
+                while (true) {
+                    if (this.executor.awaitTermination(2, TimeUnit.SECONDS)
+                        || attempt >= MethodScheduler.SHUTDOWN_ATTEMPTS) {
+                        break;
+                    }
+                    final long age = System.currentTimeMillis() - begin;
+                    if (age > this.limit) {
+                        this.executor.shutdownNow();
+                        attempt += 1;
+                    }
+                    Logger.info(
+                        this, "waiting %[ms]s for threads termination", age
+                    );
                     TimeUnit.SECONDS.sleep(1);
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                    throw new IllegalStateException(ex);
                 }
+                if (!this.executor.isTerminated()) {
+                    throw new IllegalStateException(
+                        Logger.format(
+                            "failed to shutdown %[type]s of %[type]s",
+                            this.executor,
+                            this.object
+                        )
+                    );
+                }
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                throw new IllegalStateException(ex);
             }
-            this.executor.shutdownNow();
             Logger.info(
                 this.object,
                 "execution stopped after %[ms]s and %d tick(s)",
                 System.currentTimeMillis() - this.start,
                 this.counter.get()
             );
-        }
-        /**
-         * Is it already terminated?
-         * @return TRUE if terminated
-         */
-        private boolean terminated() {
-            try {
-                return this.executor.awaitTermination(1, TimeUnit.SECONDS);
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-                throw new IllegalStateException(ex);
-            }
         }
     }
 
