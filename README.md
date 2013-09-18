@@ -24,9 +24,11 @@ You need just this dependency:
 <dependency>
   <groupId>com.jcabi</groupId>
   <artifactId>jcabi-aspects</artifactId>
-  <version>0.8</version>
+  <version>0.9</version>
 </dependency>
 ```
+
+Full list of AOP annotations is [here](http://www.jcabi.com/jcabi-aspects/).
 
 ## Questions?
 
