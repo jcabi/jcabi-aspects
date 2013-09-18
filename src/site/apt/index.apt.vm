@@ -122,7 +122,7 @@ public class MyResource {
       <plugin>
         <groupId>com.jcabi</groupId>
         <artifactId>jcabi-maven-plugin</artifactId>
-        <version>${project.version}</version>
+        <version>0.8</version>
         <executions>
           <execution>
             <goals>
