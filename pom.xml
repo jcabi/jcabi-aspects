@@ -39,6 +39,20 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>jcabi-aspects</name>
+    <description>Collection of convenient and useful Java annotations</description>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/jcabi/jcabi-aspects/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <system>rultor</system>
+        <url>http://www.rultor.com/s/jcabi</url>
+    </ciManagement>
+    <scm>
+        <connection>scm:git:github.com:jcabi/jcabi-aspects.git</connection>
+        <developerConnection>scm:git:github.com:jcabi/jcabi-aspects.git</developerConnection>
+        <url>https://github.com/jcabi/jcabi-aspects</url>
+    </scm>
     <dependencies>
         <dependency>
             <groupId>com.jcabi</groupId>
