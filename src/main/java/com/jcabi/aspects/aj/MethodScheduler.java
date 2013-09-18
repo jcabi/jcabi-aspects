@@ -146,6 +146,14 @@ public final class MethodScheduler {
          */
         private final transient long start = System.currentTimeMillis();
         /**
+         * How long to wait for the task to finish.
+         */
+        private final transient long await;
+        /**
+         * Shutdown attempts count.
+         */
+        private final transient long attempts;
+        /**
          * Public ctor.
          * @param runnable The runnable to schedule
          * @param obj Object
@@ -158,6 +166,8 @@ public final class MethodScheduler {
                 annt.threads(),
                 new VerboseThreads(this.object)
             );
+            this.await = annt.awaitUnit().toMillis(annt.await());
+            this.attempts = annt.shutdownAttempts();
             final Runnable job = new Runnable() {
                 @Override
                 public void run() {
@@ -183,9 +193,25 @@ public final class MethodScheduler {
         @Override
         public void close() throws IOException {
             this.executor.shutdown();
-            if (!this.terminated()) {
-                this.executor.shutdownNow();
-                if (!this.terminated()) {
+            final long begin = System.currentTimeMillis();
+            try {
+                while (true) {
+                    if (this.executor.awaitTermination(1, TimeUnit.SECONDS)) {
+                        break;
+                    }
+                    final long age = System.currentTimeMillis() - begin;
+                    if (age > this.await) {
+                        break;
+                    }
+                    Logger.info(
+                        this, "waiting %[ms]s for threads termination", age
+                    );
+                }
+                for (int attempt = 0; attempt < this.attempts; ++attempt) {
+                    this.executor.shutdownNow();
+                    this.executor.awaitTermination(1, TimeUnit.SECONDS);
+                }
+                if (!this.executor.isTerminated()) {
                     throw new IllegalStateException(
                         Logger.format(
                             "failed to shutdown %[type]s of %[type]s",
@@ -194,6 +220,9 @@ public final class MethodScheduler {
                         )
                     );
                 }
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                throw new IllegalStateException(ex);
             }
             Logger.info(
                 this.object,
@@ -201,19 +230,6 @@ public final class MethodScheduler {
                 System.currentTimeMillis() - this.start,
                 this.counter.get()
             );
-        }
-        /**
-         * Is it already terminated?
-         * @return TRUE if terminated
-         */
-        private boolean terminated() {
-            try {
-                // @checkstyle MagicNumber (1 line)
-                return this.executor.awaitTermination(5, TimeUnit.SECONDS);
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-                throw new IllegalStateException(ex);
-            }
         }
     }
 
