@@ -58,9 +58,9 @@ public class FooTest {
 }
 +--
 
-  The above code will execute run() method in 15 threads (15 separate
-  invocations) as a result process()) method of Foo class will also be executed
-  in those threads.
+  The above code will execute <<<run()>>> method in 15 threads (15 separate
+  invocations) as a result <<<process()>>>) method of <<<Foo>>> class will also
+  be executed in those threads.
 
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.

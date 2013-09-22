@@ -31,6 +31,7 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Parallel;
+import com.jcabi.log.VerboseThreads;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -39,6 +40,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -71,18 +73,18 @@ public final class Parallelizer {
      */
     @Around("execution(@com.jcabi.aspects.Parallel void * (..))")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
-        final int threadCount = ((MethodSignature) point.getSignature())
+        final int total = ((MethodSignature) point.getSignature())
             .getMethod().getAnnotation(Parallel.class).threads();
         final Collection<Callable<Throwable>> callables =
-            new ArrayList<Callable<Throwable>>();
+            new ArrayList<Callable<Throwable>>(total);
         final CountDownLatch start = new CountDownLatch(1);
-        for (int thread = 0; thread < threadCount; ++thread) {
+        for (int thread = 0; thread < total; ++thread) {
             callables.add(this.callable(point, start));
         }
         final ExecutorService executor = Executors
-            .newFixedThreadPool(threadCount);
+            .newFixedThreadPool(total, new VerboseThreads());
         final List<Future<Throwable>> futures =
-            new ArrayList<Future<Throwable>>();
+            new ArrayList<Future<Throwable>>(total);
         for (Callable<Throwable> callable : callables) {
             futures.add(executor.submit(callable));
         }
@@ -90,6 +92,8 @@ public final class Parallelizer {
         for (Future<Throwable> future : futures) {
             final Throwable exception = future.get();
             if (exception != null) {
+                // @checkstyle MagicNumber (1 line)
+                executor.awaitTermination(5, TimeUnit.SECONDS);
                 executor.shutdownNow();
                 throw exception;
             }
@@ -109,14 +113,15 @@ public final class Parallelizer {
         return new Callable<Throwable>() {
             @Override
             public Throwable call() {
+                Throwable result = null;
                 try {
                     start.await();
                     point.proceed();
                     // @checkstyle IllegalCatchCheck (1 line)
                 } catch (Throwable ex) {
-                    return ex;
+                    result = ex;
                 }
-                return null;
+                return result;
             }
         };
     }
