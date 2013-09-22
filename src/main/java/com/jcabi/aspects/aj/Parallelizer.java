@@ -31,6 +31,7 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Parallel;
+import com.jcabi.aspects.Tv;
 import com.jcabi.log.VerboseThreads;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,7 +52,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.7.22
+ * @since 0.10
  * @see com.jcabi.aspects.Parallel
  */
 @Aspect
@@ -92,8 +93,7 @@ public final class Parallelizer {
         for (Future<Throwable> future : futures) {
             final Throwable exception = future.get();
             if (exception != null) {
-                // @checkstyle MagicNumber (1 line)
-                executor.awaitTermination(5, TimeUnit.SECONDS);
+                executor.awaitTermination(Tv.FIVE, TimeUnit.SECONDS);
                 executor.shutdownNow();
                 throw exception;
             }

@@ -43,7 +43,7 @@ import java.lang.annotation.Target;
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.7.22
+ * @since 0.10
  * @todo #6 This annotation has to be on methods returning void only.
  *  A compile-time APT processor needs to be created that will verify that only
  *  void methods have @Parallel annotations. In runtime it should throw an
