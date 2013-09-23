@@ -95,6 +95,10 @@ public class MyResource {
      terminates a long-running method if it exceeds an allowed time frame,
      {{{./annotation-timeable.html}read more}};
 
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/Parallel.html}<<<@Parallel>>>}}:
+     executes method in multiple threads
+     {{{./annotation-parallel.html}read more}};
+
   All you need to do to start using our AOP aspects is to
   add these two artifacts to your <<<pom.xml>>>:
 
