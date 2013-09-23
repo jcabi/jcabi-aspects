@@ -83,7 +83,7 @@
         </dependency>
     </dependencies>
     <build>
-        <sourceDirectory>${project.build.directory}/filtered-sources/java</sourceDirectory>
+        <!-- <sourceDirectory>${project.build.directory}/filtered-sources/java</sourceDirectory> -->
         <resources>
             <resource>
                 <directory>${basedir}/src/main/java</directory>

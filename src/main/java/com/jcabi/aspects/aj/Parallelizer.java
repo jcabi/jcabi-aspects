@@ -154,24 +154,25 @@ public final class Parallelizer {
     /**
      * Exception that encapsulates all exceptions thrown from threads.
      */
-    public static final class ParallelException extends Exception {
-
+    private static final class ParallelException extends Exception {
+        /**
+         * Serialization marker.
+         */
+        private static final long serialVersionUID = 0x8743ef363febc422L;
         /**
          * Next parallel exception.
          */
         private final transient ParallelException next;
-
         /**
          * Constructor.
          * @param cause Cause of the current exception.
          * @param nxt Following exception.
          */
-        public ParallelException(final Throwable cause,
+        protected ParallelException(final Throwable cause,
             final ParallelException nxt) {
             super(cause);
             this.next = nxt;
         }
-
         /**
          * Get next parallel exception.
          * @return Next exception.
@@ -180,4 +181,5 @@ public final class Parallelizer {
             return this.next;
         }
     }
+
 }
