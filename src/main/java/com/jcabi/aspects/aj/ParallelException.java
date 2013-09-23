@@ -29,49 +29,37 @@
  */
 package com.jcabi.aspects.aj;
 
-import com.jcabi.aspects.Parallel;
-import com.jcabi.aspects.Tv;
-import java.util.concurrent.atomic.AtomicInteger;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
-
 /**
- * Tests for {@link Parallelizer}.
+ * Exception that encapsulates all exceptions thrown from concurrent threads.
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.7.22
+ * @since 0.10
+ * @see Parallelizer
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
-public final class ParallelizerTest {
+public final class ParallelException extends Exception {
+
     /**
-     * Method should execute in multiple threads.
+     * Next parallel exception.
      */
-    @Test
-    public void executesInParallel() {
-        final AtomicInteger count = new AtomicInteger(Tv.TEN);
-        new Runnable() {
-            @Override
-            @Parallel(threads = Tv.TEN)
-            public void run() {
-                count.decrementAndGet();
-            }
-        } .run();
-        MatcherAssert.assertThat(count.get(), Matchers.equalTo(0));
+    private final transient ParallelException next;
+
+    /**
+     * Constructor.
+     * @param cause Cause of the current exception.
+     * @param nxt Following exception.
+     */
+    public ParallelException(final Throwable cause,
+        final ParallelException nxt) {
+        super(cause);
+        this.next = nxt;
     }
 
     /**
-     * Method should have exception propagated.
+     * Get next parallel exception.
+     * @return Next exception.
      */
-    @Test(expected = ParallelException.class)
-    public void throwsCatchedException() {
-        new Runnable() {
-            @Override
-            @Parallel(threads = Tv.TEN)
-            public void run() {
-                throw new IllegalArgumentException();
-            }
-        } .run();
+    public ParallelException getNext() {
+        return this.next;
     }
 }

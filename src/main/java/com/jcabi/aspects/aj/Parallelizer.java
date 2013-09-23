@@ -31,17 +31,16 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Parallel;
-import com.jcabi.aspects.Tv;
 import com.jcabi.log.VerboseThreads;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -69,11 +68,12 @@ public final class Parallelizer {
      *
      * @param point Joint point
      * @return The result of call
-     * @throws Throwable If something goes wrong inside
+     * @throws ParallelException If something goes wrong inside
      * @checkstyle IllegalThrowsCheck (4 lines)
      */
     @Around("execution(@com.jcabi.aspects.Parallel void * (..))")
-    public Object wrap(final ProceedingJoinPoint point) throws Throwable {
+    public Object wrap(final ProceedingJoinPoint point)
+        throws ParallelException {
         final int total = ((MethodSignature) point.getSignature())
             .getMethod().getAnnotation(Parallel.class).threads();
         final Collection<Callable<Throwable>> callables =
@@ -90,15 +90,39 @@ public final class Parallelizer {
             futures.add(executor.submit(callable));
         }
         start.countDown();
+        final Collection<Throwable> failures = new ArrayList<Throwable>(0);
         for (Future<Throwable> future : futures) {
-            final Throwable exception = future.get();
-            if (exception != null) {
-                executor.awaitTermination(Tv.FIVE, TimeUnit.SECONDS);
-                executor.shutdownNow();
-                throw exception;
+            final Throwable exception;
+            try {
+                exception = future.get();
+                if (exception != null) {
+                    failures.add(exception);
+                }
+            } catch (InterruptedException ex) {
+                failures.add(ex);
+            } catch (ExecutionException ex) {
+                failures.add(ex);
             }
         }
+        if (!failures.isEmpty()) {
+            throw this.exceptions(failures);
+        }
         return null;
+    }
+
+    /**
+     * Create parallel exception.
+     * @param failures List of exceptions from threads.
+     * @return Aggregated exceptions.
+     */
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+    private ParallelException exceptions(
+        final Collection<Throwable> failures) {
+        ParallelException current = null;
+        for (Throwable failure : failures) {
+            current = new ParallelException(failure, current);
+        }
+        return current;
     }
 
     /**
