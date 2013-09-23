@@ -32,6 +32,7 @@ package com.jcabi.aspects.aj;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.RetryOnFailure;
 import com.jcabi.log.Logger;
+import java.lang.reflect.Method;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -60,10 +61,10 @@ public final class Repeater {
     @Around("execution(* * (..)) && @annotation(com.jcabi.aspects.RetryOnFailure)")
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
-        final RetryOnFailure rof = MethodSignature.class
+        final Method method = MethodSignature.class
             .cast(point.getSignature())
-            .getMethod()
-            .getAnnotation(RetryOnFailure.class);
+            .getMethod();
+        final RetryOnFailure rof = method.getAnnotation(RetryOnFailure.class);
         int attempt = 0;
         final long begin = System.nanoTime();
         while (true) {
@@ -78,17 +79,19 @@ public final class Repeater {
                 ++attempt;
                 if (rof.verbose()) {
                     Logger.warn(
-                        this,
+                        JoinPointUtils.targetize(point),
                         // @checkstyle LineLength (1 line)
-                        "attempt #%d of %d failed in %[nano]s (%[nano]s waiting already): %[exception]s",
+                        "#%s(): attempt #%d of %d failed in %[nano]s (%[nano]s waiting already) with %[exception]s",
+                        method.getName(),
                         attempt, rof.attempts(), System.nanoTime() - start,
                         System.nanoTime() - begin, ex
                     );
                 } else {
                     Logger.warn(
-                        this,
+                        JoinPointUtils.targetize(point),
                         // @checkstyle LineLength (1 line)
-                        "attempt #%d/%d failed with %[type]s in %[nano]s (%[nano]s in total): %s",
+                        "#%s(): attempt #%d/%d failed with %[type]s in %[nano]s (%[nano]s in total): %s",
+                        method.getName(),
                         attempt, rof.attempts(), ex, System.nanoTime() - start,
                         System.nanoTime() - begin, Repeater.message(ex)
                     );
