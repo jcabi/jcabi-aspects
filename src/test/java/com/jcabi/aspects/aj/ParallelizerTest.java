@@ -64,7 +64,7 @@ public final class ParallelizerTest {
     /**
      * Method should have exception propagated.
      */
-    @Test(expected = Parallelizer.ParallelException.class)
+    @Test(expected = RuntimeException.class)
     public void throwsCatchedException() {
         new Runnable() {
             @Override
