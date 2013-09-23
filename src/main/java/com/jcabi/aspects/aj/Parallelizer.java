@@ -34,6 +34,7 @@ import com.jcabi.aspects.Parallel;
 import com.jcabi.log.VerboseThreads;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
@@ -90,7 +91,7 @@ public final class Parallelizer {
             futures.add(executor.submit(callable));
         }
         start.countDown();
-        final Collection<Throwable> failures = new ArrayList<Throwable>(0);
+        final Collection<Throwable> failures = new LinkedList<Throwable>();
         for (Future<Throwable> future : futures) {
             final Throwable exception;
             try {
@@ -148,5 +149,35 @@ public final class Parallelizer {
                 return result;
             }
         };
+    }
+
+    /**
+     * Exception that encapsulates all exceptions thrown from threads.
+     */
+    public static final class ParallelException extends Exception {
+
+        /**
+         * Next parallel exception.
+         */
+        private final transient ParallelException next;
+
+        /**
+         * Constructor.
+         * @param cause Cause of the current exception.
+         * @param nxt Following exception.
+         */
+        public ParallelException(final Throwable cause,
+            final ParallelException nxt) {
+            super(cause);
+            this.next = nxt;
+        }
+
+        /**
+         * Get next parallel exception.
+         * @return Next exception.
+         */
+        public ParallelException getNext() {
+            return this.next;
+        }
     }
 }

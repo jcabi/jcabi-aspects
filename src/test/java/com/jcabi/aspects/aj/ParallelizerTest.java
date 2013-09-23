@@ -41,7 +41,7 @@ import org.junit.Test;
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.7.22
+ * @since 0.10
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class ParallelizerTest {
@@ -64,7 +64,7 @@ public final class ParallelizerTest {
     /**
      * Method should have exception propagated.
      */
-    @Test(expected = ParallelException.class)
+    @Test(expected = Parallelizer.ParallelException.class)
     public void throwsCatchedException() {
         new Runnable() {
             @Override
