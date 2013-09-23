@@ -39,10 +39,12 @@
 Useful Java AOP Aspects
 
   This module contains a collection of useful AOP aspects, which
-  allow you to modify the behavior of a Java application without
-  writing a line of code. For example, you may want to retry HTTP
-  resource downloading in case of failure. You can implement a full
-  <<<do/while>>> cycle yourself, or you can annotate your method with
+  allow you to modify behavior of a Java application without
+  writing lots of duplicate code.
+
+  For example, you may want to retry HTTP
+  resource downloading in case of a failure. You can implement a full
+  <<<do/while>>> cycle yourself or you can annotate the method with
   {{{./apidocs-${project.version}/com/jcabi/aspects/RetryOnFailure.html}<<<@RetryOnFailure>>>}}
   and let one of our AOP aspects do the work for you:
 
@@ -60,44 +62,34 @@ public class MyResource {
   framework. At the moment we offer the following aspects
   (we extend this list every few months):
 
-   * {{{./apidocs-${project.version}/com/jcabi/aspects/Cacheable.html}<<<@Cacheable>>>}}:
-     method results are cached for a few seconds to optimize performance,
-     {{{./annotation-cacheable.html}read more}};
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/Cacheable.html}<<<@Cacheable>>>}} —
+     chackes method results in {{{./annotation-cacheable.html}memory}}
 
-   * {{{./apidocs-${project.version}/com/jcabi/aspects/Immutable.html}<<<@Immutable>>>}}:
-     checks for class immutability in runtime,
-     {{{./annotation-immutable.html}read more}};
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/Immutable.html}<<<@Immutable>>>}} —
+     guarantees class true {{{./annotation-immutable.html}immutability}} in runtime
 
-   * {{{./apidocs-${project.version}/com/jcabi/aspects/LogExceptions.html}<<<@LogExceptions>>>}}:
-     all exceptions thrown out of the method are automatically logged
-     via {{{../jcabi-log/apidocs-${project.version}/com/jcabi/log/Logger.html}<<<Logger>>>}} to SLF4J,
-     {{{./annotation-logexceptions.html}read more}};
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/LogExceptions.html}<<<@LogExceptions>>>}} —
+     logs {{{./annotation-logexceptions.html}exceptions}}
+     via {{{../jcabi-log/apidocs-${project.version}/com/jcabi/log/Logger.html}<<<Logger>>>}}
 
-   * {{{./apidocs-${project.version}/com/jcabi/aspects/Quietly.html}<<<@Quietly>>>}}:
-     all exceptions thrown out of the method are automatically logged and swallowed
-     via {{{../jcabi-log/apidocs-${project.version}/com/jcabi/log/Logger.html}<<<Logger>>>}} to SLF4J,
-     {{{./annotation-quietly.html}read more}};
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/Quietly.html}<<<@Quietly>>>}} —
+     swallows all exceptions {{{./annotation-quietly.html}quietly}}
 
-   * {{{./apidocs-${project.version}/com/jcabi/aspects/Loggable.html}<<<@Loggable>>>}}:
-     every call to a method is automatically logged via
-     {{{../jcabi-log/apidocs-${project.version}/com/jcabi/log/Logger.html}<<<Logger>>>}},
-     {{{./annotation-loggable.html}read more}};
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/Loggable.html}<<<@Loggable>>>}} —
+     logs method {{{./annotation-loggable.html}calls}} via
+     {{{../jcabi-log/apidocs-${project.version}/com/jcabi/log/Logger.html}<<<Logger>>>}}
 
-   * {{{./apidocs-${project.version}/com/jcabi/aspects/RetryOnFailure.html}<<<@RetryOnFailure>>>}}:
-     method call is repeated a few times if exception is thrown,
-     {{{./annotation-retryonfailure.html}read more}};
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/Parallel.html}<<<@Parallel>>>}} —
+     executes method in {{{./annotation-parallel.html}multiple threads}}
 
-   * {{{./apidocs-${project.version}/com/jcabi/aspects/ScheduleWithFixedDelay.html}<<<@ScheduleWithFixedDelay>>>}}:
-     turns a Runnable class into self-starting scheduled thread,
-     {{{./annotation-schedulewithfixeddelay.html}read more}};
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/RetryOnFailure.html}<<<@RetryOnFailure>>>}} —
+     retries method execution {{{./annotation-retryonfailure.html}a few times}}
 
-   * {{{./apidocs-${project.version}/com/jcabi/aspects/Timeable.html}<<<@Timeable>>>}}:
-     terminates a long-running method if it exceeds an allowed time frame,
-     {{{./annotation-timeable.html}read more}};
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/ScheduleWithFixedDelay.html}<<<@ScheduleWithFixedDelay>>>}} —
+     schedules class execution in {{{./annotation-schedulewithfixeddelay.html}multiple threads}}
 
-   * {{{./apidocs-${project.version}/com/jcabi/aspects/Parallel.html}<<<@Parallel>>>}}:
-     executes method in multiple threads
-     {{{./annotation-parallel.html}read more}};
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/Timeable.html}<<<@Timeable>>>}} —
+     interrupts a method if it exceeds {{{./annotation-timeable.html}an allowed time frame}}
 
   All you need to do to start using our AOP aspects is to
   add these two artifacts to your <<<pom.xml>>>:
