@@ -30,6 +30,7 @@
 package com.jcabi;
 
 import com.jcabi.aspects.Parallel;
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -57,6 +58,14 @@ public final class ParallelTest {
             }
         } .run();
         MatcherAssert.assertThat(cnt.get(), Matchers.equalTo(5));
+        new Callable<Integer>() {
+            @Override
+            @Parallel(threads = 5)
+            public Integer call() throws Exception {
+                return cnt.decrementAndGet();
+            }
+        } .call();
+        MatcherAssert.assertThat(cnt.get(), Matchers.equalTo(0));
     }
 
 }
