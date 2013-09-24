@@ -39,15 +39,12 @@ import java.lang.annotation.Target;
  * Execute annotated method in multiple threads.
  *
  * <p>This annotation should be applied only to methods that return void, in
- * other cases the behavior might be unexpected.
+ * other cases the behavior might be unexpected (because {@code NULL} will
+ * always be returned).
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @since 0.10
- * @todo #6 This annotation has to be on methods returning void only.
- *  A compile-time APT processor needs to be created that will verify that only
- *  void methods have @Parallel annotations. In runtime it should throw an
- *  exception before executing of method body, if its return type is not void.
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

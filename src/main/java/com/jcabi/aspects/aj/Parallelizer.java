@@ -72,7 +72,7 @@ public final class Parallelizer {
      * @throws ParallelException If something goes wrong inside
      * @checkstyle IllegalThrowsCheck (4 lines)
      */
-    @Around("execution(@com.jcabi.aspects.Parallel void * (..))")
+    @Around("execution(@com.jcabi.aspects.Parallel * * (..))")
     public Object wrap(final ProceedingJoinPoint point)
         throws ParallelException {
         final int total = ((MethodSignature) point.getSignature())
