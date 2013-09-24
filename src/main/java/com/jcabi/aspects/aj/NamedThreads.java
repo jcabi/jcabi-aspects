@@ -83,8 +83,7 @@ final class NamedThreads implements ThreadFactory {
             this,
             // @checkstyle LineLength (1 line)
             "jcabi-aspects ${project.version}/${buildNumber} started new daemon thread %s for %s",
-            this.name,
-            this.purpose
+            this.name, this.purpose
         );
         return thread;
     }

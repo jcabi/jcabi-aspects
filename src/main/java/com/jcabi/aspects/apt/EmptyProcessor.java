@@ -60,9 +60,9 @@ public final class EmptyProcessor extends AbstractProcessor {
         this.processingEnv.getMessager().printMessage(
             Diagnostic.Kind.NOTE,
             String.format(
-                "jcabi-aspects: APT #process() with %d annotation(s): %s",
-                annotations.size(),
-                annotations
+                // @checkstyle LineLength (1 line)
+                "jcabi-aspects ${project.version}/${buildNumber}: APT #process() with %d annotation(s): %s",
+                annotations.size(), annotations
             )
         );
         return false;
