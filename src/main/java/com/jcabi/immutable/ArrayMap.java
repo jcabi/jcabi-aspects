@@ -49,9 +49,13 @@ import javax.validation.constraints.NotNull;
 /**
  * Map on top of array.
  *
+ * <p>This class is truly immutable. This means that it never changes
+ * its encapsulated values and is annotated with {@code &#64;Immutable}
+ * annotation.
+ *
  * @param <K> Map key type
  * @param <V> Value key type
- * @author Yegor Bugayenko (yegor@woquo.com)
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
 @Immutable
@@ -96,7 +100,8 @@ public final class ArrayMap<K, V> implements ConcurrentMap<K, V> {
      * @param map The original map
      */
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    public ArrayMap(@NotNull final Map<K, V> map) {
+    public ArrayMap(@NotNull(message = "map can't be NULL")
+        final Map<K, V> map) {
         final SortedSet<ArrayMap.ImmutableEntry<K, V>> entrs =
             new TreeSet<ArrayMap.ImmutableEntry<K, V>>(
                 new ArrayMap.Cmp<K, V>()
@@ -113,7 +118,9 @@ public final class ArrayMap<K, V> implements ConcurrentMap<K, V> {
      * @param value The value
      * @return New map
      */
-    public ArrayMap<K, V> with(@NotNull final K key, @NotNull final V value) {
+    public ArrayMap<K, V> with(
+        @NotNull(message = "key can't be NULL") final K key,
+        @NotNull(message = "value can't be NULL") final V value) {
         final ConcurrentMap<K, V> map =
             new ConcurrentHashMap<K, V>(this.entries.length);
         map.putAll(this);
@@ -122,15 +129,48 @@ public final class ArrayMap<K, V> implements ConcurrentMap<K, V> {
     }
 
     /**
+     * Make a new one with these extra entries.
+     * @param ents Entries
+     * @return New map
+     * @since 0.11
+     */
+    public ArrayMap<K, V> with(
+        @NotNull(message = "new map can't be NULL") final Map<K, V> ents) {
+        final ConcurrentMap<K, V> map =
+            new ConcurrentHashMap<K, V>(this.entries.length);
+        map.putAll(this);
+        map.putAll(ents);
+        return new ArrayMap<K, V>(map);
+    }
+
+    /**
      * Make a new one without this key.
      * @param key The key
      * @return New map
      */
-    public ArrayMap<K, V> without(@NotNull final K key) {
+    public ArrayMap<K, V> without(
+        @NotNull(message = "collection of keys can't be NULL") final K key) {
         final ConcurrentMap<K, V> map =
             new ConcurrentHashMap<K, V>(this.entries.length);
         map.putAll(this);
         map.remove(key);
+        return new ArrayMap<K, V>(map);
+    }
+
+    /**
+     * Make a new one without these keys.
+     * @param keys The keys to remove
+     * @return New map
+     * @since 0.11
+     */
+    public ArrayMap<K, V> without(
+        @NotNull(message = "keys can't be NULL") final Collection<K> keys) {
+        final ConcurrentMap<K, V> map =
+            new ConcurrentHashMap<K, V>(this.entries.length);
+        map.putAll(this);
+        for (K key : keys) {
+            map.remove(key);
+        }
         return new ArrayMap<K, V>(map);
     }
 

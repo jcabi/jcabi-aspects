@@ -31,10 +31,10 @@ package com.jcabi.immutable;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import javax.validation.constraints.NotNull;
@@ -42,8 +42,12 @@ import javax.validation.constraints.NotNull;
 /**
  * Array as an object.
  *
+ * <p>This class is truly immutable. This means that it never changes
+ * its encapsulated values and is annotated with {@code &#64;Immutable}
+ * annotation.
+ *
  * @param <T> Value key type
- * @author Yegor Bugayenko (yegor@woquo.com)
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
 @Immutable
@@ -67,7 +71,8 @@ public final class Array<T> implements List<T> {
      * Public ctor.
      * @param list Original list
      */
-    public Array(@NotNull final Collection<T> list) {
+    public Array(
+        @NotNull(message = "list can't be NULL") final Collection<T> list) {
         this.values = (T[]) new Object[list.size()];
         list.toArray(this.values);
     }
@@ -87,8 +92,9 @@ public final class Array<T> implements List<T> {
      * @param value The value
      * @return New vector
      */
-    public Array<T> with(@NotNull final T value) {
-        final Collection<T> list = new LinkedList<T>();
+    public Array<T> with(
+        @NotNull(message = "value can't be NULL") final T value) {
+        final Collection<T> list = new ArrayList<T>(this.values.length + 1);
         list.addAll(Arrays.asList(this.values));
         list.add(value);
         return new Array<T>(list);
@@ -99,8 +105,11 @@ public final class Array<T> implements List<T> {
      * @param vals The values
      * @return New vector
      */
-    public Array<T> with(@NotNull final Collection<T> vals) {
-        final Collection<T> list = new LinkedList<T>();
+    public Array<T> with(
+        @NotNull(message = "values can't be NULL") final Collection<T> vals) {
+        final Collection<T> list = new ArrayList<T>(
+            this.values.length + vals.size()
+        );
         list.addAll(Arrays.asList(this.values));
         list.addAll(vals);
         return new Array<T>(list);
@@ -119,6 +128,30 @@ public final class Array<T> implements List<T> {
         System.arraycopy(this.values, 0, temp, 0, this.values.length);
         temp[pos] = value;
         return new Array<T>(temp);
+    }
+
+    /**
+     * Make a new array, without this element.
+     * @param idx The position to remove
+     * @return New vector
+     */
+    public Array<T> without(final int idx) {
+        if (idx >= this.values.length) {
+            throw new ArrayIndexOutOfBoundsException(
+                String.format(
+                    "index %d is out of bounds: [0..%d]",
+                    idx, this.values.length
+                )
+            );
+        }
+        final Collection<T> list = new ArrayList<T>(this.values.length - 1);
+        for (int pos = 0; pos < this.values.length; ++pos) {
+            if (pos == idx) {
+                continue;
+            }
+            list.add(this.values[pos]);
+        }
+        return new Array<T>(list);
     }
 
     /**

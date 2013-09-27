@@ -83,6 +83,7 @@
         </dependency>
     </dependencies>
     <build>
+        <!-- Comment this line if you don't see source code in your IDE -->
         <sourceDirectory>${project.build.directory}/filtered-sources/java</sourceDirectory>
         <resources>
             <resource>

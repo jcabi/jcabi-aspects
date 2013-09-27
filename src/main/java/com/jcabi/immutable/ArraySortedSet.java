@@ -44,8 +44,12 @@ import javax.validation.constraints.NotNull;
 /**
  * Sorted Set on top of array.
  *
+ * <p>This class is truly immutable. This means that it never changes
+ * its encapsulated values and is annotated with {@code &#64;Immutable}
+ * annotation.
+ *
  * @param <T> Value key type
- * @author Yegor Bugayenko (yegor@woquo.com)
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
 @Immutable
@@ -108,7 +112,9 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
      * Public ctor.
      * @param comparator Comparator to use
      */
-    public ArraySortedSet(final ArraySortedSet.Comparator<T> comparator) {
+    public ArraySortedSet(
+        @NotNull(message = "comparator can't be NULL")
+        final ArraySortedSet.Comparator<T> comparator) {
         this.cmp = comparator;
         this.values = (T[]) new Object[0];
     }
@@ -118,7 +124,9 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
      * @param set Original set
      * @param comparator Comparator to use
      */
-    public ArraySortedSet(@NotNull final Collection<T> set,
+    public ArraySortedSet(
+        @NotNull(message = "set can't be NULL") final Collection<T> set,
+        @NotNull(message = "comparator can't be NULL")
         final ArraySortedSet.Comparator<T> comparator) {
         this.cmp = comparator;
         if (set instanceof ArraySortedSet) {
@@ -135,7 +143,8 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
      * @param value The value
      * @return New set
      */
-    public ArraySortedSet<T> with(@NotNull final T value) {
+    public ArraySortedSet<T> with(
+        @NotNull(message = "value can't be NULL") final T value) {
         final Collection<T> list = new TreeSet<T>(this.cmp);
         list.addAll(this);
         list.remove(value);
@@ -148,7 +157,8 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
      * @param vals Values to add
      * @return New set
      */
-    public ArraySortedSet<T> with(@NotNull final Collection<T> vals) {
+    public ArraySortedSet<T> with(
+        @NotNull(message = "list can't be NULL") final Collection<T> vals) {
         final Collection<T> list = new TreeSet<T>(this.cmp);
         list.addAll(this);
         list.removeAll(vals);
@@ -161,7 +171,8 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
      * @param value The value
      * @return New set
      */
-    public ArraySortedSet<T> without(@NotNull final T value) {
+    public ArraySortedSet<T> without(
+        @NotNull(message = "value can't be NULL") final T value) {
         final Collection<T> list = new TreeSet<T>(this.cmp);
         list.addAll(this);
         list.remove(value);

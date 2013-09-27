@@ -58,7 +58,7 @@ public final class ArrayTest {
     }
 
     /**
-     * ArraySet can build array fluently.
+     * Array can build array fluently.
      * @throws Exception If some problem inside
      */
     @Test
@@ -75,6 +75,24 @@ public final class ArrayTest {
                 Matchers.<Integer>iterableWithSize(Tv.FOUR),
                 Matchers.contains(Tv.TEN, Tv.THOUSAND, Tv.THOUSAND, Tv.THREE)
             )
+        );
+    }
+
+    /**
+     * Array can remove items by index.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void removesElementsByIndex() throws Exception {
+        MatcherAssert.assertThat(
+            new Array<Integer>()
+                .with(Tv.FIVE)
+                .with(Tv.TEN)
+                .with(Tv.THOUSAND)
+                .without(0)
+                .without(0)
+                .without(0),
+            Matchers.empty()
         );
     }
 

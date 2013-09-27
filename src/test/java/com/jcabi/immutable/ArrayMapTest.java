@@ -140,4 +140,18 @@ public final class ArrayMapTest {
         );
     }
 
+    /**
+     * ArrayMap can add maps.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void appendsEntireMapToItself() throws Exception {
+        MatcherAssert.assertThat(
+            new ArrayMap<Integer, String>().with(Tv.FIVE, "").with(
+                new ArrayMap<Integer, String>().with(Tv.TEN, "")
+            ),
+            Matchers.hasKey(Tv.TEN)
+        );
+    }
+
 }

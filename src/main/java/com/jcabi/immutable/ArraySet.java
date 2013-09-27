@@ -42,8 +42,12 @@ import javax.validation.constraints.NotNull;
 /**
  * Set on top of array.
  *
+ * <p>This class is truly immutable. This means that it never changes
+ * its encapsulated values and is annotated with {@code &#64;Immutable}
+ * annotation.
+ *
  * @param <T> Value key type
- * @author Yegor Bugayenko (yegor@woquo.com)
+ * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
 @Immutable
@@ -67,7 +71,8 @@ public final class ArraySet<T> implements Set<T> {
      * Public ctor.
      * @param set Original set
      */
-    public ArraySet(@NotNull final Collection<T> set) {
+    public ArraySet(
+        @NotNull(message = "set can't be NULL") final Collection<T> set) {
         if (set instanceof ArraySet) {
             this.values = ((ArraySet<T>) set).values;
         } else {
@@ -81,7 +86,8 @@ public final class ArraySet<T> implements Set<T> {
      * @param value The value
      * @return New set
      */
-    public ArraySet<T> with(@NotNull final T value) {
+    public ArraySet<T> with(
+        @NotNull(message = "value to add can't be NULL") final T value) {
         final Collection<T> list = new HashSet<T>(this.size() + 1);
         list.addAll(this);
         list.remove(value);
@@ -94,7 +100,8 @@ public final class ArraySet<T> implements Set<T> {
      * @param vals Values to add
      * @return New set
      */
-    public ArraySet<T> with(@NotNull final Collection<T> vals) {
+    public ArraySet<T> with(
+        @NotNull(message = "list can't be NULL") final Collection<T> vals) {
         final Collection<T> list = new HashSet<T>(this.size());
         list.addAll(this);
         list.removeAll(vals);
@@ -107,7 +114,8 @@ public final class ArraySet<T> implements Set<T> {
      * @param value The value
      * @return New set
      */
-    public ArraySet<T> without(@NotNull final T value) {
+    public ArraySet<T> without(
+        @NotNull(message = "value can't be NULL") final T value) {
         final Collection<T> list = new LinkedList<T>();
         list.addAll(this);
         list.remove(value);
