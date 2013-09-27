@@ -58,47 +58,6 @@ import javax.validation.constraints.NotNull;
 public final class ArraySortedSet<T> implements SortedSet<T> {
 
     /**
-     * Comparator.
-     * @param <T> Type of argument
-     */
-    @Immutable
-    public interface Comparator<T> extends java.util.Comparator<T> {
-        /**
-         * Default comparator.
-         * @param <T> Type of argument
-         */
-        @Immutable
-        final class Default<T> implements ArraySortedSet.Comparator<T> {
-            @Override
-            public int compare(final T left, final T right) {
-                return Comparable.class.cast(left).compareTo(right);
-            }
-        };
-        /**
-         * Neutral comparator (never compares).
-         * @param <T> Type of argument
-         */
-        @Immutable
-        final class Neutral<T> implements ArraySortedSet.Comparator<T> {
-            @Override
-            public int compare(final T left, final T right) {
-                return 1;
-            }
-        };
-        /**
-         * Reverse comparator.
-         * @param <T> Type of argument
-         */
-        @Immutable
-        final class Reverse<T> implements ArraySortedSet.Comparator<T> {
-            @Override
-            public int compare(final T left, final T right) {
-                return Comparable.class.cast(right).compareTo(left);
-            }
-        };
-    };
-
-    /**
      * All values.
      */
     private final transient T[] values;
@@ -388,5 +347,46 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
     public void clear() {
         throw new UnsupportedOperationException();
     }
+
+    /**
+     * Comparator.
+     * @param <T> Type of argument
+     */
+    @Immutable
+    public interface Comparator<T> extends java.util.Comparator<T> {
+        /**
+         * Default comparator.
+         * @param <T> Type of argument
+         */
+        @Immutable
+        final class Default<T> implements ArraySortedSet.Comparator<T> {
+            @Override
+            public int compare(final T left, final T right) {
+                return Comparable.class.cast(left).compareTo(right);
+            }
+        };
+        /**
+         * Neutral comparator (never compares).
+         * @param <T> Type of argument
+         */
+        @Immutable
+        final class Neutral<T> implements ArraySortedSet.Comparator<T> {
+            @Override
+            public int compare(final T left, final T right) {
+                return 1;
+            }
+        };
+        /**
+         * Reverse comparator.
+         * @param <T> Type of argument
+         */
+        @Immutable
+        final class Reverse<T> implements ArraySortedSet.Comparator<T> {
+            @Override
+            public int compare(final T left, final T right) {
+                return Comparable.class.cast(right).compareTo(left);
+            }
+        };
+    };
 
 }
