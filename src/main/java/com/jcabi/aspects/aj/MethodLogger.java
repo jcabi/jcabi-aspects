@@ -307,6 +307,69 @@ public final class MethodLogger {
     }
 
     /**
+     * Checks whether array of types contains given type.
+     * @param array Array of them
+     * @param exp The exception to find
+     * @return TRUE if it's there
+     */
+    private static boolean contains(final Class<? extends Throwable>[] array,
+        final Throwable exp) {
+        boolean contains = false;
+        for (Class<? extends Throwable> type : array) {
+            if (MethodLogger.instanceOf(exp.getClass(), type)) {
+                contains = true;
+                break;
+            }
+        }
+        return contains;
+    }
+
+    /**
+     * The type is an instance of another type?
+     * @param child The child type
+     * @param parent Parent type
+     * @return TRUE if child is really a child of a parent
+     */
+    private static boolean instanceOf(final Class<?> child,
+        final Class<?> parent) {
+        boolean instance = child.equals(parent)
+            || (child.getSuperclass() != null
+            && MethodLogger.instanceOf(child.getSuperclass(), parent));
+        if (!instance) {
+            for (Class<?> iface : child.getInterfaces()) {
+                instance = MethodLogger.instanceOf(iface, parent);
+                if (instance) {
+                    break;
+                }
+            }
+        }
+        return instance;
+    }
+
+    /**
+     * Textualize a stacktrace.
+     * @param trace Array of stacktrace elements
+     * @return The text
+     */
+    private static String textualize(final StackTraceElement[] trace) {
+        final StringBuilder text = new StringBuilder();
+        for (int pos = 0; pos < trace.length; ++pos) {
+            if (text.length() > 0) {
+                text.append(", ");
+            }
+            text.append(
+                String.format(
+                    "%s#%s[%d]",
+                    trace[pos].getClassName(),
+                    trace[pos].getMethodName(),
+                    trace[pos].getLineNumber()
+                )
+            );
+        }
+        return text.toString();
+    }
+
+    /**
      * Marker of a running method.
      */
     private static final class Marker
@@ -403,69 +466,6 @@ public final class MethodLogger {
             }
             return cmp;
         }
-    }
-
-    /**
-     * Checks whether array of types contains given type.
-     * @param array Array of them
-     * @param exp The exception to find
-     * @return TRUE if it's there
-     */
-    private static boolean contains(final Class<? extends Throwable>[] array,
-        final Throwable exp) {
-        boolean contains = false;
-        for (Class<? extends Throwable> type : array) {
-            if (MethodLogger.instanceOf(exp.getClass(), type)) {
-                contains = true;
-                break;
-            }
-        }
-        return contains;
-    }
-
-    /**
-     * The type is an instance of another type?
-     * @param child The child type
-     * @param parent Parent type
-     * @return TRUE if child is really a child of a parent
-     */
-    private static boolean instanceOf(final Class<?> child,
-        final Class<?> parent) {
-        boolean instance = child.equals(parent)
-            || (child.getSuperclass() != null
-            && MethodLogger.instanceOf(child.getSuperclass(), parent));
-        if (!instance) {
-            for (Class<?> iface : child.getInterfaces()) {
-                instance = MethodLogger.instanceOf(iface, parent);
-                if (instance) {
-                    break;
-                }
-            }
-        }
-        return instance;
-    }
-
-    /**
-     * Textualize a stacktrace.
-     * @param trace Array of stacktrace elements
-     * @return The text
-     */
-    private static String textualize(final StackTraceElement[] trace) {
-        final StringBuilder text = new StringBuilder();
-        for (int pos = 0; pos < trace.length; ++pos) {
-            if (text.length() > 0) {
-                text.append(", ");
-            }
-            text.append(
-                String.format(
-                    "%s#%s[%d]",
-                    trace[pos].getClassName(),
-                    trace[pos].getMethodName(),
-                    trace[pos].getLineNumber()
-                )
-            );
-        }
-        return text.toString();
     }
 
 }

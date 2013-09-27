@@ -64,26 +64,6 @@ import javax.validation.constraints.NotNull;
 public final class ArrayMap<K, V> implements ConcurrentMap<K, V> {
 
     /**
-     * Comparator.
-     */
-    private static final class Cmp<K, V> implements
-        Comparator<ArrayMap.ImmutableEntry<K, V>> {
-        @Override
-        public int compare(final ImmutableEntry<K, V> left,
-            final ImmutableEntry<K, V> right) {
-            int compare;
-            if (left.getKey() instanceof Comparable) {
-                compare = Comparable.class.cast(left.getKey())
-                    .compareTo(right.getKey());
-            } else {
-                compare = left.getKey().toString()
-                    .compareTo(right.getKey().toString());
-            }
-            return compare;
-        }
-    }
-
-    /**
      * All entries.
      */
     private final transient ImmutableEntry<K, V>[] entries;
@@ -373,6 +353,26 @@ public final class ArrayMap<K, V> implements ConcurrentMap<K, V> {
         return Collections.unmodifiableSet(
             new LinkedHashSet<Map.Entry<K, V>>(Arrays.asList(this.entries))
         );
+    }
+
+    /**
+     * Comparator.
+     */
+    private static final class Cmp<K, V> implements
+        Comparator<ArrayMap.ImmutableEntry<K, V>> {
+        @Override
+        public int compare(final ImmutableEntry<K, V> left,
+            final ImmutableEntry<K, V> right) {
+            int compare;
+            if (left.getKey() instanceof Comparable) {
+                compare = Comparable.class.cast(left.getKey())
+                    .compareTo(right.getKey());
+            } else {
+                compare = left.getKey().toString()
+                    .compareTo(right.getKey().toString());
+            }
+            return compare;
+        }
     }
 
     /**
