@@ -48,7 +48,7 @@ import javax.tools.Diagnostic;
  * @since 0.7.9
  */
 @SupportedAnnotationTypes("*")
-@SupportedSourceVersion(SourceVersion.RELEASE_6)
+@SupportedSourceVersion(SourceVersion.RELEASE_7)
 public final class EmptyProcessor extends AbstractProcessor {
 
     /**

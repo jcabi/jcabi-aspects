@@ -55,11 +55,6 @@
     </scm>
     <distributionManagement>
         <site>
-            <!--
-            Deploying the site to Amazon S3. "jcabi.s3" server details
-            are defined in "settings.xml" file, provided by continuous integration
-            server during build cycle.
-            -->
             <id>www.jcabi.com</id>
             <url>s3://www.jcabi.com/jcabi-aspects</url>
         </site>
