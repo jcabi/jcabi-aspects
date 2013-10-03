@@ -33,6 +33,7 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.RetryOnFailure;
 import com.jcabi.log.Logger;
 import java.lang.reflect.Method;
+import java.util.Random;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -49,6 +50,11 @@ import org.aspectj.lang.reflect.MethodSignature;
 @Aspect
 @Immutable
 public final class Repeater {
+
+    /**
+     * Pseudo random number generator.
+     */
+    private static final Random RAND = new Random();
 
     /**
      * Catch exception and re-call the method.
@@ -100,10 +106,27 @@ public final class Repeater {
                     throw ex;
                 }
                 if (rof.delay() > 0) {
-                    rof.unit().sleep(rof.delay() * attempt);
+                    delay(rof, attempt);
                 }
             }
         }
+    }
+
+    /**
+     * Waits certain time before returning.
+     * @param rof RetryOnFailure parameters.
+     * @param attempt Attempt number.
+     * @throws InterruptedException If wait has been interrupted.
+     */
+    private void delay(final RetryOnFailure rof, final int attempt) throws
+        InterruptedException {
+        final long delay;
+        if (rof.randomize()) {
+            delay = RAND.nextInt(2 << attempt) * rof.delay();
+        } else {
+            delay = rof.delay() * attempt;
+        }
+        rof.unit().sleep(delay);
     }
 
     /**
