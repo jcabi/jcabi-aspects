@@ -86,4 +86,9 @@ public @interface RetryOnFailure {
      */
     boolean verbose() default true;
 
+    /**
+     * Shall the time between retries by randomized.
+     */
+    boolean randomize() default true;
+
 }
