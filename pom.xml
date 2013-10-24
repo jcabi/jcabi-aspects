@@ -33,7 +33,7 @@
     <parent>
         <groupId>com.jcabi</groupId>
         <artifactId>parent</artifactId>
-        <version>0.11.2</version>
+        <version>0.12</version>
     </parent>
     <artifactId>jcabi-aspects</artifactId>
     <version>0.12</version>
@@ -55,8 +55,8 @@
     </scm>
     <distributionManagement>
         <site>
-            <id>www.jcabi.com</id>
-            <url>s3://www.jcabi.com/jcabi-aspects</url>
+            <id>aspects.jcabi.com</id>
+            <url>http://aspects.jcabi.com/</url>
         </site>
     </distributionManagement>
     <dependencies>
