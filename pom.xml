@@ -123,6 +123,12 @@
         </pluginManagement>
         <plugins>
             <plugin>
+                <!-- https://github.com/github/maven-plugins/issues/54 -->
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>0.8</version>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
                 <version>1.4</version>
