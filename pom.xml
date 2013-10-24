@@ -36,7 +36,7 @@
         <version>0.11.2</version>
     </parent>
     <artifactId>jcabi-aspects</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.12</version>
     <packaging>jar</packaging>
     <name>jcabi-aspects</name>
     <description>Collection of convenient and useful Java annotations</description>
