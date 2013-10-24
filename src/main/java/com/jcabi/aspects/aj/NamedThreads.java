@@ -71,9 +71,6 @@ final class NamedThreads implements ThreadFactory {
         this.purpose = desc;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Thread newThread(final Runnable runnable) {
         final Thread thread = new Thread(this.group, runnable);

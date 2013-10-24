@@ -98,6 +98,56 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
     }
 
     /**
+     * Public ctor.
+     * @param set Original set
+     * @param comparator Comparator to use
+     * @since 0.12
+     */
+    public ArraySortedSet(
+        @NotNull(message = "set can't be NULL") final Iterable<T> set,
+        @NotNull(message = "comparator can't be NULL")
+        final ArraySortedSet.Comparator<T> comparator) {
+        this.cmp = comparator;
+        if (set instanceof ArraySortedSet) {
+            this.values = ((ArraySortedSet<T>) set).values;
+        } else {
+            final Set<T> hset = new TreeSet<T>(this.cmp);
+            for (final T item : set) {
+                hset.add(item);
+            }
+            this.values = hset.toArray((T[]) new Object[hset.size()]);
+        }
+    }
+
+    /**
+     * Public ctor.
+     * @param set Original set
+     * @since 0.12
+     */
+    public ArraySortedSet(
+        @NotNull(message = "set can't be NULL") final T... set) {
+        this(Arrays.asList(set));
+    }
+
+    /**
+     * Public ctor, with default comparator.
+     * @param set Original set
+     * @since 0.12
+     */
+    public ArraySortedSet(final Collection<T> set) {
+        this(set, new ArraySortedSet.Comparator.Default<T>());
+    }
+
+    /**
+     * Public ctor, with default comparator.
+     * @param set Original set
+     * @since 0.12
+     */
+    public ArraySortedSet(final Iterable<T> set) {
+        this(set, new ArraySortedSet.Comparator.Default<T>());
+    }
+
+    /**
      * Make a new one with an extra entry.
      * @param value The value
      * @return New set
@@ -138,37 +188,23 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
         return new ArraySortedSet<T>(list, this.cmp);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int hashCode() {
         return Arrays.hashCode(this.values);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean equals(final Object object) {
-        final boolean equals;
-        if (object instanceof ArraySortedSet) {
-            equals = Arrays.deepEquals(
+        return object instanceof ArraySortedSet
+            && Arrays.deepEquals(
                 this.values, ArraySortedSet.class.cast(object).values
             );
-        } else {
-            equals = false;
-        }
-        return equals;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
-        final StringBuilder text = new StringBuilder();
-        for (T item : this.values) {
+        final StringBuilder text = new StringBuilder(0);
+        for (final T item : this.values) {
             if (text.length() > 0) {
                 text.append(", ");
             }
@@ -177,49 +213,31 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
         return text.toString();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int size() {
         return this.values.length;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean isEmpty() {
         return this.values.length == 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean contains(final Object key) {
         return Arrays.asList(this.values).contains(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Comparator<? super T> comparator() {
         return this.cmp;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public SortedSet<T> subSet(final T from, final T till) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public SortedSet<T> headSet(final T till) {
         return Collections.unmodifiableSortedSet(
@@ -227,9 +245,6 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
         ).headSet(till);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public SortedSet<T> tailSet(final T from) {
         return Collections.unmodifiableSortedSet(
@@ -237,9 +252,6 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
         ).tailSet(from);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public T first() {
         if (this.values.length == 0) {
@@ -248,9 +260,6 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
         return this.values[0];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public T last() {
         if (this.values.length == 0) {
@@ -259,17 +268,11 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
         return this.values[this.values.length - 1];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Iterator<T> iterator() {
         return Arrays.asList(this.values).iterator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Object[] toArray() {
         final Object[] array = new Object[this.values.length];
@@ -277,9 +280,6 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
         return array;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public <T> T[] toArray(final T[] array) {
         T[] dest;
@@ -292,60 +292,51 @@ public final class ArraySortedSet<T> implements SortedSet<T> {
         return dest;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean add(final T element) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "add(): ArraySortedSet is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean remove(final Object obj) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "remove(): ArraySortedSet is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean containsAll(final Collection<?> col) {
         return Arrays.asList(this.values).containsAll(col);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean addAll(final Collection<? extends T> col) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "addAll(): ArraySortedSet is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean retainAll(final Collection<?> col) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "retainAll(): ArraySortedSet is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean removeAll(final Collection<?> col) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "removeAll(): ArraySortedSet is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void clear() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "clear(): ArraySortedSet is immutable"
+        );
     }
 
     /**

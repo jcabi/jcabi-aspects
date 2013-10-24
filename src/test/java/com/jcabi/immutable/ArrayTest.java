@@ -30,6 +30,7 @@
 package com.jcabi.immutable;
 
 import com.jcabi.aspects.Tv;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import org.hamcrest.MatcherAssert;
@@ -52,7 +53,7 @@ public final class ArrayTest {
         final Collection<Integer> list = new LinkedList<Integer>();
         list.add(Tv.TEN);
         list.add(Tv.FIVE);
-        final Array<Integer> array = new Array<Integer>(list);
+        final Collection<Integer> array = new Array<Integer>(list);
         MatcherAssert.assertThat(array, Matchers.hasItem(Tv.TEN));
         MatcherAssert.assertThat(array, Matchers.hasSize(2));
     }
@@ -93,6 +94,20 @@ public final class ArrayTest {
                 .without(0)
                 .without(0),
             Matchers.empty()
+        );
+    }
+
+    /**
+     * Array can encapsulate iterables.
+     * @throws Exception If some problem inside
+     * @since 0.12
+     */
+    @Test
+    public void encapsulatesIterables() throws Exception {
+        final Iterable<Integer> list = Arrays.asList(Tv.TEN, Tv.FIVE);
+        MatcherAssert.assertThat(
+            new Array<Integer>(list),
+            Matchers.hasItem(Tv.TEN)
         );
     }
 

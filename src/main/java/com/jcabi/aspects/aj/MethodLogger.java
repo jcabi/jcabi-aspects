@@ -438,24 +438,15 @@ public final class MethodLogger {
                 this.logged.set(cycle);
             }
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public int hashCode() {
             return this.point.hashCode();
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public boolean equals(final Object obj) {
             return obj == this || MethodLogger.Marker.class.cast(obj)
                 .point.equals(this.point);
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public int compareTo(final Marker marker) {
             int cmp = 0;

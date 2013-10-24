@@ -40,7 +40,6 @@ import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -82,11 +81,11 @@ public final class ArrayMap<K, V> implements ConcurrentMap<K, V> {
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public ArrayMap(@NotNull(message = "map can't be NULL")
         final Map<K, V> map) {
-        final SortedSet<ArrayMap.ImmutableEntry<K, V>> entrs =
+        final Set<ArrayMap.ImmutableEntry<K, V>> entrs =
             new TreeSet<ArrayMap.ImmutableEntry<K, V>>(
                 new ArrayMap.Cmp<K, V>()
             );
-        for (Map.Entry<K, V> entry : map.entrySet()) {
+        for (final Map.Entry<K, V> entry : map.entrySet()) {
             entrs.add(new ArrayMap.ImmutableEntry<K, V>(entry));
         }
         this.entries = entrs.toArray(new ArrayMap.ImmutableEntry[entrs.size()]);
@@ -148,43 +147,29 @@ public final class ArrayMap<K, V> implements ConcurrentMap<K, V> {
         final ConcurrentMap<K, V> map =
             new ConcurrentHashMap<K, V>(this.entries.length);
         map.putAll(this);
-        for (K key : keys) {
+        for (final K key : keys) {
             map.remove(key);
         }
         return new ArrayMap<K, V>(map);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int hashCode() {
         return Arrays.hashCode(this.entries);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean equals(final Object object) {
-        final boolean equals;
-        if (object instanceof ArrayMap) {
-            equals = Arrays.deepEquals(
+        return object instanceof ArrayMap
+            && Arrays.deepEquals(
                 this.entries, ArrayMap.class.cast(object).entries
             );
-        } else {
-            equals = false;
-        }
-        return equals;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
-        final StringBuilder text = new StringBuilder();
-        for (ImmutableEntry<K, V> item : this.entries) {
+        final StringBuilder text = new StringBuilder(0);
+        for (final Map.Entry<K, V> item : this.entries) {
             if (text.length() > 0) {
                 text.append(", ");
             }
@@ -193,29 +178,20 @@ public final class ArrayMap<K, V> implements ConcurrentMap<K, V> {
         return text.toString();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int size() {
         return this.entries.length;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean isEmpty() {
         return this.entries.length == 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean containsKey(final Object key) {
         boolean contains = false;
-        for (Map.Entry<K, V> entry : this.entries) {
+        for (final Map.Entry<K, V> entry : this.entries) {
             if (entry.getKey().equals(key)) {
                 contains = true;
                 break;
@@ -224,13 +200,10 @@ public final class ArrayMap<K, V> implements ConcurrentMap<K, V> {
         return contains;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean containsValue(final Object value) {
         boolean contains = false;
-        for (Map.Entry<K, V> entry : this.entries) {
+        for (final Map.Entry<K, V> entry : this.entries) {
             if (entry.getValue().equals(value)) {
                 contains = true;
                 break;
@@ -239,13 +212,10 @@ public final class ArrayMap<K, V> implements ConcurrentMap<K, V> {
         return contains;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public V get(final Object key) {
         V value = null;
-        for (Map.Entry<K, V> entry : this.entries) {
+        for (final Map.Entry<K, V> entry : this.entries) {
             if (entry.getKey().equals(key)) {
                 value = entry.getValue();
                 break;
@@ -254,99 +224,82 @@ public final class ArrayMap<K, V> implements ConcurrentMap<K, V> {
         return value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public V put(final K key, final V value) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "put(): ArrayMap is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public V remove(final Object key) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "remove(): ArrayMap is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void putAll(final Map<? extends K, ? extends V> map) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "putAll(): ArrayMap is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void clear() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "clear(): ArrayMap is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public V putIfAbsent(final K key, final V value) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "putIfAbsent(): ArrayMap is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean remove(final Object key, final Object value) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "remove(): ArrayMap is immutable, can't change"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean replace(final K key, final V old, final V value) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "replace(): ArrayMap is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public V replace(final K key, final V value) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "replace(): ArrayMap is immutable, can't replace"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @NotNull
     public Set<K> keySet() {
         final Set<K> keys = new LinkedHashSet<K>(this.entries.length);
-        for (Map.Entry<K, V> entry : this.entries) {
+        for (final Map.Entry<K, V> entry : this.entries) {
             keys.add(entry.getKey());
         }
         return Collections.unmodifiableSet(keys);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @NotNull
     public Collection<V> values() {
         final Collection<V> values = new ArrayList<V>(this.entries.length);
-        for (Map.Entry<K, V> entry : this.entries) {
+        for (final Map.Entry<K, V> entry : this.entries) {
             values.add(entry.getValue());
         }
         return Collections.unmodifiableCollection(values);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @NotNull
     public Set<Map.Entry<K, V>> entrySet() {
@@ -400,9 +353,6 @@ public final class ArrayMap<K, V> implements ConcurrentMap<K, V> {
         private ImmutableEntry(final K key, final V value) {
             super(key, value);
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public String toString() {
             return String.format("%s=%s", this.getKey(), this.getValue());

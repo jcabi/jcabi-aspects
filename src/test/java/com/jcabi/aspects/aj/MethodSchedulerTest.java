@@ -80,9 +80,6 @@ public final class MethodSchedulerTest {
          */
         private transient boolean finished;
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public void run() {
             try {
@@ -110,9 +107,6 @@ public final class MethodSchedulerTest {
          */
         private transient boolean finished;
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public void run() {
             try {

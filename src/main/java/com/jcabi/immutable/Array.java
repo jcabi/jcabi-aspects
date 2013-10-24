@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import javax.validation.constraints.NotNull;
@@ -69,21 +70,44 @@ public final class Array<T> implements List<T> {
 
     /**
      * Public ctor.
-     * @param list Original list
+     * @param list Items to encapsulate
      */
     public Array(
         @NotNull(message = "list can't be NULL") final Collection<T> list) {
-        this.values = (T[]) new Object[list.size()];
-        list.toArray(this.values);
+        if (list instanceof Array) {
+            this.values = ((Array<T>) list).values;
+        } else {
+            this.values = (T[]) new Object[list.size()];
+            list.toArray(this.values);
+        }
     }
 
     /**
-     * Private ctor, from a sorted array of values.
-     * @param vals Values to encapsulate (pre-sorted)
+     * Private ctor, from an array of values.
+     * @param list Items to encapsulate
      */
-    public Array(final T[] vals) {
-        this.values = (T[]) new Object[vals.length];
-        System.arraycopy(vals, 0, this.values, 0, vals.length);
+    public Array(final T... list) {
+        this.values = (T[]) new Object[list.length];
+        System.arraycopy(list, 0, this.values, 0, list.length);
+    }
+
+    /**
+     * Public ctor.
+     * @param list Items to encapsulate
+     * @since 0.12
+     */
+    public Array(
+        @NotNull(message = "list can't be NULL") final Iterable<T> list) {
+        final Collection<T> items = new LinkedList<T>();
+        if (list instanceof Array) {
+            this.values = ((Array<T>) list).values;
+        } else {
+            for (final T item : list) {
+                items.add(item);
+            }
+            this.values = (T[]) new Object[items.size()];
+            items.toArray(this.values);
+        }
     }
 
     /**
@@ -154,37 +178,21 @@ public final class Array<T> implements List<T> {
         return new Array<T>(list);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int hashCode() {
         return Arrays.hashCode(this.values);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean equals(final Object object) {
-        final boolean equals;
-        if (object instanceof Array) {
-            equals = Arrays.deepEquals(
-                this.values, Array.class.cast(object).values
-            );
-        } else {
-            equals = false;
-        }
-        return equals;
+        return object instanceof Array
+            && Arrays.deepEquals(this.values, Array.class.cast(object).values);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
-        final StringBuilder text = new StringBuilder();
-        for (T item : this.values) {
+        final StringBuilder text = new StringBuilder(0);
+        for (final T item : this.values) {
             if (text.length() > 0) {
                 text.append(", ");
             }
@@ -193,41 +201,26 @@ public final class Array<T> implements List<T> {
         return text.toString();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int size() {
         return this.values.length;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean isEmpty() {
         return this.values.length == 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean contains(final Object key) {
         return Arrays.asList(this.values).contains(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Iterator<T> iterator() {
         return Arrays.asList(this.values).iterator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Object[] toArray() {
         final Object[] array = new Object[this.values.length];
@@ -235,88 +228,72 @@ public final class Array<T> implements List<T> {
         return array;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public <T> T[] toArray(final T[] array) {
-        T[] dest;
+        final T[] target;
         if (array.length == this.values.length) {
-            dest = array;
+            target = array;
         } else {
-            dest = (T[]) new Object[this.values.length];
+            target = (T[]) new Object[this.values.length];
         }
-        System.arraycopy(this.values, 0, dest, 0, this.values.length);
-        return dest;
+        System.arraycopy(this.values, 0, target, 0, this.values.length);
+        return target;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean add(final T element) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "add(): Array is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean remove(final Object obj) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "remove(): Array is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean containsAll(final Collection<?> col) {
         return Arrays.asList(this.values).containsAll(col);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean addAll(final Collection<? extends T> col) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "addAll(): Array is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean retainAll(final Collection<?> col) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "retainAll(): Array is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean removeAll(final Collection<?> col) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "removeAll(): Array is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void clear() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "clear(): Array is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean addAll(final int index, final Collection<? extends T> col) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "addAll(): Array is immutable, can't change"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public T get(final int index) {
         if (index < 0 || index >= this.values.length) {
@@ -331,65 +308,47 @@ public final class Array<T> implements List<T> {
         return this.values[index];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public T set(final int index, final T element) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "set(idx): Array is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void add(final int index, final T element) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "add(idx): Array is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public T remove(final int index) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+            "remove(idx): Array is immutable"
+        );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int indexOf(final Object obj) {
         return Arrays.asList(this.values).indexOf(obj);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int lastIndexOf(final Object obj) {
         return Arrays.asList(this.values).lastIndexOf(obj);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ListIterator<T> listIterator() {
         return Arrays.asList(this.values).listIterator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ListIterator<T> listIterator(final int index) {
         return Arrays.asList(this.values).listIterator(index);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<T> subList(final int from, final int till) {
         return Arrays.asList(this.values).subList(from, till);

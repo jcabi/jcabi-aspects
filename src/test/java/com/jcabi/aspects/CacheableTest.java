@@ -155,23 +155,14 @@ public final class CacheableTest {
         public Foo(final long num) {
             this.number = num;
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public int hashCode() {
             return this.get().hashCode();
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public boolean equals(final Object obj) {
             return obj == this;
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         @Cacheable(forever = true)
         @Loggable(Loggable.DEBUG)

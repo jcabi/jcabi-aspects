@@ -30,6 +30,7 @@
 package com.jcabi.immutable;
 
 import com.jcabi.aspects.Tv;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.SortedSet;
@@ -103,6 +104,20 @@ public final class ArraySortedSetTest {
                 new ArraySortedSet<Integer>(ArraySortedSetTest.CMP)
                     .with(2).with(Tv.TEN)
             )
+        );
+    }
+
+    /**
+     * ArraySortedSet can encapsulate iterables.
+     * @throws Exception If some problem inside
+     * @since 0.12
+     */
+    @Test
+    public void encapsulatesIterables() throws Exception {
+        final Iterable<Integer> list = Arrays.asList(Tv.TEN, Tv.FIVE);
+        MatcherAssert.assertThat(
+            new ArraySortedSet<Integer>(list),
+            Matchers.hasItem(Tv.TEN)
         );
     }
 

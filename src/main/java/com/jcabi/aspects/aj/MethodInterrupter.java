@@ -165,9 +165,6 @@ public final class MethodInterrupter {
             final Timeable annt = method.getAnnotation(Timeable.class);
             this.deadline = this.start + annt.unit().toMillis(annt.limit());
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public int compareTo(final Call obj) {
             int compare;

@@ -82,6 +82,25 @@ public final class ArraySet<T> implements Set<T> {
     }
 
     /**
+     * Public ctor.
+     * @param set Original set
+     * @since 0.12
+     */
+    public ArraySet(
+        @NotNull(message = "iterable set can't be NULL")
+        final Iterable<T> set) {
+        if (set instanceof ArraySet) {
+            this.values = ((ArraySet<T>) set).values;
+        } else {
+            final Set<T> hset = new HashSet<T>(0);
+            for (final T item : set) {
+                hset.add(item);
+            }
+            this.values = hset.toArray((T[]) new Object[hset.size()]);
+        }
+    }
+
+    /**
      * Make a new one with an extra entry.
      * @param value The value
      * @return New set
@@ -122,17 +141,11 @@ public final class ArraySet<T> implements Set<T> {
         return new ArraySet<T>(list);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int hashCode() {
         return Arrays.hashCode(this.values);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean equals(final Object object) {
         final boolean equals;
@@ -146,9 +159,6 @@ public final class ArraySet<T> implements Set<T> {
         return equals;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         final StringBuilder text = new StringBuilder();
@@ -161,41 +171,26 @@ public final class ArraySet<T> implements Set<T> {
         return text.toString();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int size() {
         return this.values.length;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean isEmpty() {
         return this.values.length == 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean contains(final Object key) {
         return Arrays.asList(this.values).contains(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Iterator<T> iterator() {
         return Arrays.asList(this.values).iterator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Object[] toArray() {
         final Object[] array = new Object[this.values.length];
@@ -203,9 +198,6 @@ public final class ArraySet<T> implements Set<T> {
         return array;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public <T> T[] toArray(final T[] array) {
         T[] dest;
@@ -218,57 +210,36 @@ public final class ArraySet<T> implements Set<T> {
         return dest;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean add(final T element) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean remove(final Object obj) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean containsAll(final Collection<?> col) {
         return Arrays.asList(this.values).containsAll(col);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean addAll(final Collection<? extends T> col) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean retainAll(final Collection<?> col) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean removeAll(final Collection<?> col) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void clear() {
         throw new UnsupportedOperationException();

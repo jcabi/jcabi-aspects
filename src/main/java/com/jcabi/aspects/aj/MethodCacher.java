@@ -260,9 +260,6 @@ public final class MethodCacher {
             this.point = pnt;
             this.key = akey;
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public String toString() {
             return Mnemos.toText(this.cached, true, false);
@@ -354,23 +351,14 @@ public final class MethodCacher {
             this.target = MethodCacher.Key.targetize(point);
             this.arguments = point.getArgs();
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public String toString() {
             return Mnemos.toText(this.method, this.arguments, true, false);
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public int hashCode() {
             return this.method.hashCode();
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public boolean equals(final Object obj) {
             boolean equals;

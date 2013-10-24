@@ -187,9 +187,6 @@ public final class MethodScheduler {
                 annt.unit()
             );
         }
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public void close() throws IOException {
             this.executor.shutdown();

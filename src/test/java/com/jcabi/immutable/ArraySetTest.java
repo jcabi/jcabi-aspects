@@ -30,6 +30,7 @@
 package com.jcabi.immutable;
 
 import com.jcabi.aspects.Tv;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Set;
@@ -89,6 +90,20 @@ public final class ArraySetTest {
         MatcherAssert.assertThat(
             new ArraySet<Integer>().with(Tv.TEN).with(2),
             Matchers.equalTo(new ArraySet<Integer>().with(2).with(Tv.TEN))
+        );
+    }
+
+    /**
+     * ArraySet can encapsulate iterables.
+     * @throws Exception If some problem inside
+     * @since 0.12
+     */
+    @Test
+    public void encapsulatesIterables() throws Exception {
+        final Iterable<Integer> list = Arrays.asList(Tv.TEN, Tv.FIVE);
+        MatcherAssert.assertThat(
+            new ArraySet<Integer>(list),
+            Matchers.hasItem(Tv.TEN)
         );
     }
 

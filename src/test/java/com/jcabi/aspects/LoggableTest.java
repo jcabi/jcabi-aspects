@@ -108,9 +108,6 @@ public final class LoggableTest {
         limit = 1, unit = TimeUnit.MILLISECONDS
     )
     private static final class Foo extends LoggableTest.Parent {
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public String toString() {
             return "some text";

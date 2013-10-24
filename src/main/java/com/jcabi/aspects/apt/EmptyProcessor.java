@@ -51,9 +51,6 @@ import javax.tools.Diagnostic;
 @SupportedSourceVersion(SourceVersion.RELEASE_7)
 public final class EmptyProcessor extends AbstractProcessor {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean process(final Set<? extends TypeElement> annotations,
         final RoundEnvironment env) {
