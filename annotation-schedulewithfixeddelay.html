@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<!--
+ * Copyright (c) 2012-2013, JCabi.com
+ * All rights reserved.
+ -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>jcabi-aspects - Schedule With Fixed Delay without Executor or Thread Manipulations</title>
+        <link media="all" rel="stylesheet" type="text/css" href="./css/jcabi.css"/>
+                    <meta name="author" content="Yegor Bugayenko" />
+                            <script>
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-1963507-23']);
+                _gaq.push(['_trackPageview']);
+                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            </script>
+                                                                                                                
+<link rel="shortcut icon" href="http://img.jcabi.com/favicon.ico"/>
+                                                                                                                
+<link rel="author" href="https://plus.google.com/u/0/114792568016408327418?rel=author"/>
+                                            <link rel="stylesheet" href="./css/highlight.css" />
+        <script src="./js/jquery-1.8.3.min.js"></script>
+        <script src="./js/highlight-7.3.min.js"></script>
+        <script>
+            $(document).ready(
+                function() {
+                    $('div.source pre').each(
+                        function (idx, element) {
+                            hljs.highlightBlock(element);
+                        }
+                    );
+                }
+            );
+        </script>
+    </head>
+    <body>
+                <ul id="menu">
+                                                    <li>
+                    Parent Project
+                                            <ul>
+                                                                            <li>
+                                                                    <a href="../parent/index.html" title="parent">parent</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                </ul>
+                                    </li>
+                            <li>
+                    Overview
+                                            <ul>
+                                                                            <li>
+                                                                    <a href="index.html" title="Introduction">Introduction</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="apidocs-0.12/index.html" title="API 0.12 (JavaDoc)">API 0.12 (JavaDoc)</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="cobertura/index.html" title="Test coverage">Test coverage</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="changes-report.html" title="Release History">Release History</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                </ul>
+                                    </li>
+                            <li>
+                    Examples
+                                            <ul>
+                                                                            <li>
+                                                                    <a href="jsr-303.html" title="JSR-303 validations">JSR-303 validations</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="immutable-collections.html" title="Immutable collections">Immutable collections</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                </ul>
+                                    </li>
+                            <li>
+                    Annotations
+                                            <ul>
+                                                                            <li>
+                                                                    <a href="annotation-cacheable.html" title="@Cacheable">@Cacheable</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="annotation-immutable.html" title="@Immutable">@Immutable</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="annotation-logexceptions.html" title="@LogExceptions">@LogExceptions</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="annotation-loggable.html" title="@Loggable">@Loggable</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="annotation-quietly.html" title="@Quietly">@Quietly</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="annotation-parallel.html" title="@Parallel">@Parallel</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="annotation-retryonfailure.html" title="@RetryOnFailure">@RetryOnFailure</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                            <strong>                        <a href="annotation-schedulewithfixeddelay.html" title="@ScheduleWithFixedDelay">@ScheduleWithFixedDelay</a>
+        </strong>
+                                                                                                                <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="annotation-timeable.html" title="@Timeable">@Timeable</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                </ul>
+                                    </li>
+                            <li>
+                    Project Documentation
+                                            <ul>
+                                                                            <li>
+                                                                    <a href="project-info.html" title="Project Information">Project Information</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
+                                                                                        <li>
+                                                                    <a href="project-reports.html" title="Project Reports">Project Reports</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
+                                                                </ul>
+                                    </li>
+                    </ul>
+        <div id="content">
+                            <a href="https://github.com/jcabi/jcabi-aspects">
+                    <img style="position: absolute; top: 0; right: 0; border: 0; width: 100px; height: 100px;"
+                        src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
+                        alt="Fork me on GitHub" />
+                </a>
+                        <a href="../../" title="${decoration.bannerLeft.title}">
+                <img src="http://img.jcabi.com/logo.png"
+                    alt="jcabi"
+                                            width="200"
+                                                                height="48"
+                                    />
+            </a>
+                        <p>
+                
+                24-Oct-2013
+                0.12
+            </p>
+            <article>
+                <!--  --><!-- Copyright (c) 2011-2013, jcabi.com --><!-- All rights reserved. --><!--  --><!-- Redistribution and use in source and binary forms, with or without --><!-- modification, are permitted provided that the following conditions --><!-- are met: 1) Redistributions of source code must retain the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer. 2) Redistributions in binary form must reproduce the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer in the documentation and/or other materials provided --><!-- with the distribution. 3) Neither the name of the jcabi.com nor --><!-- the names of its contributors may be used to endorse or promote --><!-- products derived from this software without specific prior written --><!-- permission. --><!--  --><!-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS --><!-- "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT --><!-- NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND --><!-- FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL --><!-- THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, --><!-- INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES --><!-- (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR --><!-- SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) --><!-- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, --><!-- STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) --><!-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED --><!-- OF THE POSSIBILITY OF SUCH DAMAGE. --><!--  --><div class="section">
+<h2>Schedule With Fixed Delay without Executor or Thread Manipulations<a name="Schedule_With_Fixed_Delay_without_Executor_or_Thread_Manipulations"></a></h2>
+<p>Make your class implement <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.html"><tt>Runnable</tt></a> (or <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/concurrent/Callable.html"><tt>Callable</tt></a>) and annotate it with <a href="./apidocs-0.12/com/jcabi/aspects/ScheduleWithFixedDelay.html"><tt>@ScheduleWithFixedDelay</tt></a> annotation:</p>
+<div class="source">
+<pre>@ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.SECONDS)
+public class Clock implements Runnable, Closeable {
+  @Override
+  public void run() {
+    System.out.println(&quot;tick tick..&quot;);
+  }
+  @Override
+  public void close() {
+    System.out.println(&quot;done with ticking&quot;);
+  }
+}</pre></div>
+<p>Now, make an instance of this class and it will start ticking immediately:</p>
+<div class="source">
+<pre>public class Main {
+  public static void main(String[] args) {
+    Clock clock = new Clock();
+    TimeUnit.SECONDS.sleep(5); // wait for five seconds
+    clock.close();
+  }
+}</pre></div>
+<p>If you class implements <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/io/Closeable.html"><tt>Closeable</tt></a> you can stop a routine thread by calling its <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/io/Closeable.html#close()"><tt>close()</tt></a> method.</p>
+<p>The mechanism is implemented with AOP/AspectJ. Read <a href="./index.html">how to integrate it into your <tt>pom.xml</tt></a>.</p></div>
+            </article>
+            <p style="margin-bottom: 3em; margin-top: 2em;">
+                Copyright &#169;
+                                                    2012-2013
+                                jcabi.com, All Rights Reserved.
+                <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+            </p>
+            <a href="http://maven.apache.org" title="site is built by Apache Maven"
+                style='position: absolute; bottom: 1em; right: 1em;'>
+                <img src='images/built-by-maven.png' style='width: 50px; height: 17px;'
+                    alt='site is built by Apache Maven'/>
+            </a>
+        </div>
+    </body>
+</html>

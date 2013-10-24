@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<!--
+ * Copyright (c) 2012-2013, JCabi.com
+ * All rights reserved.
+ -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>jcabi-aspects - Logging Java method executions</title>
+        <link media="all" rel="stylesheet" type="text/css" href="./css/jcabi.css"/>
+                    <meta name="author" content="Yegor Bugayenko" />
+                            <script>
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-1963507-23']);
+                _gaq.push(['_trackPageview']);
+                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            </script>
+                                                                                                                
+<link rel="shortcut icon" href="http://img.jcabi.com/favicon.ico"/>
+                                                                                                                
+<link rel="author" href="https://plus.google.com/u/0/114792568016408327418?rel=author"/>
+                                            <link rel="stylesheet" href="./css/highlight.css" />
+        <script src="./js/jquery-1.8.3.min.js"></script>
+        <script src="./js/highlight-7.3.min.js"></script>
+        <script>
+            $(document).ready(
+                function() {
+                    $('div.source pre').each(
+                        function (idx, element) {
+                            hljs.highlightBlock(element);
+                        }
+                    );
+                }
+            );
+        </script>
+    </head>
+    <body>
+                <ul id="menu">
+                                                    <li>
+                    Parent Project
+                                            <ul>
+                                                                            <li>
+                                                                    <a href="../parent/index.html" title="parent">parent</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                </ul>
+                                    </li>
+                            <li>
+                    Overview
+                                            <ul>
+                                                                            <li>
+                                                                    <a href="index.html" title="Introduction">Introduction</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="apidocs-0.12/index.html" title="API 0.12 (JavaDoc)">API 0.12 (JavaDoc)</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="cobertura/index.html" title="Test coverage">Test coverage</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="changes-report.html" title="Release History">Release History</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                </ul>
+                                    </li>
+                            <li>
+                    Examples
+                                            <ul>
+                                                                            <li>
+                                                                    <a href="jsr-303.html" title="JSR-303 validations">JSR-303 validations</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="immutable-collections.html" title="Immutable collections">Immutable collections</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                </ul>
+                                    </li>
+                            <li>
+                    Annotations
+                                            <ul>
+                                                                            <li>
+                                                                    <a href="annotation-cacheable.html" title="@Cacheable">@Cacheable</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="annotation-immutable.html" title="@Immutable">@Immutable</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="annotation-logexceptions.html" title="@LogExceptions">@LogExceptions</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                            <strong>                        <a href="annotation-loggable.html" title="@Loggable">@Loggable</a>
+        </strong>
+                                                                                                                <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="annotation-quietly.html" title="@Quietly">@Quietly</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="annotation-parallel.html" title="@Parallel">@Parallel</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="annotation-retryonfailure.html" title="@RetryOnFailure">@RetryOnFailure</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="annotation-schedulewithfixeddelay.html" title="@ScheduleWithFixedDelay">@ScheduleWithFixedDelay</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="annotation-timeable.html" title="@Timeable">@Timeable</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                </ul>
+                                    </li>
+                            <li>
+                    Project Documentation
+                                            <ul>
+                                                                            <li>
+                                                                    <a href="project-info.html" title="Project Information">Project Information</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
+                                                                                        <li>
+                                                                    <a href="project-reports.html" title="Project Reports">Project Reports</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
+                                                                </ul>
+                                    </li>
+                    </ul>
+        <div id="content">
+                            <a href="https://github.com/jcabi/jcabi-aspects">
+                    <img style="position: absolute; top: 0; right: 0; border: 0; width: 100px; height: 100px;"
+                        src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
+                        alt="Fork me on GitHub" />
+                </a>
+                        <a href="../../" title="${decoration.bannerLeft.title}">
+                <img src="http://img.jcabi.com/logo.png"
+                    alt="jcabi"
+                                            width="200"
+                                                                height="48"
+                                    />
+            </a>
+                        <p>
+                
+                24-Oct-2013
+                0.12
+            </p>
+            <article>
+                <!--  --><!-- Copyright (c) 2011, jcabi.com --><!-- All rights reserved. --><!--  --><!-- Redistribution and use in source and binary forms, with or without --><!-- modification, are permitted provided that the following conditions --><!-- are met: 1) Redistributions of source code must retain the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer. 2) Redistributions in binary form must reproduce the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer in the documentation and/or other materials provided --><!-- with the distribution. 3) Neither the name of the jcabi.com nor --><!-- the names of its contributors may be used to endorse or promote --><!-- products derived from this software without specific prior written --><!-- permission. --><!--  --><!-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS --><!-- "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT --><!-- NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND --><!-- FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL --><!-- THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, --><!-- INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES --><!-- (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR --><!-- SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) --><!-- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, --><!-- STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) --><!-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED --><!-- OF THE POSSIBILITY OF SUCH DAMAGE. --><!--  --><div class="section">
+<h2>Logging Java method executions<a name="Logging_Java_method_executions"></a></h2>
+<p>Annotate your methods with <a href="./apidocs-0.12/com/jcabi/aspects/Loggable.html"><tt>@Loggable</tt></a> annotation and every time they are called your SLF4J logging facility will receive a message with the details of execution and total execution time:</p>
+<div class="source">
+<pre>public class Resource {
+  @Loggable(Loggable.DEBUG)
+  public String load(URL url) {
+    return url.openConnection().getContent();
+  }
+}</pre></div>
+<p>Something like this will appear in the log:</p>
+<div class="source">
+<pre>[DEBUG] #load('http://www.google.com'): returned &quot;&lt;html ...&quot; in 23ms</pre></div>
+<p>If a method throws an exception it is also logged.</p>
+<p>Method <tt>toString()</tt> of your method arguments and its return value is used to compose a log line. Too long texts are trimmed to 100 characters, in order to make log lines compact. Since version 0.7.13 it's possible to disable this trimming mechanism with an extra <tt>trim</tt> argument of the annotation.</p>
+<p>Since version 0.7.13 an entire class can be annotated. In this case all methods will be logged (except <tt>toString()</tt>, <tt>hashCode()</tt>, and <tt>equals(Object)</tt>):</p>
+<div class="source">
+<pre>public class Resource {
+  @Loggable(Loggable.DEBUG)
+  public class Foo {
+    // all methods of the class will be logged
+  }
+}</pre></div>
+<p>If both a class and a method are annotated, method annotation has a higher priority.</p>
+<p>Since version 0.7.6 you can specify a time limit in seconds, as a maximum execution time of a method. If this limit is reached a logging level is increased to WARN and method slowness is reported. Since version 0.7.14 you can change time unit as well:</p>
+<div class="source">
+<pre>public class Resource {
+  @Loggable(limit = 200, unit = TimeUnit.MILLISECONDS)
+  public void run() {
+    // something that should not take more than 200 msec
+  }
+}</pre></div>
+<p>Since version 0.7.16 you can get log lines not only when method execution is done, but also when it is just started:</p>
+<div class="source">
+<pre>public class Resource {
+  @Loggable(prepend = true)
+  public void run() {
+    // something that takes too long
+  }
+}</pre></div>
+<p>In this case two log lines will be recorded, one when the method is just started and another one when it returns the output.</p>
+<p>Since version 0.7.18 you can ignore certain exception types. They won't be logged when thrown and won't polute the log. Sometimes exceptions don't mean fatal errors and should not be visible in logs, for example in JAX-RS applications where <a class="externalLink" href="http://docs.oracle.com/javaee/6/api/javax/ws/rs/WebApplicationException.html"><tt>WebApplicationException</tt></a> is used to redirect a user to another page and is not an indicator of an application error:</p>
+<div class="source">
+<pre>@Path(&quot;/&quot;)
+public class JaxRsResource {
+  @GET
+  @Loggable(ignore = WebApplicationException.class)
+  public String get() {
+    if (/* not a logged in user */) {
+      throw new WebApplicationException(Response.seeOther(/* URI */));
+    }
+  }
+}</pre></div>
+<p>Since version 0.7.19 it is possible to skip either arguments or result part of the log message, in order to make it more compact, using <tt>skipArgs</tt> and <tt>skipResult</tt> arguments of <tt>@Loggable</tt> annotation:</p>
+<div class="source">
+<pre>public class VerboseClass {
+  @Loggable(skipResult = true)
+  public List&lt;String&gt; get(String name) {
+    // Returns a long list of texts, which are not
+    // important and should not polute the log
+  }
+}</pre></div>
+<p>The mechanism is implemented with AOP/AspectJ. Read <a href="./index.html">how to integrate it into your <tt>pom.xml</tt></a>.</p></div>
+            </article>
+            <p style="margin-bottom: 3em; margin-top: 2em;">
+                Copyright &#169;
+                                                    2012-2013
+                                jcabi.com, All Rights Reserved.
+                <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+            </p>
+            <a href="http://maven.apache.org" title="site is built by Apache Maven"
+                style='position: absolute; bottom: 1em; right: 1em;'>
+                <img src='images/built-by-maven.png' style='width: 50px; height: 17px;'
+                    alt='site is built by Apache Maven'/>
+            </a>
+        </div>
+    </body>
+</html>
