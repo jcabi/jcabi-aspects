@@ -1,0 +1,51 @@
+-classpath
+'/Users/be/code/jcabi/jcabi-aspects/target/classes:/Users/be/.m2/repository/commons-lang/commons-lang/2.6/commons-lang-2.6.jar:/Users/be/.m2/repository/javax/validation/validation-api/1.1.0.Alpha1/validation-api-1.1.0.Alpha1.jar:/Users/be/.m2/repository/org/aspectj/aspectjrt/1.6.11/aspectjrt-1.6.11.jar:/Users/be/code/jcabi/jcabi-log/target/jcabi-log-0.5.1.jar:/Users/be/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar'
+-encoding
+'UTF-8'
+-protected
+-quiet
+-sourcepath
+'/Users/be/code/jcabi/jcabi-aspects/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2012 <a href="http://www.jcabi.com">jcabi.com</a>. All Rights Reserved.'
+-charset
+'UTF-8'
+-d
+'/Users/be/code/jcabi/jcabi-aspects/target/site/apidocs-0.5.1'
+-docencoding
+'UTF-8'
+-doctitle
+'jcabi-aspects 0.5.1 API'
+-link
+'http://download.oracle.com/javaee/6/api'
+-link
+'http://sonatype.github.com/sonatype-aether/apidocs'
+-link
+'http://hamcrest.org/JavaHamcrest/javadoc/1.3'
+-link
+'http://docs.mockito.googlecode.com/hg/latest'
+-link
+'http://www.h2database.com/javadoc'
+-link
+'http://jolbox.com/bonecp/downloads/site/apidocs'
+-link
+'http://www.jcabi.com/jcabi-log/apidocs'
+-link
+'http://validator.hibernate.org/hibernate-validator/apidocs'
+-link
+'http://junit.org/apidocs'
+-link
+'http://www.slf4j.org/apidocs'
+-linkoffline
+'http://download.oracle.com/javase/6/docs/api' '/Users/be/code/jcabi/jcabi-aspects/target/javadoc-bundle-options'
+-linkoffline
+'http://www.jcabi.com/jcabi-log/apidocs' '/Users/be/code/jcabi/jcabi-log/target/site/apidocs-0.5.1'
+-tag
+"todo:a:To do:"
+-tag
+"checkstyle:a:Suppressed Checkstyle violations:"
+-use
+-version
+-windowtitle
+'jcabi-aspects 0.5.1 API'
