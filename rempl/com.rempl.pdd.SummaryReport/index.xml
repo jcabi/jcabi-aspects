@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type='text/xsl' href='puzzles.xsl'?><puzzles>
+   <puzzle>
+      <ticket>1</ticket>
+      <file>src/main/java/com/jcabi/aspects/Quietly.java</file>
+      <prefix> * </prefix>
+      <body>This annotation has to be on methods returning void only. A compile-time APT processor needs to be created that will verify that only void methods have @Quietly annotations. In runtime it should throw an exception before executing of method body, if its return type is not void.</body>
+      <estimate>0</estimate>
+      <lines>44-47</lines>
+      <owner>someone</owner>
+   </puzzle>
+   <puzzle>
+      <ticket>39</ticket>
+      <file>src/main/java/com/jcabi/aspects/RetryOnFailure.java</file>
+      <prefix>     * </prefix>
+      <body>Not implemented yet, just ignored</body>
+      <estimate>0</estimate>
+      <lines>79-79</lines>
+      <owner>someone</owner>
+   </puzzle>
+   <puzzle>
+      <ticket>61</ticket>
+      <file>src/main/java/com/jcabi/aspects/aj/MethodValidator.java</file>
+      <prefix>     * </prefix>
+      <body>It's a temporary design, which enables only NotNull, Valid, and Pattern annotations. In the future we should use JSR-303 Validator, when they implement validation of values (see their appendix C).</body>
+      <estimate>0</estimate>
+      <lines>193-196</lines>
+      <owner>someone</owner>
+   </puzzle>
+   <puzzle>
+      <ticket>133</ticket>
+      <file>src/test/java/com/jcabi/aspects/ImmutableTest.java</file>
+      <prefix>     * </prefix>
+      <body>The test is disabled since in Java final arrays can still be modified (bloody Java!)</body>
+      <estimate>0</estimate>
+      <lines>57-58</lines>
+      <owner>someone</owner>
+   </puzzle>
+</puzzles>
