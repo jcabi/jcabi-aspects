@@ -160,7 +160,9 @@ public final class ImmutabilityChecker {
                 );
             }
             try {
-                this.check(field.getType());
+                if (field.getType() != type) {
+                    this.check(field.getType());
+                }
             } catch (ImmutabilityChecker.Violation ex) {
                 throw new ImmutabilityChecker.Violation(
                     String.format(
