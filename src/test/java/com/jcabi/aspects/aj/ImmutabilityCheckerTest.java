@@ -45,7 +45,7 @@ public final class ImmutabilityCheckerTest {
      * ImmutabilityChecker should check recursive classes.
      */
     @Test
-    public void shouldCheckRecursiveClasses() {
+    public void checksRecursiveClasses() {
         MatcherAssert.assertThat(
             new Recursive(null).getNext(), Matchers.nullValue()
         );
@@ -55,7 +55,7 @@ public final class ImmutabilityCheckerTest {
      * ImmutabilityChecker should fail on non final fields.
      */
     @Test(expected = IllegalStateException.class)
-    public void shouldFailNonFinalFields() {
+    public void failsOnNonFinalFields() {
         new NonFinal("test");
     }
 
