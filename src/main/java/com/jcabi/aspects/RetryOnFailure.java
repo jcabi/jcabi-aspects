@@ -76,9 +76,8 @@ public @interface RetryOnFailure {
 
     /**
      * When to retry (in case of what exception types).
-     * @todo #39 Not implemented yet, just ignored
      */
-    Class<? extends Exception>[] types() default { };
+    Class<? extends Exception>[] types() default { Exception.class };
 
     /**
      * Shall it be fully verbose (show full exception trace) or just

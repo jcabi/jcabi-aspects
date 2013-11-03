@@ -87,4 +87,79 @@ public final class RepeaterTest {
             }
         } .call();
     }
+
+    /**
+     * Repeater should retry if an exception specified to be
+     * retried is thrown from the method.
+     */
+    @Test
+    public void onlyRetryExceptionsWhichAreSpecified() {
+        final AtomicInteger calls = new AtomicInteger(0);
+        MatcherAssert.assertThat(
+            new Callable<Boolean>() {
+                @Override
+                @RetryOnFailure(attempts = Tv.THREE,
+                    types = {ArrayIndexOutOfBoundsException.class })
+                public Boolean call() {
+                    if (calls.get() < Tv.THREE - 1) {
+                        calls.incrementAndGet();
+                        throw new ArrayIndexOutOfBoundsException();
+                    }
+                    return true;
+                }
+            } .call(),
+            Matchers.equalTo(true)
+        );
+        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(Tv.THREE - 1));
+    }
+
+    /**
+     * Repeater should throw the exception if it is
+     * not specified to be retried.
+     */
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void throwExceptionsWhichAreNotSpecifiedAsRetry() {
+        final AtomicInteger calls = new AtomicInteger(0);
+        try {
+            new Callable<Boolean>() {
+                @Override
+                @RetryOnFailure(attempts = Tv.THREE,
+                    types = {IllegalArgumentException.class })
+                public Boolean call() {
+                    if (calls.get() < Tv.THREE - 1) {
+                        calls.incrementAndGet();
+                        throw new ArrayIndexOutOfBoundsException();
+                    }
+                    return true;
+                }
+            } .call();
+        } finally {
+            MatcherAssert.assertThat(calls.get(), Matchers.equalTo(1));
+        }
+    }
+
+    /**
+     * Repeater should retry even if the exception is a
+     * subtype of the class specified to be retried.
+     */
+    @Test
+    public void retryExceptionsWhichAreSubTypesOfTheExceptionsSpecified() {
+        final AtomicInteger calls = new AtomicInteger(0);
+        MatcherAssert.assertThat(
+            new Callable<Boolean>() {
+                @Override
+                @RetryOnFailure(attempts = Tv.THREE,
+                    types = {IndexOutOfBoundsException.class })
+                public Boolean call() {
+                    if (calls.get() < Tv.THREE - 1) {
+                        calls.incrementAndGet();
+                        throw new ArrayIndexOutOfBoundsException();
+                    }
+                    return true;
+                }
+            } .call(),
+            Matchers.equalTo(true)
+        );
+        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(Tv.THREE - 1));
+    }
 }
