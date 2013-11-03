@@ -74,6 +74,8 @@ public final class Repeater {
         final RetryOnFailure rof = method.getAnnotation(RetryOnFailure.class);
         int attempt = 0;
         final long begin = System.nanoTime();
+        final Class<? extends Throwable>[]
+            types = rof.types();
         while (true) {
             final long start = System.nanoTime();
             try {
@@ -83,6 +85,13 @@ public final class Repeater {
                 throw ex;
             // @checkstyle IllegalCatch (1 line)
             } catch (Throwable ex) {
+                if (!isExceptionToBeRetried(
+                    ex.getClass(),
+                    types
+                )
+                    ) {
+                    throw ex;
+                }
                 ++attempt;
                 if (rof.verbose()) {
                     Logger.warn(
@@ -143,6 +152,25 @@ public final class Repeater {
             text.append("; ").append(Repeater.message(exp.getCause()));
         }
         return text.toString();
+    }
+
+    /**
+     * Checks if the exception thrown is specified to be retried.
+     * @param thrown The thrown exception class
+     * @param types The exceptions specified to be retried
+     * @return True if the method call is to be retried
+     */
+    private boolean isExceptionToBeRetried(
+        final Class<? extends Throwable> thrown,
+            final Class<? extends Throwable>[] types
+    ) {
+        boolean result = false;
+        for (Class<? extends Throwable> exceptionType : types) {
+            if (exceptionType.isAssignableFrom(thrown)) {
+                result = true;
+            }
+        }
+        return result;
     }
 
 }
