@@ -31,6 +31,7 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.UnitedThrow;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -76,15 +77,32 @@ public final class SingleException {
         } catch (Throwable ex) {
             Throwable throwable = ex;
             if (!clz.isAssignableFrom(ex.getClass())) {
-                try {
+                if (exists(clz)) {
                     throwable = clz.getConstructor(Throwable.class)
                         .newInstance(ex);
-                } catch (NoSuchMethodException methodex) {
+                } else {
                     throwable = clz.newInstance();
                 }
             }
             throw throwable;
         }
+    }
+
+    /**
+     * Check if there is a constructor with single Throwable argument.
+     * @param clz Class to check.
+     * @return Whether constructor exists.
+     */
+    private boolean exists(final Class<? extends Throwable> clz) {
+        boolean found = false;
+        for (Constructor ctr : clz.getConstructors()) {
+            if ((ctr.getParameterTypes().length == 1)
+                && (ctr.getParameterTypes()[0] == Throwable.class)) {
+                found = true;
+                break;
+            }
+        }
+        return found;
     }
 
     /**

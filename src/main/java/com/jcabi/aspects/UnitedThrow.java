@@ -52,7 +52,7 @@ public @interface UnitedThrow {
     static class None extends Throwable {
     }
     /**
-     * Number of threads to use for parallel execution.
+     * Exception that should be allowed.
      */
     Class<? extends Throwable> value() default None.class;
 }
