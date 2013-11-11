@@ -85,6 +85,9 @@ public class MyResource {
    * {{{./apidocs-${project.version}/com/jcabi/aspects/RetryOnFailure.html}<<<@RetryOnFailure>>>}} —
      retries method execution {{{./annotation-retryonfailure.html}a few times}}
 
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/UnitedThrow.html}<<<@UnitedThrow>>>}} —
+     encapsulates all exceptions into {{{./annotation-unitedthrow.html}allowed one}}
+
    * {{{./apidocs-${project.version}/com/jcabi/aspects/ScheduleWithFixedDelay.html}<<<@ScheduleWithFixedDelay>>>}} —
      schedules class execution in {{{./annotation-schedulewithfixeddelay.html}multiple threads}}
 
