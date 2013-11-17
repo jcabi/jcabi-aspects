@@ -33,10 +33,10 @@
     <parent>
         <groupId>com.jcabi</groupId>
         <artifactId>parent</artifactId>
-        <version>0.12</version>
+        <version>0.13.1</version>
     </parent>
     <artifactId>jcabi-aspects</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.13</version>
     <packaging>jar</packaging>
     <name>jcabi-aspects</name>
     <description>Collection of convenient and useful Java annotations</description>
@@ -122,12 +122,6 @@
             </plugins>
         </pluginManagement>
         <plugins>
-            <plugin>
-                <!-- https://github.com/github/maven-plugins/issues/54 -->
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-                <version>0.8</version>
-            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>

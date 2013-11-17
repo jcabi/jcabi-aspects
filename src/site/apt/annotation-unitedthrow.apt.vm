@@ -41,34 +41,33 @@ Unification of Exceptions Thrown from Java Methods
   Annotate your methods with
   {{{./apidocs-${project.version}/com/jcabi/aspects/UnitedThrows.html}<<<@UnitedThrows>>>}}
   annotation and every exception thrown out of the method
-  and every exception thrown will be of given type:
+  will be of a required type:
 
 +--
 public class Thrower {
-
   @UnitedThrow
-  public void do() {
-    throw new IllegalArgumentException();
+  public void do() throws IOException {
+    throw new FileNotFoundException();
   }
 }
 +--
 
-  Instead of IllegalArgumentException a IllegalStateException will be thrown,
-  which is the default.
+  Instead of <<<FileNotFoundException>>> an <<<IllegalStateException will be thrown,
+  which is the default for <<<@UnitedThrow>>>.
 
-  Another example with custom selected exception:
+  Another example with a custom selected exception:
 
 +--
-  public class Thrower {
-
+public class Thrower {
   @UnitedThrow(IOException.class)
   public void save() throws IOException, InterruptedException {
     throw new IllegalStateException();
   }
+}
 +--
 
-  In this case IllegalStateException will not be thrown instead a IOException
-  will be used.
+  In this case <<<IllegalStateException>>> will not be thrown.
+  Instead, <<<IOException>>> will be used.
 
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.

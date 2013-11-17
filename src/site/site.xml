@@ -67,9 +67,9 @@
             <item name="@Quietly" href="annotation-quietly.html"/>
             <item name="@Parallel" href="annotation-parallel.html"/>
             <item name="@RetryOnFailure" href="annotation-retryonfailure.html"/>
-            <item name="@UnitedThrow" href="annotation-unitedthrow.html"/>
             <item name="@ScheduleWithFixedDelay" href="annotation-schedulewithfixeddelay.html"/>
             <item name="@Timeable" href="annotation-timeable.html"/>
+            <item name="@UnitedThrow" href="annotation-unitedthrow.html"/>
         </menu>
         <menu ref="reports"/>
     </body>

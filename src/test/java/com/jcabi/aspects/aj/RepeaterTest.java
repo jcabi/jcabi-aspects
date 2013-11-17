@@ -55,7 +55,7 @@ public final class RepeaterTest {
         MatcherAssert.assertThat(
             new Callable<Boolean>() {
                 @Override
-                @RetryOnFailure(attempts = Tv.THREE)
+                @RetryOnFailure(attempts = Tv.THREE, verbose = false)
                 public Boolean call() {
                     if (calls.get() < Tv.THREE - 1) {
                         calls.incrementAndGet();
@@ -77,7 +77,7 @@ public final class RepeaterTest {
         final AtomicInteger calls = new AtomicInteger(0);
         new Callable<Boolean>() {
             @Override
-            @RetryOnFailure(attempts = Tv.THREE)
+            @RetryOnFailure(attempts = Tv.THREE, verbose = false)
             public Boolean call() {
                 if (calls.get() < Tv.THREE) {
                     calls.incrementAndGet();
@@ -98,8 +98,11 @@ public final class RepeaterTest {
         MatcherAssert.assertThat(
             new Callable<Boolean>() {
                 @Override
-                @RetryOnFailure(attempts = Tv.THREE,
-                    types = {ArrayIndexOutOfBoundsException.class })
+                @RetryOnFailure(
+                    attempts = Tv.THREE,
+                    types = {ArrayIndexOutOfBoundsException.class },
+                    verbose = false
+                )
                 public Boolean call() {
                     if (calls.get() < Tv.THREE - 1) {
                         calls.incrementAndGet();
@@ -123,8 +126,11 @@ public final class RepeaterTest {
         try {
             new Callable<Boolean>() {
                 @Override
-                @RetryOnFailure(attempts = Tv.THREE,
-                    types = {IllegalArgumentException.class })
+                @RetryOnFailure(
+                    attempts = Tv.THREE,
+                    types = {IllegalArgumentException.class },
+                    verbose = false
+                )
                 public Boolean call() {
                     if (calls.get() < Tv.THREE - 1) {
                         calls.incrementAndGet();
@@ -148,8 +154,11 @@ public final class RepeaterTest {
         MatcherAssert.assertThat(
             new Callable<Boolean>() {
                 @Override
-                @RetryOnFailure(attempts = Tv.THREE,
-                    types = {IndexOutOfBoundsException.class })
+                @RetryOnFailure(
+                    attempts = Tv.THREE,
+                    verbose = false,
+                    types = {IndexOutOfBoundsException.class }
+                )
                 public Boolean call() {
                     if (calls.get() < Tv.THREE - 1) {
                         calls.incrementAndGet();
