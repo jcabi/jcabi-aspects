@@ -60,7 +60,7 @@
                                                     </ul>
                                     </li>
                                                                                         <li>
-                                                                    <a href="apidocs-0.12/index.html" title="API 0.12 (JavaDoc)">API 0.12 (JavaDoc)</a>
+                                                                    <a href="apidocs-0.13/index.html" title="API 0.13 (JavaDoc)">API 0.13 (JavaDoc)</a>
                                                                                                                         <ul>
                                                     </ul>
                                     </li>
@@ -140,14 +140,22 @@
                                                                                                                 <ul>
                                                     </ul>
                                     </li>
+                                                                                        <li>
+                                                                    <a href="annotation-unitedthrow.html" title="@UnitedThrow">@UnitedThrow</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
                                                                 </ul>
                                     </li>
                             <li>
                     Project Documentation
                                             <ul>
                                                                             <li>
+                                                                    <a href="project-info.html" title="Project Information">Project Information</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
+                                                                                        <li>
                                                                     <a href="project-reports.html" title="Project Reports">Project Reports</a>
-                                                                                                                                                                                                                                                                                                                                                    </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
                                                                 </ul>
                                     </li>
                     </ul>
@@ -166,13 +174,13 @@
             </a>
                         <p>
                 
-                24-Oct-2013
-                0.12
+                17-Nov-2013
+                0.13
             </p>
             <article>
                 <!--  --><!-- ~~ Copyright (c) 2011-2013, jcabi.com --><!-- All rights reserved. --><!--  --><!-- Redistribution and use in source and binary forms, with or without --><!-- modification, are permitted provided that the following conditions --><!-- are met: 1) Redistributions of source code must retain the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer. 2) Redistributions in binary form must reproduce the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer in the documentation and/or other materials provided --><!-- with the distribution. 3) Neither the name of the jcabi.com nor --><!-- the names of its contributors may be used to endorse or promote --><!-- products derived from this software without specific prior written --><!-- permission. --><!--  --><!-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS --><!-- "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT --><!-- NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND --><!-- FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL --><!-- THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, --><!-- INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES --><!-- (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR --><!-- SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) --><!-- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, --><!-- STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) --><!-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED --><!-- OF THE POSSIBILITY OF SUCH DAMAGE. --><!--  --><div class="section">
 <h2>Limit Java Method Execution Time<a name="Limit_Java_Method_Execution_Time"></a></h2>
-<p>Annotate your methods with <a href="./apidocs-0.12/com/jcabi/aspects/Timeable.html"><tt>@Timeable</tt></a> annotation and every time their execution takes more than allowed their thread will be interrupted:</p>
+<p>Annotate your methods with <a href="./apidocs-0.13/com/jcabi/aspects/Timeable.html"><tt>@Timeable</tt></a> annotation and every time their execution takes more than allowed their thread will be interrupted:</p>
 <div class="source">
 <pre>public class Resource {
   @Timeable(limit = 5, unit = TimeUnit.SECONDS)
@@ -181,7 +189,7 @@
   }
 }</pre></div>
 <p>The thread running this method will be terminated if it takes more than five seconds.</p>
-<p>Important to note that in Java 1.5+ it is impossible to force thread termination: <a class="externalLink" href="http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html">Why Are Thread.stop, Thread.suspend, Thread.resume and Runtime.runFinalizersOnExit Deprecated?</a>. Thus, we can't just call <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#stop()"><tt>Thread.stop()</tt></a>, when a thread is over a specified time limit. The best thing we can do is to call <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#interrupt()"><tt>Thread#interrupt()</tt></a> and hope that the thread itself is checking its <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#isInterrupted()"><tt>Thread#isInterrupted()</tt></a> status. If you want to design your long-running methods in a way that <a href="./apidocs-0.12/com/jcabi/aspects/Timeable.html"><tt>@Timeable</tt></a> can terminate them, embed a checker into your most intessively used place, for example:</p>
+<p>Important to note that in Java 1.5+ it is impossible to force thread termination: <a class="externalLink" href="http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html">Why Are Thread.stop, Thread.suspend, Thread.resume and Runtime.runFinalizersOnExit Deprecated?</a>. Thus, we can't just call <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#stop()"><tt>Thread.stop()</tt></a>, when a thread is over a specified time limit. The best thing we can do is to call <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#interrupt()"><tt>Thread#interrupt()</tt></a> and hope that the thread itself is checking its <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#isInterrupted()"><tt>Thread#isInterrupted()</tt></a> status. If you want to design your long-running methods in a way that <a href="./apidocs-0.13/com/jcabi/aspects/Timeable.html"><tt>@Timeable</tt></a> can terminate them, embed a checker into your most intessively used place, for example:</p>
 <div class="source">
 <pre>public class Resource {
   @Timeable(limit = 1, unit = TimeUnit.SECONDS)

@@ -10,15 +10,6 @@
       <owner>someone</owner>
    </puzzle>
    <puzzle>
-      <ticket>39</ticket>
-      <file>src/main/java/com/jcabi/aspects/RetryOnFailure.java</file>
-      <prefix>     * </prefix>
-      <body>Not implemented yet, just ignored</body>
-      <estimate>0</estimate>
-      <lines>79-79</lines>
-      <owner>someone</owner>
-   </puzzle>
-   <puzzle>
       <ticket>61</ticket>
       <file>src/main/java/com/jcabi/aspects/aj/MethodValidator.java</file>
       <prefix>     * </prefix>
