@@ -95,7 +95,7 @@ public final class SingleException {
      */
     private boolean exists(final Class<? extends Throwable> clz) {
         boolean found = false;
-        for (Constructor ctr : clz.getConstructors()) {
+        for (final Constructor<?> ctr : clz.getConstructors()) {
             if ((ctr.getParameterTypes().length == 1)
                 && (ctr.getParameterTypes()[0] == Throwable.class)) {
                 found = true;
@@ -111,6 +111,7 @@ public final class SingleException {
      * @param annot UnitedThrow annotation.
      * @return Class of exception.
      */
+    @SuppressWarnings("unchecked")
     private Class<? extends Throwable> clazz(final Method method,
         final UnitedThrow annot) {
         Class<? extends Throwable> clz = annot.value();

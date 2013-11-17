@@ -49,7 +49,11 @@ public @interface UnitedThrow {
     /**
      * Default empty exception.
      */
-    static class None extends Throwable {
+    class None extends Throwable {
+        /**
+         * Serialization marker.
+         */
+        private static final long serialVersionUID = -2085901092419654865L;
     }
     /**
      * Exception that should be allowed.

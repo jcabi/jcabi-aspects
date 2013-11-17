@@ -24,7 +24,7 @@ You need just this dependency:
 <dependency>
   <groupId>com.jcabi</groupId>
   <artifactId>jcabi-aspects</artifactId>
-  <version>0.12</version>
+  <version>0.13</version>
 </dependency>
 ```
 
