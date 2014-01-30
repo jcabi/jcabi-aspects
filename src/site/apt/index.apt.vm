@@ -98,9 +98,9 @@ public class MyResource {
   (this is mandatory, without this step annotations will have absolutely no effect!).
 
   If you have any questions, please submit an issue to
-  [Github](https://github.com/jcabi/jcabi-aspects/issues/new).
+  {{{https://github.com/jcabi/jcabi-aspects/issues/new}Github}}.
   If you want to discuss, please use our
-  [Google Group](https://groups.google.com/forum/#!forum/jcabi).
+  {{{https://groups.google.com/forum/#!forum/jcabi}Google Group}}.
 
 * Cutting Edge Version
 
