@@ -40,7 +40,8 @@ Executing method in multiple threads
 
   Methods annotated with
   {{{./apidocs-${project.version}/com/jcabi/aspects/Parallel.html}<<<@Parallel>>>}}
-  will be executed by multiple threads (depending on the threads parameter):
+  will be executed in multiple threads
+  (depending on the <<<threads>>> annotation parameter):
 
 +--
 public class FooTest {
@@ -63,4 +64,4 @@ public class FooTest {
   be executed in those threads.
 
   The mechanism is implemented with AOP/AspectJ. Read
-  {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.
+  {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.

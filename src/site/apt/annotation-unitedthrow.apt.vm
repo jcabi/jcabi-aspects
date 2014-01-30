@@ -41,7 +41,7 @@ Unification of Exceptions Thrown from Java Methods
   Annotate your methods with
   {{{./apidocs-${project.version}/com/jcabi/aspects/UnitedThrows.html}<<<@UnitedThrows>>>}}
   annotation and every exception thrown out of the method
-  will be of a required type:
+  will be an instance of the required type:
 
 +--
 public class Thrower {
@@ -52,7 +52,7 @@ public class Thrower {
 }
 +--
 
-  Instead of <<<FileNotFoundException>>> an <<<IllegalStateException will be thrown,
+  Instead of <<<FileNotFoundException>>> an <<<IllegalStateException>>> will be thrown,
   which is the default for <<<@UnitedThrow>>>.
 
   Another example with a custom selected exception:
@@ -66,8 +66,8 @@ public class Thrower {
 }
 +--
 
-  In this case <<<IllegalStateException>>> will not be thrown.
+  In this case, <<<IllegalStateException>>> will not be thrown.
   Instead, <<<IOException>>> will be used.
 
   The mechanism is implemented with AOP/AspectJ. Read
-  {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.
+  {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.

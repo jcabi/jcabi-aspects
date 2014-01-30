@@ -54,7 +54,8 @@ public class Resource {
 
   If you call this method, say, every second, only every 5th call
   will make a real HTTP connection. The other four will return
-  cached value. Cache is maintained in memory in a hash map.
+  a cached value. Cache is maintained in memory, in a concurrent hash map
+  (everything is thread safe).
 
   You can make a value cacheable forever (method's result will
   never expire):
@@ -95,9 +96,9 @@ public class Page {
   and
   {{{./apidocs-${project.version}/com/jcabi/aspects/Cacheable.html}<<<@Cacheable.FlushAfter>>>}}.
 
-  Be aware of a potential problem with caching of mutable object. For example,
-  if a method return a <<<HashSet>>> and then you change it, a new call to
-  the same method will return a modified set. Not the one originally cached.
+  Be aware of a potential problem with caching of mutable objects. For example,
+  if a method returns a <<<HashSet>>> and then you change it, a new call to
+  the same method will return a modified set, instead of the one originally cached.
   We strongly recommend to make sure that you cache only immutable objects:
 
 +--
@@ -118,4 +119,4 @@ public class Employees {
   a new coming Java caching standard.
 
   The mechanism is implemented with AOP/AspectJ. Read
-  {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.
+  {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.

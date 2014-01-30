@@ -59,15 +59,15 @@ public class Resource {
 [DEBUG] #load('http://www.google.com'): returned "<html ..." in 23ms
 +--
 
-  If a method throws an exception it is also logged.
+  If a method throws an exception, it is also logged.
 
-  Method <<<toString()>>> of your method arguments and its return value is
+  Methods <<<toString()>>> of your method arguments and its return value are
   used to compose a log line. Too long texts are trimmed to 100 characters,
   in order to make log lines compact. Since version 0.7.13 it's possible
   to disable this trimming mechanism with an extra <<<trim>>> argument
   of the annotation.
 
-  Since version 0.7.13 an entire class can be annotated. In this case all
+  Since version 0.7.13 an entire class can be annotated. In this case, all
   methods will be logged (except <<<toString()>>>, <<<hashCode()>>>,
   and <<<equals(Object)>>>):
 
@@ -109,10 +109,10 @@ public class Resource {
 }
 +--
 
-  In this case two log lines will be recorded, one when the method is
+  In this case, two log lines will be recorded, one when the method is
   just started and another one when it returns the output.
 
-  Since version 0.7.18 you can ignore certain exception types. They won't
+  Since version 0.7.18, you can ignore certain exception types. They won't
   be logged when thrown and won't polute the log. Sometimes exceptions don't
   mean fatal errors and should not be visible in logs, for example in
   JAX-RS applications where
@@ -133,7 +133,7 @@ public class JaxRsResource {
 }
 +--
 
-  Since version 0.7.19 it is possible to skip either arguments or result
+  Since version 0.7.19, it is possible to skip either arguments or result
   part of the log message, in order to make it more compact, using
   <<<skipArgs>>> and <<<skipResult>>> arguments of <<<@Loggable>>> annotation:
 
@@ -148,4 +148,4 @@ public class VerboseClass {
 +--
 
   The mechanism is implemented with AOP/AspectJ. Read
-  {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.
+  {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.

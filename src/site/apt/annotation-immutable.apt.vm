@@ -52,15 +52,17 @@ public class Foo {
   During instantion of this class a runtime exception will be thrown,
   because it is mutable.
 
-  Keep in mind, that although JDK requires some classes to be immutable,
+  Keep in mind that, although JDK requires some classes to be immutable,
   most of them are mutable in reality, for example
-  {{{http://docs.oracle.com/javase/7/docs/api/java/math/BigDecimal.html}<<<java.math.BigDecimal>>>}}
-  (well, at least in OpenJDK 7 it is mutable). Our immutability checker
+  {{{http://docs.oracle.com/javase/7/docs/api/java/math/BigDecimal.html}<<<BigDecimal>>>}}
+  (well, at least in OpenJDK 7). Our immutability checker
   is rather strict and doesn't allow classes to have any non-private non-final
   properties in order to be called truly immutable.
 
   If your class/interface has a property, which type is an interface, that
-  child interface has to be <<<@Immutable>>> annotated, for example:
+  child interface has to be annotated with
+  {{{./apidocs-${project.version}/com/jcabi/aspects/Immutable.html}<<<@Immutable>>>}},
+  for example:
 
 +--
 @Immutable
@@ -88,4 +90,4 @@ public class Foo {
 +--
 
   The mechanism is implemented with AOP/AspectJ. Read
-  {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.
+  {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.

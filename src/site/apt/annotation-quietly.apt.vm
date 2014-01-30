@@ -46,7 +46,6 @@ Logging Exceptions Thrown out of Java Methods and Swallowing Them
 +--
 public class Resource {
   private Object content;
-
   @Quietly
   public void load(URL url) {
     this.content = url.openConnection().getContent();
@@ -54,12 +53,12 @@ public class Resource {
 }
 +--
 
-  If an exception occurs it will not be thrown to the caller and it will
+  If an exception occurs, it will not be thrown to the caller and it will
   be logged through {{{http://www.slf4j.org/}SLF4J}} logging facility.
 
   Also, take a look at {{{./annotation-logexceptions.html}<<<@LogExceptions>>>}}
-  annotation which does the same but it it propagates exceptions thrown to the
+  annotation, which does the same but it propagates exceptions thrown to the
   caller.
 
   The mechanism is implemented with AOP/AspectJ. Read
-  {{{./index.html}how to integrate it into your <<<pom.xml>>>}}.
+  {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.
