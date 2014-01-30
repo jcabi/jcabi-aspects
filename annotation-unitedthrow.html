@@ -42,16 +42,6 @@
     <body>
                 <ul id="menu">
                                                     <li>
-                    Parent Project
-                                            <ul>
-                                                                            <li>
-                                                                    <a href="../../../../http:/parent.jcabi.com/index.html" title="parent">parent</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                </ul>
-                                    </li>
-                            <li>
                     Overview
                                             <ul>
                                                                             <li>
@@ -80,12 +70,22 @@
                     Examples
                                             <ul>
                                                                             <li>
+                                                                    <a href="example-weaving.html" title="Weaving binaries">Weaving binaries</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
                                                                     <a href="jsr-303.html" title="JSR-303 validations">JSR-303 validations</a>
                                                                                                                         <ul>
                                                     </ul>
                                     </li>
                                                                                         <li>
                                                                     <a href="immutable-collections.html" title="Immutable collections">Immutable collections</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="example-aspectj.html" title="Weaving with AspectJ">Weaving with AspectJ</a>
                                                                                                                         <ul>
                                                     </ul>
                                     </li>
@@ -165,7 +165,7 @@
                         src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
                         alt="Fork me on GitHub" />
                 </a>
-                        <a href="../../" title="${decoration.bannerLeft.title}">
+                        <a href="../" title="${decoration.bannerLeft.title}">
                 <img src="http://img.jcabi.com/logo.png"
                     alt="jcabi"
                                             width="200"
@@ -174,13 +174,13 @@
             </a>
                         <p>
                 
-                17-Nov-2013
+                30-Jan-2014
                 0.13
             </p>
             <article>
                 <!--  --><!-- Copyright (c) 2011, jcabi.com --><!-- All rights reserved. --><!--  --><!-- Redistribution and use in source and binary forms, with or without --><!-- modification, are permitted provided that the following conditions --><!-- are met: 1) Redistributions of source code must retain the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer. 2) Redistributions in binary form must reproduce the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer in the documentation and/or other materials provided --><!-- with the distribution. 3) Neither the name of the jcabi.com nor --><!-- the names of its contributors may be used to endorse or promote --><!-- products derived from this software without specific prior written --><!-- permission. --><!--  --><!-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS --><!-- "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT --><!-- NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND --><!-- FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL --><!-- THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, --><!-- INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES --><!-- (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR --><!-- SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) --><!-- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, --><!-- STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) --><!-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED --><!-- OF THE POSSIBILITY OF SUCH DAMAGE. --><!--  --><div class="section">
 <h2>Unification of Exceptions Thrown from Java Methods<a name="Unification_of_Exceptions_Thrown_from_Java_Methods"></a></h2>
-<p>Annotate your methods with <a href="./apidocs-0.13/com/jcabi/aspects/UnitedThrows.html"><tt>@UnitedThrows</tt></a> annotation and every exception thrown out of the method will be of a required type:</p>
+<p>Annotate your methods with <a href="./apidocs-0.13/com/jcabi/aspects/UnitedThrows.html"><tt>@UnitedThrows</tt></a> annotation and every exception thrown out of the method will be an instance of the required type:</p>
 <div class="source">
 <pre>public class Thrower {
   @UnitedThrow
@@ -188,7 +188,7 @@
     throw new FileNotFoundException();
   }
 }</pre></div>
-<p>Instead of <tt>FileNotFoundException</tt> an <tt>IllegalStateException will be thrown, which is the default for &lt;&lt;&lt;@UnitedThrow</tt>.</p>
+<p>Instead of <tt>FileNotFoundException</tt> an <tt>IllegalStateException</tt> will be thrown, which is the default for <tt>@UnitedThrow</tt>.</p>
 <p>Another example with a custom selected exception:</p>
 <div class="source">
 <pre>public class Thrower {
@@ -197,12 +197,12 @@
     throw new IllegalStateException();
   }
 }</pre></div>
-<p>In this case <tt>IllegalStateException</tt> will not be thrown. Instead, <tt>IOException</tt> will be used.</p>
-<p>The mechanism is implemented with AOP/AspectJ. Read <a href="./index.html">how to integrate it into your <tt>pom.xml</tt></a>.</p></div>
+<p>In this case, <tt>IllegalStateException</tt> will not be thrown. Instead, <tt>IOException</tt> will be used.</p>
+<p>The mechanism is implemented with AOP/AspectJ. Read <a href="./example-weaving.html">how to integrate it into your <tt>pom.xml</tt></a>.</p></div>
             </article>
             <p style="margin-bottom: 3em; margin-top: 2em;">
                 Copyright &#169;
-                                                    2012-2013
+                                                    2012-2014
                                 jcabi.com, All Rights Reserved.
                 <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
             </p>

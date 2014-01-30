@@ -41,16 +41,6 @@
     <body>
                 <ul id="menu">
                                                     <li>
-                    Parent Project
-                                            <ul>
-                                                                            <li>
-                                                                    <a href="../../../../http:/parent.jcabi.com/index.html" title="parent">parent</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                </ul>
-                                    </li>
-                            <li>
                     Overview
                                             <ul>
                                                                             <li>
@@ -79,12 +69,22 @@
                     Examples
                                             <ul>
                                                                             <li>
+                                                                    <a href="example-weaving.html" title="Weaving binaries">Weaving binaries</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
                                                                     <a href="jsr-303.html" title="JSR-303 validations">JSR-303 validations</a>
                                                                                                                         <ul>
                                                     </ul>
                                     </li>
                                                                                         <li>
                                                                     <a href="immutable-collections.html" title="Immutable collections">Immutable collections</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="example-aspectj.html" title="Weaving with AspectJ">Weaving with AspectJ</a>
                                                                                                                         <ul>
                                                     </ul>
                                     </li>
@@ -211,7 +211,7 @@
                         src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
                         alt="Fork me on GitHub" />
                 </a>
-                        <a href="../../" title="${decoration.bannerLeft.title}">
+                        <a href="../" title="${decoration.bannerLeft.title}">
                 <img src="http://img.jcabi.com/logo.png"
                     alt="jcabi"
                                             width="200"
@@ -220,7 +220,7 @@
             </a>
                         <p>
                 
-                17-Nov-2013
+                30-Jan-2014
                 0.13
             </p>
             <article>
@@ -240,7 +240,7 @@
 <tr class="b">
 <td>com.jcabi</td>
 <td><a class="externalLink" href="http://www.jcabi.com/jcabi-log">jcabi-log</a></td>
-<td>0.7</td>
+<td>0.12.1</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.jcabi.com/LICENSE.txt">BSD</a></td></tr>
 <tr class="a">
@@ -321,15 +321,15 @@
 <th>Type</th>
 <th>License</th></tr>
 <tr class="b">
-<td>commons-lang</td>
-<td><a class="externalLink" href="http://commons.apache.org/lang/">commons-lang</a></td>
-<td>2.6</td>
+<td>org.apache.commons</td>
+<td><a class="externalLink" href="http://commons.apache.org/lang/">commons-lang3</a></td>
+<td>3.1</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
 <tr class="a">
 <td>org.slf4j</td>
 <td><a class="externalLink" href="http://www.slf4j.org">slf4j-api</a></td>
-<td>1.6.1</td>
+<td>1.7.5</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></td></tr></table></div><a name="Project_Transitive_Dependencies_test"></a>
 <div class="section">
@@ -389,20 +389,20 @@
 <tr class="b">
 <td>
 <p><b>Description: </b>Collection of convenient and useful Java annotations</p>
-<p><b>URL: </b><a class="externalLink" href="http://www.jcabi.com/parent/jcabi-aspects">http://www.jcabi.com/parent/jcabi-aspects</a></p>
+<p><b>URL: </b><a class="externalLink" href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.jcabi.com/LICENSE.txt">BSD</a></p></td></tr></table></div>
 <ul>
-<li>com.jcabi:jcabi-log:jar:0.7 (compile) <img id="_img3" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep2', '_img3' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep2" style="display:none">
+<li>com.jcabi:jcabi-log:jar:0.12.1 (compile) <img id="_img3" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep2', '_img3' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep2" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>jcabi-log</th></tr>
 <tr class="b">
 <td>
-<p><b>Description: </b>JCABI is a set of useful open source Java components.</p>
+<p><b>Description: </b>Wrapper of SLF4J and a few supplementary logging classes</p>
 <p><b>URL: </b><a class="externalLink" href="http://www.jcabi.com/jcabi-log">http://www.jcabi.com/jcabi-log</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.jcabi.com/LICENSE.txt">BSD</a></p></td></tr></table></div>
 <ul>
-<li>org.slf4j:slf4j-api:jar:1.6.1 (compile) <img id="_img5" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep4', '_img5' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep4" style="display:none">
+<li>org.slf4j:slf4j-api:jar:1.7.5 (compile) <img id="_img5" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep4', '_img5' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep4" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>SLF4J API Module</th></tr>
@@ -411,15 +411,15 @@
 <p><b>Description: </b>The slf4j API</p>
 <p><b>URL: </b><a class="externalLink" href="http://www.slf4j.org">http://www.slf4j.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></p></td></tr></table></div></li>
-<li>commons-lang:commons-lang:jar:2.6 (compile) <img id="_img7" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep6', '_img7' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep6" style="display:none">
+<li>org.apache.commons:commons-lang3:jar:3.1 (compile) <img id="_img7" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep6', '_img7' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep6" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Commons Lang</th></tr>
 <tr class="b">
 <td>
 <p><b>Description: </b>Commons Lang, a package of Java utility classes for the
-        classes that are in java.lang's hierarchy, or are considered to be so
-        standard as to justify existence in java.lang.</p>
+  classes that are in java.lang's hierarchy, or are considered to be so
+  standard as to justify existence in java.lang.</p>
 <p><b>URL: </b><a class="externalLink" href="http://commons.apache.org/lang/">http://commons.apache.org/lang/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
 <li>org.aspectj:aspectjrt:jar:1.7.3 (compile) <img id="_img9" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep8', '_img9' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep8" style="display:none">
@@ -548,7 +548,7 @@
             </article>
             <p style="margin-bottom: 3em; margin-top: 2em;">
                 Copyright &#169;
-                                                    2012-2013
+                                                    2012-2014
                                 jcabi.com, All Rights Reserved.
                 <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
             </p>

@@ -42,16 +42,6 @@
     <body>
                 <ul id="menu">
                                                     <li>
-                    Parent Project
-                                            <ul>
-                                                                            <li>
-                                                                    <a href="../../../../http:/parent.jcabi.com/index.html" title="parent">parent</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                </ul>
-                                    </li>
-                            <li>
                     Overview
                                             <ul>
                                                                             <li>
@@ -80,12 +70,22 @@
                     Examples
                                             <ul>
                                                                             <li>
+                                                                    <a href="example-weaving.html" title="Weaving binaries">Weaving binaries</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
                                                                     <a href="jsr-303.html" title="JSR-303 validations">JSR-303 validations</a>
                                                                                                                         <ul>
                                                     </ul>
                                     </li>
                                                                                         <li>
                                                                     <a href="immutable-collections.html" title="Immutable collections">Immutable collections</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="example-aspectj.html" title="Weaving with AspectJ">Weaving with AspectJ</a>
                                                                                                                         <ul>
                                                     </ul>
                                     </li>
@@ -165,7 +165,7 @@
                         src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
                         alt="Fork me on GitHub" />
                 </a>
-                        <a href="../../" title="${decoration.bannerLeft.title}">
+                        <a href="../" title="${decoration.bannerLeft.title}">
                 <img src="http://img.jcabi.com/logo.png"
                     alt="jcabi"
                                             width="200"
@@ -174,7 +174,7 @@
             </a>
                         <p>
                 
-                17-Nov-2013
+                30-Jan-2014
                 0.13
             </p>
             <article>
@@ -184,19 +184,18 @@
 <div class="source">
 <pre>public class Resource {
   private Object content;
-
   @Quietly
   public void load(URL url) {
     this.content = url.openConnection().getContent();
   }
 }</pre></div>
-<p>If an exception occurs it will not be thrown to the caller and it will be logged through <a class="externalLink" href="http://www.slf4j.org/">SLF4J</a> logging facility.</p>
-<p>Also, take a look at <a href="./annotation-logexceptions.html"><tt>@LogExceptions</tt></a> annotation which does the same but it it propagates exceptions thrown to the caller.</p>
-<p>The mechanism is implemented with AOP/AspectJ. Read <a href="./index.html">how to integrate it into your <tt>pom.xml</tt></a>.</p></div>
+<p>If an exception occurs, it will not be thrown to the caller and it will be logged through <a class="externalLink" href="http://www.slf4j.org/">SLF4J</a> logging facility.</p>
+<p>Also, take a look at <a href="./annotation-logexceptions.html"><tt>@LogExceptions</tt></a> annotation, which does the same but it propagates exceptions thrown to the caller.</p>
+<p>The mechanism is implemented with AOP/AspectJ. Read <a href="./example-weaving.html">how to integrate it into your <tt>pom.xml</tt></a>.</p></div>
             </article>
             <p style="margin-bottom: 3em; margin-top: 2em;">
                 Copyright &#169;
-                                                    2012-2013
+                                                    2012-2014
                                 jcabi.com, All Rights Reserved.
                 <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
             </p>

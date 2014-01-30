@@ -42,16 +42,6 @@
     <body>
                 <ul id="menu">
                                                     <li>
-                    Parent Project
-                                            <ul>
-                                                                            <li>
-                                                                    <a href="../../../../http:/parent.jcabi.com/index.html" title="parent">parent</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                </ul>
-                                    </li>
-                            <li>
                     Overview
                                             <ul>
                                                                             <li>
@@ -80,12 +70,22 @@
                     Examples
                                             <ul>
                                                                             <li>
+                                                                    <a href="example-weaving.html" title="Weaving binaries">Weaving binaries</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
                                                                     <a href="jsr-303.html" title="JSR-303 validations">JSR-303 validations</a>
                                                                                                                         <ul>
                                                     </ul>
                                     </li>
                                                                                         <li>
                                                                     <a href="immutable-collections.html" title="Immutable collections">Immutable collections</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="example-aspectj.html" title="Weaving with AspectJ">Weaving with AspectJ</a>
                                                                                                                         <ul>
                                                     </ul>
                                     </li>
@@ -165,7 +165,7 @@
                         src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
                         alt="Fork me on GitHub" />
                 </a>
-                        <a href="../../" title="${decoration.bannerLeft.title}">
+                        <a href="../" title="${decoration.bannerLeft.title}">
                 <img src="http://img.jcabi.com/logo.png"
                     alt="jcabi"
                                             width="200"
@@ -174,7 +174,7 @@
             </a>
                         <p>
                 
-                17-Nov-2013
+                30-Jan-2014
                 0.13
             </p>
             <article>
@@ -191,9 +191,9 @@
 <p>Something like this will appear in the log:</p>
 <div class="source">
 <pre>[DEBUG] #load('http://www.google.com'): returned &quot;&lt;html ...&quot; in 23ms</pre></div>
-<p>If a method throws an exception it is also logged.</p>
-<p>Method <tt>toString()</tt> of your method arguments and its return value is used to compose a log line. Too long texts are trimmed to 100 characters, in order to make log lines compact. Since version 0.7.13 it's possible to disable this trimming mechanism with an extra <tt>trim</tt> argument of the annotation.</p>
-<p>Since version 0.7.13 an entire class can be annotated. In this case all methods will be logged (except <tt>toString()</tt>, <tt>hashCode()</tt>, and <tt>equals(Object)</tt>):</p>
+<p>If a method throws an exception, it is also logged.</p>
+<p>Methods <tt>toString()</tt> of your method arguments and its return value are used to compose a log line. Too long texts are trimmed to 100 characters, in order to make log lines compact. Since version 0.7.13 it's possible to disable this trimming mechanism with an extra <tt>trim</tt> argument of the annotation.</p>
+<p>Since version 0.7.13 an entire class can be annotated. In this case, all methods will be logged (except <tt>toString()</tt>, <tt>hashCode()</tt>, and <tt>equals(Object)</tt>):</p>
 <div class="source">
 <pre>public class Resource {
   @Loggable(Loggable.DEBUG)
@@ -218,8 +218,8 @@
     // something that takes too long
   }
 }</pre></div>
-<p>In this case two log lines will be recorded, one when the method is just started and another one when it returns the output.</p>
-<p>Since version 0.7.18 you can ignore certain exception types. They won't be logged when thrown and won't polute the log. Sometimes exceptions don't mean fatal errors and should not be visible in logs, for example in JAX-RS applications where <a class="externalLink" href="http://docs.oracle.com/javaee/6/api/javax/ws/rs/WebApplicationException.html"><tt>WebApplicationException</tt></a> is used to redirect a user to another page and is not an indicator of an application error:</p>
+<p>In this case, two log lines will be recorded, one when the method is just started and another one when it returns the output.</p>
+<p>Since version 0.7.18, you can ignore certain exception types. They won't be logged when thrown and won't polute the log. Sometimes exceptions don't mean fatal errors and should not be visible in logs, for example in JAX-RS applications where <a class="externalLink" href="http://docs.oracle.com/javaee/6/api/javax/ws/rs/WebApplicationException.html"><tt>WebApplicationException</tt></a> is used to redirect a user to another page and is not an indicator of an application error:</p>
 <div class="source">
 <pre>@Path(&quot;/&quot;)
 public class JaxRsResource {
@@ -231,7 +231,7 @@ public class JaxRsResource {
     }
   }
 }</pre></div>
-<p>Since version 0.7.19 it is possible to skip either arguments or result part of the log message, in order to make it more compact, using <tt>skipArgs</tt> and <tt>skipResult</tt> arguments of <tt>@Loggable</tt> annotation:</p>
+<p>Since version 0.7.19, it is possible to skip either arguments or result part of the log message, in order to make it more compact, using <tt>skipArgs</tt> and <tt>skipResult</tt> arguments of <tt>@Loggable</tt> annotation:</p>
 <div class="source">
 <pre>public class VerboseClass {
   @Loggable(skipResult = true)
@@ -240,11 +240,11 @@ public class JaxRsResource {
     // important and should not polute the log
   }
 }</pre></div>
-<p>The mechanism is implemented with AOP/AspectJ. Read <a href="./index.html">how to integrate it into your <tt>pom.xml</tt></a>.</p></div>
+<p>The mechanism is implemented with AOP/AspectJ. Read <a href="./example-weaving.html">how to integrate it into your <tt>pom.xml</tt></a>.</p></div>
             </article>
             <p style="margin-bottom: 3em; margin-top: 2em;">
                 Copyright &#169;
-                                                    2012-2013
+                                                    2012-2014
                                 jcabi.com, All Rights Reserved.
                 <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
             </p>

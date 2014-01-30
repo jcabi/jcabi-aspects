@@ -42,16 +42,6 @@
     <body>
                 <ul id="menu">
                                                     <li>
-                    Parent Project
-                                            <ul>
-                                                                            <li>
-                                                                    <a href="../../../../http:/parent.jcabi.com/index.html" title="parent">parent</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                </ul>
-                                    </li>
-                            <li>
                     Overview
                                             <ul>
                                                                             <li>
@@ -80,6 +70,11 @@
                     Examples
                                             <ul>
                                                                             <li>
+                                                                    <a href="example-weaving.html" title="Weaving binaries">Weaving binaries</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
                                                                     <a href="jsr-303.html" title="JSR-303 validations">JSR-303 validations</a>
                                                                                                                         <ul>
                                                     </ul>
@@ -88,6 +83,11 @@
                                             <strong>                        <a href="immutable-collections.html" title="Immutable collections">Immutable collections</a>
         </strong>
                                                                                                                 <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="example-aspectj.html" title="Weaving with AspectJ">Weaving with AspectJ</a>
+                                                                                                                        <ul>
                                                     </ul>
                                     </li>
                                                                 </ul>
@@ -165,7 +165,7 @@
                         src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
                         alt="Fork me on GitHub" />
                 </a>
-                        <a href="../../" title="${decoration.bannerLeft.title}">
+                        <a href="../" title="${decoration.bannerLeft.title}">
                 <img src="http://img.jcabi.com/logo.png"
                     alt="jcabi"
                                             width="200"
@@ -174,7 +174,7 @@
             </a>
                         <p>
                 
-                17-Nov-2013
+                30-Jan-2014
                 0.13
             </p>
             <article>
@@ -182,15 +182,15 @@
 <h2>Immutable Collections<a name="Immutable_Collections"></a></h2>
 <p>There a few classes that are truly immutable (not like those pseudo immutables from Guava and Apache Commons):</p>
 <ul>
-<li><a href="./apidocs-0.13/com/jcabi/immutable/Array.html"><tt>Array</tt></a>: implements <tt>java.util.Collection</tt>;</li>
-<li><a href="./apidocs-0.13/com/jcabi/immutable/ArraySet.html"><tt>ArraySet</tt></a>: implements <tt>java.util.Set</tt>;</li>
-<li><a href="./apidocs-0.13/com/jcabi/immutable/ArraySortedSet.html"><tt>ArraySortedSet</tt></a>: implements <tt>java.util.SortedSet</tt>;</li>
-<li><a href="./apidocs-0.13/com/jcabi/immutable/ArrayMap.html"><tt>ArrayMap</tt></a>: implements <tt>java.util.Map</tt>.</li></ul>
-<p>All of them are annotated with <tt>@Immutable</tt>.</p></div>
+<li><a href="./apidocs-0.13/com/jcabi/immutable/Array.html"><tt>Array</tt></a>: implements <a class="externalLink" href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html"><tt>Collection</tt></a>;</li>
+<li><a href="./apidocs-0.13/com/jcabi/immutable/ArraySet.html"><tt>ArraySet</tt></a>: implements <a class="externalLink" href="http://docs.oracle.com/javase/6/docs/api/java/util/Set.html"><tt>Set</tt></a>;</li>
+<li><a href="./apidocs-0.13/com/jcabi/immutable/ArraySortedSet.html"><tt>ArraySortedSet</tt></a>: implements <a class="externalLink" href="http://docs.oracle.com/javase/6/docs/api/java/util/SortedSet.html"><tt>SortedSet</tt></a>;</li>
+<li><a href="./apidocs-0.13/com/jcabi/immutable/ArrayMap.html"><tt>ArrayMap</tt></a>: implements <a class="externalLink" href="http://docs.oracle.com/javase/6/docs/api/java/util/Map.html"><tt>Map</tt></a>.</li></ul>
+<p>All of them are annotated with <a href="./apidocs-0.13/com/jcabi/aspects/Immutable.html"><tt>@Immutable</tt></a>.</p></div>
             </article>
             <p style="margin-bottom: 3em; margin-top: 2em;">
                 Copyright &#169;
-                                                    2012-2013
+                                                    2012-2014
                                 jcabi.com, All Rights Reserved.
                 <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
             </p>

@@ -42,16 +42,6 @@
     <body>
                 <ul id="menu">
                                                     <li>
-                    Parent Project
-                                            <ul>
-                                                                            <li>
-                                                                    <a href="../../../../http:/parent.jcabi.com/index.html" title="parent">parent</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                </ul>
-                                    </li>
-                            <li>
                     Overview
                                             <ul>
                                                                             <li>
@@ -81,12 +71,22 @@
                     Examples
                                             <ul>
                                                                             <li>
+                                                                    <a href="example-weaving.html" title="Weaving binaries">Weaving binaries</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
                                                                     <a href="jsr-303.html" title="JSR-303 validations">JSR-303 validations</a>
                                                                                                                         <ul>
                                                     </ul>
                                     </li>
                                                                                         <li>
                                                                     <a href="immutable-collections.html" title="Immutable collections">Immutable collections</a>
+                                                                                                                        <ul>
+                                                    </ul>
+                                    </li>
+                                                                                        <li>
+                                                                    <a href="example-aspectj.html" title="Weaving with AspectJ">Weaving with AspectJ</a>
                                                                                                                         <ul>
                                                     </ul>
                                     </li>
@@ -165,7 +165,7 @@
                         src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
                         alt="Fork me on GitHub" />
                 </a>
-                        <a href="../../" title="${decoration.bannerLeft.title}">
+                        <a href="../" title="${decoration.bannerLeft.title}">
                 <img src="http://img.jcabi.com/logo.png"
                     alt="jcabi"
                                             width="200"
@@ -174,14 +174,13 @@
             </a>
                         <p>
                 
-                17-Nov-2013
+                30-Jan-2014
                 0.13
             </p>
             <article>
                 <!--  --><!-- Copyright (c) 2011, jcabi.com --><!-- All rights reserved. --><!--  --><!-- Redistribution and use in source and binary forms, with or without --><!-- modification, are permitted provided that the following conditions --><!-- are met: 1) Redistributions of source code must retain the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer. 2) Redistributions in binary form must reproduce the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer in the documentation and/or other materials provided --><!-- with the distribution. 3) Neither the name of the jcabi.com nor --><!-- the names of its contributors may be used to endorse or promote --><!-- products derived from this software without specific prior written --><!-- permission. --><!--  --><!-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS --><!-- "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT --><!-- NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND --><!-- FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL --><!-- THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, --><!-- INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES --><!-- (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR --><!-- SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) --><!-- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, --><!-- STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) --><!-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED --><!-- OF THE POSSIBILITY OF SUCH DAMAGE. --><!--  --><div class="section">
 <h2>Useful Java AOP Aspects<a name="Useful_Java_AOP_Aspects"></a></h2>
-<p>This module contains a collection of useful AOP aspects, which allow you to modify behavior of a Java application without writing lots of duplicate code.</p>
-<p>For example, you may want to retry HTTP resource downloading in case of a failure. You can implement a full <tt>do/while</tt> cycle yourself or you can annotate the method with <a href="./apidocs-0.13/com/jcabi/aspects/RetryOnFailure.html"><tt>@RetryOnFailure</tt></a> and let one of our AOP aspects do the work for you:</p>
+<p>It's a collection of useful AOP aspects and Java annotations, which allows you to modify the behavior of your Java application without writing lots of duplicate code. For example, you may want to retry HTTP resource downloading in case of a failure. You can implement a full <tt>do/while</tt> cycle yourself or you can annotate the method with <a href="./apidocs-0.13/com/jcabi/aspects/RetryOnFailure.html"><tt>@RetryOnFailure</tt></a> and let one of our AOP aspects do the work for you:</p>
 <div class="source">
 <pre>public class MyResource {
   @RetryOnFailure
@@ -201,71 +200,8 @@
 <li><a href="./apidocs-0.13/com/jcabi/aspects/ScheduleWithFixedDelay.html"><tt>@ScheduleWithFixedDelay</tt></a> &#x2014; schedules class execution in <a href="./annotation-schedulewithfixeddelay.html">multiple threads</a></li>
 <li><a href="./apidocs-0.13/com/jcabi/aspects/Timeable.html"><tt>@Timeable</tt></a> &#x2014; interrupts a method if it exceeds <a href="./annotation-timeable.html">an allowed time frame</a></li>
 <li><a href="./apidocs-0.13/com/jcabi/aspects/UnitedThrow.html"><tt>@UnitedThrow</tt></a> &#x2014; encapsulates all exceptions into <a href="./annotation-unitedthrow.html">allowed one</a></li></ul>
-<p>All you need to do to start using our AOP aspects is to add these two artifacts to your <tt>pom.xml</tt>:</p>
-<div class="source">
-<pre>&lt;dependency&gt;
-  &lt;groupId&gt;com.jcabi&lt;/groupId&gt;
-  &lt;artifactId&gt;jcabi-aspects&lt;/artifactId&gt;
-  &lt;version&gt;0.13&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;org.aspectj&lt;/groupId&gt;
-  &lt;artifactId&gt;aspectjrt&lt;/artifactId&gt;
-  &lt;version&gt;1.6.12&lt;/version&gt;
-  &lt;scope&gt;runtime&lt;/scope&gt;
-&lt;/dependency&gt;</pre></div>
-<p>Then, we recommend to use our own plugin for AspectJ weaving <a href="../jcabi-maven-plugin/example-ajc.html">jcabi-maven-plugin:ajc</a>:</p>
-<div class="source">
-<pre>&lt;project&gt;
-  &lt;build&gt;
-    &lt;plugins&gt;
-      &lt;plugin&gt;
-        &lt;groupId&gt;com.jcabi&lt;/groupId&gt;
-        &lt;artifactId&gt;jcabi-maven-plugin&lt;/artifactId&gt;
-        &lt;version&gt;0.8&lt;/version&gt;
-        &lt;executions&gt;
-          &lt;execution&gt;
-            &lt;goals&gt;
-              &lt;goal&gt;ajc&lt;/goal&gt;
-            &lt;/goals&gt;
-          &lt;/execution&gt;
-        &lt;/executions&gt;
-      &lt;/plugin&gt;
-    &lt;/plugins&gt;
-  &lt;/build&gt;
-&lt;/project&gt;</pre></div>
-<p>Actually, the best way to get all these configurations in one package is to use our <a href="../parent/index.html"><tt>com.jcabi:parent</tt></a> parent <tt>pom.xml</tt>.</p>
-<p>However, you can use <tt>aspectj-maven-plugin</tt>, in order to apply AOP aspects to your code during compile time:</p>
-<div class="source">
-<pre>&lt;plugin&gt;
-  &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
-  &lt;artifactId&gt;aspectj-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.4&lt;/version&gt;
-  &lt;configuration&gt;
-    &lt;complianceLevel&gt;1.6&lt;/complianceLevel&gt;
-    &lt;encoding&gt;${project.build.sourceEncoding}&lt;/encoding&gt;
-    &lt;showWeaveInfo&gt;true&lt;/showWeaveInfo&gt;
-    &lt;source&gt;1.6&lt;/source&gt;
-    &lt;target&gt;1.6&lt;/target&gt;
-    &lt;verbose&gt;true&lt;/verbose&gt;
-    &lt;aspectLibraries&gt;
-      &lt;aspectLibrary&gt;
-        &lt;groupId&gt;com.jcabi&lt;/groupId&gt;
-        &lt;artifactId&gt;jcabi-aspects&lt;/artifactId&gt;
-      &lt;/aspectLibrary&gt;
-    &lt;/aspectLibraries&gt;
-  &lt;/configuration&gt;
-  &lt;executions&gt;
-    &lt;execution&gt;
-      &lt;id&gt;weave-classes&lt;/id&gt;
-      &lt;phase&gt;process-classes&lt;/phase&gt;
-      &lt;goals&gt;
-        &lt;goal&gt;compile&lt;/goal&gt;
-      &lt;/goals&gt;
-    &lt;/execution&gt;
-  &lt;/executions&gt;
-&lt;/plugin&gt;</pre></div>
-<p>Also, read more about custom integration of <a href="./jsr-303.html">JSR-303 annotations</a> and AOP.</p>
+<p>After you add that annotations to your code you should configure your build system to <a href="./example-weaving.html">&quot;weave&quot; your binaries after compilation</a> (this is mandatory, without this step annotations will have absolutely no effect!).</p>
+<p>If you have any questions, please submit an issue to [Github](https://github.com/jcabi/jcabi-aspects/issues/new). If you want to discuss, please use our [Google Group](https://groups.google.com/forum/#!forum/jcabi).</p>
 <div class="section">
 <h3>Cutting Edge Version<a name="Cutting_Edge_Version"></a></h3>
 <p>If you want to use current version of the product, you can do it with this configuration in your <tt>pom.xml</tt>:</p>
@@ -286,7 +222,7 @@
             </article>
             <p style="margin-bottom: 3em; margin-top: 2em;">
                 Copyright &#169;
-                                                    2012-2013
+                                                    2012-2014
                                 jcabi.com, All Rights Reserved.
                 <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
             </p>
