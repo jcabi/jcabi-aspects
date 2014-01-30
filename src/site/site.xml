@@ -55,6 +55,7 @@
             <item name="Release History" href="./changes-report.html"/>
         </menu>
         <menu name="Examples">
+            <item name="Weaving binaries" href="example-weaving.html"/>
             <item name="JSR-303 validations" href="jsr-303.html"/>
             <item name="Immutable collections" href="immutable-collections.html"/>
             <item name="Weaving with AspectJ" href="example-aspectj.html"/>

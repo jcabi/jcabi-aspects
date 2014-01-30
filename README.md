@@ -1,6 +1,6 @@
 <img src="http://img.jcabi.com/logo.png" width="200px" height="48px" />
 
-More details are here: [www.jcabi.com/jcabi-aspects](http://www.jcabi.com/jcabi-aspects/index.html)
+More details are here: [aspects.jcabi.com](http://aspects.jcabi.com/index.html)
 
 This module contains a collection of useful AOP aspects, which
 allow you to modify the behavior of a Java application without

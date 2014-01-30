@@ -38,10 +38,9 @@
 
 Useful Java AOP Aspects
 
-  This module contains a collection of useful AOP aspects, which
-  allow you to modify behavior of a Java application without
+  It's a collection of useful AOP aspects and Java annotations, which
+  allows you to modify the behavior of your Java application without
   writing lots of duplicate code.
-
   For example, you may want to retry HTTP
   resource downloading in case of a failure. You can implement a full
   <<<do/while>>> cycle yourself or you can annotate the method with
@@ -94,46 +93,14 @@ public class MyResource {
    * {{{./apidocs-${project.version}/com/jcabi/aspects/UnitedThrow.html}<<<@UnitedThrow>>>}} —
      encapsulates all exceptions into {{{./annotation-unitedthrow.html}allowed one}}
 
-  All you need to do to start using our AOP aspects is to
-  add these two artifacts to your <<<pom.xml>>>:
+  After you add that annotations to your code you should
+  configure your build system to {{{./example-weaving.html}"weave" your binaries after compilation}}
+  (this is mandatory, without this step annotations will have absolutely no effect!).
 
-+--
-<dependency>
-  <groupId>com.jcabi</groupId>
-  <artifactId>jcabi-aspects</artifactId>
-  <version>${project.version}</version>
-</dependency>
-<dependency>
-  <groupId>org.aspectj</groupId>
-  <artifactId>aspectjrt</artifactId>
-  <version>1.6.12</version>
-  <scope>runtime</scope>
-</dependency>
-+--
-
-  Then, we recommend to use our own plugin for AspectJ weaving
-  {{{http://www.jcabi.com/jcabi-maven-plugin/example-ajc.html}jcabi-maven-plugin:ajc}}:
-
-+--
-<project>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>com.jcabi</groupId>
-        <artifactId>jcabi-maven-plugin</artifactId>
-        <version>0.8</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>ajc</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-</project>
-+--
+  If you have any questions, please submit an issue to
+  [Github](https://github.com/jcabi/jcabi-aspects/issues/new).
+  If you want to discuss, please use our
+  [Google Group](https://groups.google.com/forum/#!forum/jcabi).
 
 * Cutting Edge Version
 
