@@ -112,7 +112,7 @@ public class MyResource {
 +--
 
   Then, we recommend to use our own plugin for AspectJ weaving
-  {{{../jcabi-maven-plugin/example-ajc.html}jcabi-maven-plugin:ajc}}:
+  {{{http://www.jcabi.com/jcabi-maven-plugin/example-ajc.html}jcabi-maven-plugin:ajc}}:
 
 +--
 <project>
@@ -134,47 +134,6 @@ public class MyResource {
   </build>
 </project>
 +--
-
-  Actually, the best way to get all these configurations in one package
-  is to use our
-  {{{../parent/index.html}<<<com.jcabi:parent>>>}} parent <<<pom.xml>>>.
-
-  However, you can use <<<aspectj-maven-plugin>>>,
-  in order to apply AOP aspects to your code during compile time:
-
-+--
-<plugin>
-  <groupId>org.codehaus.mojo</groupId>
-  <artifactId>aspectj-maven-plugin</artifactId>
-  <version>1.4</version>
-  <configuration>
-    <complianceLevel>1.6</complianceLevel>
-    <encoding>${project.build.sourceEncoding}</encoding>
-    <showWeaveInfo>true</showWeaveInfo>
-    <source>1.6</source>
-    <target>1.6</target>
-    <verbose>true</verbose>
-    <aspectLibraries>
-      <aspectLibrary>
-        <groupId>com.jcabi</groupId>
-        <artifactId>jcabi-aspects</artifactId>
-      </aspectLibrary>
-    </aspectLibraries>
-  </configuration>
-  <executions>
-    <execution>
-      <id>weave-classes</id>
-      <phase>process-classes</phase>
-      <goals>
-        <goal>compile</goal>
-      </goals>
-    </execution>
-  </executions>
-</plugin>
-+--
-
-  Also, read more about custom integration of
-  {{{./jsr-303.html}JSR-303 annotations}} and AOP.
 
 * Cutting Edge Version
 

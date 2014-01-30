@@ -48,7 +48,6 @@
             <link href="http://img.jcabi.com/favicon.ico" rel="shortcut icon"/>
             <link href="https://plus.google.com/u/0/114792568016408327418?rel=author" rel="author"/>
         </head>
-        <menu ref="parent"/>
         <menu name="Overview">
             <item name="Introduction" href="index.html"/>
             <item name="API ${project.version} (JavaDoc)" href="./apidocs-${project.version}/index.html"/>
@@ -58,6 +57,7 @@
         <menu name="Examples">
             <item name="JSR-303 validations" href="jsr-303.html"/>
             <item name="Immutable collections" href="immutable-collections.html"/>
+            <item name="Weaving with AspectJ" href="example-aspectj.html"/>
         </menu>
         <menu name="Annotations">
             <item name="@Cacheable" href="annotation-cacheable.html"/>
