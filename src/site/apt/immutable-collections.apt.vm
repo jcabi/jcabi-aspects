@@ -38,20 +38,5 @@
 
 Immutable Collections
 
-  There a few classes that are truly immutable (not like those
-  pseudo immutables from Guava and Apache Commons):
-
-   * {{{./apidocs-${project.version}/com/jcabi/immutable/Array.html}<<<Array>>>}}:
-   implements {{{http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html}<<<Collection>>>}};
-
-   * {{{./apidocs-${project.version}/com/jcabi/immutable/ArraySet.html}<<<ArraySet>>>}}:
-   implements {{{http://docs.oracle.com/javase/6/docs/api/java/util/Set.html}<<<Set>>>}};
-
-   * {{{./apidocs-${project.version}/com/jcabi/immutable/ArraySortedSet.html}<<<ArraySortedSet>>>}}:
-   implements {{{http://docs.oracle.com/javase/6/docs/api/java/util/SortedSet.html}<<<SortedSet>>>}};
-
-   * {{{./apidocs-${project.version}/com/jcabi/immutable/ArrayMap.html}<<<ArrayMap>>>}}:
-   implements {{{http://docs.oracle.com/javase/6/docs/api/java/util/Map.html}<<<Map>>>}}.
-
-  All of them are annotated with
-  {{{./apidocs-${project.version}/com/jcabi/aspects/Immutable.html}<<<@Immutable>>>}}.
+  Immutable collections migrated to
+  [jcabi-immutable](http://immutable.jcabi.com).
