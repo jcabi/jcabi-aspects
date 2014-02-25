@@ -55,7 +55,7 @@ public final class CacheableTest {
      */
     @Test
     public void cachesSimpleCall() throws Exception {
-        final CacheableTest.Foo foo = new CacheableTest.Foo(1);
+        final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.get().toString();
         MatcherAssert.assertThat(first, Matchers.equalTo(foo.get().toString()));
         foo.flush();
@@ -89,9 +89,9 @@ public final class CacheableTest {
      */
     @Test
     public void cleansCacheWhenExpired() throws Exception {
-        final CacheableTest.Foo foo = new CacheableTest.Foo(1);
+        final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.get().toString();
-        TimeUnit.SECONDS.sleep(Tv.FIVE);
+        TimeUnit.SECONDS.sleep((long) Tv.FIVE);
         MatcherAssert.assertThat(
             foo.get().toString(),
             Matchers.not(Matchers.equalTo(first))
@@ -104,7 +104,7 @@ public final class CacheableTest {
      */
     @Test
     public void cachesJustOnceInParallelThreads() throws Exception {
-        final CacheableTest.Foo foo = new CacheableTest.Foo(1);
+        final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final Thread never = new Thread(
             new Runnable() {
                 @Override
@@ -115,7 +115,7 @@ public final class CacheableTest {
         );
         never.start();
         final Set<String> values = new ConcurrentSkipListSet<String>();
-        final int threads = Runtime.getRuntime().availableProcessors() * 2;
+        final int threads = Runtime.getRuntime().availableProcessors() << 1;
         final CountDownLatch start = new CountDownLatch(1);
         final CountDownLatch done = new CountDownLatch(threads);
         final Callable<Boolean> task = new Callable<Boolean>() {
@@ -131,7 +131,7 @@ public final class CacheableTest {
             Executors.newFixedThreadPool(threads).submit(task);
         }
         start.countDown();
-        done.await(1, TimeUnit.SECONDS);
+        done.await(1L, TimeUnit.SECONDS);
         MatcherAssert.assertThat(values.size(), Matchers.equalTo(1));
         never.interrupt();
     }
@@ -152,7 +152,7 @@ public final class CacheableTest {
          * Public ctor.
          * @param num Number to encapsulate
          */
-        public Foo(final long num) {
+        Foo(final long num) {
             this.number = num;
         }
         @Override
@@ -186,7 +186,7 @@ public final class CacheableTest {
         @Loggable(Loggable.DEBUG)
         public CacheableTest.Foo never() {
             try {
-                TimeUnit.HOURS.sleep(1);
+                TimeUnit.HOURS.sleep(1L);
             } catch (InterruptedException ex) {
                 throw new IllegalStateException(ex);
             }

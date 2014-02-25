@@ -55,10 +55,10 @@ public final class ScheduleWithFixedDelayTest {
         final AtomicLong counter = new AtomicLong();
         final ScheduleWithFixedDelayTest.Sample sample =
             new ScheduleWithFixedDelayTest.Sample(counter);
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(1L);
         MatcherAssert.assertThat(counter.get(), Matchers.greaterThan(0L));
         sample.close();
-        TimeUnit.MILLISECONDS.sleep(Tv.TEN);
+        TimeUnit.MILLISECONDS.sleep((long) Tv.TEN);
         MatcherAssert.assertThat(counter.get(), Matchers.lessThan(0L));
     }
 
@@ -75,16 +75,16 @@ public final class ScheduleWithFixedDelayTest {
          * Public ctor.
          * @param cnt Counter to encapsulate
          */
-        public Sample(final AtomicLong cnt) {
+        Sample(final AtomicLong cnt) {
             this.counter = cnt;
         }
         @Override
         public void run() {
-            this.counter.addAndGet(1);
+            this.counter.addAndGet(1L);
         }
         @Override
         public void close() throws IOException {
-            this.counter.set(-1);
+            this.counter.set(-1L);
         }
     }
 

@@ -55,7 +55,7 @@ public final class TimeableTest {
      */
     @Timeable(limit = 1, unit = TimeUnit.MILLISECONDS)
     public void slow() throws Exception {
-        TimeUnit.MINUTES.sleep(1);
+        TimeUnit.MINUTES.sleep(1L);
     }
 
 }

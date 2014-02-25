@@ -33,6 +33,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -49,7 +50,7 @@ public final class JSR303Test {
      * NotNull can throw when invalid method parameters.
      * @throws Exception If something goes wrong
      */
-    @Test(expected = javax.validation.ConstraintViolationException.class)
+    @Test(expected = ConstraintViolationException.class)
     public void throwsWhenMethodParametersAreInvalid() throws Exception {
         new JSR303Test.Foo().foo(null);
     }
@@ -58,7 +59,7 @@ public final class JSR303Test {
      * NotNull can throw when regex doesn't match.
      * @throws Exception If something goes wrong
      */
-    @Test(expected = javax.validation.ConstraintViolationException.class)
+    @Test(expected = ConstraintViolationException.class)
     public void throwsWhenRegularExpressionDoesntMatch() throws Exception {
         new JSR303Test.Foo().foo("some text");
     }
@@ -76,7 +77,7 @@ public final class JSR303Test {
      * NotNull can validate method output.
      * @throws Exception If something goes wrong
      */
-    @Test(expected = javax.validation.ConstraintViolationException.class)
+    @Test(expected = ConstraintViolationException.class)
     public void validatesOutputForNonNull() throws Exception {
         new JSR303Test.Foo().nullValue();
     }
@@ -107,7 +108,8 @@ public final class JSR303Test {
          */
         @NotNull
         public int foo(
-            @NotNull @Pattern(regexp = "\\d+") @NoMeaning final String text) {
+            @NotNull @Pattern(regexp = "\\d+")
+            @JSR303Test.NoMeaning final String text) {
             return -1;
         }
         /**

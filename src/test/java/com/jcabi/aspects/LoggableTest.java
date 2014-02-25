@@ -127,7 +127,7 @@ public final class LoggableTest {
          */
         @Timeable(limit = 1, unit = TimeUnit.HOURS)
         public static String text() throws Exception {
-            TimeUnit.SECONDS.sleep(2);
+            TimeUnit.SECONDS.sleep(2L);
             return LoggableTest.Foo.hiddenText();
         }
         /**
