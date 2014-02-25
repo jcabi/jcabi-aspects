@@ -32,8 +32,8 @@ package com.jcabi.aspects.aj;
 import com.jcabi.log.Logger;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.Constraint;
@@ -42,6 +42,7 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
 import javax.validation.Valid;
 import javax.validation.Validation;
+import javax.validation.ValidationException;
 import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -145,7 +146,7 @@ public final class MethodValidator {
             throw new ConstraintViolationException(
                 method.getAnnotation(NotNull.class).message(),
                 new HashSet<ConstraintViolation<?>>(
-                    Arrays.<ConstraintViolation<?>>asList(
+                    Collections.<ConstraintViolation<?>>singletonList(
                         MethodValidator.violation(
                             result,
                             method.getAnnotation(NotNull.class).message()
@@ -199,7 +200,7 @@ public final class MethodValidator {
         final Object arg, final Annotation[] annotations) {
         final Set<ConstraintViolation<?>> violations =
             new HashSet<ConstraintViolation<?>>(0);
-        for (Annotation antn : annotations) {
+        for (final Annotation antn : annotations) {
             if (antn.annotationType().equals(NotNull.class)) {
                 if (arg == null) {
                     violations.add(
@@ -282,7 +283,7 @@ public final class MethodValidator {
             }
             @Override
             public Object[] getExecutableParameters() {
-                return new Object[] {};
+                return new Object[0];
             }
             @Override
             public Object getExecutableReturnValue() {
@@ -301,8 +302,8 @@ public final class MethodValidator {
      * @return The full text
      */
     private static String pack(final Collection<ConstraintViolation<?>> errs) {
-        final StringBuilder text = new StringBuilder();
-        for (ConstraintViolation<?> violation : errs) {
+        final StringBuilder text = new StringBuilder(0);
+        for (final ConstraintViolation<?> violation : errs) {
             if (text.length() > 0) {
                 text.append("; ");
             }
@@ -326,7 +327,7 @@ public final class MethodValidator {
                 "JSR-303 validator %[type]s instantiated by jcabi-aspects ${project.version}/${buildNumber}",
                 val
             );
-        } catch (javax.validation.ValidationException ex) {
+        } catch (ValidationException ex) {
             Logger.error(
                 MethodValidator.class,
                 // @checkstyle LineLength (1 line)
@@ -365,7 +366,7 @@ public final class MethodValidator {
                 ex,
                 object
             );
-            violations = new HashSet<ConstraintViolation<T>>();
+            violations = new HashSet<ConstraintViolation<T>>(0);
         }
         return violations;
     }
