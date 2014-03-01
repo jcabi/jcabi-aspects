@@ -26,6 +26,7 @@
                                             <link rel="stylesheet" href="./css/highlight.css" />
         <script src="./js/jquery-1.8.3.min.js"></script>
         <script src="./js/highlight-7.3.min.js"></script>
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
         <script>
             $(document).ready(
                 function() {
@@ -34,202 +35,245 @@
                             hljs.highlightBlock(element);
                         }
                     );
+                    $(".menu-button").click(
+                        function() {
+                            if ($("#here-goes-menu").attr("class") == "menu-off") {
+                                $("#menu").clone().attr("class", "mobile-menu").appendTo("#here-goes-menu");
+                                $("#here-goes-menu").attr("class", "menu-on");
+                            } else {
+                                $(".mobile-menu").hide();
+                                $("#here-goes-menu").attr("class", "menu-off");
+                            }
+                        }
+                    );
                 }
             );
         </script>
+        <style>
+            @import url("./css/wide.css") (min-width: 1200px) and (max-width:5000px);
+            @import url("./css/900-1199.css") (min-width: 900px) and (max-width:1199px);
+            @import url("./css/600-899.css") (min-width: 600px) and (max-width:899px);
+            @import url("./css/100-599.css") (min-width: 100px) and (max-width:599px);
+        </style>
     </head>
-    <body>
+    <body style="background: url('./images/background.png') fixed;">
+                <div class="page">
+            <div class="menu-section">
                 <ul id="menu">
-                                                    <li>
-                    Overview
-                                            <ul>
-                                                                            <li>
-                                                                    <a href="index.html" title="Introduction">Introduction</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="apidocs-0.14/index.html" title="API 0.14 (JavaDoc)">API 0.14 (JavaDoc)</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="cobertura/index.html" title="Test coverage">Test coverage</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="changes-report.html" title="Release History">Release History</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                </ul>
-                                    </li>
-                            <li>
-                    Examples
-                                            <ul>
-                                                                            <li>
-                                                                    <a href="example-weaving.html" title="Weaving binaries">Weaving binaries</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="jsr-303.html" title="JSR-303 validations">JSR-303 validations</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="example-aspectj.html" title="Weaving with AspectJ">Weaving with AspectJ</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                </ul>
-                                    </li>
-                            <li>
-                    Annotations
-                                            <ul>
-                                                                            <li>
-                                                                    <a href="annotation-cacheable.html" title="@Cacheable">@Cacheable</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-immutable.html" title="@Immutable">@Immutable</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-logexceptions.html" title="@LogExceptions">@LogExceptions</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-loggable.html" title="@Loggable">@Loggable</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-quietly.html" title="@Quietly">@Quietly</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-parallel.html" title="@Parallel">@Parallel</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-retryonfailure.html" title="@RetryOnFailure">@RetryOnFailure</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-schedulewithfixeddelay.html" title="@ScheduleWithFixedDelay">@ScheduleWithFixedDelay</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-timeable.html" title="@Timeable">@Timeable</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-unitedthrow.html" title="@UnitedThrow">@UnitedThrow</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                </ul>
-                                    </li>
-                            <li>
-                    Project Documentation
-                                            <ul>
-                                                                            <li>
-                                                                    <a href="project-info.html" title="Project Information">Project Information</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
-                                                                                        <li>
-                                                                    <a href="project-reports.html" title="Project Reports">Project Reports</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <ul>
-                                                                            <li>
-                                                                    <a href="rempl.html" title="REMPL">REMPL</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="xref-test/index.html" title="Test Source Xref">Test Source Xref</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                            <strong>                        <a href="surefire-report.html" title="Surefire Report">Surefire Report</a>
+                                                                                    <li>
+                            Overview
+                                                            <ul>
+                                                                                                    <li>
+                                                                                    <a href="index.html" title="Introduction">Introduction</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="apidocs-0.14/index.html" title="API 0.14 (JavaDoc)">API 0.14 (JavaDoc)</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="cobertura/index.html" title="Test coverage">Test coverage</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="changes-report.html" title="Release History">Release History</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                        </ul>
+                                                    </li>
+                                            <li>
+                            Examples
+                                                            <ul>
+                                                                                                    <li>
+                                                                                    <a href="example-weaving.html" title="Weaving binaries">Weaving binaries</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="jsr-303.html" title="JSR-303 validations">JSR-303 validations</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="example-aspectj.html" title="Weaving with AspectJ">Weaving with AspectJ</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                        </ul>
+                                                    </li>
+                                            <li>
+                            Annotations
+                                                            <ul>
+                                                                                                    <li>
+                                                                                    <a href="annotation-cacheable.html" title="@Cacheable">@Cacheable</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-immutable.html" title="@Immutable">@Immutable</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-logexceptions.html" title="@LogExceptions">@LogExceptions</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-loggable.html" title="@Loggable">@Loggable</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-quietly.html" title="@Quietly">@Quietly</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-parallel.html" title="@Parallel">@Parallel</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-retryonfailure.html" title="@RetryOnFailure">@RetryOnFailure</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-schedulewithfixeddelay.html" title="@ScheduleWithFixedDelay">@ScheduleWithFixedDelay</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-timeable.html" title="@Timeable">@Timeable</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-unitedthrow.html" title="@UnitedThrow">@UnitedThrow</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                        </ul>
+                                                    </li>
+                                            <li>
+                            Project Documentation
+                                                            <ul>
+                                                                                                    <li>
+                                                                                    <a href="project-info.html" title="Project Information">Project Information</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </li>
+                                                                                                                        <li>
+                                                                                    <a href="project-reports.html" title="Project Reports">Project Reports</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <ul>
+                                                                                                    <li>
+                                                                                    <a href="rempl.html" title="REMPL">REMPL</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="xref-test/index.html" title="Test Source Xref">Test Source Xref</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                            <strong>                        <a href="surefire-report.html" title="Surefire Report">Surefire Report</a>
         </strong>
-                                                                                                                <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="changelog.html" title="Change Log">Change Log</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="dev-activity.html" title="Developer Activity">Developer Activity</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="file-activity.html" title="File Activity">File Activity</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="dependency-updates-report.html" title="Dependency Updates Report">Dependency Updates Report</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="plugin-updates-report.html" title="Plugin Updates Report">Plugin Updates Report</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="apidocs-0.14/index.html" title="JavaDocs">JavaDocs</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="github-report.html" title="GitHub Report">GitHub Report</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="changes-report.html" title="Changes Report">Changes Report</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                </ul>
-                                    </li>
-                                                                </ul>
-                                    </li>
-                    </ul>
-        <div id="content">
-                            <a href="https://github.com/jcabi/jcabi-aspects">
-                    <img style="position: absolute; top: 0; right: 0; border: 0; width: 100px; height: 100px;"
-                        src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
-                        alt="Fork me on GitHub" />
-                </a>
+                                                                                                                                                                <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="changelog.html" title="Change Log">Change Log</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="dev-activity.html" title="Developer Activity">Developer Activity</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="file-activity.html" title="File Activity">File Activity</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="dependency-updates-report.html" title="Dependency Updates Report">Dependency Updates Report</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="plugin-updates-report.html" title="Plugin Updates Report">Plugin Updates Report</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="apidocs-0.14/index.html" title="JavaDocs">JavaDocs</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="github-report.html" title="GitHub Report">GitHub Report</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="changes-report.html" title="Changes Report">Changes Report</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                        </ul>
+                                                    </li>
+                                                                                        </ul>
+                                                    </li>
+                                    </ul>
+            </div>
+            <div id="right-side">
+                <div id="content">
+                    <i class="menu-button fa fa-align-justify"></i>
+                    <div class="logo-section">
                         <a href="../" title="${decoration.bannerLeft.title}">
-                <img src="http://img.jcabi.com/logo.png"
-                    alt="jcabi"
-                                            width="200"
-                                                                height="48"
-                                    />
-            </a>
-                        <p>
-                
-                31-Jan-2014
-                0.14
-            </p>
-            <article>
-                <script type="text/javascript">
+                            <img src="http://img.jcabi.com/logo.png"
+                                alt="jcabi"
+                                                                    width="200"
+                                                                                                    height="48"
+                                                            />
+                        </a>
+                    </div>
+                    <div class="date">
+                        <div class="date-numbers">
+                            
+                            01-Mar-2014
+                            0.14
+                        </div>
+                                                                            <div class="github">
+                                <iframe
+                                    class="github-large"
+                                    src="http://ghbtns.com/github-btn.html?user=jcabi&amp;repo=jcabi-aspects&amp;type=watch&amp;count=true&amp;size=large"
+                                    allowtransparency="true"
+                                    frameborder="0"
+                                    scrolling="0"
+                                    width="170"
+                                    height="30">
+                                </iframe>
+                                <iframe
+                                    class="github-small"
+                                    src="http://ghbtns.com/github-btn.html?user=jcabi&amp;repo=jcabi-aspects&amp;type=watch&amp;count=true&amp;size=small"
+                                    allowtransparency="true"
+                                    frameborder="0"
+                                    scrolling="0"
+                                    width="170"
+                                    height="30">
+                                </iframe>
+                            </div>
+                                            </div>
+                    <div id="here-goes-menu"></div>
+                    <article>
+                        <div class="section">
+                            <script type="text/javascript">
 //<![CDATA[
 function toggleDisplay(elementId) {
  var elm = document.getElementById(elementId + 'error');
@@ -262,10 +306,10 @@ function toggleDisplay(elementId) {
 <tr class="b">
 <td>41</td>
 <td>0</td>
-<td>0</td>
+<td>2</td>
 <td>1</td>
-<td>97.561%</td>
-<td>16.667</td></tr></table><br />
+<td>92.683%</td>
+<td>25.013</td></tr></table><br />
 <p>Note: failures are anticipated and checked for with assertions while errors are unanticipated.</p><br /></div>
 <div class="section">
 <h2>Package List<a name="Package_List"></a></h2><a name="Package_List"></a>
@@ -283,10 +327,10 @@ function toggleDisplay(elementId) {
 <td><a href="#com.jcabi.aspects">com.jcabi.aspects</a></td>
 <td>26</td>
 <td>0</td>
-<td>0</td>
+<td>2</td>
 <td>1</td>
-<td>96.154%</td>
-<td>13.234</td></tr>
+<td>88.462%</td>
+<td>11.54</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspects.aj">com.jcabi.aspects.aj</a></td>
 <td>15</td>
@@ -294,7 +338,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>3.433</td></tr></table><br />
+<td>13.473</td></tr></table><br />
 <p>Note: package statistics are not computed recursively, they only sum up all of its testsuites numbers.</p>
 <div class="section">
 <h3>com.jcabi.aspects<a name="com.jcabi.aspects"></a></h3><a name="com.jcabi.aspects"></a>
@@ -316,7 +360,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>5.103</td></tr>
+<td>5.373</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspectsImmutableTest"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspectsImmutableTest">ImmutableTest</a></td>
@@ -325,16 +369,16 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>1</td>
 <td>75%</td>
-<td>0.023</td></tr>
+<td>0.012</td></tr>
 <tr class="b">
-<td><a href="#com.jcabi.aspectsJSR303Test"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#com.jcabi.aspectsJSR303Test"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspectsJSR303Test">JSR303Test</a></td>
 <td>5</td>
 <td>0</td>
+<td>2</td>
 <td>0</td>
-<td>0</td>
-<td>100%</td>
-<td>0.983</td></tr>
+<td>60%</td>
+<td>0.863</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspectsLoggableTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspectsLoggableTest">LoggableTest</a></td>
@@ -343,7 +387,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>2.024</td></tr>
+<td>2.163</td></tr>
 <tr class="b">
 <td><a href="#com.jcabi.aspectsRetryOnFailureTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspectsRetryOnFailureTest">RetryOnFailureTest</a></td>
@@ -352,7 +396,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>3.015</td></tr>
+<td>0.147</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspectsScheduleWithFixedDelayTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspectsScheduleWithFixedDelayTest">ScheduleWithFixedDelayTest</a></td>
@@ -361,7 +405,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>1.044</td></tr>
+<td>1.199</td></tr>
 <tr class="b">
 <td><a href="#com.jcabi.aspectsTimeableTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspectsTimeableTest">TimeableTest</a></td>
@@ -370,7 +414,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.993</td></tr>
+<td>1.138</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspectsUnitedThrowTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspectsUnitedThrowTest">UnitedThrowTest</a></td>
@@ -379,7 +423,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.049</td></tr></table></div>
+<td>0.645</td></tr></table></div>
 <div class="section">
 <h3>com.jcabi.aspects.aj<a name="com.jcabi.aspects.aj"></a></h3><a name="com.jcabi.aspects.aj"></a>
 <table border="1" class="bodyTable">
@@ -400,7 +444,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.008</td></tr>
+<td>0.245</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspects.ajMethodSchedulerTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspects.ajMethodSchedulerTest">MethodSchedulerTest</a></td>
@@ -409,7 +453,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>1.014</td></tr>
+<td>11.39</td></tr>
 <tr class="b">
 <td><a href="#com.jcabi.aspects.ajMnemosTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspects.ajMnemosTest">MnemosTest</a></td>
@@ -418,7 +462,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.005</td></tr>
+<td>0.065</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspects.ajParallelizerTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspects.ajParallelizerTest">ParallelizerTest</a></td>
@@ -427,7 +471,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.747</td></tr>
+<td>0.41</td></tr>
 <tr class="b">
 <td><a href="#com.jcabi.aspects.ajQuietExceptionsLoggerTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspects.ajQuietExceptionsLoggerTest">QuietExceptionsLoggerTest</a></td>
@@ -436,7 +480,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.396</td></tr>
+<td>0.418</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspects.ajRepeaterTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspects.ajRepeaterTest">RepeaterTest</a></td>
@@ -445,7 +489,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>1.263</td></tr></table></div><br /></div>
+<td>0.945</td></tr></table></div><br /></div>
 <div class="section">
 <h2>Test Cases<a name="Test_Cases"></a></h2><a name="Test_Cases"></a>
 <p>[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</p>
@@ -454,212 +498,236 @@ function toggleDisplay(elementId) {
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>cachesJustOnceInParallelThreads</td>
-<td>0.032</td></tr>
+<td>cachesSimpleCall</td>
+<td>0.132</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>cachesSimpleStaticCall</td>
-<td>0.027</td></tr>
+<td>0.068</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>cachesSimpleCall</td>
-<td>0.024</td></tr>
+<td>cachesJustOnceInParallelThreads</td>
+<td>0.108</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>cleansCacheWhenExpired</td>
-<td>5.02</td></tr></table></div>
+<td>5.065</td></tr></table></div>
 <div class="section">
 <h3>ImmutableTest<a name="ImmutableTest"></a></h3><a name="com.jcabi.aspectsImmutableTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>passesImmutableObjects</td>
-<td>0.007</td></tr>
+<td>0.01</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>catchedMutableTypes</td>
-<td>0.008</td></tr>
+<td>0</td></tr>
 <tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>catchedMutableTypesWithInterfaces</td>
-<td>0.008</td></tr>
-<tr class="b">
 <td><a href="#com.jcabi.aspects.ImmutableTest.catchedMutableTypesWithArrays"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspects.ImmutableTest.catchedMutableTypesWithArrays">catchedMutableTypesWithArrays</a>
 <div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;com_jcabi_aspects_ImmutableTest_catchedMutableTypesWithArrays&apos;);"><span style="display:inline;" id="com_jcabi_aspects_ImmutableTest_catchedMutableTypesWithArraysoff"> + </span><span style="display:none;" id="com_jcabi_aspects_ImmutableTest_catchedMutableTypesWithArrayson"> - </span>[ Detail ]</a></div></td>
 <td>0</td></tr>
-<tr class="a">
+<tr class="b">
 <td></td>
 <td>skipped</td>
-<td></td></tr></table></div>
+<td></td></tr>
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>catchedMutableTypesWithInterfaces</td>
+<td>0.002</td></tr></table></div>
 <div class="section">
 <h3>JSR303Test<a name="JSR303Test"></a></h3><a name="com.jcabi.aspectsJSR303Test"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>ignoresVoidResponses</td>
-<td>0.212</td></tr>
+<td>passesWhenMethodParametersAreValid</td>
+<td>0.186</td></tr>
 <tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>throwsWhenRegularExpressionDoesntMatch</td>
-<td>0.257</td></tr>
+<td><a href="#com.jcabi.aspects.JSR303Test.throwsWhenRegularExpressionDoesntMatch"><img src="images/icon_error_sml.gif" alt="" /></a></td>
+<td><a href="#com.jcabi.aspects.JSR303Test.throwsWhenRegularExpressionDoesntMatch">throwsWhenRegularExpressionDoesntMatch</a>
+<div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;com_jcabi_aspects_JSR303Test_throwsWhenRegularExpressionDoesntMatch&apos;);"><span style="display:inline;" id="com_jcabi_aspects_JSR303Test_throwsWhenRegularExpressionDoesntMatchoff"> + </span><span style="display:none;" id="com_jcabi_aspects_JSR303Test_throwsWhenRegularExpressionDoesntMatchon"> - </span>[ Detail ]</a></div></td>
+<td>0.189</td></tr>
+<tr class="a">
+<td></td>
+<td>Expected exception: javax.validation.ConstraintViolationException</td>
+<td></td></tr>
+<tr class="b">
+<td></td>
+<td>
+<div id="com_jcabi_aspects_JSR303Test_throwsWhenRegularExpressionDoesntMatcherror" style="display:none;">
+<div>
+<pre>java.lang.AssertionError: Expected exception: javax.validation.ConstraintViolationExceptionat org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:32)at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)at org.apache.maven.surefire.junitcore.pc.Scheduler$1.run(Scheduler.java:258)at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)at java.util.concurrent.FutureTask.run(FutureTask.java:262)at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)at java.lang.Thread.run(Thread.java:744)</pre></div></div></td>
+<td></td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>validatesOutputForNonNull</td>
-<td>0.256</td></tr>
+<td>0.175</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>passesWhenMethodParametersAreValid</td>
-<td>0.256</td></tr>
+<td>ignoresVoidResponses</td>
+<td>0.17</td></tr>
 <tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>throwsWhenMethodParametersAreInvalid</td>
-<td>0.002</td></tr></table></div>
+<td><a href="#com.jcabi.aspects.JSR303Test.throwsWhenMethodParametersAreInvalid"><img src="images/icon_error_sml.gif" alt="" /></a></td>
+<td><a href="#com.jcabi.aspects.JSR303Test.throwsWhenMethodParametersAreInvalid">throwsWhenMethodParametersAreInvalid</a>
+<div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;com_jcabi_aspects_JSR303Test_throwsWhenMethodParametersAreInvalid&apos;);"><span style="display:inline;" id="com_jcabi_aspects_JSR303Test_throwsWhenMethodParametersAreInvalidoff"> + </span><span style="display:none;" id="com_jcabi_aspects_JSR303Test_throwsWhenMethodParametersAreInvalidon"> - </span>[ Detail ]</a></div></td>
+<td>0.143</td></tr>
+<tr class="b">
+<td></td>
+<td>Expected exception: javax.validation.ConstraintViolationException</td>
+<td></td></tr>
+<tr class="a">
+<td></td>
+<td>
+<div id="com_jcabi_aspects_JSR303Test_throwsWhenMethodParametersAreInvaliderror" style="display:none;">
+<div>
+<pre>java.lang.AssertionError: Expected exception: javax.validation.ConstraintViolationExceptionat org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:32)at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)at org.apache.maven.surefire.junitcore.pc.Scheduler$1.run(Scheduler.java:258)at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)at java.util.concurrent.FutureTask.run(FutureTask.java:262)at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)at java.lang.Thread.run(Thread.java:744)</pre></div></div></td>
+<td></td></tr></table></div>
 <div class="section">
 <h3>LoggableTest<a name="LoggableTest"></a></h3><a name="com.jcabi.aspectsLoggableTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>logsSimpleCall</td>
-<td>0.009</td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>logsStaticMethods</td>
-<td>2.006</td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>doesntLogInheritedMethods</td>
-<td>0.007</td></tr>
+<td>2.038</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>ignoresToStringMethods</td>
-<td>0.001</td></tr>
+<td>logsSimpleCall</td>
+<td>0.037</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>ignoresSomeExceptions</td>
-<td>0.001</td></tr></table></div>
+<td>0.034</td></tr>
+<tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>doesntLogInheritedMethods</td>
+<td>0.005</td></tr>
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>ignoresToStringMethods</td>
+<td>0.049</td></tr></table></div>
 <div class="section">
 <h3>RetryOnFailureTest<a name="RetryOnFailureTest"></a></h3><a name="com.jcabi.aspectsRetryOnFailureTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>executesMethodManyTimes</td>
-<td>3.015</td></tr></table></div>
+<td>0.147</td></tr></table></div>
 <div class="section">
 <h3>ScheduleWithFixedDelayTest<a name="ScheduleWithFixedDelayTest"></a></h3><a name="com.jcabi.aspectsScheduleWithFixedDelayTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>runsRoutineOperations</td>
-<td>1.044</td></tr></table></div>
+<td>1.199</td></tr></table></div>
 <div class="section">
 <h3>TimeableTest<a name="TimeableTest"></a></h3><a name="com.jcabi.aspectsTimeableTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>interruptsLongRunningMethod</td>
-<td>0.993</td></tr></table></div>
+<td>1.138</td></tr></table></div>
 <div class="section">
 <h3>UnitedThrowTest<a name="UnitedThrowTest"></a></h3><a name="com.jcabi.aspectsUnitedThrowTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>rethrowsDeclaredException</td>
-<td>0.01</td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>throwsOriginalExceptionEncapsulatedInsideDeclared</td>
-<td>0.017</td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>throwsDeclaredException</td>
-<td>0.005</td></tr>
+<td>0.129</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>throwsConfiguredException</td>
-<td>0.005</td></tr>
+<td>0.128</td></tr>
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>rethrowsDeclaredException</td>
+<td>0.128</td></tr>
+<tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>throwsOriginalExceptionEncapsulatedInsideDeclared</td>
+<td>0.132</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>throwsIllegalStateException</td>
-<td>0.012</td></tr></table></div>
+<td>0.128</td></tr></table></div>
 <div class="section">
 <h3>ImmutabilityCheckerTest<a name="ImmutabilityCheckerTest"></a></h3><a name="com.jcabi.aspects.ajImmutabilityCheckerTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>failsOnNonFinalFields</td>
-<td>0.006</td></tr>
+<td>checksRecursiveClasses</td>
+<td>0.122</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>checksRecursiveClasses</td>
-<td>0.002</td></tr></table></div>
+<td>failsOnNonFinalFields</td>
+<td>0.123</td></tr></table></div>
 <div class="section">
 <h3>MethodSchedulerTest<a name="MethodSchedulerTest"></a></h3><a name="com.jcabi.aspects.ajMethodSchedulerTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>interruptLongRunningTask</td>
-<td>0.006</td></tr>
+<td>10.201</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>shortRunningTaskShouldBeAllowedToFinish</td>
-<td>1.008</td></tr></table></div>
+<td>1.189</td></tr></table></div>
 <div class="section">
 <h3>MnemosTest<a name="MnemosTest"></a></h3><a name="com.jcabi.aspects.ajMnemosTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>handlesToxicObjectsGracefully</td>
-<td>0.004</td></tr>
+<td>buildsTextFromObject</td>
+<td>0.044</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>buildsTextFromObject</td>
-<td>0.001</td></tr></table></div>
+<td>handlesToxicObjectsGracefully</td>
+<td>0.021</td></tr></table></div>
 <div class="section">
 <h3>ParallelizerTest<a name="ParallelizerTest"></a></h3><a name="com.jcabi.aspects.ajParallelizerTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>throwsCatchedException</td>
-<td>0.396</td></tr>
+<td>executesInParallel</td>
+<td>0.207</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>executesInParallel</td>
-<td>0.351</td></tr></table></div>
+<td>throwsCatchedException</td>
+<td>0.203</td></tr></table></div>
 <div class="section">
 <h3>QuietExceptionsLoggerTest<a name="QuietExceptionsLoggerTest"></a></h3><a name="com.jcabi.aspects.ajQuietExceptionsLoggerTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>withoutException</td>
-<td>0.179</td></tr>
+<td>exception</td>
+<td>0.211</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>exception</td>
-<td>0.217</td></tr></table></div>
+<td>withoutException</td>
+<td>0.207</td></tr></table></div>
 <div class="section">
 <h3>RepeaterTest<a name="RepeaterTest"></a></h3><a name="com.jcabi.aspects.ajRepeaterTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>onlyRetryExceptionsWhichAreSpecified</td>
-<td>0.178</td></tr>
+<td>0.166</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>retriesAfterFailure</td>
-<td>0.366</td></tr>
+<td>0.209</td></tr>
 <tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>throwExceptionsWhichAreNotSpecifiedAsRetry</td>
-<td>0.007</td></tr>
-<tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>stopsRetryingAfterNumberOfAttempts</td>
 <td>0.359</td></tr>
+<tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>throwExceptionsWhichAreNotSpecifiedAsRetry</td>
+<td>0.006</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>retryExceptionsWhichAreSubTypesOfTheExceptionsSpecified</td>
-<td>0.353</td></tr></table></div><br /></div>
+<td>0.205</td></tr></table></div><br /></div>
 <div class="section">
 <h2>Failure Details<a name="Failure_Details"></a></h2><a name="Failure_Details"></a>
 <p>[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</p><br />
@@ -669,19 +737,42 @@ function toggleDisplay(elementId) {
 <td><a name="com.jcabi.aspects.ImmutableTest.catchedMutableTypesWithArrays"></a>catchedMutableTypesWithArrays</td></tr>
 <tr class="b">
 <td></td>
-<td>skipped: skipped</td></tr></table><br /></div>
-            </article>
-            <p style="margin-bottom: 3em; margin-top: 2em;">
-                Copyright &#169;
-                                                    2012-2014
-                                jcabi.com, All Rights Reserved.
-                <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
-            </p>
-            <a href="http://maven.apache.org" title="site is built by Apache Maven"
-                style='position: absolute; bottom: 1em; right: 1em;'>
-                <img src='images/built-by-maven.png' style='width: 50px; height: 17px;'
-                    alt='site is built by Apache Maven'/>
-            </a>
+<td>skipped: skipped</td></tr>
+<tr class="a">
+<td><img src="images/icon_error_sml.gif" alt="" /></td>
+<td><a name="com.jcabi.aspects.JSR303Test.throwsWhenRegularExpressionDoesntMatch"></a>throwsWhenRegularExpressionDoesntMatch</td></tr>
+<tr class="b">
+<td></td>
+<td>java.lang.AssertionError: Expected exception: javax.validation.ConstraintViolationException</td></tr>                                            
+<tr class="a">
+<td></td>
+<td>
+<div id="throwsWhenRegularExpressionDoesntMatcherror"><a href="./xref-test/com/jcabi/aspects/JSR303Test.html#">com.jcabi.aspects.JSR303Test:</a></div></td></tr>
+<tr class="b">
+<td><img src="images/icon_error_sml.gif" alt="" /></td>
+<td><a name="com.jcabi.aspects.JSR303Test.throwsWhenMethodParametersAreInvalid"></a>throwsWhenMethodParametersAreInvalid</td></tr>
+<tr class="a">
+<td></td>
+<td>java.lang.AssertionError: Expected exception: javax.validation.ConstraintViolationException</td></tr>                                            
+<tr class="b">
+<td></td>
+<td>
+<div id="throwsWhenMethodParametersAreInvaliderror"><a href="./xref-test/com/jcabi/aspects/JSR303Test.html#">com.jcabi.aspects.JSR303Test:</a></div></td></tr></table><br /></div>
+                        </div>
+                    </article>
+                    <img class="maven-mobile" src="./images/built-by-maven.png" style="float:right" width="80px"/>
+                </div>
+                <div class="legal-notes">
+                    <div class="copyright">
+                        Copyright &#169;
+                                                                            2012-2014
+                                                <br/>
+                        jcabi.com, All Rights Reserved.
+                        <br/>
+                        <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

@@ -1,0 +1,141 @@
+/**
+ * Copyright (c) 2012-2013, JCabi.com
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met: 1) Redistributions of source code must retain the above
+ * copyright notice, this list of conditions and the following
+ * disclaimer. 2) Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following
+ * disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3) Neither the name of the jcabi.com nor
+ * the names of its contributors may be used to endorse or promote
+ * products derived from this software without specific prior written
+ * permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+ * NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+ * THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+div.page {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    white-space: nowrap;
+}
+
+div.menu-section {
+    width: 35%;
+    vertical-align: top;
+    display: inline-block;
+}
+
+#menu {
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+    background-color: white;
+    font-size: 1.2em;
+    margin-top: 1em;
+    margin-right:1em;
+    padding-top: 1em;
+    padding-right: 2em;
+    padding-left: 2em;
+    padding-bottom: 2em;
+    list-style: none;
+}
+    #menu li strong {
+        font-weight: 500;
+    }
+
+    #menu > ul  {
+        font-size: 1em;
+        margin-top: 1.5em;
+    }
+    #menu > li {
+        font-weight: 500;
+        font-size: 1em;
+        margin-top: 1.5em;
+    }
+    #menu a {
+        text-decoration: none;
+    }
+    #menu > li > ul {
+        padding-left: 0em;
+        font-weight: 100;
+        list-style: none;
+        margin-top:0.5em;
+    }
+    #menu > li > ul li {
+        padding: 0.05em;
+        padding-left: 0em;
+    }
+    #menu > li > ul li:hover {
+    }
+    #menu > li > ul li:active {
+    }
+
+#content {
+    font-size: 1.1em;
+    font-weight: 300;
+    min-height: 25em;
+    background-color: white;
+    line-height: 1.7em;
+    padding: 3em;
+    position: relative;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+    box-sizing:border-box;
+}
+#right-side {
+    width: 65%;
+    white-space: normal;
+    display: inline-block;
+}
+.menu-button {
+    float:right;
+    font-size: 2em;
+    color: #2276A4;
+    display: none;
+}
+div.date {
+    position: absolute;
+    right:40px;
+    top:40px;
+    float:right;
+    color:lightgray;
+    font-weight: 100;
+}
+div.legal-notes {
+    margin-bottom: 3em;
+    margin-top: 2em;
+    font-weight: 300;
+    color:gray;
+    font-size: 1.1em;
+}
+div.copyright {
+    font-size: 0.8em;
+}
+div.logo-section {
+    margin-bottom:3em;
+}
+.github-large {
+    display:block;
+}
+.github-small {
+    display:none;
+}

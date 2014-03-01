@@ -27,77 +27,45 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
+@import url(http://fonts.googleapis.com/css?family=Patua+One);
 
 body {
+    margin: 0em;
     padding: 2em;
-    font-family: 'Helvetica Neue', Arial, serif;
+    font-family: 'Ubuntu', sans-serif;
     font-size: 16px;
     background-color: #EEE;
-    background-image: url('../images/background.png');
 }
-
-#breadcrumbs {
-    list-style: none;
-    padding-left: 0;
-}
-    #breadcrumbs li {
-        display: inline;
-    }
-    #breadcrumbs li:before {
-        content: ">";
-    }
-    #breadcrumbs li:first-child:before {
-        content: none;
-    }
-
-#menu {
-    float: left;
-    width: 15em;
-    margin-top: 3em;
-    padding-left: 0;
-    list-style: none;
-}
-    #menu > li {
-        margin-top: 1em;
-    }
-    #menu ul {
-        padding-left: 1em;
-        list-style: none;
-    }
-    #menu a {
-        text-decoration: none;
-    }
-
-#content {
-    position: relative;
-    max-width: 40em;
-    min-height: 25em;
-    margin-left: auto;
-    margin-right: auto;
+div.menu {
+    padding: 1em;
+    border-top: 20px solid white;
+    box-shadow: 0px 1px 1px lightgray;
     background-color: white;
-    line-height: 1.5em;
-    padding: 3em;
-    border-radius: 7px;
-    -webkit-border-radius: 7px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
-    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+    margin-bottom: 1em;
+    text-align: center;
 }
-
+.maven-mobile {
+    display: none;
+}
 h1, h2, h3 {
-    font-weight: normal;
+    font-weight: 300;
 }
     h1 {
         font-size: 2.5em;
+        line-height: 1.1em;
     }
     h2 {
         font-size: 2em;
+        line-height: 1.2em;
     }
     h2 {
         font-size: 1.6em;
+        line-height: 1.3em;
     }
-
 a {
     color: #2276A4;
+    text-decoration: none;
 }
     a tt {
         text-decoration: none;
@@ -108,17 +76,19 @@ a {
 pre {
     background-color: #3f464c;
     color: #f8f8f8;
-    padding: 0.5em 1em;
+    border-radius: 3px;
+    padding: 1em;
     font-family: 'Monaco', monospace;
-    font-size: 13px;
+    font-size: 16px;
     overflow-x: auto;
     line-height: 1.3em;
 }
 
 tt {
     background-color: #eee;
-    padding: 0 0.3em;
-    font-family: 'Monaco', monospace;
+    padding: 0.05em 0.5em;
+    font-family: 'Exo 2', monospace;
+    font-weight: 500;
     border: 1px solid #ccc;
     border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -126,16 +96,32 @@ tt {
 
 table {
     background-color: white;
+    border:0px;
+    border-collapse: collapse;
 }
     table tr.a {
-        background-color: #ddd;
+        background-color: #FCFCFC;
     }
     table tr.b {
-        background-color: #eee;
+        background-color: #FAFAFA;
     }
     table th {
-        background-color: #2276A4;
-        color: white;
+        background-color: #F2F2F2;
+        color: #585858;
+        padding-left: 0.7em;
+        padding-top: 0.7em;
+        padding-bottom: 0.7em;
         font-weight: normal;
         text-align: left;
+        border-bottom: 1px solid white;
+    }
+    table td {
+        vertical-align: top;
+        padding:0.7em;
+    }
+    table th:first-child {
+        border-top-left-radius:5px;
+    }
+    table th:last-child {
+        border-top-right-radius:5px;
     }

@@ -26,6 +26,7 @@
                                             <link rel="stylesheet" href="./css/highlight.css" />
         <script src="./js/jquery-1.8.3.min.js"></script>
         <script src="./js/highlight-7.3.min.js"></script>
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
         <script>
             $(document).ready(
                 function() {
@@ -34,192 +35,235 @@
                             hljs.highlightBlock(element);
                         }
                     );
+                    $(".menu-button").click(
+                        function() {
+                            if ($("#here-goes-menu").attr("class") == "menu-off") {
+                                $("#menu").clone().attr("class", "mobile-menu").appendTo("#here-goes-menu");
+                                $("#here-goes-menu").attr("class", "menu-on");
+                            } else {
+                                $(".mobile-menu").hide();
+                                $("#here-goes-menu").attr("class", "menu-off");
+                            }
+                        }
+                    );
                 }
             );
         </script>
+        <style>
+            @import url("./css/wide.css") (min-width: 1200px) and (max-width:5000px);
+            @import url("./css/900-1199.css") (min-width: 900px) and (max-width:1199px);
+            @import url("./css/600-899.css") (min-width: 600px) and (max-width:899px);
+            @import url("./css/100-599.css") (min-width: 100px) and (max-width:599px);
+        </style>
     </head>
-    <body>
+    <body style="background: url('./images/background.png') fixed;">
+                <div class="page">
+            <div class="menu-section">
                 <ul id="menu">
-                                                    <li>
-                    Overview
-                                            <ul>
-                                                                            <li>
-                                                                    <a href="index.html" title="Introduction">Introduction</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="apidocs-0.14/index.html" title="API 0.14 (JavaDoc)">API 0.14 (JavaDoc)</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="cobertura/index.html" title="Test coverage">Test coverage</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="changes-report.html" title="Release History">Release History</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                </ul>
-                                    </li>
-                            <li>
-                    Examples
-                                            <ul>
-                                                                            <li>
-                                                                    <a href="example-weaving.html" title="Weaving binaries">Weaving binaries</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="jsr-303.html" title="JSR-303 validations">JSR-303 validations</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="example-aspectj.html" title="Weaving with AspectJ">Weaving with AspectJ</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                </ul>
-                                    </li>
-                            <li>
-                    Annotations
-                                            <ul>
-                                                                            <li>
-                                                                    <a href="annotation-cacheable.html" title="@Cacheable">@Cacheable</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-immutable.html" title="@Immutable">@Immutable</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-logexceptions.html" title="@LogExceptions">@LogExceptions</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-loggable.html" title="@Loggable">@Loggable</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-quietly.html" title="@Quietly">@Quietly</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-parallel.html" title="@Parallel">@Parallel</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-retryonfailure.html" title="@RetryOnFailure">@RetryOnFailure</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-schedulewithfixeddelay.html" title="@ScheduleWithFixedDelay">@ScheduleWithFixedDelay</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-timeable.html" title="@Timeable">@Timeable</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="annotation-unitedthrow.html" title="@UnitedThrow">@UnitedThrow</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                </ul>
-                                    </li>
-                            <li>
-                    Project Documentation
-                                            <ul>
-                                                                            <li>
-                                                                    <a href="project-info.html" title="Project Information">Project Information</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <ul>
-                                                                            <li>
-                                                                    <a href="integration.html" title="Continuous Integration">Continuous Integration</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                            <strong>                        <a href="dependencies.html" title="Dependencies">Dependencies</a>
+                                                                                    <li>
+                            Overview
+                                                            <ul>
+                                                                                                    <li>
+                                                                                    <a href="index.html" title="Introduction">Introduction</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="apidocs-0.14/index.html" title="API 0.14 (JavaDoc)">API 0.14 (JavaDoc)</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="cobertura/index.html" title="Test coverage">Test coverage</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="changes-report.html" title="Release History">Release History</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                        </ul>
+                                                    </li>
+                                            <li>
+                            Examples
+                                                            <ul>
+                                                                                                    <li>
+                                                                                    <a href="example-weaving.html" title="Weaving binaries">Weaving binaries</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="jsr-303.html" title="JSR-303 validations">JSR-303 validations</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="example-aspectj.html" title="Weaving with AspectJ">Weaving with AspectJ</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                        </ul>
+                                                    </li>
+                                            <li>
+                            Annotations
+                                                            <ul>
+                                                                                                    <li>
+                                                                                    <a href="annotation-cacheable.html" title="@Cacheable">@Cacheable</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-immutable.html" title="@Immutable">@Immutable</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-logexceptions.html" title="@LogExceptions">@LogExceptions</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-loggable.html" title="@Loggable">@Loggable</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-quietly.html" title="@Quietly">@Quietly</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-parallel.html" title="@Parallel">@Parallel</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-retryonfailure.html" title="@RetryOnFailure">@RetryOnFailure</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-schedulewithfixeddelay.html" title="@ScheduleWithFixedDelay">@ScheduleWithFixedDelay</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-timeable.html" title="@Timeable">@Timeable</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="annotation-unitedthrow.html" title="@UnitedThrow">@UnitedThrow</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                        </ul>
+                                                    </li>
+                                            <li>
+                            Project Documentation
+                                                            <ul>
+                                                                                                    <li>
+                                                                                    <a href="project-info.html" title="Project Information">Project Information</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <ul>
+                                                                                                    <li>
+                                                                                    <a href="integration.html" title="Continuous Integration">Continuous Integration</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                            <strong>                        <a href="dependencies.html" title="Dependencies">Dependencies</a>
         </strong>
-                                                                                                                <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="issue-tracking.html" title="Issue Tracking">Issue Tracking</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="license.html" title="Project License">Project License</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="mail-lists.html" title="Mailing Lists">Mailing Lists</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="plugins.html" title="Project Plugins">Project Plugins</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="team-list.html" title="Project Team">Project Team</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="source-repository.html" title="Source Repository">Source Repository</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="project-summary.html" title="Project Summary">Project Summary</a>
-                                                                                                                        <ul>
-                                                    </ul>
-                                    </li>
-                                                                </ul>
-                                    </li>
-                                                                                        <li>
-                                                                    <a href="project-reports.html" title="Project Reports">Project Reports</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
-                                                                </ul>
-                                    </li>
-                    </ul>
-        <div id="content">
-                            <a href="https://github.com/jcabi/jcabi-aspects">
-                    <img style="position: absolute; top: 0; right: 0; border: 0; width: 100px; height: 100px;"
-                        src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
-                        alt="Fork me on GitHub" />
-                </a>
+                                                                                                                                                                <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="issue-tracking.html" title="Issue Tracking">Issue Tracking</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="license.html" title="Project License">Project License</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="mail-lists.html" title="Mailing Lists">Mailing Lists</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="plugins.html" title="Project Plugins">Project Plugins</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="team-list.html" title="Project Team">Project Team</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="source-repository.html" title="Source Repository">Source Repository</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="project-summary.html" title="Project Summary">Project Summary</a>
+                                                                                                                                                                        <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                        </ul>
+                                                    </li>
+                                                                                                                        <li>
+                                                                                    <a href="project-reports.html" title="Project Reports">Project Reports</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </li>
+                                                                                        </ul>
+                                                    </li>
+                                    </ul>
+            </div>
+            <div id="right-side">
+                <div id="content">
+                    <i class="menu-button fa fa-align-justify"></i>
+                    <div class="logo-section">
                         <a href="../" title="${decoration.bannerLeft.title}">
-                <img src="http://img.jcabi.com/logo.png"
-                    alt="jcabi"
-                                            width="200"
-                                                                height="48"
-                                    />
-            </a>
-                        <p>
-                
-                31-Jan-2014
-                0.14
-            </p>
-            <article>
-                <a name="Project_Dependencies"></a>
+                            <img src="http://img.jcabi.com/logo.png"
+                                alt="jcabi"
+                                                                    width="200"
+                                                                                                    height="48"
+                                                            />
+                        </a>
+                    </div>
+                    <div class="date">
+                        <div class="date-numbers">
+                            
+                            01-Mar-2014
+                            0.14
+                        </div>
+                                                                            <div class="github">
+                                <iframe
+                                    class="github-large"
+                                    src="http://ghbtns.com/github-btn.html?user=jcabi&amp;repo=jcabi-aspects&amp;type=watch&amp;count=true&amp;size=large"
+                                    allowtransparency="true"
+                                    frameborder="0"
+                                    scrolling="0"
+                                    width="170"
+                                    height="30">
+                                </iframe>
+                                <iframe
+                                    class="github-small"
+                                    src="http://ghbtns.com/github-btn.html?user=jcabi&amp;repo=jcabi-aspects&amp;type=watch&amp;count=true&amp;size=small"
+                                    allowtransparency="true"
+                                    frameborder="0"
+                                    scrolling="0"
+                                    width="170"
+                                    height="30">
+                                </iframe>
+                            </div>
+                                            </div>
+                    <div id="here-goes-menu"></div>
+                    <article>
+                        <div class="section">
+                            <a name="Project_Dependencies"></a>
 <div class="section">
 <h2>Project Dependencies<a name="Project_Dependencies"></a></h2><a name="Project_Dependencies_compile"></a>
 <div class="section">
@@ -247,7 +291,7 @@
 <tr class="b">
 <td>org.aspectj</td>
 <td><a class="externalLink" href="http://www.aspectj.org">aspectjrt</a></td>
-<td>1.7.3</td>
+<td>1.7.4</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.eclipse.org/legal/epl-v10.html">Eclipse Public License - v 1.0</a></td></tr></table></div><a name="Project_Dependencies_test"></a>
 <div class="section">
@@ -287,7 +331,7 @@
 <tr class="b">
 <td>org.hibernate</td>
 <td><a class="externalLink" href="http://validator.hibernate.org/hibernate-validator">hibernate-validator</a></td>
-<td>5.1.0.Alpha1</td>
+<td>5.1.0.CR1</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></td></tr>
 <tr class="a">
@@ -299,7 +343,7 @@
 <tr class="b">
 <td>org.slf4j</td>
 <td><a class="externalLink" href="http://www.slf4j.org">slf4j-log4j12</a></td>
-<td>1.7.5</td>
+<td>1.7.6</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></td></tr></table></div></div><a name="Project_Transitive_Dependencies"></a>
 <div class="section">
@@ -317,8 +361,8 @@
 <th>License</th></tr>
 <tr class="b">
 <td>org.apache.commons</td>
-<td><a class="externalLink" href="http://commons.apache.org/lang/">commons-lang3</a></td>
-<td>3.1</td>
+<td><a class="externalLink" href="http://commons.apache.org/proper/commons-lang/">commons-lang3</a></td>
+<td>3.2.1</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
 <tr class="a">
@@ -340,7 +384,7 @@
 <tr class="b">
 <td>com.fasterxml</td>
 <td><a class="externalLink" href="http://github.com/cowtowncoder/java-classmate">classmate</a></td>
-<td>0.8.0</td>
+<td>1.0.0</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
 <tr class="a">
@@ -406,18 +450,18 @@
 <p><b>Description: </b>The slf4j API</p>
 <p><b>URL: </b><a class="externalLink" href="http://www.slf4j.org">http://www.slf4j.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></p></td></tr></table></div></li>
-<li>org.apache.commons:commons-lang3:jar:3.1 (compile) <img id="_img7" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep6', '_img7' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep6" style="display:none">
+<li>org.apache.commons:commons-lang3:jar:3.2.1 (compile) <img id="_img7" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep6', '_img7' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep6" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
-<th>Commons Lang</th></tr>
+<th>Apache Commons Lang</th></tr>
 <tr class="b">
 <td>
-<p><b>Description: </b>Commons Lang, a package of Java utility classes for the
+<p><b>Description: </b>Apache Commons Lang, a package of Java utility classes for the
   classes that are in java.lang's hierarchy, or are considered to be so
   standard as to justify existence in java.lang.</p>
-<p><b>URL: </b><a class="externalLink" href="http://commons.apache.org/lang/">http://commons.apache.org/lang/</a></p>
+<p><b>URL: </b><a class="externalLink" href="http://commons.apache.org/proper/commons-lang/">http://commons.apache.org/proper/commons-lang/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
-<li>org.aspectj:aspectjrt:jar:1.7.3 (compile) <img id="_img9" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep8', '_img9' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep8" style="display:none">
+<li>org.aspectj:aspectjrt:jar:1.7.4 (compile) <img id="_img9" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep8', '_img9' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep8" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>AspectJ runtime</th></tr>
@@ -435,7 +479,7 @@
 <p><b>Description: </b>Bean Validation API</p>
 <p><b>URL: </b><a class="externalLink" href="http://beanvalidation.org">http://beanvalidation.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.hibernate:hibernate-validator:jar:5.1.0.Alpha1 (test) <img id="_img13" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep12', '_img13' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep12" style="display:none">
+<li>org.hibernate:hibernate-validator:jar:5.1.0.CR1 (test) <img id="_img13" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep12', '_img13' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep12" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Hibernate Validator Engine</th></tr>
@@ -454,7 +498,7 @@
 <p><b>Description: </b>The JBoss Logging Framework</p>
 <p><b>URL: </b><a class="externalLink" href="http://www.jboss.org">http://www.jboss.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, version 2.0</a></p></td></tr></table></div></li>
-<li>com.fasterxml:classmate:jar:0.8.0 (test) <img id="_img17" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep16', '_img17' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep16" style="display:none">
+<li>com.fasterxml:classmate:jar:1.0.0 (test) <img id="_img17" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep16', '_img17' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep16" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>ClassMate</th></tr>
@@ -511,7 +555,7 @@
 <p><b>Description: </b>A library for instantiating Java objects</p>
 <p><b>URL: </b><a class="externalLink" href="http://objenesis.googlecode.com/svn/docs/index.html">http://objenesis.googlecode.com/svn/docs/index.html</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://objenesis.googlecode.com/svn/docs/license.html">MIT License</a></p></td></tr></table></div></li></ul></li>
-<li>org.slf4j:slf4j-log4j12:jar:1.7.5 (test) <img id="_img29" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep28', '_img29' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep28" style="display:none">
+<li>org.slf4j:slf4j-log4j12:jar:1.7.6 (test) <img id="_img29" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep28', '_img29' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep28" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>SLF4J LOG4J-12 Binding</th></tr>
@@ -537,21 +581,24 @@
 <p><b>Apache License, Version 2.0: </b>Hibernate Validator Engine</p>
 <p><b>Eclipse Public License - v 1.0: </b>AspectJ runtime</p>
 <p><b>Common Public License Version 1.0: </b>JUnit</p>
-<p><b>The Apache Software License, Version 2.0: </b>Apache Log4j, Bean Validation API, ClassMate, Commons Lang</p>
+<p><b>The Apache Software License, Version 2.0: </b>Apache Commons Lang, Apache Log4j, Bean Validation API, ClassMate</p>
 <p><b>MIT License: </b>Objenesis, SLF4J API Module, SLF4J LOG4J-12 Binding</p>
 <p><b>The MIT License: </b>Mockito</p></div>
-            </article>
-            <p style="margin-bottom: 3em; margin-top: 2em;">
-                Copyright &#169;
-                                                    2012-2014
-                                jcabi.com, All Rights Reserved.
-                <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
-            </p>
-            <a href="http://maven.apache.org" title="site is built by Apache Maven"
-                style='position: absolute; bottom: 1em; right: 1em;'>
-                <img src='images/built-by-maven.png' style='width: 50px; height: 17px;'
-                    alt='site is built by Apache Maven'/>
-            </a>
+                        </div>
+                    </article>
+                    <img class="maven-mobile" src="./images/built-by-maven.png" style="float:right" width="80px"/>
+                </div>
+                <div class="legal-notes">
+                    <div class="copyright">
+                        Copyright &#169;
+                                                                            2012-2014
+                                                <br/>
+                        jcabi.com, All Rights Reserved.
+                        <br/>
+                        <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

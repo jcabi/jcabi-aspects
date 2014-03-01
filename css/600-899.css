@@ -1,0 +1,135 @@
+/**
+ * Copyright (c) 2012-2013, JCabi.com
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met: 1) Redistributions of source code must retain the above
+ * copyright notice, this list of conditions and the following
+ * disclaimer. 2) Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following
+ * disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3) Neither the name of the jcabi.com nor
+ * the names of its contributors may be used to endorse or promote
+ * products derived from this software without specific prior written
+ * permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+ * NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+ * THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+div.page {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    white-space: nowrap;
+}
+
+div.menu-section {
+    width: 30%;
+    vertical-align: top;
+    display: none;
+}
+
+#menu {
+    font-size: 1.5em;
+    margin-top: 0em;
+    margin-bottom: 2em;
+    padding-left: 0em;
+    list-style: none;
+    text-align: center;
+}
+    #menu > li {
+        font-size: 1em;
+        margin-top: 1.5em;
+    }
+    #menu ul {
+        font-size: 1em;
+        font-weight: normal;
+        padding-left: 0em;
+        list-style: none;
+    }
+    #menu a {
+        text-decoration: none;
+    }
+    #menu > li > ul {
+        padding-bottom:1em;
+        border-bottom: 1px solid lightgray;
+        margin-top:0.5em;
+    }
+    #menu > li > ul > li {
+        margin-top:0.5em;
+    }
+
+#content {
+    font-size: 1.2em;
+    font-weight: 300;
+    box-sizing:border-box;
+    white-space: normal;
+    display: inline-block;
+    width: 100%;
+    min-height: 25em;
+    background-color: white;
+    line-height: 1.5em;
+    padding: 2em;
+    padding-top: 3em;
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+}
+.menu-button {
+    cursor: pointer;
+    float:right;
+    font-size: 2em;
+    color: #2276A4;
+}
+body {
+    padding: 0.5em;
+
+}
+div.date {
+    color:lightgray;
+    font-weight: 100;
+    position: absolute;
+    font-size: 0.8em;
+    right:100px;
+    top:40px;
+}
+div.legal-notes {
+    text-align: center;
+    margin-bottom: 3em;
+    margin-top: 2em;
+    font-weight: 300;
+    line-height: 1.2em;
+    color:gray;
+    font-size: 1.4em;
+}
+div.copyright {
+    font-size: 0.8em;
+}
+div.logo-section {
+    margin-bottom:1em;
+}
+div.section {
+    margin-top: 3em;
+}
+.github-large {
+    display:block;
+}
+.github-small {
+    display:none;
+}
+.maven-wide {
+    display: none;
+}
