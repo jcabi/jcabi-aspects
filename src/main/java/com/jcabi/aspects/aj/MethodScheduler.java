@@ -217,7 +217,7 @@ public final class MethodScheduler {
                         )
                     );
                 }
-            } catch (InterruptedException ex) {
+            } catch (final InterruptedException ex) {
                 Thread.currentThread().interrupt();
                 throw new IllegalStateException(ex);
             }

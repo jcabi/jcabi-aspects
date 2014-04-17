@@ -71,7 +71,7 @@ public final class QuietExceptionsLogger {
         try {
             result = point.proceed();
         // @checkstyle IllegalCatch (1 line)
-        } catch (Throwable ex) {
+        } catch (final Throwable ex) {
             Logger.warn(
                 JoinPointUtils.targetize(point),
                 "%[exception]s",

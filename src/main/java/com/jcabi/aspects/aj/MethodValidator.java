@@ -327,7 +327,7 @@ public final class MethodValidator {
                 "JSR-303 validator %[type]s instantiated by jcabi-aspects ${project.version}/${buildNumber}",
                 val
             );
-        } catch (ValidationException ex) {
+        } catch (final ValidationException ex) {
             Logger.error(
                 MethodValidator.class,
                 // @checkstyle LineLength (1 line)
@@ -335,7 +335,7 @@ public final class MethodValidator {
                 ex.getMessage()
             );
         // @checkstyle IllegalCatch (1 line)
-        } catch (Throwable ex) {
+        } catch (final Throwable ex) {
             Logger.error(
                 MethodValidator.class,
                 "JSR-303 validator thrown during initialization: %[exception]s",
@@ -357,7 +357,7 @@ public final class MethodValidator {
         try {
             violations = this.validator.validate(object);
         // @checkstyle IllegalCatch (1 line)
-        } catch (Throwable ex) {
+        } catch (final Throwable ex) {
             Logger.error(
                 this,
                 // @checkstyle LineLength (1 line)

@@ -187,7 +187,7 @@ public final class CacheableTest {
         public CacheableTest.Foo never() {
             try {
                 TimeUnit.HOURS.sleep(1L);
-            } catch (InterruptedException ex) {
+            } catch (final InterruptedException ex) {
                 throw new IllegalStateException(ex);
             }
             return this;

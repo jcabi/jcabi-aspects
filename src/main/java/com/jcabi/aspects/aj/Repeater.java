@@ -79,11 +79,11 @@ public final class Repeater {
             final long start = System.nanoTime();
             try {
                 return point.proceed();
-            } catch (InterruptedException ex) {
+            } catch (final InterruptedException ex) {
                 Thread.currentThread().interrupt();
                 throw ex;
             // @checkstyle IllegalCatch (1 line)
-            } catch (Throwable ex) {
+            } catch (final Throwable ex) {
                 if (!isExceptionToBeRetried(ex.getClass(), types)) {
                     throw ex;
                 }
@@ -160,7 +160,7 @@ public final class Repeater {
         final Class<? extends Throwable>[] types
     ) {
         boolean result = false;
-        for (Class<? extends Throwable> type : types) {
+        for (final Class<? extends Throwable> type : types) {
             if (type.isAssignableFrom(thrown)) {
                 result = true;
                 break;

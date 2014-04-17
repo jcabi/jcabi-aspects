@@ -124,7 +124,7 @@ public final class MethodInterrupter {
      */
     private void interrupt() {
         synchronized (this.interrupter) {
-            for (MethodInterrupter.Call call : this.calls) {
+            for (final MethodInterrupter.Call call : this.calls) {
                 if (call.expired() && call.interrupted()) {
                     this.calls.remove(call);
                 }

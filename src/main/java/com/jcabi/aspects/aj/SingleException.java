@@ -74,7 +74,7 @@ public final class SingleException {
         try {
             return point.proceed();
             // @checkstyle IllegalCatch (1 line)
-        } catch (Throwable ex) {
+        } catch (final Throwable ex) {
             Throwable throwable = ex;
             if (!clz.isAssignableFrom(ex.getClass())) {
                 if (exists(clz)) {

@@ -68,7 +68,7 @@ public final class ExceptionsLogger {
         try {
             return point.proceed();
         // @checkstyle IllegalCatch (1 line)
-        } catch (Throwable ex) {
+        } catch (final Throwable ex) {
             Logger.warn(
                 JoinPointUtils.targetize(point),
                 "%[exception]s",

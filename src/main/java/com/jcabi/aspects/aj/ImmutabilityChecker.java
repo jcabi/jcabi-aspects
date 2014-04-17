@@ -69,7 +69,7 @@ public final class ImmutabilityChecker {
         final Class<?> type = point.getTarget().getClass();
         try {
             this.check(type);
-        } catch (ImmutabilityChecker.Violation ex) {
+        } catch (final ImmutabilityChecker.Violation ex) {
             throw new IllegalStateException(
                 String.format(
                     // @checkstyle LineLength (1 line)
@@ -101,7 +101,7 @@ public final class ImmutabilityChecker {
                 }
                 try {
                     this.fields(type);
-                } catch (ImmutabilityChecker.Violation ex) {
+                } catch (final ImmutabilityChecker.Violation ex) {
                     throw new ImmutabilityChecker.Violation(
                         String.format("Class '%s' is mutable", type.getName()),
                         ex
@@ -163,7 +163,7 @@ public final class ImmutabilityChecker {
                 if (field.getType() != type) {
                     this.check(field.getType());
                 }
-            } catch (ImmutabilityChecker.Violation ex) {
+            } catch (final ImmutabilityChecker.Violation ex) {
                 throw new ImmutabilityChecker.Violation(
                     String.format(
                         "field '%s' is mutable",

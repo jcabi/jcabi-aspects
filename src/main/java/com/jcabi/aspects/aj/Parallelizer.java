@@ -87,21 +87,21 @@ public final class Parallelizer {
             .newFixedThreadPool(total, new VerboseThreads());
         final List<Future<Throwable>> futures =
             new ArrayList<Future<Throwable>>(total);
-        for (Callable<Throwable> callable : callables) {
+        for (final Callable<Throwable> callable : callables) {
             futures.add(executor.submit(callable));
         }
         start.countDown();
         final Collection<Throwable> failures = new LinkedList<Throwable>();
-        for (Future<Throwable> future : futures) {
+        for (final Future<Throwable> future : futures) {
             final Throwable exception;
             try {
                 exception = future.get();
                 if (exception != null) {
                     failures.add(exception);
                 }
-            } catch (InterruptedException ex) {
+            } catch (final InterruptedException ex) {
                 failures.add(ex);
-            } catch (ExecutionException ex) {
+            } catch (final ExecutionException ex) {
                 failures.add(ex);
             }
         }
@@ -120,7 +120,7 @@ public final class Parallelizer {
     private ParallelException exceptions(
         final Collection<Throwable> failures) {
         ParallelException current = null;
-        for (Throwable failure : failures) {
+        for (final Throwable failure : failures) {
             current = new ParallelException(failure, current);
         }
         return current;
@@ -143,7 +143,7 @@ public final class Parallelizer {
                     start.await();
                     point.proceed();
                     // @checkstyle IllegalCatchCheck (1 line)
-                } catch (Throwable ex) {
+                } catch (final Throwable ex) {
                     result = ex;
                 }
                 return result;

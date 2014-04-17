@@ -56,7 +56,7 @@ public final class MnemosTest {
             new Object[] {new String[] {"abc", "x"}, "['abc', 'x']"},
             new Object[] {new Object[] {null, 5}, "[NULL, 5]"},
         };
-        for (Object[] pair : pairs) {
+        for (final Object[] pair : pairs) {
             MatcherAssert.assertThat(
                 Mnemos.toText(pair[0], false, false),
                 Matchers.equalTo(pair[1].toString())

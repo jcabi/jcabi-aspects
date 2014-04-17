@@ -201,7 +201,7 @@ final class Mnemos {
                     text.append(mnemo);
                 }
             // @checkstyle IllegalCatch (1 line)
-            } catch (Throwable ex) {
+            } catch (final Throwable ex) {
                 text.append(
                     String.format(
                         "[%s thrown %s]",
@@ -248,7 +248,7 @@ final class Mnemos {
         if (arg.getClass().isArray()) {
             final StringBuilder bldr = new StringBuilder();
             bldr.append('[');
-            for (Object item : (Object[]) arg) {
+            for (final Object item : (Object[]) arg) {
                 if (bldr.length() > 1) {
                     bldr.append(Mnemos.COMMA);
                 }

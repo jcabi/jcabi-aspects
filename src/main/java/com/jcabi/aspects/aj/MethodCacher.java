@@ -186,7 +186,7 @@ public final class MethodCacher {
      */
     private void flush(final JoinPoint point, final String when) {
         synchronized (this.tunnels) {
-            for (MethodCacher.Key key : this.tunnels.keySet()) {
+            for (final MethodCacher.Key key : this.tunnels.keySet()) {
                 if (!key.sameTarget(point)) {
                     continue;
                 }
@@ -213,7 +213,7 @@ public final class MethodCacher {
      */
     private void clean() {
         synchronized (this.tunnels) {
-            for (Key key : this.tunnels.keySet()) {
+            for (final Key key : this.tunnels.keySet()) {
                 if (this.tunnels.get(key).expired()) {
                     final Tunnel tunnel = this.tunnels.remove(key);
                     Logger.debug(

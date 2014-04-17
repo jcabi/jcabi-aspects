@@ -85,7 +85,7 @@ public final class MethodSchedulerTest {
             try {
                 TimeUnit.SECONDS.sleep(1);
                 this.finished = true;
-            } catch (InterruptedException ex) {
+            } catch (final InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
         }
@@ -113,7 +113,7 @@ public final class MethodSchedulerTest {
                 // @checkstyle MagicNumber (1 line)
                 TimeUnit.SECONDS.sleep(30);
                 this.finished = true;
-            } catch (InterruptedException ex) {
+            } catch (final InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
         }

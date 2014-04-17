@@ -91,7 +91,7 @@ public final class MethodLogger {
                 new Runnable() {
                     @Override
                     public void run() {
-                        for (MethodLogger.Marker marker
+                        for (final MethodLogger.Marker marker
                             : MethodLogger.this.running) {
                             marker.monitor();
                         }
@@ -235,7 +235,7 @@ public final class MethodLogger {
             }
             return result;
         // @checkstyle IllegalCatch (1 line)
-        } catch (Throwable ex) {
+        } catch (final Throwable ex) {
             if (!MethodLogger.contains(annotation.ignore(), ex)
                 && !ex.getClass().isAnnotationPresent(Loggable.Quiet.class)) {
                 final StackTraceElement trace = ex.getStackTrace()[0];
@@ -315,7 +315,7 @@ public final class MethodLogger {
     private static boolean contains(final Class<? extends Throwable>[] array,
         final Throwable exp) {
         boolean contains = false;
-        for (Class<? extends Throwable> type : array) {
+        for (final Class<? extends Throwable> type : array) {
             if (MethodLogger.instanceOf(exp.getClass(), type)) {
                 contains = true;
                 break;
@@ -336,7 +336,7 @@ public final class MethodLogger {
             || (child.getSuperclass() != null
             && MethodLogger.instanceOf(child.getSuperclass(), parent));
         if (!instance) {
-            for (Class<?> iface : child.getInterfaces()) {
+            for (final Class<?> iface : child.getInterfaces()) {
                 instance = MethodLogger.instanceOf(iface, parent);
                 if (instance) {
                     break;
