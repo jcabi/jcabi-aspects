@@ -1,5 +1,7 @@
+@import url(http://fonts.googleapis.com/css?family=Maven+Pro:400,500,700);
+@import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono);
 /**
- * Copyright (c) 2012-2013, JCabi.com
+ * Copyright (c) 2012-2014, jcabi.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,101 +29,222 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-@import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
-@import url(http://fonts.googleapis.com/css?family=Patua+One);
-
 body {
-    margin: 0em;
-    padding: 2em;
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 16px;
-    background-color: #EEE;
+  margin: 0;
+  padding: 1em;
+  font-family: "Maven Pro", sans-serif;
+  font-size: 1.4em;
+  line-height: 1.4em;
+  background-color: lightgrey;
 }
-div.menu {
-    padding: 1em;
-    border-top: 20px solid white;
-    box-shadow: 0px 1px 1px lightgray;
-    background-color: white;
-    margin-bottom: 1em;
-    text-align: center;
+@media all and (max-width: 1200px) {
+  body {
+    font-size: 1.2em;
+    line-height: 1.4em;
+  }
 }
-.maven-mobile {
-    display: none;
-}
-h1, h2, h3 {
-    font-weight: 300;
-}
-    h1 {
-        font-size: 2.5em;
-        line-height: 1.1em;
-    }
-    h2 {
-        font-size: 2em;
-        line-height: 1.2em;
-    }
-    h2 {
-        font-size: 1.6em;
-        line-height: 1.3em;
-    }
-a {
-    color: #2276A4;
-    text-decoration: none;
-}
-    a tt {
-        text-decoration: none;
-        /* see http://stackoverflow.com/questions/13442609 */
-        display: inline-block;
-    }
 
-pre {
-    background-color: #3f464c;
-    color: #f8f8f8;
-    border-radius: 3px;
-    padding: 1em;
-    font-family: 'Monaco', monospace;
-    font-size: 16px;
-    overflow-x: auto;
-    line-height: 1.3em;
+a {
+  color: inherit;
+  border-bottom: 1px dashed;
+  text-decoration: none;
 }
 
 tt {
-    background-color: #eee;
-    padding: 0.05em 0.5em;
-    font-family: 'Exo 2', monospace;
-    font-weight: 500;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
+  background-color: #eee;
+  padding: 0 .5em;
+  font-family: "Ubuntu Mono", monospace;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -1px;
+  text-transform: uppercase;
+}
+
+pre {
+  border-left: 2px solid gray;
+  margin-left: 1em;
+  color: inherit;
+  padding: 1em;
+  font-family: "Ubuntu Mono", monospace;
+  overflow-x: auto;
+  line-height: 1.3em;
+}
+
+#breadcrumbs {
+  list-style: none;
+  padding-left: 0;
+}
+#breadcrumbs li {
+  display: inline;
+}
+#breadcrumbs li:before {
+  content: '>';
+}
+#breadcrumbs li:first-child:before {
+  content: none;
 }
 
 table {
-    background-color: white;
-    border:0px;
-    border-collapse: collapse;
+  background-color: #fff;
+  border: 0;
+  border-collapse: collapse;
 }
-    table tr.a {
-        background-color: #FCFCFC;
-    }
-    table tr.b {
-        background-color: #FAFAFA;
-    }
-    table th {
-        background-color: #F2F2F2;
-        color: #585858;
-        padding-left: 0.7em;
-        padding-top: 0.7em;
-        padding-bottom: 0.7em;
-        font-weight: normal;
-        text-align: left;
-        border-bottom: 1px solid white;
-    }
-    table td {
-        vertical-align: top;
-        padding:0.7em;
-    }
-    table th:first-child {
-        border-top-left-radius:5px;
-    }
-    table th:last-child {
-        border-top-right-radius:5px;
-    }
+table tr .a {
+  background-color: #fcfcfc;
+}
+table tr .b {
+  background-color: #fafafa;
+}
+table th {
+  background-color: #f2f2f2;
+  color: #585858;
+  padding-left: .7em;
+  padding-top: .7em;
+  padding-bottom: .7em;
+  font-weight: normal;
+  font-size: 1.2em;
+  text-align: left;
+  border-bottom: 1px solid #fff;
+}
+table td {
+  vertical-align: top;
+  padding: .7em;
+}
+table td:nth-child(1) {
+  width: 30%;
+}
+
+.page {
+  margin-left: auto;
+  margin-right: auto;
+  white-space: nowrap;
+  width: 90%;
+}
+@media all and (max-width: 1200px) {
+  .page {
+    width: 100%;
+  }
+}
+
+.menu-section {
+  vertical-align: top;
+  display: inline-block;
+  width: 30%;
+}
+@media all and (max-width: 1200px) {
+  .menu-section {
+    display: none;
+  }
+}
+
+.date {
+  color: lightgrey;
+}
+
+.legal-notes {
+  margin-top: 1em;
+  color: gray;
+  font-size: 0.8em;
+  line-height: 1em;
+  text-align: center;
+}
+@media all and (max-width: 1200px) {
+  .legal-notes {
+    text-align: center;
+  }
+}
+
+#content {
+  background-color: #fff;
+  position: relative;
+  padding: 3em;
+}
+@media all and (max-width: 1200px) {
+  #content {
+    padding: 1em;
+  }
+}
+
+#right-side {
+  white-space: normal;
+  display: inline-block;
+  width: 70%;
+}
+@media all and (max-width: 1200px) {
+  #right-side {
+    width: 100%;
+  }
+}
+
+.menu-button {
+  float: right;
+  font-size: 2em;
+  display: none;
+}
+@media all and (max-width: 1200px) {
+  .menu-button {
+    display: block;
+  }
+}
+
+.github-small {
+  display: none;
+}
+
+.mobile-menu {
+  display: none;
+}
+@media all and (max-width: 1200px) {
+  .mobile-menu {
+    display: block;
+  }
+}
+
+#menu {
+  background-color: #fff;
+  padding: 2em 1em 1em;
+  margin-right: 1em;
+  font-size: 1em;
+  line-height: 1.3em;
+}
+@media all and (max-width: 1200px) {
+  #menu {
+    text-align: center;
+  }
+}
+#menu > li > ul {
+  margin-bottom: 1em;
+  border-top: 1px solid lightgrey;
+}
+#menu li {
+  font-weight: 700;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+#menu li ul {
+  list-style: none;
+  padding-left: .5em;
+}
+#menu li ul li {
+  text-transform: none;
+  font-weight: 400;
+}
+#menu li a {
+  border-bottom: 0;
+}
+#menu li a:hover {
+  border-bottom: 1px dashed;
+}
+
+.logo-section a {
+  border: 0;
+}
+
+.maven-mobile {
+  float: right;
+  width: 64px;
+}

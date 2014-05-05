@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
- * Copyright (c) 2012-2013, JCabi.com
+ * Copyright (c) 2012-2014, jcabi.com
  * All rights reserved.
  -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -23,18 +23,12 @@
 <link rel="shortcut icon" href="http://img.jcabi.com/favicon.ico"/>
                                                                                                                 
 <link rel="author" href="https://plus.google.com/u/0/114792568016408327418?rel=author"/>
-                                            <link rel="stylesheet" href="./css/highlight.css" />
-        <script src="./js/jquery-1.8.3.min.js"></script>
-        <script src="./js/highlight-7.3.min.js"></script>
+                                            <script src="./js/jquery-1.8.3.min.js"></script>
         <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
+        <link href="./css/jcabi.css" rel="stylesheet"/>
         <script>
             $(document).ready(
                 function() {
-                    $('div.source pre').each(
-                        function (idx, element) {
-                            hljs.highlightBlock(element);
-                        }
-                    );
                     $(".menu-button").click(
                         function() {
                             if ($("#here-goes-menu").attr("class") == "menu-off") {
@@ -49,16 +43,10 @@
                 }
             );
         </script>
-        <style>
-            @import url("./css/wide.css") (min-width: 1200px) and (max-width:5000px);
-            @import url("./css/900-1199.css") (min-width: 900px) and (max-width:1199px);
-            @import url("./css/600-899.css") (min-width: 600px) and (max-width:899px);
-            @import url("./css/100-599.css") (min-width: 100px) and (max-width:599px);
-        </style>
     </head>
-    <body style="background: url('./images/background.png') fixed;">
-                <div class="page">
-            <div class="menu-section">
+    <body>
+                <section class="page">
+            <nav class="menu-section">
                 <ul id="menu">
                                                                                     <li>
                             Overview
@@ -69,7 +57,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li>
-                                                                                    <a href="apidocs-0.14/index.html" title="API 0.14 (JavaDoc)">API 0.14 (JavaDoc)</a>
+                                                                                    <a href="apidocs-0.15/index.html" title="JavaDoc 0.15">JavaDoc 0.15</a>
                                                                                                                                                                         <ul>
                                                                     </ul>
                                                     </li>
@@ -79,7 +67,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li>
-                                                                                    <a href="changes-report.html" title="Release History">Release History</a>
+                                                                                    <a href="https://github.com/jcabi/jcabi-aspects/releases" title="Release History">Release History</a>
                                                                                                                                                                         <ul>
                                                                     </ul>
                                                     </li>
@@ -211,7 +199,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li>
-                                                                                    <a href="apidocs-0.14/index.html" title="JavaDocs">JavaDocs</a>
+                                                                                    <a href="apidocs-0.15/index.html" title="JavaDocs">JavaDocs</a>
                                                                                                                                                                         <ul>
                                                                     </ul>
                                                     </li>
@@ -230,24 +218,24 @@
                                                                                         </ul>
                                                     </li>
                                     </ul>
-            </div>
+            </nav>
             <div id="right-side">
                 <div id="content">
                     <i class="menu-button fa fa-align-justify"></i>
                     <div class="logo-section">
                         <a href="../" title="${decoration.bannerLeft.title}">
-                            <img src="http://img.jcabi.com/logo.png"
+                            <img src="http://img.jcabi.com/logo-square.png"
                                 alt="jcabi"
-                                                                    width="200"
-                                                                                                    height="48"
+                                                                    width="64"
+                                                                                                    height="64"
                                                             />
                         </a>
                     </div>
                     <div class="date">
                         <div class="date-numbers">
+                            <strong>0.15</strong>
                             
-                            01-Mar-2014
-                            0.14
+                            05-May-2014
                         </div>
                                                                             <div class="github">
                                 <iframe
@@ -270,10 +258,9 @@
                                 </iframe>
                             </div>
                                             </div>
-                    <div id="here-goes-menu"></div>
+                    <div id="here-goes-menu" class="menu-off"></div>
                     <article>
-                        <div class="section">
-                            <script type="text/javascript">
+                        <script type="text/javascript">
 //<![CDATA[
 function toggleDisplay(elementId) {
  var elm = document.getElementById(elementId + 'error');
@@ -306,10 +293,10 @@ function toggleDisplay(elementId) {
 <tr class="b">
 <td>41</td>
 <td>0</td>
-<td>2</td>
+<td>0</td>
 <td>1</td>
-<td>92.683%</td>
-<td>25.013</td></tr></table><br />
+<td>97.561%</td>
+<td>30.835</td></tr></table><br />
 <p>Note: failures are anticipated and checked for with assertions while errors are unanticipated.</p><br /></div>
 <div class="section">
 <h2>Package List<a name="Package_List"></a></h2><a name="Package_List"></a>
@@ -327,10 +314,10 @@ function toggleDisplay(elementId) {
 <td><a href="#com.jcabi.aspects">com.jcabi.aspects</a></td>
 <td>26</td>
 <td>0</td>
-<td>2</td>
+<td>0</td>
 <td>1</td>
-<td>88.462%</td>
-<td>11.54</td></tr>
+<td>96.154%</td>
+<td>13.167</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspects.aj">com.jcabi.aspects.aj</a></td>
 <td>15</td>
@@ -338,7 +325,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>13.473</td></tr></table><br />
+<td>17.668</td></tr></table><br />
 <p>Note: package statistics are not computed recursively, they only sum up all of its testsuites numbers.</p>
 <div class="section">
 <h3>com.jcabi.aspects<a name="com.jcabi.aspects"></a></h3><a name="com.jcabi.aspects"></a>
@@ -360,7 +347,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>5.373</td></tr>
+<td>5.65</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspectsImmutableTest"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspectsImmutableTest">ImmutableTest</a></td>
@@ -369,16 +356,16 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>1</td>
 <td>75%</td>
-<td>0.012</td></tr>
+<td>0.277</td></tr>
 <tr class="b">
-<td><a href="#com.jcabi.aspectsJSR303Test"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
+<td><a href="#com.jcabi.aspectsJSR303Test"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspectsJSR303Test">JSR303Test</a></td>
 <td>5</td>
 <td>0</td>
-<td>2</td>
 <td>0</td>
-<td>60%</td>
-<td>0.863</td></tr>
+<td>0</td>
+<td>100%</td>
+<td>0.689</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspectsLoggableTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspectsLoggableTest">LoggableTest</a></td>
@@ -387,7 +374,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>2.163</td></tr>
+<td>2.766</td></tr>
 <tr class="b">
 <td><a href="#com.jcabi.aspectsRetryOnFailureTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspectsRetryOnFailureTest">RetryOnFailureTest</a></td>
@@ -396,7 +383,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.147</td></tr>
+<td>1.01</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspectsScheduleWithFixedDelayTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspectsScheduleWithFixedDelayTest">ScheduleWithFixedDelayTest</a></td>
@@ -405,7 +392,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>1.199</td></tr>
+<td>1.239</td></tr>
 <tr class="b">
 <td><a href="#com.jcabi.aspectsTimeableTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspectsTimeableTest">TimeableTest</a></td>
@@ -414,7 +401,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>1.138</td></tr>
+<td>1.162</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspectsUnitedThrowTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspectsUnitedThrowTest">UnitedThrowTest</a></td>
@@ -423,7 +410,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.645</td></tr></table></div>
+<td>0.374</td></tr></table></div>
 <div class="section">
 <h3>com.jcabi.aspects.aj<a name="com.jcabi.aspects.aj"></a></h3><a name="com.jcabi.aspects.aj"></a>
 <table border="1" class="bodyTable">
@@ -444,7 +431,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.245</td></tr>
+<td>0.009</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspects.ajMethodSchedulerTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspects.ajMethodSchedulerTest">MethodSchedulerTest</a></td>
@@ -453,7 +440,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>11.39</td></tr>
+<td>15.476</td></tr>
 <tr class="b">
 <td><a href="#com.jcabi.aspects.ajMnemosTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspects.ajMnemosTest">MnemosTest</a></td>
@@ -462,7 +449,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.065</td></tr>
+<td>0.037</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspects.ajParallelizerTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspects.ajParallelizerTest">ParallelizerTest</a></td>
@@ -471,7 +458,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.41</td></tr>
+<td>0.167</td></tr>
 <tr class="b">
 <td><a href="#com.jcabi.aspects.ajQuietExceptionsLoggerTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspects.ajQuietExceptionsLoggerTest">QuietExceptionsLoggerTest</a></td>
@@ -480,7 +467,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.418</td></tr>
+<td>0.259</td></tr>
 <tr class="a">
 <td><a href="#com.jcabi.aspects.ajRepeaterTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspects.ajRepeaterTest">RepeaterTest</a></td>
@@ -489,7 +476,7 @@ function toggleDisplay(elementId) {
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.945</td></tr></table></div><br /></div>
+<td>1.72</td></tr></table></div><br /></div>
 <div class="section">
 <h2>Test Cases<a name="Test_Cases"></a></h2><a name="Test_Cases"></a>
 <p>[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</p>
@@ -499,235 +486,211 @@ function toggleDisplay(elementId) {
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>cachesSimpleCall</td>
-<td>0.132</td></tr>
+<td>0.253</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>cachesSimpleStaticCall</td>
-<td>0.068</td></tr>
+<td>0.117</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>cachesJustOnceInParallelThreads</td>
-<td>0.108</td></tr>
+<td>0.163</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>cleansCacheWhenExpired</td>
-<td>5.065</td></tr></table></div>
+<td>5.117</td></tr></table></div>
 <div class="section">
 <h3>ImmutableTest<a name="ImmutableTest"></a></h3><a name="com.jcabi.aspectsImmutableTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>passesImmutableObjects</td>
-<td>0.01</td></tr>
+<td>0.115</td></tr>
 <tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>catchedMutableTypes</td>
-<td>0</td></tr>
-<tr class="a">
 <td><a href="#com.jcabi.aspects.ImmutableTest.catchedMutableTypesWithArrays"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
 <td><a href="#com.jcabi.aspects.ImmutableTest.catchedMutableTypesWithArrays">catchedMutableTypesWithArrays</a>
 <div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;com_jcabi_aspects_ImmutableTest_catchedMutableTypesWithArrays&apos;);"><span style="display:inline;" id="com_jcabi_aspects_ImmutableTest_catchedMutableTypesWithArraysoff"> + </span><span style="display:none;" id="com_jcabi_aspects_ImmutableTest_catchedMutableTypesWithArrayson"> - </span>[ Detail ]</a></div></td>
 <td>0</td></tr>
-<tr class="b">
+<tr class="a">
 <td></td>
 <td>skipped</td>
 <td></td></tr>
+<tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>catchedMutableTypes</td>
+<td>0.08</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>catchedMutableTypesWithInterfaces</td>
-<td>0.002</td></tr></table></div>
+<td>0.082</td></tr></table></div>
 <div class="section">
 <h3>JSR303Test<a name="JSR303Test"></a></h3><a name="com.jcabi.aspectsJSR303Test"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>passesWhenMethodParametersAreValid</td>
-<td>0.186</td></tr>
+<td>ignoresVoidResponses</td>
+<td>0.204</td></tr>
 <tr class="b">
-<td><a href="#com.jcabi.aspects.JSR303Test.throwsWhenRegularExpressionDoesntMatch"><img src="images/icon_error_sml.gif" alt="" /></a></td>
-<td><a href="#com.jcabi.aspects.JSR303Test.throwsWhenRegularExpressionDoesntMatch">throwsWhenRegularExpressionDoesntMatch</a>
-<div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;com_jcabi_aspects_JSR303Test_throwsWhenRegularExpressionDoesntMatch&apos;);"><span style="display:inline;" id="com_jcabi_aspects_JSR303Test_throwsWhenRegularExpressionDoesntMatchoff"> + </span><span style="display:none;" id="com_jcabi_aspects_JSR303Test_throwsWhenRegularExpressionDoesntMatchon"> - </span>[ Detail ]</a></div></td>
-<td>0.189</td></tr>
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>throwsWhenRegularExpressionDoesntMatch</td>
+<td>0.193</td></tr>
 <tr class="a">
-<td></td>
-<td>Expected exception: javax.validation.ConstraintViolationException</td>
-<td></td></tr>
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>throwsWhenMethodParametersAreInvalid</td>
+<td>0.092</td></tr>
 <tr class="b">
-<td></td>
-<td>
-<div id="com_jcabi_aspects_JSR303Test_throwsWhenRegularExpressionDoesntMatcherror" style="display:none;">
-<div>
-<pre>java.lang.AssertionError: Expected exception: javax.validation.ConstraintViolationExceptionat org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:32)at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)at org.apache.maven.surefire.junitcore.pc.Scheduler$1.run(Scheduler.java:258)at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)at java.util.concurrent.FutureTask.run(FutureTask.java:262)at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)at java.lang.Thread.run(Thread.java:744)</pre></div></div></td>
-<td></td></tr>
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>passesWhenMethodParametersAreValid</td>
+<td>0.108</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>validatesOutputForNonNull</td>
-<td>0.175</td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>ignoresVoidResponses</td>
-<td>0.17</td></tr>
-<tr class="a">
-<td><a href="#com.jcabi.aspects.JSR303Test.throwsWhenMethodParametersAreInvalid"><img src="images/icon_error_sml.gif" alt="" /></a></td>
-<td><a href="#com.jcabi.aspects.JSR303Test.throwsWhenMethodParametersAreInvalid">throwsWhenMethodParametersAreInvalid</a>
-<div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;com_jcabi_aspects_JSR303Test_throwsWhenMethodParametersAreInvalid&apos;);"><span style="display:inline;" id="com_jcabi_aspects_JSR303Test_throwsWhenMethodParametersAreInvalidoff"> + </span><span style="display:none;" id="com_jcabi_aspects_JSR303Test_throwsWhenMethodParametersAreInvalidon"> - </span>[ Detail ]</a></div></td>
-<td>0.143</td></tr>
-<tr class="b">
-<td></td>
-<td>Expected exception: javax.validation.ConstraintViolationException</td>
-<td></td></tr>
-<tr class="a">
-<td></td>
-<td>
-<div id="com_jcabi_aspects_JSR303Test_throwsWhenMethodParametersAreInvaliderror" style="display:none;">
-<div>
-<pre>java.lang.AssertionError: Expected exception: javax.validation.ConstraintViolationExceptionat org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:32)at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)at org.apache.maven.surefire.junitcore.pc.Scheduler$1.run(Scheduler.java:258)at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)at java.util.concurrent.FutureTask.run(FutureTask.java:262)at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)at java.lang.Thread.run(Thread.java:744)</pre></div></div></td>
-<td></td></tr></table></div>
+<td>0.092</td></tr></table></div>
 <div class="section">
 <h3>LoggableTest<a name="LoggableTest"></a></h3><a name="com.jcabi.aspectsLoggableTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>logsStaticMethods</td>
-<td>2.038</td></tr>
+<td>ignoresSomeExceptions</td>
+<td>0.198</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>logsSimpleCall</td>
-<td>0.037</td></tr>
+<td>logsStaticMethods</td>
+<td>2.2</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>ignoresSomeExceptions</td>
-<td>0.034</td></tr>
+<td>logsSimpleCall</td>
+<td>0.173</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>doesntLogInheritedMethods</td>
-<td>0.005</td></tr>
+<td>0.001</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>ignoresToStringMethods</td>
-<td>0.049</td></tr></table></div>
+<td>0.194</td></tr></table></div>
 <div class="section">
 <h3>RetryOnFailureTest<a name="RetryOnFailureTest"></a></h3><a name="com.jcabi.aspectsRetryOnFailureTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>executesMethodManyTimes</td>
-<td>0.147</td></tr></table></div>
+<td>1.01</td></tr></table></div>
 <div class="section">
 <h3>ScheduleWithFixedDelayTest<a name="ScheduleWithFixedDelayTest"></a></h3><a name="com.jcabi.aspectsScheduleWithFixedDelayTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>runsRoutineOperations</td>
-<td>1.199</td></tr></table></div>
+<td>1.239</td></tr></table></div>
 <div class="section">
 <h3>TimeableTest<a name="TimeableTest"></a></h3><a name="com.jcabi.aspectsTimeableTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>interruptsLongRunningMethod</td>
-<td>1.138</td></tr></table></div>
+<td>1.162</td></tr></table></div>
 <div class="section">
 <h3>UnitedThrowTest<a name="UnitedThrowTest"></a></h3><a name="com.jcabi.aspectsUnitedThrowTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>throwsDeclaredException</td>
-<td>0.129</td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>throwsConfiguredException</td>
-<td>0.128</td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>rethrowsDeclaredException</td>
-<td>0.128</td></tr>
+<td>0.123</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>throwsOriginalExceptionEncapsulatedInsideDeclared</td>
-<td>0.132</td></tr>
+<td>0.089</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>throwsIllegalStateException</td>
-<td>0.128</td></tr></table></div>
+<td>0.087</td></tr>
+<tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>throwsConfiguredException</td>
+<td>0.064</td></tr>
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>throwsDeclaredException</td>
+<td>0.011</td></tr></table></div>
 <div class="section">
 <h3>ImmutabilityCheckerTest<a name="ImmutabilityCheckerTest"></a></h3><a name="com.jcabi.aspects.ajImmutabilityCheckerTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>checksRecursiveClasses</td>
-<td>0.122</td></tr>
+<td>failsOnNonFinalFields</td>
+<td>0.007</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>failsOnNonFinalFields</td>
-<td>0.123</td></tr></table></div>
+<td>checksRecursiveClasses</td>
+<td>0.002</td></tr></table></div>
 <div class="section">
 <h3>MethodSchedulerTest<a name="MethodSchedulerTest"></a></h3><a name="com.jcabi.aspects.ajMethodSchedulerTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>interruptLongRunningTask</td>
-<td>10.201</td></tr>
+<td>10.242</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>shortRunningTaskShouldBeAllowedToFinish</td>
-<td>1.189</td></tr></table></div>
+<td>5.234</td></tr></table></div>
 <div class="section">
 <h3>MnemosTest<a name="MnemosTest"></a></h3><a name="com.jcabi.aspects.ajMnemosTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>buildsTextFromObject</td>
-<td>0.044</td></tr>
+<td>0.035</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>handlesToxicObjectsGracefully</td>
-<td>0.021</td></tr></table></div>
+<td>0.002</td></tr></table></div>
 <div class="section">
 <h3>ParallelizerTest<a name="ParallelizerTest"></a></h3><a name="com.jcabi.aspects.ajParallelizerTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>executesInParallel</td>
-<td>0.207</td></tr>
+<td>throwsCatchedException</td>
+<td>0.119</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>throwsCatchedException</td>
-<td>0.203</td></tr></table></div>
+<td>executesInParallel</td>
+<td>0.048</td></tr></table></div>
 <div class="section">
 <h3>QuietExceptionsLoggerTest<a name="QuietExceptionsLoggerTest"></a></h3><a name="com.jcabi.aspects.ajQuietExceptionsLoggerTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>exception</td>
-<td>0.211</td></tr>
+<td>withoutException</td>
+<td>0.132</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>withoutException</td>
-<td>0.207</td></tr></table></div>
+<td>exception</td>
+<td>0.127</td></tr></table></div>
 <div class="section">
 <h3>RepeaterTest<a name="RepeaterTest"></a></h3><a name="com.jcabi.aspects.ajRepeaterTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>onlyRetryExceptionsWhichAreSpecified</td>
-<td>0.166</td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>retriesAfterFailure</td>
-<td>0.209</td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>stopsRetryingAfterNumberOfAttempts</td>
-<td>0.359</td></tr>
+<td>0.239</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>throwExceptionsWhichAreNotSpecifiedAsRetry</td>
-<td>0.006</td></tr>
+<td>0.122</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>retriesAfterFailure</td>
+<td>0.237</td></tr>
+<tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>retryExceptionsWhichAreSubTypesOfTheExceptionsSpecified</td>
-<td>0.205</td></tr></table></div><br /></div>
+<td>0.486</td></tr>
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>stopsRetryingAfterNumberOfAttempts</td>
+<td>0.636</td></tr></table></div><br /></div>
 <div class="section">
 <h2>Failure Details<a name="Failure_Details"></a></h2><a name="Failure_Details"></a>
 <p>[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</p><br />
@@ -737,42 +700,19 @@ function toggleDisplay(elementId) {
 <td><a name="com.jcabi.aspects.ImmutableTest.catchedMutableTypesWithArrays"></a>catchedMutableTypesWithArrays</td></tr>
 <tr class="b">
 <td></td>
-<td>skipped: skipped</td></tr>
-<tr class="a">
-<td><img src="images/icon_error_sml.gif" alt="" /></td>
-<td><a name="com.jcabi.aspects.JSR303Test.throwsWhenRegularExpressionDoesntMatch"></a>throwsWhenRegularExpressionDoesntMatch</td></tr>
-<tr class="b">
-<td></td>
-<td>java.lang.AssertionError: Expected exception: javax.validation.ConstraintViolationException</td></tr>                                            
-<tr class="a">
-<td></td>
-<td>
-<div id="throwsWhenRegularExpressionDoesntMatcherror"><a href="./xref-test/com/jcabi/aspects/JSR303Test.html#">com.jcabi.aspects.JSR303Test:</a></div></td></tr>
-<tr class="b">
-<td><img src="images/icon_error_sml.gif" alt="" /></td>
-<td><a name="com.jcabi.aspects.JSR303Test.throwsWhenMethodParametersAreInvalid"></a>throwsWhenMethodParametersAreInvalid</td></tr>
-<tr class="a">
-<td></td>
-<td>java.lang.AssertionError: Expected exception: javax.validation.ConstraintViolationException</td></tr>                                            
-<tr class="b">
-<td></td>
-<td>
-<div id="throwsWhenMethodParametersAreInvaliderror"><a href="./xref-test/com/jcabi/aspects/JSR303Test.html#">com.jcabi.aspects.JSR303Test:</a></div></td></tr></table><br /></div>
-                        </div>
+<td>skipped: skipped</td></tr></table><br /></div>
                     </article>
-                    <img class="maven-mobile" src="./images/built-by-maven.png" style="float:right" width="80px"/>
+                    <img class="maven-mobile" src="./images/built-by-maven.png" alt="built by maven"/>
                 </div>
-                <div class="legal-notes">
-                    <div class="copyright">
-                        Copyright &#169;
-                                                                            2012-2014
-                                                <br/>
-                        jcabi.com, All Rights Reserved.
-                        <br/>
-                        <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
-                    </div>
-                </div>
+                <footer class="legal-notes">
+                    Copyright &#169;
+                                                                2012-2014
+                                        <br/>
+                    jcabi.com, All Rights Reserved.
+                    <br/>
+                    <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+                </footer>
             </div>
-        </div>
+        </section>
     </body>
 </html>
