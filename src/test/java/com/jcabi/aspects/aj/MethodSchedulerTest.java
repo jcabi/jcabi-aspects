@@ -54,7 +54,7 @@ public final class MethodSchedulerTest {
     @Test
     public void shortRunningTaskShouldBeAllowedToFinish() throws Exception {
         final ShortRun target = new ShortRun();
-        Thread.sleep(1);
+        TimeUnit.SECONDS.sleep((long) Tv.FIVE);
         target.close();
         MatcherAssert.assertThat(target.finished, Matchers.equalTo(true));
     }
