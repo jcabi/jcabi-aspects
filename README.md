@@ -1,6 +1,7 @@
 <img src="http://img.jcabi.com/logo-square.png" width="64px" height="64px" />
  
 [![Build Status](https://travis-ci.org/jcabi/jcabi-aspects.svg?branch=master)](https://travis-ci.org/jcabi/jcabi-aspects)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects)
 
 More details are here: [aspects.jcabi.com](http://aspects.jcabi.com/index.html)
 
@@ -18,16 +19,6 @@ public class MyResource {
     return url.openConnection().getContent();
   }
 }
-```
-
-You need just this dependency:
-
-```xml
-<dependency>
-  <groupId>com.jcabi</groupId>
-  <artifactId>jcabi-aspects</artifactId>
-  <version>0.14</version>
-</dependency>
 ```
 
 Full list of AOP annotations is [here](http://www.jcabi.com/jcabi-aspects/).
