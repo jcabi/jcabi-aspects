@@ -39,7 +39,7 @@
 Weaving with AspectJ Maven Plugin
 
   The best to weave your classes is by using
-  {{{http://www.jcabi.com/jcabi-maven-plugin/example-ajc.html}jcabi-maven-plugin:ajc}}.
+  {{{http://plugin.jcabi.com/example-ajc.html}jcabi-maven-plugin:ajc}}.
 
   Alternatively, you can use <<<aspectj-maven-plugin>>>,
   in order to apply AOP aspects to your code during compile time:

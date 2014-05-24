@@ -38,7 +38,7 @@
 
 Weaving Java Binaries
 
-  {{{http://en.wikipedia.org/wiki/Aspect_weaver}Asepcts weaving}} is a process
+  {{{http://en.wikipedia.org/wiki/Aspect_weaver}Aspect weaving}} is a process
   of modifying binary <<<.class>>> files after compilation, in order
   to inject AOP advices at certain join points.
 
@@ -65,7 +65,7 @@ Weaving Java Binaries
 +--
 
   Then, you use
-  {{{http://www.jcabi.com/jcabi-maven-plugin/example-ajc.html}jcabi-maven-plugin}}
+  {{{http://plugin.jcabi.com/example-ajc.html}jcabi-maven-plugin}}
   plugin, which executed AspectJ weaver that modifies your <<<.class>>> files:
 
 +--
