@@ -69,14 +69,14 @@ public class MyResource {
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/LogExceptions.html}<<<@LogExceptions>>>}} —
      logs {{{./annotation-logexceptions.html}exceptions}}
-     via {{{../jcabi-log/apidocs-${project.version}/com/jcabi/log/Logger.html}<<<Logger>>>}}
+     via {{{http://log.jcabi.com/apidocs-0.12.2/com/jcabi/log/Logger.html}<<<Logger>>>}}
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Quietly.html}<<<@Quietly>>>}} —
      swallows all exceptions {{{./annotation-quietly.html}quietly}}
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Loggable.html}<<<@Loggable>>>}} —
      logs method {{{./annotation-loggable.html}calls}} via
-     {{{../jcabi-log/apidocs-${project.version}/com/jcabi/log/Logger.html}<<<Logger>>>}}
+     {{{http://log.jcabi.com/apidocs-0.12.2/com/jcabi/log/Logger.html}<<<Logger>>>}}
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Parallel.html}<<<@Parallel>>>}} —
      executes method in {{{./annotation-parallel.html}multiple threads}}
