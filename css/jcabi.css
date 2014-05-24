@@ -36,6 +36,7 @@ body {
   font-size: 1.4em;
   line-height: 1.4em;
   background-color: lightgrey;
+  color: #111111;
 }
 @media all and (max-width: 1200px) {
   body {
@@ -51,44 +52,36 @@ a {
 }
 
 tt {
-  background-color: #eee;
+  background-color: #eeeeee;
   padding: 0 .5em;
   font-family: "Ubuntu Mono", monospace;
 }
 
-h1,
-h2,
+h1 {
+  font-size: 1.5em;
+}
+
+h2 {
+  font-size: 1.3em;
+}
+
 h3 {
-  letter-spacing: -1px;
-  text-transform: uppercase;
+  font-size: 1.1em;
 }
 
 pre {
   border-left: 2px solid gray;
   margin-left: 1em;
-  color: inherit;
+  color: gray;
   padding: 1em;
   font-family: "Ubuntu Mono", monospace;
+  font-size: 0.9em;
   overflow-x: auto;
   line-height: 1.3em;
 }
 
-#breadcrumbs {
-  list-style: none;
-  padding-left: 0;
-}
-#breadcrumbs li {
-  display: inline;
-}
-#breadcrumbs li:before {
-  content: '>';
-}
-#breadcrumbs li:first-child:before {
-  content: none;
-}
-
 table {
-  background-color: #fff;
+  background-color: white;
   border: 0;
   border-collapse: collapse;
 }
@@ -141,7 +134,7 @@ table td:nth-child(1) {
 }
 
 .date {
-  color: lightgrey;
+  color: gray;
 }
 
 .legal-notes {
@@ -157,24 +150,24 @@ table td:nth-child(1) {
   }
 }
 
-#content {
-  background-color: #fff;
+.content {
+  background-color: white;
   position: relative;
   padding: 3em;
 }
 @media all and (max-width: 1200px) {
-  #content {
+  .content {
     padding: 1em;
   }
 }
 
-#right-side {
+.right-side {
   white-space: normal;
   display: inline-block;
   width: 70%;
 }
 @media all and (max-width: 1200px) {
-  #right-side {
+  .right-side {
     width: 100%;
   }
 }
@@ -190,10 +183,6 @@ table td:nth-child(1) {
   }
 }
 
-.github-small {
-  display: none;
-}
-
 .mobile-menu {
   display: none;
 }
@@ -203,48 +192,51 @@ table td:nth-child(1) {
   }
 }
 
-#menu {
-  background-color: #fff;
+.menu {
+  background-color: white;
   padding: 2em 1em 1em;
   margin-right: 1em;
   font-size: 1em;
   line-height: 1.3em;
 }
 @media all and (max-width: 1200px) {
-  #menu {
+  .menu {
     text-align: center;
   }
 }
-#menu > li > ul {
+.menu > li > ul {
   margin-bottom: 1em;
   border-top: 1px solid lightgrey;
 }
-#menu li {
+.menu li {
   font-weight: 700;
-  text-transform: uppercase;
+  color: gray;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-#menu li ul {
+.menu li.active {
+  font-weight: bold;
+}
+.menu li ul {
   list-style: none;
   padding-left: .5em;
 }
-#menu li ul li {
-  text-transform: none;
+.menu li ul li {
+  color: #111111;
   font-weight: 400;
 }
-#menu li a {
+.menu li a {
   border-bottom: 0;
 }
-#menu li a:hover {
+.menu li a:hover {
   border-bottom: 1px dashed;
 }
 
-.logo-section a {
+.logo a {
   border: 0;
 }
 
-.maven-mobile {
+.maven-logo {
   float: right;
-  width: 64px;
+  width: 60px;
 }
