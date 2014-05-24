@@ -71,22 +71,18 @@ public final class MethodLogger {
         new ConcurrentSkipListSet<MethodLogger.Marker>();
 
     /**
-     * Service that monitors all running methods.
-     */
-    private final transient ScheduledExecutorService monitor;
-
-    /**
      * Public ctor.
      */
     @SuppressWarnings("PMD.DoNotUseThreads")
     public MethodLogger() {
-        this.monitor = Executors.newSingleThreadScheduledExecutor(
-            new NamedThreads(
-                "loggable",
-                "watching of @Loggable annotated methods"
-            )
-        );
-        this.monitor.scheduleWithFixedDelay(
+        final ScheduledExecutorService monitor =
+            Executors.newSingleThreadScheduledExecutor(
+                new NamedThreads(
+                    "loggable",
+                    "watching of @Loggable annotated methods"
+                )
+            );
+        monitor.scheduleWithFixedDelay(
             new VerboseRunnable(
                 new Runnable() {
                     @Override

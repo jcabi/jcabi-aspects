@@ -70,14 +70,14 @@ public final class SingleException {
         final Method method =
             MethodSignature.class.cast(point.getSignature()).getMethod();
         final UnitedThrow annot = method.getAnnotation(UnitedThrow.class);
-        final Class<? extends Throwable> clz = clazz(method, annot);
+        final Class<? extends Throwable> clz = this.clazz(method, annot);
         try {
             return point.proceed();
             // @checkstyle IllegalCatch (1 line)
         } catch (final Throwable ex) {
             Throwable throwable = ex;
             if (!clz.isAssignableFrom(ex.getClass())) {
-                if (exists(clz)) {
+                if (this.exists(clz)) {
                     throwable = clz.getConstructor(Throwable.class)
                         .newInstance(ex);
                 } else {

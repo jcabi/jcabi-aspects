@@ -143,6 +143,7 @@ public final class CacheableTest {
         /**
          * Random.
          */
+        @SuppressWarnings("PMD.UnusedPrivateField")
         private static final Random RANDOM = new Random();
         /**
          * Encapsulated long.

@@ -55,7 +55,7 @@ final class JoinPointUtils {
      * @param point Proceeding point
      * @return The target
      */
-    protected static Object targetize(final JoinPoint point) {
+    public static Object targetize(final JoinPoint point) {
         Object tgt;
         final Method method = MethodSignature.class
             .cast(point.getSignature()).getMethod();

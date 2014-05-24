@@ -33,7 +33,7 @@
     <parent>
         <groupId>com.jcabi</groupId>
         <artifactId>jcabi</artifactId>
-        <version>1.5.1</version>
+        <version>1.7</version>
     </parent>
     <artifactId>jcabi-aspects</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -166,7 +166,9 @@
                             <excludes>
                                 <exclude>checkstyle:/src/it/.*</exclude>
                                 <exclude>checkstyle:/src/site/apt/.*</exclude>
+                                <exclude>pmd:/src/it/.*</exclude>
                                 <exclude>findbugs:.*</exclude>
+                                <exclude>xml:/src/it/settings.xml</exclude>
                             </excludes>
                         </configuration>
                     </plugin>

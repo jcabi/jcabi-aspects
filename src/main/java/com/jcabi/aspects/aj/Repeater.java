@@ -84,7 +84,7 @@ public final class Repeater {
                 throw ex;
             // @checkstyle IllegalCatch (1 line)
             } catch (final Throwable ex) {
-                if (!isExceptionToBeRetried(ex.getClass(), types)) {
+                if (!this.isExceptionToBeRetried(ex.getClass(), types)) {
                     throw ex;
                 }
                 ++attempt;
