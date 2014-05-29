@@ -64,4 +64,23 @@ public final class RetryOnFailureTest {
         MatcherAssert.assertThat(count.get(), Matchers.greaterThan(0));
     }
 
+    /**
+     * RetryOnFailure can retry when Error types are thrown.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void retriesOnError() throws Exception {
+        final AtomicInteger count = new AtomicInteger();
+        new Runnable() {
+            @Override
+            @RetryOnFailure(verbose = false, unit = TimeUnit.SECONDS, delay = 1)
+            public void run() {
+                if (count.incrementAndGet() < 2) {
+                    throw new AssertionError("Should be caught and ignored.");
+                }
+            }
+        } .run();
+        MatcherAssert.assertThat(count.get(), Matchers.greaterThan(0));
+    }
+
 }
