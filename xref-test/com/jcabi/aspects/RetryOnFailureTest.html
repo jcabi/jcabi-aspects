@@ -72,7 +72,26 @@
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>          MatcherAssert.assertThat(count.get(), Matchers.greaterThan(0));
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>      }
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>  }
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">     * RetryOnFailure can retry when Error types are thrown.</em>
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">     * @throws Exception If something goes wrong</em>
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>      @Test
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> retriesOnError() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          <strong class="jxr_keyword">final</strong> AtomicInteger count = <strong class="jxr_keyword">new</strong> AtomicInteger();
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          <strong class="jxr_keyword">new</strong> Runnable() {
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>              @Override
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>              @RetryOnFailure(verbose = false, unit = TimeUnit.SECONDS, delay = 1)
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>              <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> run() {
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>                  <strong class="jxr_keyword">if</strong> (count.incrementAndGet() &lt; 2) {
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>                      <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> AssertionError(<span class="jxr_string">"Should be caught and ignored."</span>);
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>                  }
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>              }
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          } .run();
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>          MatcherAssert.assertThat(count.get(), Matchers.greaterThan(0));
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>      }
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>  
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2012&#x2013;2014 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
