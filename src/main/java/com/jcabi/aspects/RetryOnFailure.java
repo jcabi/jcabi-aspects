@@ -77,7 +77,7 @@ public @interface RetryOnFailure {
     /**
      * When to retry (in case of what exception types).
      */
-    Class<? extends Exception>[] types() default { Exception.class };
+    Class<? extends Throwable>[] types() default { Throwable.class };
 
     /**
      * Shall it be fully verbose (show full exception trace) or just
