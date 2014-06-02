@@ -99,6 +99,14 @@ public final class ImmutabilityChecker {
                         )
                     );
                 }
+                if (type.isArray()) {
+                    throw new ImmutabilityChecker.Violation(
+                        String.format(
+                            "Type '%s' is an array, which is mutable",
+                            type.getName()
+                        )
+                    );
+                }
                 try {
                     this.fields(type);
                 } catch (final ImmutabilityChecker.Violation ex) {
@@ -152,14 +160,6 @@ public final class ImmutabilityChecker {
                 throw new ImmutabilityChecker.Violation(
                     String.format(
                         "field '%s' is not private",
-                        field
-                    )
-                );
-            }
-            if (field.getType().isArray()) {
-                throw new ImmutabilityChecker.Violation(
-                    String.format(
-                        "field '%s' is an array, which is mutable",
                         field
                     )
                 );
