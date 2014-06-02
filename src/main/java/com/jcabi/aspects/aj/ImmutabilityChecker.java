@@ -107,9 +107,6 @@ public final class ImmutabilityChecker {
                         ex
                     );
                 }
-                if (type.isArray()) {
-                    this.check(type.getComponentType());
-                }
                 this.immutable.add(type);
                 Logger.debug(this, "#check(%s): immutability checked", type);
             }
@@ -155,6 +152,14 @@ public final class ImmutabilityChecker {
                 throw new ImmutabilityChecker.Violation(
                     String.format(
                         "field '%s' is not private",
+                        field
+                    )
+                );
+            }
+            if (field.getType().isArray()) {
+                throw new ImmutabilityChecker.Violation(
+                    String.format(
+                        "field '%s' is an array, which is mutable",
                         field
                     )
                 );
