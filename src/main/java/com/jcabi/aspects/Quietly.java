@@ -41,10 +41,11 @@ import java.lang.annotation.Target;
  * <p>This annotation should be applied only to methods that return void, in
  * other cases the behavior might be unexpected.
  *
- * @todo #1 This annotation has to be on methods returning void only.
- *  A compile-time APT processor needs to be created that will verify that only
- *  void methods have @Quietly annotations. In runtime it should throw an
- *  exception before executing of method body, if its return type is not void.
+ * @todo #32 This annotation has to be on methods returning void only.
+ *  We already have runtime checking of the return type, and any methods
+ *  annotated with @Quietly that don't throw void throws an exception. Let's
+ *  create a compile-time APT processor needs to be created that will verify
+ *  that only void methods have @Quietly annotations.
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
