@@ -50,6 +50,7 @@ import java.lang.annotation.Target;
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
  * @see <a href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
+ * @since 0.16
  */
 @Documented
 @Target(ElementType.METHOD)

@@ -47,6 +47,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  *
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
+ * @since 0.16
  */
 @Aspect
 public final class MethodAsyncRunner {
