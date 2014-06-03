@@ -29,7 +29,6 @@
  */
 package com.jcabi.aspects.aj;
 
-import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -78,18 +77,16 @@ public final class MethodAsyncRunner {
     @Around("execution(@com.jcabi.aspects.Async * * (..))")
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrap(final ProceedingJoinPoint point) {
-        final Method method = MethodSignature.class.cast(point.getSignature())
-            .getMethod();
         final Future<?> result = this.executor.submit(
             // @checkstyle AnonInnerLength (23 lines)
             new Callable<Object>() {
                 @Override
                 public Object call() throws Exception {
-                    Object future = null;
+                    Object returned = null;
                     try {
                         final Object result = point.proceed();
                         if (result instanceof Future) {
-                            future = ((Future<?>) result).get();
+                            returned = ((Future<?>) result).get();
                         }
                     // @checkstyle IllegalCatch (1 line)
                     } catch (final Throwable ex) {
@@ -101,12 +98,15 @@ public final class MethodAsyncRunner {
                             ex
                         );
                     }
-                    return future;
+                    return returned;
                 }
             }
         );
         Object res = null;
-        if (Future.class.isAssignableFrom(method.getReturnType())) {
+        if (Future.class.isAssignableFrom(
+            MethodSignature.class.cast(point.getSignature())
+                .getMethod().getReturnType()
+        )) {
             res = result;
         }
         return res;

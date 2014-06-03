@@ -30,6 +30,7 @@
 package com.jcabi.aspects;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Future;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 import org.hamcrest.MatcherAssert;
@@ -42,7 +43,7 @@ import org.junit.Test;
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
  */
-public final class AsyncRunnerTest {
+public final class AsyncTest {
 
     /**
      * Async annotation can execute asynchronously in a different thread.
@@ -60,6 +61,7 @@ public final class AsyncRunnerTest {
             }
         };
         runnable.run();
+        // @checkstyle MultipleStringLiterals (5 lines)
         MatcherAssert.assertThat(
             queue.poll(Tv.THIRTY, TimeUnit.SECONDS),
             Matchers.allOf(
@@ -67,6 +69,58 @@ public final class AsyncRunnerTest {
                 Matchers.startsWith("jcabi-async")
             )
         );
+    }
+
+    /**
+     * Asynchronous execution can return a value within a Future object.
+     * @throws Exception If a problem occurs.
+     */
+    @Test
+    public void returnsFutureValue() throws Exception {
+        MatcherAssert.assertThat(
+            new Foo().asyncMethodWithReturnValue()
+                .get(Tv.THIRTY, TimeUnit.SECONDS),
+            Matchers.allOf(
+                Matchers.not(Thread.currentThread().getName()),
+                Matchers.startsWith("jcabi-async")
+            )
+        );
+    }
+
+    /**
+     * Dummy class for test purposes.
+     */
+    private static final class Foo {
+        /**
+         * Async method that returns a Future containing the thread name.
+         * @return The future.
+         */
+        @Async
+        public Future<String> asyncMethodWithReturnValue() {
+            // @checkstyle AnonInnerLength (23 lines)
+            return new Future<String>() {
+                @Override
+                public boolean cancel(final boolean interruptible) {
+                    return false;
+                }
+                @Override
+                public boolean isCancelled() {
+                    return false;
+                }
+                @Override
+                public boolean isDone() {
+                    return false;
+                }
+                @Override
+                public String get() {
+                    return Thread.currentThread().getName();
+                }
+                @Override
+                public String get(final long timeout, final TimeUnit unit) {
+                    return Thread.currentThread().getName();
+                }
+            };
+        }
     }
 
 }
