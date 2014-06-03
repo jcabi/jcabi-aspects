@@ -34,6 +34,7 @@ import com.jcabi.log.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Logs all exceptions thrown out of a method and swallow exception.
@@ -67,6 +68,15 @@ public final class QuietExceptionsLogger {
     )
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
+        if (!MethodSignature.class.cast(point.getSignature()).getReturnType()
+            .equals(Void.TYPE)) {
+            throw new IllegalStateException(
+                String.format(
+                    "%s: Return type is not void, cannot use @Quietly",
+                    Mnemos.toText(point, true, true)
+                )
+            );
+        }
         Object result = null;
         try {
             result = point.proceed();

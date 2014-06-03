@@ -42,7 +42,9 @@ import org.mockito.Mockito;
  * @since 0.1.10
  * @checkstyle IllegalThrows (500 lines)
  */
-@SuppressWarnings("PMD.AvoidCatchingThrowable")
+@SuppressWarnings(
+    { "PMD.AvoidCatchingThrowable", "PMD.AvoidThrowingRawExceptionTypes" }
+)
 public final class QuietExceptionsLoggerTest {
     /**
      * Call method that doesn't throw exception.
@@ -52,6 +54,12 @@ public final class QuietExceptionsLoggerTest {
     public void withoutException() throws Throwable {
         final ProceedingJoinPoint point = Mockito
             .mock(ProceedingJoinPoint.class);
+        final MethodSignature signature = Mockito.mock(MethodSignature.class);
+        Mockito.when(point.getSignature()).thenReturn(signature);
+        Mockito.when(signature.getMethod())
+            .thenReturn(this.getClass().getMethods()[0]);
+        Mockito.when(signature.getReturnType())
+            .thenReturn(Void.TYPE);
         new QuietExceptionsLogger().wrap(point);
         Mockito.verify(point).proceed();
     }
@@ -61,7 +69,6 @@ public final class QuietExceptionsLoggerTest {
      * @throws Throwable In case of error.
      */
     @Test
-    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     public void exception() throws Throwable {
         final ProceedingJoinPoint point = Mockito
             .mock(ProceedingJoinPoint.class);
@@ -71,7 +78,25 @@ public final class QuietExceptionsLoggerTest {
         Mockito.when(point.getSignature()).thenReturn(signature);
         Mockito.when(signature.getMethod())
             .thenReturn(this.getClass().getMethods()[0]);
+        Mockito.when(signature.getReturnType())
+            .thenReturn(Void.TYPE);
         new QuietExceptionsLogger().wrap(point);
         Mockito.verify(point).proceed();
+    }
+
+    /**
+     * Throws exception when used with method that does not return void.
+     * @throws Throwable in case of error
+     */
+    @Test(expected = IllegalStateException.class)
+    public void throwsWhenUsedWithNonVoidReturnValue() throws Throwable {
+        final ProceedingJoinPoint point = Mockito
+            .mock(ProceedingJoinPoint.class);
+        final MethodSignature signature = Mockito.mock(MethodSignature.class);
+        Mockito.when(point.getSignature()).thenReturn(signature);
+        Mockito.when(signature.getMethod())
+            .thenReturn(this.getClass().getMethods()[0]);
+        Mockito.when(signature.getReturnType()).thenReturn(Object.class);
+        new QuietExceptionsLogger().wrap(point);
     }
 }
