@@ -109,7 +109,7 @@ public final class AsyncTest {
                 }
                 @Override
                 public boolean isDone() {
-                    return false;
+                    return true;
                 }
                 @Override
                 public String get() {
