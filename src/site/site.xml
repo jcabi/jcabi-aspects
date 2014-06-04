@@ -62,6 +62,7 @@
             <item name="Weaving with AspectJ" href="./example-aspectj.html"/>
         </menu>
         <menu name="Annotations">
+            <item name="@Async" href="./annotation-async.html"/>
             <item name="@Cacheable" href="./annotation-cacheable.html"/>
             <item name="@Immutable" href="./annotation-immutable.html"/>
             <item name="@LogExceptions" href="./annotation-logexceptions.html"/>
