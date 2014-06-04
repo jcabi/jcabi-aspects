@@ -31,7 +31,7 @@ package com.jcabi.aspects;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Future;
-import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -52,7 +52,7 @@ public final class AsyncTest {
     @Test
     @SuppressWarnings("PMD.DoNotUseThreads")
     public void executesAsynchronously() throws Exception {
-        final BlockingQueue<String> queue = new SynchronousQueue<String>();
+        final BlockingQueue<String> queue = new LinkedBlockingQueue<String>();
         final Runnable runnable = new Runnable() {
             @Async
             @Override
