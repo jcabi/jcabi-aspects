@@ -1,5 +1,5 @@
  ------
- Enable asynchronous execution of methods
+ Asynchronous Execution of Java Methods
  ------
  Carlos Miranda
  ------
@@ -36,12 +36,12 @@
 ~~ OF THE POSSIBILITY OF SUCH DAMAGE.
 ~~
 
-Asynchronous execution of methods
+Asynchronous Execution of Methods
 
   Methods annotated with
   {{{./apidocs-${project.version}/com/jcabi/aspects/Async.html}<<<@Async>>>}}
   will return immediately to its caller, while its operation executes
-  asynchronously: 
+  asynchronously:
 
 +--
 public class AsyncExample {

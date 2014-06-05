@@ -61,6 +61,9 @@ public class MyResource {
   framework. At the moment we offer the following aspects
   (we extend this list every few months):
 
+   * {{{./apidocs-${project.version}/com/jcabi/aspects/Async.html}<<<@Async>>>}} —
+     executes methods asynchronously
+
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Cacheable.html}<<<@Cacheable>>>}} —
      chackes method results in {{{./annotation-cacheable.html}memory}}
 
