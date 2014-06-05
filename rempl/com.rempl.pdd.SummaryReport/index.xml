@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?xml-stylesheet type='text/xsl' href='puzzles.xsl'?><puzzles>
 <puzzle>
-<ticket>1</ticket>
+<ticket>32</ticket>
 <file>src/main/java/com/jcabi/aspects/Quietly.java</file>
 <prefix> * </prefix>
-<body>This annotation has to be on methods returning void only. A compile-time APT processor needs to be created that will verify that only void methods have @Quietly annotations. In runtime it should throw an exception before executing of method body, if its return type is not void.</body>
+<body>This annotation has to be on methods returning void only. We already have runtime checking of the return type, and any methods annotated with @Quietly that don't throw void throws an exception. Let's create a compile-time APT processor needs to be created that will verify that only void methods have @Quietly annotations.</body>
 <estimate>0</estimate>
-<lines>44-47</lines>
+<lines>44-48</lines>
 <owner>someone</owner>
 </puzzle>
 <puzzle>
@@ -16,6 +16,15 @@
 <body>It's a temporary design, which enables only NotNull, Valid, and Pattern annotations. In the future we should use JSR-303 Validator, when they implement validation of values (see their appendix C).</body>
 <estimate>0</estimate>
 <lines>194-197</lines>
+<owner>someone</owner>
+</puzzle>
+<puzzle>
+<ticket>30</ticket>
+<file>src/test/java/com/jcabi/aspects/AsyncTest.java</file>
+<prefix>     * </prefix>
+<body>This test is not stable during Maven build, for some reason. Let's fix and enable it.</body>
+<estimate>0</estimate>
+<lines>77-78</lines>
 <owner>someone</owner>
 </puzzle>
 <puzzle>
