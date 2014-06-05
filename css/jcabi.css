@@ -42,6 +42,8 @@ body {
   body {
     font-size: 1.2em;
     line-height: 1.4em;
+    background-color: white;
+    padding: 0;
   }
 }
 
@@ -51,7 +53,7 @@ a {
   text-decoration: none;
 }
 
-tt {
+code, tt {
   background-color: #eeeeee;
   padding: 0 .5em;
   font-family: "Ubuntu Mono", monospace;
@@ -78,6 +80,12 @@ pre {
   font-size: 0.9em;
   overflow-x: auto;
   line-height: 1.3em;
+}
+@media all and (max-width: 1200px) {
+  pre {
+    border-left: 0;
+    margin-left: 0;
+  }
 }
 
 table {
@@ -146,7 +154,7 @@ table td:nth-child(1) {
 }
 @media all and (max-width: 1200px) {
   .legal-notes {
-    text-align: center;
+    display: none;
   }
 }
 
@@ -238,5 +246,11 @@ table td:nth-child(1) {
 
 .maven-logo {
   float: right;
+  margin-top: -40px;
   width: 60px;
+}
+@media all and (max-width: 1200px) {
+  .maven-logo {
+    display: none;
+  }
 }

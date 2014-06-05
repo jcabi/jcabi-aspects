@@ -43,7 +43,7 @@
     <body>
                 <section class="page" itemscope="" itemtype="http://schema.org/BlogPosting">
             <nav class="menu-section" role="navigation">
-                <ul class="menu">
+                <ul class="menu" id="menu">
                                                                                     <li>
                             Overview
                                                             <ul>
@@ -202,7 +202,7 @@
                                 <div class="date-numbers">
                                     <strong itemprop="version">0.16</strong>
                                     
-                                    <time itemprop="datePublished" datetime="2014-06-05T07:47:50Z">
+                                    <time itemprop="datePublished" datetime="2014-06-05T08:18:18Z">
                                         
                                         05-Jun-2014
                                     </time>
@@ -220,19 +220,20 @@
 <h2>Asynchronous Execution of Methods<a name="Asynchronous_Execution_of_Methods"></a></h2>
 <p>Methods annotated with <a href="./apidocs-0.16/com/jcabi/aspects/Async.html"><tt>@Async</tt></a> will return immediately to its caller, while its operation executes asynchronously:</p>
 <div class="source">
-<pre>public class AsyncExample {
+<pre>public class Foo {
   @Async
-  public void asynchronousMethod() {
-    //perform some operation here
+  public void save() {
+    // perform some operation here
   }
 }</pre></div>
-<p>The <tt>asynchronousMethod()</tt> method will immediately return control to its caller when invoked, without having to wait for the operation to complete. Note that the <b>asynchronousMethod()</b> operation will execute in a separate thread, so you must ensure thread safety for that any shared data being manipulated within <b>asynchrnousMethod()</b>.</p>
-<p>An asynchronous method can also pass a result to its caller, by returning a <b>Future</b>, through the returned value of <b>Future.get()</b>.</p>
+<p>The <tt>save()</tt> method will immediately return control to its caller when invoked, without having to wait for the operation to complete. Note that the <tt>save()</tt> operation will execute in a separate thread, so you must ensure thread safety for that any shared data being manipulated within <tt>save()</tt>.</p>
+<p>An asynchronous method can also pass a result to its caller, by returning a <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html"><tt>Future</tt></a>, through the returned value of <tt>Future.get()</tt>.</p>
 <div class="source">
-<pre>public class AsyncWithResultExample {
+<pre>public class Foo {
   @Async
-  public Future&lt;Integer&gt; calculateSomething() {
-    //perform some operation here
+  public Future&lt;Integer&gt; calculate() {
+    // perform some operation here
+    // return an instance of Future interface
   }
 }</pre></div>
 <p>The mechanism is implemented with AOP/AspectJ. Read <a href="./example-weaving.html">how to integrate it into your <tt>pom.xml</tt></a>.</p></div>
