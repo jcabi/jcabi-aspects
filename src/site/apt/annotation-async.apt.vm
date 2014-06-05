@@ -44,28 +44,30 @@ Asynchronous Execution of Methods
   asynchronously:
 
 +--
-public class AsyncExample {
+public class Foo {
   @Async
-  public void asynchronousMethod() {
-    //perform some operation here
+  public void save() {
+    // perform some operation here
   }
 }
 +--
 
-  The <<<asynchronousMethod()>>> method will immediately return control to its
+  The <<<save()>>> method will immediately return control to its
   caller when invoked, without having to wait for the operation to complete.
-  Note that the <<asynchronousMethod()>> operation will execute in a separate
+  Note that the <<<save()>>> operation will execute in a separate
   thread, so you must ensure thread safety for that any shared data being
-  manipulated within <<asynchrnousMethod()>>.
+  manipulated within <<<save()>>>.
 
   An asynchronous method can also pass a result to its caller, by returning a
-  <<Future>>, through the returned value of <<Future.get()>>.
+  {{{http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html}<<<Future>>>}},
+  through the returned value of <<<Future.get()>>>.
 
 +--
-public class AsyncWithResultExample {
+public class Foo {
   @Async
-  public Future<Integer> calculateSomething() {
-    //perform some operation here
+  public Future<Integer> calculate() {
+    // perform some operation here
+    // return an instance of Future interface
   }
 }
 +--
