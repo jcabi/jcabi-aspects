@@ -107,12 +107,38 @@ public final class ImmutabilityChecker {
                         ex
                     );
                 }
-                if (type.isArray()) {
-                    this.check(type.getComponentType());
-                }
                 this.immutable.add(type);
                 Logger.debug(this, "#check(%s): immutability checked", type);
             }
+        }
+    }
+
+    /**
+     * This array field immutable?
+     * @param field The field to check
+     * @throws Violation If it is mutable.
+     */
+    private void checkArray(final Field field) throws Violation {
+        if (field.isAnnotationPresent(Immutable.Array.class)) {
+            try {
+                this.check(field.getType().getComponentType());
+            } catch (final ImmutabilityChecker.Violation ex) {
+                throw new ImmutabilityChecker.Violation(
+                    String.format(
+                        "Field array component type '%s' is mutable",
+                        field.getType().getComponentType().getName()
+                    ),
+                    ex
+                );
+            }
+        } else {
+            // @checkstyle LineLength (3 lines)
+            throw new ImmutabilityChecker.Violation(
+                String.format(
+                    "Field '%s' is an array and is not annotated with @Immutable.Array",
+                    field.getName()
+                )
+            );
         }
     }
 
@@ -162,6 +188,9 @@ public final class ImmutabilityChecker {
             try {
                 if (field.getType() != type) {
                     this.check(field.getType());
+                }
+                if (field.getType().isArray()) {
+                    this.checkArray(field);
                 }
             } catch (final ImmutabilityChecker.Violation ex) {
                 throw new ImmutabilityChecker.Violation(

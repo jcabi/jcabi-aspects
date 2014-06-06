@@ -57,4 +57,19 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Immutable {
+    /**
+     * Identifies that an array-type field should be considered immutable. Note
+     * that for an array to be considered immutable, its component type must
+     * also be immutable.
+     * @since 0.17
+     * @todo #33 Let's prevent modifications to arrays having this annotation,
+     *  somehow. Perhaps we can create an aspect that will throw an exception
+     *  should something try to write into the array. See
+     *  https://bugs.eclipse.org/bugs/show_bug.cgi?id=157031
+     */
+    @Documented
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.FIELD)
+    public @interface Array {
+    }
 }

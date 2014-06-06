@@ -54,11 +54,8 @@ public final class ImmutableTest {
 
     /**
      * ImmutabilityChecker can catch mutable classes with arrays.
-     * @todo #133 The test is disabled since in Java final arrays can still be
-     *  modified (bloody Java!)
      */
     @Test(expected = IllegalStateException.class)
-    @org.junit.Ignore
     public void catchedMutableTypesWithArrays() {
         new MutableWithArray();
     }
@@ -145,8 +142,9 @@ public final class ImmutableTest {
          */
         private final transient String text = "Hello, world!";
         /**
-         * Another immutable class member.
+         * An immutable array member.
          */
+        @Immutable.Array
         private final transient String[] texts = new String[] {"foo"};
     }
 
