@@ -132,9 +132,10 @@ public final class ImmutabilityChecker {
                 );
             }
         } else {
+            // @checkstyle LineLength (3 lines)
             throw new ImmutabilityChecker.Violation(
                 String.format(
-                    "Field '%s' is an array, which is mutable",
+                    "Field '%s' is an array and is not annotated with @Immutable.Array",
                     field.getName()
                 )
             );
