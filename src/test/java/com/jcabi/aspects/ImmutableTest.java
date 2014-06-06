@@ -141,6 +141,11 @@ public final class ImmutableTest {
          * Another immutable class member.
          */
         private final transient String text = "Hello, world!";
+        /**
+         * An immutable array member.
+         */
+        @Immutable.Array
+        private final transient String[] texts = new String[] {"foo"};
     }
 
 }

@@ -99,14 +99,6 @@ public final class ImmutabilityChecker {
                         )
                     );
                 }
-                if (type.isArray()) {
-                    throw new ImmutabilityChecker.Violation(
-                        String.format(
-                            "Type '%s' is an array, which is mutable",
-                            type.getName()
-                        )
-                    );
-                }
                 try {
                     this.fields(type);
                 } catch (final ImmutabilityChecker.Violation ex) {
@@ -118,6 +110,34 @@ public final class ImmutabilityChecker {
                 this.immutable.add(type);
                 Logger.debug(this, "#check(%s): immutability checked", type);
             }
+        }
+    }
+
+    /**
+     * This array field immutable?
+     * @param field The field to check
+     * @throws Violation If it is mutable.
+     */
+    private void checkArray(final Field field) throws Violation {
+        if (field.isAnnotationPresent(Immutable.Array.class)) {
+            try {
+                this.check(field.getType().getComponentType());
+            } catch (final ImmutabilityChecker.Violation ex) {
+                throw new ImmutabilityChecker.Violation(
+                    String.format(
+                        "Field array component type '%s' is mutable",
+                        field.getType().getComponentType().getName()
+                    ),
+                    ex
+                );
+            }
+        } else {
+            throw new ImmutabilityChecker.Violation(
+                String.format(
+                    "Field '%s' is an array, which is mutable",
+                    field.getName()
+                )
+            );
         }
     }
 
@@ -167,6 +187,9 @@ public final class ImmutabilityChecker {
             try {
                 if (field.getType() != type) {
                     this.check(field.getType());
+                }
+                if (field.getType().isArray()) {
+                    this.checkArray(field);
                 }
             } catch (final ImmutabilityChecker.Violation ex) {
                 throw new ImmutabilityChecker.Violation(
