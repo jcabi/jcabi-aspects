@@ -109,4 +109,8 @@ public @interface ScheduleWithFixedDelay {
      */
     int threads() default 1;
 
+    /**
+     * Be less verbose.
+     */
+    boolean verbose() default true;
 }
