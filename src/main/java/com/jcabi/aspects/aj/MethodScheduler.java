@@ -154,6 +154,10 @@ public final class MethodScheduler {
          */
         private final transient long attempts;
         /**
+         * Should more information be logged?
+         */
+        private final transient boolean verbose;
+        /**
          * Public ctor.
          * @param runnable The runnable to schedule
          * @param obj Object
@@ -166,6 +170,7 @@ public final class MethodScheduler {
                 annt.threads(),
                 new VerboseThreads(this.object)
             );
+            this.verbose = annt.verbose();
             this.await = annt.awaitUnit().toMillis(annt.await());
             this.attempts = annt.shutdownAttempts();
             final Runnable job = new Runnable() {
@@ -180,12 +185,14 @@ public final class MethodScheduler {
                     job, annt.delay(), annt.delay(), annt.unit()
                 );
             }
-            Logger.info(
-                this.object,
-                "scheduled for execution with %d %s interval",
-                annt.delay(),
-                annt.unit()
-            );
+            if (this.verbose) {
+                Logger.info(
+                    this.object,
+                    "scheduled for execution with %d %s interval",
+                    annt.delay(),
+                    annt.unit()
+                );
+            }
         }
         @Override
         public void close() throws IOException {
@@ -200,9 +207,11 @@ public final class MethodScheduler {
                     if (age > this.await) {
                         break;
                     }
-                    Logger.info(
-                        this, "waiting %[ms]s for threads termination", age
-                    );
+                    if (this.verbose) {
+                        Logger.info(
+                            this, "waiting %[ms]s for threads termination", age
+                        );
+                    }
                 }
                 for (int attempt = 0; attempt < this.attempts; ++attempt) {
                     this.executor.shutdownNow();
@@ -221,12 +230,14 @@ public final class MethodScheduler {
                 Thread.currentThread().interrupt();
                 throw new IllegalStateException(ex);
             }
-            Logger.info(
-                this.object,
-                "execution stopped after %[ms]s and %d tick(s)",
-                System.currentTimeMillis() - this.start,
-                this.counter.get()
-            );
+            if (this.verbose) {
+                Logger.info(
+                    this.object,
+                    "execution stopped after %[ms]s and %d tick(s)",
+                    System.currentTimeMillis() - this.start,
+                    this.counter.get()
+                );
+            }
         }
     }
 
