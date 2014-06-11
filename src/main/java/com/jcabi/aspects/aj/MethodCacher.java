@@ -30,6 +30,7 @@
 package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Cacheable;
+import com.jcabi.aspects.Loggable;
 import com.jcabi.log.Logger;
 import com.jcabi.log.VerboseRunnable;
 import java.lang.reflect.Method;
@@ -61,9 +62,12 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.8
+ * @todo #14 Split this class into smaller ones so it will have less
+ *  responsibility and remove PMD.GodClass suppressed warning.
  */
 @Aspect
-@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
+@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods",
+    "PMD.GodClass" })
 public final class MethodCacher {
 
     /**
@@ -194,8 +198,11 @@ public final class MethodCacher {
                 final Method method = MethodSignature.class
                     .cast(point.getSignature())
                     .getMethod();
-                if (Logger.isDebugEnabled(method.getDeclaringClass())) {
-                    Logger.debug(
+                if (MethodCacher.enabled(
+                    key.getLevel(), method.getDeclaringClass()
+                )) {
+                    MethodCacher.log(
+                        key.getLevel(),
                         method.getDeclaringClass(),
                         "%s: %s:%s removed from cache %s",
                         Mnemos.toText(method, point.getArgs(), true, false),
@@ -216,7 +223,8 @@ public final class MethodCacher {
             for (final Key key : this.tunnels.keySet()) {
                 if (this.tunnels.get(key).expired()) {
                     final Tunnel tunnel = this.tunnels.remove(key);
-                    Logger.debug(
+                    MethodCacher.log(
+                        key.getLevel(),
                         this,
                         "%s:%s expired in cache",
                         key,
@@ -225,6 +233,51 @@ public final class MethodCacher {
                 }
             }
         }
+    }
+
+    /**
+     * Log one line.
+     * @param level Level of logging
+     * @param log Destination log
+     * @param message Message to log
+     * @param params Message parameters
+     * @checkstyle ParameterNumberCheck (3 lines)
+     */
+    private static void log(final int level, final Object log,
+        final String message, final Object... params) {
+        if (level == Loggable.TRACE) {
+            Logger.trace(log, message, params);
+        } else if (level == Loggable.DEBUG) {
+            Logger.debug(log, message, params);
+        } else if (level == Loggable.INFO) {
+            Logger.info(log, message, params);
+        } else if (level == Loggable.WARN) {
+            Logger.warn(log, message, params);
+        } else if (level == Loggable.ERROR) {
+            Logger.error(log, message, params);
+        }
+    }
+
+    /**
+     * Log level is enabled?
+     * @param level Level of logging
+     * @param log Destination log
+     * @return TRUE if enabled
+     */
+    private static boolean enabled(final int level, final Object log) {
+        boolean enabled;
+        if (level == Loggable.TRACE) {
+            enabled = Logger.isTraceEnabled(log);
+        } else if (level == Loggable.DEBUG) {
+            enabled = Logger.isDebugEnabled(log);
+        } else if (level == Loggable.INFO) {
+            enabled = Logger.isInfoEnabled(log);
+        } else if (level == Loggable.WARN) {
+            enabled = Logger.isWarnEnabled(log);
+        } else {
+            enabled = true;
+        }
+        return enabled;
     }
 
     /**
@@ -292,8 +345,9 @@ public final class MethodCacher {
                     suffix = Logger.format("valid for %[ms]s", msec);
                 }
                 final Class<?> type = method.getDeclaringClass();
-                if (Logger.isDebugEnabled(type)) {
-                    Logger.debug(
+                if (MethodCacher.enabled(this.key.getLevel(), type)) {
+                    MethodCacher.log(
+                        this.key.getLevel(),
                         type,
                         "%s: %s cached in %[ms]s, %s",
                         Mnemos.toText(
@@ -341,6 +395,12 @@ public final class MethodCacher {
          * Arguments.
          */
         private final transient Object[] arguments;
+
+        /**
+         * Log level.
+         */
+        private final int level;
+
         /**
          * Public ctor.
          * @param point Joint point
@@ -350,6 +410,11 @@ public final class MethodCacher {
                 .cast(point.getSignature()).getMethod();
             this.target = MethodCacher.Key.targetize(point);
             this.arguments = point.getArgs();
+            if (this.method.isAnnotationPresent(Loggable.class)) {
+                this.level = this.method.getAnnotation(Loggable.class).value();
+            } else {
+                this.level = Loggable.DEBUG;
+            }
         }
         @Override
         public String toString() {
@@ -382,8 +447,9 @@ public final class MethodCacher {
         public Object through(final Object result) {
             final int hit = this.accessed.getAndIncrement();
             final Class<?> type = this.method.getDeclaringClass();
-            if (hit > 0 && Logger.isDebugEnabled(type)) {
-                Logger.debug(
+            if (hit > 0 && MethodCacher.enabled(this.level, type)) {
+                MethodCacher.log(
+                    this.level,
                     type,
                     "%s: %s from cache (hit #%d, %[ms]s old)",
                     this,
@@ -417,6 +483,14 @@ public final class MethodCacher {
                 tgt = point.getTarget();
             }
             return tgt;
+        }
+
+        /**
+         * Get log level.
+         * @return Log level of current method.
+         */
+        private int getLevel() {
+            return this.level;
         }
     }
 
