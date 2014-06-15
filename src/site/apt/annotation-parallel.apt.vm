@@ -54,7 +54,7 @@ public class FooTest {
       public void run() {
         foo.process();
       }
-    }
+    }.run();
   }
 }
 +--
