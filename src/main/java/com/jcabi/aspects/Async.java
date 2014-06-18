@@ -51,6 +51,9 @@ import java.lang.annotation.Target;
  * @version $Id$
  * @see <a href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
  * @since 0.16
+ * @todo #41 We should create a compile-time APT processor that checks whether
+ *  methods annotated with {@link Async} return either void or Future. The
+ *  check should fail if that is not the case.
  */
 @Documented
 @Target(ElementType.METHOD)

@@ -27,27 +27,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.aspects;
+package com.jcabi;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.jcabi.aspects.Quietly;
 
 /**
- * Log all exceptions thrown out of this method and swallow them.
- *
- * <p>This annotation should be applied only to methods that return void, in
- * other cases the behavior might be unexpected.
- *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * Quietly that should pass compilation checks.
+ * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
- * @since 0.7.22
- * @see <a href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
  */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Quietly {
+public final class QuietlyVoid {
+
+    /**
+     * Returns void. Should be allowed by annotation processor.
+     */
+    @Quietly
+    public void foo() {
+    }
 }

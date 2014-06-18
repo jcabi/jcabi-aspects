@@ -48,6 +48,11 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
  * @since 0.16
+ * @todo #41 It is meaningless for methods covered by this class if they return
+ *  anything other than void or {@link java.util.concurrent.Future}. Currently,
+ *  null is returned when the annotated method returns any other type. Let's
+ *  make it throw an exception, instead, similar to how
+ *  {@link QuietExceptionsLogger} does it.
  */
 @Aspect
 public final class MethodAsyncRunner {
