@@ -37,6 +37,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeKind;
 import javax.tools.Diagnostic;
 
 /**
@@ -68,7 +69,7 @@ public final class QuietlyReturnTypeProcessor extends AbstractProcessor {
         for (final Element element: env.getElementsAnnotatedWith(type)) {
             if (element.getKind() == ElementKind.METHOD) {
                 final ExecutableElement method = (ExecutableElement) element;
-                if (!method.getReturnType().equals(Void.TYPE)) {
+                if (!method.getReturnType().getKind().equals(TypeKind.VOID)) {
                     this.processingEnv.getMessager().printMessage(
                         Diagnostic.Kind.ERROR,
                         String.format(

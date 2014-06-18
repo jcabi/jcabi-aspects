@@ -27,11 +27,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.jcabi;
 
-def log = new File(basedir, 'build.log')
-assert log.text.contains(
-    '\'QuietlyNonVoid.foo\' annotated with @Quietly does not return void'
-)
-assert !log.text.contains(
-    '\'QuietlyVoid.foo\' annotated with @Quietly does not return void'
-)
+import com.jcabi.aspects.Quietly;
+
+/**
+ * Quietly that should pass compilation checks.
+ * @author Carlos Miranda (miranda.cma@gmail.com)
+ * @version $Id$
+ */
+public final class QuietlyVoid {
+
+    /**
+     * Returns void. Should be allowed by annotation processor.
+     */
+    @Quietly
+    public void foo() {
+    }
+}
