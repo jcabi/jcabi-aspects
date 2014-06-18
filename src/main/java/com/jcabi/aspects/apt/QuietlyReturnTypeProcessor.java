@@ -74,7 +74,7 @@ public final class QuietlyReturnTypeProcessor extends AbstractProcessor {
                         String.format(
                             // @checkstyle LineLength (1 line)
                             "Method '%s.%s' annotated with @Quietly does not return void",
-                            method.getEnclosingElement().getClass(),
+                            method.getEnclosingElement().getSimpleName(),
                             method.getSimpleName()
                         )
                     );
