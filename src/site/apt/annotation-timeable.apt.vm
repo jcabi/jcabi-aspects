@@ -87,3 +87,6 @@ public class Resource {
 
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.
+
+  {{{http://www.yegor256.com/2014/06/20/limit-method-execution-time.html}This blog post}} gives more details about
+  internal implementation of the mechanism.
