@@ -92,6 +92,7 @@ import java.util.concurrent.TimeUnit;
  * @since 0.7.2
  * @see com.jcabi.log.Logger
  * @see <a href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
+ * @see <a href="http://www.yegor256.com/2014/06/01/aop-aspectj-java-method-logging.html">Java Method Logging with AOP and Annotations, by Yegor Bugayenko</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
