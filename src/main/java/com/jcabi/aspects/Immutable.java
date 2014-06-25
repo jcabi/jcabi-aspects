@@ -52,6 +52,7 @@ import java.lang.annotation.Target;
  * @version $Id$
  * @since 0.7.8
  * @see <a href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
+ * @see <a href="http://www.yegor256.com/2014/06/09/objects-should-be-immutable.html">Objects Should Be Immutable, by Yegor Bugayenko</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
