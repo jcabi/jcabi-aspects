@@ -54,7 +54,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-0.16/index.html" title="JavaDoc 0.16">JavaDoc 0.16</a>
+                            <span>                        <a href="apidocs-0.17/index.html" title="JavaDoc 0.17">JavaDoc 0.17</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -177,7 +177,7 @@
                                                                                                                         <li >
                             <span>                        <a href="project-reports.html" title="Project Reports">Project Reports</a>
         </span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </li>
                                                                                         </ul>
                                                     </li>
                                     </ul>
@@ -200,11 +200,11 @@
                             </div>
                             <div class="date">
                                 <div class="date-numbers">
-                                    <strong itemprop="version">0.16</strong>
+                                    <strong itemprop="version">0.17</strong>
                                     
-                                    <time itemprop="datePublished" datetime="2014-06-05T08:18:18Z">
+                                    <time itemprop="datePublished" datetime="2014-06-25T11:58:32Z">
                                         
-                                        05-Jun-2014
+                                        25-Jun-2014
                                     </time>
                                 </div>
                                                                                                     <div>
@@ -218,7 +218,7 @@
                         <article role="article" itemprop="articleBody">
                             <!--  --><!-- Copyright (c) 2011, jcabi.com --><!-- All rights reserved. --><!--  --><!-- Redistribution and use in source and binary forms, with or without --><!-- modification, are permitted provided that the following conditions --><!-- are met: 1) Redistributions of source code must retain the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer. 2) Redistributions in binary form must reproduce the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer in the documentation and/or other materials provided --><!-- with the distribution. 3) Neither the name of the jcabi.com nor --><!-- the names of its contributors may be used to endorse or promote --><!-- products derived from this software without specific prior written --><!-- permission. --><!--  --><!-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS --><!-- "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT --><!-- NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND --><!-- FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL --><!-- THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, --><!-- INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES --><!-- (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR --><!-- SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) --><!-- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, --><!-- STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) --><!-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED --><!-- OF THE POSSIBILITY OF SUCH DAMAGE. --><!--  --><div class="section">
 <h2>Useful Java AOP Aspects<a name="Useful_Java_AOP_Aspects"></a></h2>
-<p>It's a collection of useful AOP aspects and Java annotations, which allows you to modify the behavior of your Java application without writing lots of duplicate code. For example, you may want to retry HTTP resource downloading in case of a failure. You can implement a full <tt>do/while</tt> cycle yourself or you can annotate the method with <a href="./apidocs-0.16/com/jcabi/aspects/RetryOnFailure.html"><tt>@RetryOnFailure</tt></a> and let one of our AOP aspects do the work for you:</p>
+<p>It's a collection of useful AOP aspects and Java annotations, which allows you to modify the behavior of your Java application without writing lots of duplicate code. For example, you may want to retry HTTP resource downloading in case of a failure. You can implement a full <tt>do/while</tt> cycle yourself or you can annotate the method with <a href="./apidocs-0.17/com/jcabi/aspects/RetryOnFailure.html"><tt>@RetryOnFailure</tt></a> and let one of our AOP aspects do the work for you:</p>
 <div class="source">
 <pre>public class MyResource {
   @RetryOnFailure
@@ -228,18 +228,18 @@
 }</pre></div>
 <p><tt>jcabi-aspects</tt> works only together with <a class="externalLink" href="http://www.eclipse.org/aspectj/">AspectJ</a>, an <a class="externalLink" href="http://en.wikipedia.org/wiki/Aspect-oriented_programming">Aspect Oriented Programming (AOP)</a> framework. At the moment we offer the following aspects (we extend this list every few months):</p>
 <ul>
-<li><a href="./apidocs-0.16/com/jcabi/aspects/Async.html"><tt>@Async</tt></a> &#x2014; executes methods asynchronously</li>
-<li><a href="./apidocs-0.16/com/jcabi/aspects/Cacheable.html"><tt>@Cacheable</tt></a> &#x2014; caches method results in <a href="./annotation-cacheable.html">memory</a></li>
-<li><a href="./apidocs-0.16/com/jcabi/aspects/Immutable.html"><tt>@Immutable</tt></a> &#x2014; guarantees class true <a href="./annotation-immutable.html">immutability</a> in runtime</li>
-<li><a href="./apidocs-0.16/com/jcabi/aspects/LogExceptions.html"><tt>@LogExceptions</tt></a> &#x2014; logs <a href="./annotation-logexceptions.html">exceptions</a> via <a class="externalLink" href="http://log.jcabi.com/apidocs-0.12.2/com/jcabi/log/Logger.html"><tt>Logger</tt></a></li>
-<li><a href="./apidocs-0.16/com/jcabi/aspects/Quietly.html"><tt>@Quietly</tt></a> &#x2014; swallows all exceptions <a href="./annotation-quietly.html">quietly</a></li>
-<li><a href="./apidocs-0.16/com/jcabi/aspects/Loggable.html"><tt>@Loggable</tt></a> &#x2014; logs method <a href="./annotation-loggable.html">calls</a> via <a class="externalLink" href="http://log.jcabi.com/apidocs-0.12.2/com/jcabi/log/Logger.html"><tt>Logger</tt></a></li>
-<li><a href="./apidocs-0.16/com/jcabi/aspects/Parallel.html"><tt>@Parallel</tt></a> &#x2014; executes method in <a href="./annotation-parallel.html">multiple threads</a></li>
-<li><a href="./apidocs-0.16/com/jcabi/aspects/RetryOnFailure.html"><tt>@RetryOnFailure</tt></a> &#x2014; retries method execution <a href="./annotation-retryonfailure.html">a few times</a></li>
-<li><a href="./apidocs-0.16/com/jcabi/aspects/ScheduleWithFixedDelay.html"><tt>@ScheduleWithFixedDelay</tt></a> &#x2014; schedules class execution in <a href="./annotation-schedulewithfixeddelay.html">multiple threads</a></li>
-<li><a href="./apidocs-0.16/com/jcabi/aspects/Timeable.html"><tt>@Timeable</tt></a> &#x2014; interrupts a method if it exceeds <a href="./annotation-timeable.html">an allowed time frame</a></li>
-<li><a href="./apidocs-0.16/com/jcabi/aspects/UnitedThrow.html"><tt>@UnitedThrow</tt></a> &#x2014; encapsulates all exceptions into <a href="./annotation-unitedthrow.html">allowed one</a></li></ul>
-<p>After you add these annotations to your code you should configure your build system to <a href="./example-weaving.html">&quot;weave&quot; your binaries after compilation</a> (this is mandatory, without this step annotations will have absolutely no effect!).</p>
+<li><a href="./apidocs-0.17/com/jcabi/aspects/Async.html"><tt>@Async</tt></a> &#x2014; executes methods asynchronously</li>
+<li><a href="./apidocs-0.17/com/jcabi/aspects/Cacheable.html"><tt>@Cacheable</tt></a> &#x2014; chackes method results in <a href="./annotation-cacheable.html">memory</a></li>
+<li><a href="./apidocs-0.17/com/jcabi/aspects/Immutable.html"><tt>@Immutable</tt></a> &#x2014; guarantees class true <a href="./annotation-immutable.html">immutability</a> in runtime</li>
+<li><a href="./apidocs-0.17/com/jcabi/aspects/LogExceptions.html"><tt>@LogExceptions</tt></a> &#x2014; logs <a href="./annotation-logexceptions.html">exceptions</a> via <a class="externalLink" href="http://log.jcabi.com/apidocs-0.12.2/com/jcabi/log/Logger.html"><tt>Logger</tt></a></li>
+<li><a href="./apidocs-0.17/com/jcabi/aspects/Quietly.html"><tt>@Quietly</tt></a> &#x2014; swallows all exceptions <a href="./annotation-quietly.html">quietly</a></li>
+<li><a href="./apidocs-0.17/com/jcabi/aspects/Loggable.html"><tt>@Loggable</tt></a> &#x2014; logs method <a href="./annotation-loggable.html">calls</a> via <a class="externalLink" href="http://log.jcabi.com/apidocs-0.12.2/com/jcabi/log/Logger.html"><tt>Logger</tt></a></li>
+<li><a href="./apidocs-0.17/com/jcabi/aspects/Parallel.html"><tt>@Parallel</tt></a> &#x2014; executes method in <a href="./annotation-parallel.html">multiple threads</a></li>
+<li><a href="./apidocs-0.17/com/jcabi/aspects/RetryOnFailure.html"><tt>@RetryOnFailure</tt></a> &#x2014; retries method execution <a href="./annotation-retryonfailure.html">a few times</a></li>
+<li><a href="./apidocs-0.17/com/jcabi/aspects/ScheduleWithFixedDelay.html"><tt>@ScheduleWithFixedDelay</tt></a> &#x2014; schedules class execution in <a href="./annotation-schedulewithfixeddelay.html">multiple threads</a></li>
+<li><a href="./apidocs-0.17/com/jcabi/aspects/Timeable.html"><tt>@Timeable</tt></a> &#x2014; interrupts a method if it exceeds <a href="./annotation-timeable.html">an allowed time frame</a></li>
+<li><a href="./apidocs-0.17/com/jcabi/aspects/UnitedThrow.html"><tt>@UnitedThrow</tt></a> &#x2014; encapsulates all exceptions into <a href="./annotation-unitedthrow.html">allowed one</a></li></ul>
+<p>After you add that annotations to your code you should configure your build system to <a href="./example-weaving.html">&quot;weave&quot; your binaries after compilation</a> (this is mandatory, without this step annotations will have absolutely no effect!).</p>
 <p>If you have any questions, please submit an issue to <a class="externalLink" href="https://github.com/jcabi/jcabi-aspects/issues/new">Github</a>. If you want to discuss, please use our <a class="externalLink" href="https://groups.google.com/forum/#!forum/jcabi">Google Group</a>.</p>
 <div class="section">
 <h3>Cutting Edge Version<a name="Cutting_Edge_Version"></a></h3>

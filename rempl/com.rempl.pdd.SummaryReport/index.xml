@@ -1,39 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?xml-stylesheet type='text/xsl' href='puzzles.xsl'?><puzzles>
 <puzzle>
+<ticket>33</ticket>
+<file>src/main/java/com/jcabi/aspects/Immutable.java</file>
+<body>Let's prevent modifications to arrays having this annotation, somehow. Perhaps we can create an aspect that will throw an exception should something try to write into the array. See https://bugs.eclipse.org/bugs/show_bug.cgi?id=157031</body>
+<role>IMP</role>
+<estimate>0</estimate>
+<lines>66-69</lines>
+</puzzle>
+<puzzle>
 <ticket>32</ticket>
 <file>src/main/java/com/jcabi/aspects/Quietly.java</file>
-<prefix> * </prefix>
 <body>This annotation has to be on methods returning void only. We already have runtime checking of the return type, and any methods annotated with @Quietly that don't throw void throws an exception. Let's create a compile-time APT processor needs to be created that will verify that only void methods have @Quietly annotations.</body>
+<role>IMP</role>
 <estimate>0</estimate>
 <lines>44-48</lines>
-<owner>someone</owner>
+</puzzle>
+<puzzle>
+<ticket>14</ticket>
+<file>src/main/java/com/jcabi/aspects/aj/MethodCacher.java</file>
+<body>Split this class into smaller ones so it will have less responsibility and remove PMD.GodClass suppressed warning.</body>
+<role>IMP</role>
+<estimate>0</estimate>
+<lines>65-66</lines>
 </puzzle>
 <puzzle>
 <ticket>61</ticket>
 <file>src/main/java/com/jcabi/aspects/aj/MethodValidator.java</file>
-<prefix>     * </prefix>
 <body>It's a temporary design, which enables only NotNull, Valid, and Pattern annotations. In the future we should use JSR-303 Validator, when they implement validation of values (see their appendix C).</body>
+<role>IMP</role>
 <estimate>0</estimate>
 <lines>194-197</lines>
-<owner>someone</owner>
-</puzzle>
-<puzzle>
-<ticket>30</ticket>
-<file>src/test/java/com/jcabi/aspects/AsyncTest.java</file>
-<prefix>     * </prefix>
-<body>This test is not stable during Maven build, for some reason. Let's fix and enable it.</body>
-<estimate>0</estimate>
-<lines>77-78</lines>
-<owner>someone</owner>
-</puzzle>
-<puzzle>
-<ticket>133</ticket>
-<file>src/test/java/com/jcabi/aspects/ImmutableTest.java</file>
-<prefix>     * </prefix>
-<body>The test is disabled since in Java final arrays can still be modified (bloody Java!)</body>
-<estimate>0</estimate>
-<lines>57-58</lines>
-<owner>someone</owner>
 </puzzle>
 </puzzles>
