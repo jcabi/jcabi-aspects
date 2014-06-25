@@ -54,7 +54,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-0.17/index.html" title="JavaDoc 0.17">JavaDoc 0.17</a>
+                            <span>                        <a href="apidocs-0.17.1/index.html" title="JavaDoc 0.17.1">JavaDoc 0.17.1</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -200,9 +200,9 @@
                             </div>
                             <div class="date">
                                 <div class="date-numbers">
-                                    <strong itemprop="version">0.17</strong>
+                                    <strong itemprop="version">0.17.1</strong>
                                     
-                                    <time itemprop="datePublished" datetime="2014-06-25T11:58:32Z">
+                                    <time itemprop="datePublished" datetime="2014-06-25T12:11:07Z">
                                         
                                         25-Jun-2014
                                     </time>
@@ -218,7 +218,7 @@
                         <article role="article" itemprop="articleBody">
                             <!--  --><!-- Copyright (c) 2011, jcabi.com --><!-- All rights reserved. --><!--  --><!-- Redistribution and use in source and binary forms, with or without --><!-- modification, are permitted provided that the following conditions --><!-- are met: 1) Redistributions of source code must retain the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer. 2) Redistributions in binary form must reproduce the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer in the documentation and/or other materials provided --><!-- with the distribution. 3) Neither the name of the jcabi.com nor --><!-- the names of its contributors may be used to endorse or promote --><!-- products derived from this software without specific prior written --><!-- permission. --><!--  --><!-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS --><!-- "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT --><!-- NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND --><!-- FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL --><!-- THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, --><!-- INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES --><!-- (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR --><!-- SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) --><!-- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, --><!-- STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) --><!-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED --><!-- OF THE POSSIBILITY OF SUCH DAMAGE. --><!--  --><div class="section">
 <h2>Logging Exceptions Thrown out of Java Methods and Swallowing Them<a name="Logging_Exceptions_Thrown_out_of_Java_Methods_and_Swallowing_Them"></a></h2>
-<p>Annotate your methods with <a href="./apidocs-0.17/com/jcabi/aspects/Quietly.html"><tt>@Quietly</tt></a> annotation and every exception thrown out of the method will not be propagated, but it will be logged through SLF4J:</p>
+<p>Annotate your methods with <a href="./apidocs-0.17.1/com/jcabi/aspects/Quietly.html"><tt>@Quietly</tt></a> annotation and every exception thrown out of the method will not be propagated, but it will be logged through SLF4J:</p>
 <div class="source">
 <pre>public class Resource {
   private Object content;
@@ -229,6 +229,28 @@
 }</pre></div>
 <p>If an exception occurs, it will not be thrown to the caller and it will be logged through <a class="externalLink" href="http://www.slf4j.org/">SLF4J</a> logging facility.</p>
 <p>Also, take a look at <a href="./annotation-logexceptions.html"><tt>@LogExceptions</tt></a> annotation, which does the same but it propagates exceptions thrown to the caller.</p>
+<p>Methods annotated with <tt>@Quietly</tt> must strictly have a <tt>void</tt> return type. Otherwise, an exception will be thrown at runtime when the method is invoked. If you wish to check for non-compliant methods at compile time, you may incorporate the annotation processor <a href="./apidocs-0.17.1/com/jcabi/aspects/apt/QuietlyReturnTypeProcessor.html"><tt>QuietlyReturnTypeProcessor</tt></a> during your build. Example usage with <tt>maven-processor-plugin</tt>:</p>
+<div class="source">
+<pre>&lt;plugin&gt;
+    &lt;groupId&gt;org.bsc.maven&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-processor-plugin&lt;/artifactId&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;id&gt;process&lt;/id&gt;
+            &lt;goals&gt;
+                &lt;goal&gt;process&lt;/goal&gt;
+            &lt;/goals&gt;
+            &lt;phase&gt;generate-sources&lt;/phase&gt;
+            &lt;configuration&gt;
+                &lt;processors&gt;
+                    &lt;processor&gt;
+                        com.jcabi.aspects.apt.QuietlyReturnTypeProcessor
+                    &lt;/processor&gt;
+                &lt;/processors&gt;
+            &lt;/configuration&gt; 
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+&lt;/plugin&gt;</pre></div>
 <p>The mechanism is implemented with AOP/AspectJ. Read <a href="./example-weaving.html">how to integrate it into your <tt>pom.xml</tt></a>.</p></div>
                             <img class="maven-logo" src="//img.jcabi.com/built-by-maven.png" alt="built by maven"/>
                         </article>

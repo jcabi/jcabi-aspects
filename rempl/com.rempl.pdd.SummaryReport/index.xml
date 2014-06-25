@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?xml-stylesheet type='text/xsl' href='puzzles.xsl'?><puzzles>
 <puzzle>
+<ticket>41</ticket>
+<file>src/main/java/com/jcabi/aspects/Async.java</file>
+<body>We should create a compile-time APT processor that checks whether methods annotated with {@link Async} return either void or Future. The check should fail if that is not the case.</body>
+<role>IMP</role>
+<estimate>0</estimate>
+<lines>54-56</lines>
+</puzzle>
+<puzzle>
 <ticket>33</ticket>
 <file>src/main/java/com/jcabi/aspects/Immutable.java</file>
 <body>Let's prevent modifications to arrays having this annotation, somehow. Perhaps we can create an aspect that will throw an exception should something try to write into the array. See https://bugs.eclipse.org/bugs/show_bug.cgi?id=157031</body>
@@ -9,12 +17,12 @@
 <lines>66-69</lines>
 </puzzle>
 <puzzle>
-<ticket>32</ticket>
-<file>src/main/java/com/jcabi/aspects/Quietly.java</file>
-<body>This annotation has to be on methods returning void only. We already have runtime checking of the return type, and any methods annotated with @Quietly that don't throw void throws an exception. Let's create a compile-time APT processor needs to be created that will verify that only void methods have @Quietly annotations.</body>
+<ticket>41</ticket>
+<file>src/main/java/com/jcabi/aspects/aj/MethodAsyncRunner.java</file>
+<body>It is meaningless for methods covered by this class if they return anything other than void or {@link java.util.concurrent.Future}. Currently, null is returned when the annotated method returns any other type. Let's make it throw an exception, instead, similar to how {@link QuietExceptionsLogger} does it.</body>
 <role>IMP</role>
 <estimate>0</estimate>
-<lines>44-48</lines>
+<lines>51-55</lines>
 </puzzle>
 <puzzle>
 <ticket>14</ticket>
