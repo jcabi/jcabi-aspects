@@ -91,3 +91,6 @@ public class Foo {
 
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.
+
+  {{{http://www.yegor256.com/2014/06/09/objects-should-be-immutable.html}This blog post}}
+  explains why objects should be immutable.
