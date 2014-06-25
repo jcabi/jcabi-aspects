@@ -21,7 +21,7 @@ public class MyResource {
 }
 ```
 
-Full list of AOP annotations is [here](http://www.jcabi.com/jcabi-aspects/).
+Full list of AOP annotations is [here](http://aspects.jcabi.com/).
 
 ## Questions?
 
