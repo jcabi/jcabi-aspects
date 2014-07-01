@@ -49,7 +49,6 @@ public final class Document {
      * Public ctor.
      * @param txt Name of it
      */
-    @Loggable
     public Document(@NotNull String txt) {
         this.name = txt;
     }

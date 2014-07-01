@@ -96,7 +96,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.TYPE })
+@Target({ ElementType.METHOD, ElementType.TYPE })
 @SuppressWarnings({
     "PMD.VariableNamingConventions", "PMD.RedundantFieldInitializer"
 })
