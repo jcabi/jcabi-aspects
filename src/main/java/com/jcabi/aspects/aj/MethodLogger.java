@@ -110,8 +110,7 @@ public final class MethodLogger {
      */
     @Around(
         // @checkstyle StringLiteralsConcatenation (7 lines)
-        "(execution(public * (@com.jcabi.aspects.Loggable *).*(..))"
-        + " || initialization((@com.jcabi.aspects.Loggable *).new(..)))"
+        "execution(public * (@com.jcabi.aspects.Loggable *).*(..))"
         + " && !execution(String *.toString())"
         + " && !execution(int *.hashCode())"
         + " && !execution(boolean *.canEqual(Object))"
