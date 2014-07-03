@@ -88,6 +88,15 @@ public final class AsyncTest {
     }
 
     /**
+     * Throws exception when method is annotated with Async but does not return
+     * Future or void.
+     */
+    @Test(expected = IllegalStateException.class)
+    public void throwsWhenMethodDoesNotReturnVoidOrFuture() {
+        new Foo().asyncMethodThatReturnsInt();
+    }
+
+    /**
      * Dummy class for test purposes.
      */
     private static final class Foo {
@@ -120,6 +129,14 @@ public final class AsyncTest {
                     return Thread.currentThread().getName();
                 }
             };
+        }
+        /**
+         * Async method that does not return void or Future. Should throw
+         * exception.
+         */
+        @Async
+        public int asyncMethodThatReturnsInt() {
+            return 0;
         }
     }
 
