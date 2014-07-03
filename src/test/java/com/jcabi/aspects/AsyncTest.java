@@ -133,6 +133,7 @@ public final class AsyncTest {
         /**
          * Async method that does not return void or Future. Should throw
          * exception.
+         * @returns Int value
          */
         @Async
         public int asyncMethodThatReturnsInt() {
