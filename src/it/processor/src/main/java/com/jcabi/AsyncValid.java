@@ -27,16 +27,35 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.jcabi;
 
-def log = new File(basedir, 'build.log')
-assert log.text.contains(
-    '\'QuietlyNonVoid.foo\' annotated with @Quietly does not return void'
-)
-assert !log.text.contains(
-    '\'QuietlyVoid.foo\' annotated with @Quietly does not return void'
-)
-assert log.text.contains(
-    '\'AsyncInvalid.foo\' annotated with @Async does not return void or Future'
-)
-assert !log.text.contains('\'AsyncValid.returnsVoid\'')
-assert !log.text.contains('\'AsyncValid.returnsFuture\'')
+import java.util.concurrent.Future;
+
+import com.jcabi.aspects.Async;
+
+/**
+ * Async that should compile.
+ * @author Carlos Miranda (miranda.cma@gmail.com)
+ * @version $Id$
+ */
+public final class AsyncValid {
+
+    /**
+     * Returns void.
+     * Should not be flagged by annotation processor.
+     */
+    @Async
+    public void returnsVoid() {
+        // nothing to do
+    }
+
+    /**
+     * Returns void.
+     * Should not be flagged by annotation processor.
+     * @return Future type.
+     */
+    @Async
+    public Future<Integer> returnsFuture() {
+        return null;
+    }
+}
