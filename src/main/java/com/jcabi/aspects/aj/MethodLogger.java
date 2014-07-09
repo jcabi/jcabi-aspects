@@ -184,7 +184,7 @@ public final class MethodLogger {
             int level = annotation.value();
             final int limit = annotation.limit();
             if (annotation.prepend()) {
-                MethodLogger.log(
+                LogHelper.log(
                     level,
                     type,
                     new StringBuilder(
@@ -199,7 +199,7 @@ public final class MethodLogger {
             final Object result = point.proceed();
             final long nano = System.nanoTime() - start;
             final boolean over = nano > annotation.unit().toNanos(limit);
-            if (MethodLogger.enabled(level, type) || over) {
+            if (LogHelper.enabled(level, type) || over) {
                 final StringBuilder msg = new StringBuilder();
                 msg.append(
                     Mnemos.toText(
@@ -222,7 +222,7 @@ public final class MethodLogger {
                     level = Loggable.WARN;
                     msg.append(" (too slow!)");
                 }
-                MethodLogger.log(
+                LogHelper.log(
                     level,
                     type,
                     msg.toString()
@@ -234,7 +234,7 @@ public final class MethodLogger {
             if (!MethodLogger.contains(annotation.ignore(), ex)
                 && !ex.getClass().isAnnotationPresent(Loggable.Quiet.class)) {
                 final StackTraceElement trace = ex.getStackTrace()[0];
-                MethodLogger.log(
+                LogHelper.log(
                     Loggable.ERROR,
                     method.getDeclaringClass(),
                     Logger.format(
@@ -256,49 +256,6 @@ public final class MethodLogger {
         } finally {
             this.running.remove(marker);
         }
-    }
-
-    /**
-     * Log one line.
-     * @param level Level of logging
-     * @param log Destination log
-     * @param message Message to log
-     */
-    private static void log(final int level, final Class<?> log,
-        final String message) {
-        if (level == Loggable.TRACE) {
-            Logger.trace(log, message);
-        } else if (level == Loggable.DEBUG) {
-            Logger.debug(log, message);
-        } else if (level == Loggable.INFO) {
-            Logger.info(log, message);
-        } else if (level == Loggable.WARN) {
-            Logger.warn(log, message);
-        } else if (level == Loggable.ERROR) {
-            Logger.error(log, message);
-        }
-    }
-
-    /**
-     * Log level is enabled?
-     * @param level Level of logging
-     * @param log Destination log
-     * @return TRUE if enabled
-     */
-    private static boolean enabled(final int level, final Class<?> log) {
-        boolean enabled;
-        if (level == Loggable.TRACE) {
-            enabled = Logger.isTraceEnabled(log);
-        } else if (level == Loggable.DEBUG) {
-            enabled = Logger.isDebugEnabled(log);
-        } else if (level == Loggable.INFO) {
-            enabled = Logger.isInfoEnabled(log);
-        } else if (level == Loggable.WARN) {
-            enabled = Logger.isWarnEnabled(log);
-        } else {
-            enabled = true;
-        }
-        return enabled;
     }
 
     /**
