@@ -93,23 +93,33 @@ public final class Parallelizer {
         start.countDown();
         final Collection<Throwable> failures = new LinkedList<Throwable>();
         for (final Future<Throwable> future : futures) {
-            final Throwable exception;
-            try {
-                exception = future.get();
-                if (exception != null) {
-                    failures.add(exception);
-                }
-            } catch (final InterruptedException ex) {
-                failures.add(ex);
-            } catch (final ExecutionException ex) {
-                failures.add(ex);
-            }
+            this.process(failures, future);
         }
         executor.shutdown();
         if (!failures.isEmpty()) {
             throw this.exceptions(failures);
         }
         return null;
+    }
+
+    /**
+     * Process futures.
+     * @param failures Collection of failures.
+     * @param future Future tu process.
+     */
+    private void process(final Collection<Throwable> failures,
+        final Future<Throwable> future) {
+        final Throwable exception;
+        try {
+            exception = future.get();
+            if (exception != null) {
+                failures.add(exception);
+            }
+        } catch (final InterruptedException ex) {
+            failures.add(ex);
+        } catch (final ExecutionException ex) {
+            failures.add(ex);
+        }
     }
 
     /**
