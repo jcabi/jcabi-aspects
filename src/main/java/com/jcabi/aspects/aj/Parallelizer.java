@@ -105,6 +105,7 @@ public final class Parallelizer {
                 failures.add(ex);
             }
         }
+        executor.shutdown();
         if (!failures.isEmpty()) {
             throw this.exceptions(failures);
         }
