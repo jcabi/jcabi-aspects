@@ -1,5 +1,5 @@
 assets:
-  settings.xml: "yegor256/home#assets/jcabi/settings.xml 
+  settings.xml: "yegor256/home#assets/jcabi/settings.xml"
 merge:
   env:
     MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
