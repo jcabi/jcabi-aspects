@@ -62,12 +62,9 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.8
- * @todo #14 Split this class into smaller ones so it will have less
- *  responsibility and remove PMD.GodClass suppressed warning.
  */
 @Aspect
-@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods",
-    "PMD.GodClass" })
+@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
 public final class MethodCacher {
 
     /**
@@ -198,10 +195,10 @@ public final class MethodCacher {
                 final Method method = MethodSignature.class
                     .cast(point.getSignature())
                     .getMethod();
-                if (MethodCacher.enabled(
+                if (LogHelper.enabled(
                     key.getLevel(), method.getDeclaringClass()
                 )) {
-                    MethodCacher.log(
+                    LogHelper.log(
                         key.getLevel(),
                         method.getDeclaringClass(),
                         "%s: %s:%s removed from cache %s",
@@ -223,7 +220,7 @@ public final class MethodCacher {
             for (final Key key : this.tunnels.keySet()) {
                 if (this.tunnels.get(key).expired()) {
                     final Tunnel tunnel = this.tunnels.remove(key);
-                    MethodCacher.log(
+                    LogHelper.log(
                         key.getLevel(),
                         this,
                         "%s:%s expired in cache",
@@ -233,51 +230,6 @@ public final class MethodCacher {
                 }
             }
         }
-    }
-
-    /**
-     * Log one line.
-     * @param level Level of logging
-     * @param log Destination log
-     * @param message Message to log
-     * @param params Message parameters
-     * @checkstyle ParameterNumberCheck (3 lines)
-     */
-    private static void log(final int level, final Object log,
-        final String message, final Object... params) {
-        if (level == Loggable.TRACE) {
-            Logger.trace(log, message, params);
-        } else if (level == Loggable.DEBUG) {
-            Logger.debug(log, message, params);
-        } else if (level == Loggable.INFO) {
-            Logger.info(log, message, params);
-        } else if (level == Loggable.WARN) {
-            Logger.warn(log, message, params);
-        } else if (level == Loggable.ERROR) {
-            Logger.error(log, message, params);
-        }
-    }
-
-    /**
-     * Log level is enabled?
-     * @param level Level of logging
-     * @param log Destination log
-     * @return TRUE if enabled
-     */
-    private static boolean enabled(final int level, final Object log) {
-        boolean enabled;
-        if (level == Loggable.TRACE) {
-            enabled = Logger.isTraceEnabled(log);
-        } else if (level == Loggable.DEBUG) {
-            enabled = Logger.isDebugEnabled(log);
-        } else if (level == Loggable.INFO) {
-            enabled = Logger.isInfoEnabled(log);
-        } else if (level == Loggable.WARN) {
-            enabled = Logger.isWarnEnabled(log);
-        } else {
-            enabled = true;
-        }
-        return enabled;
     }
 
     /**
@@ -345,8 +297,8 @@ public final class MethodCacher {
                     suffix = Logger.format("valid for %[ms]s", msec);
                 }
                 final Class<?> type = method.getDeclaringClass();
-                if (MethodCacher.enabled(this.key.getLevel(), type)) {
-                    MethodCacher.log(
+                if (LogHelper.enabled(this.key.getLevel(), type)) {
+                    LogHelper.log(
                         this.key.getLevel(),
                         type,
                         "%s: %s cached in %[ms]s, %s",
@@ -447,8 +399,8 @@ public final class MethodCacher {
         public Object through(final Object result) {
             final int hit = this.accessed.getAndIncrement();
             final Class<?> type = this.method.getDeclaringClass();
-            if (hit > 0 && MethodCacher.enabled(this.level, type)) {
-                MethodCacher.log(
+            if (hit > 0 && LogHelper.enabled(this.level, type)) {
+                LogHelper.log(
                     this.level,
                     type,
                     "%s: %s from cache (hit #%d, %[ms]s old)",
