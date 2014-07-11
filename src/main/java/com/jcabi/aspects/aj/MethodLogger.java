@@ -35,8 +35,8 @@ import com.jcabi.log.VerboseRunnable;
 import java.lang.reflect.Method;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -75,26 +75,37 @@ public final class MethodLogger {
      */
     @SuppressWarnings("PMD.DoNotUseThreads")
     public MethodLogger() {
-        final ScheduledExecutorService monitor =
-            Executors.newSingleThreadScheduledExecutor(
+        final ExecutorService monitor =
+            Executors.newSingleThreadExecutor(
                 new NamedThreads(
                     "loggable",
                     "watching of @Loggable annotated methods"
                 )
             );
-        monitor.scheduleWithFixedDelay(
+        monitor.submit(
             new VerboseRunnable(
+                // @checkstyle AnonInnerLength (22 lines)
                 new Runnable() {
                     @Override
                     public void run() {
-                        for (final MethodLogger.Marker marker
-                            : MethodLogger.this.running) {
-                            marker.monitor();
+                        while (true) {
+                            try {
+                                TimeUnit.SECONDS.sleep(1);
+                                for (final MethodLogger.Marker marker
+                                    : MethodLogger.this.running) {
+                                    marker.monitor();
+                                }
+                            } catch (final InterruptedException ex) {
+                                Logger.debug(
+                                    this, "Logging monitor thread interrupted"
+                                );
+                                break;
+                            }
                         }
+                        monitor.shutdown();
                     }
                 }
-            ),
-            1, 1, TimeUnit.SECONDS
+            )
         );
     }
 
