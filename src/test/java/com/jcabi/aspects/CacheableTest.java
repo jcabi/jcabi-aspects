@@ -34,6 +34,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.hamcrest.MatcherAssert;
@@ -127,13 +128,18 @@ public final class CacheableTest {
                 return true;
             }
         };
-        for (int pos = 0; pos < threads; ++pos) {
-            Executors.newFixedThreadPool(threads).submit(task);
+        final ExecutorService executor = Executors.newFixedThreadPool(threads);
+        try {
+            for (int pos = 0; pos < threads; ++pos) {
+                executor.submit(task);
+            }
+            start.countDown();
+            done.await(Tv.THIRTY, TimeUnit.SECONDS);
+            MatcherAssert.assertThat(values.size(), Matchers.equalTo(1));
+            never.interrupt();
+        } finally {
+            executor.shutdown();
         }
-        start.countDown();
-        done.await(1L, TimeUnit.SECONDS);
-        MatcherAssert.assertThat(values.size(), Matchers.equalTo(1));
-        never.interrupt();
     }
 
     /**
