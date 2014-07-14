@@ -64,6 +64,7 @@
     <plugin>
         <groupId>org.bsc.maven</groupId>
         <artifactId>maven-processor-plugin</artifactId>
+        <version>2.2.4</version>
         <executions>
             <execution>
                 <id>process</id>
@@ -75,6 +76,9 @@
                     <processors>
                         <processor>
                             com.jcabi.aspects.apt.QuietlyReturnTypeProcessor
+                        </processor>
+                        <processor>
+                            com.jcabi.aspects.apt.AsyncReturnTypeProcessor
                         </processor>
                     </processors>
                 </configuration> 
