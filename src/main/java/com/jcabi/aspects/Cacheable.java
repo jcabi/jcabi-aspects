@@ -57,7 +57,11 @@ import java.util.concurrent.TimeUnit;
  * }</pre>
  *
  * <p>Since version 0.7.14 you can also annotate methods that should flush
- * cache of the object, for example:
+ * cache of the object.
+ *
+ * <p>Since 0.7.18 you can control when exactly flushing happens, with
+ * {@link Cacheable.FlushBefore} and {@link Cacheable.FlushAfter} annotations
+ * ({@link Cacheable.Flush} is deprecated), for example:
  *
  * <pre>public class Page {
  *   &#64;Cacheable
@@ -65,15 +69,11 @@ import java.util.concurrent.TimeUnit;
  *     // load data from external source, e.g. the network
  *     return data;
  *   }
- *   &#64;Cacheable.Flush
+ *   &#64;Cacheable.FlushBefore
  *   public void set(String data) {
  *     // save data to the network
  *   }
  * }</pre>
- *
- * <p>Since 0.7.18 you can control when exactly flushing happens, with
- * {@link Cacheable.FlushBefore} and {@link Cacheable.FlushAfter} annotations
- * ({@link Cacheable.Flush} is deprecated).
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$

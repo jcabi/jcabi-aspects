@@ -48,11 +48,6 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
  * @since 0.16
- * @todo #41 It is meaningless for methods covered by this class if they return
- *  anything other than void or {@link java.util.concurrent.Future}. Currently,
- *  null is returned when the annotated method returns any other type. Let's
- *  make it throw an exception, instead, similar to how
- *  {@link QuietExceptionsLogger} does it.
  */
 @Aspect
 public final class MethodAsyncRunner {
@@ -83,6 +78,19 @@ public final class MethodAsyncRunner {
     @Around("execution(@com.jcabi.aspects.Async * * (..))")
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrap(final ProceedingJoinPoint point) {
+        final Class<?> returned = MethodSignature.class
+            .cast(point.getSignature()).getMethod().getReturnType();
+        if (!Future.class.isAssignableFrom(returned)
+            && !returned.equals(Void.TYPE)) {
+            // @checkstyle LineLength (3 lines)
+            throw new IllegalStateException(
+                String.format(
+                    "%s: Return type is %s, not void or Future, cannot use @Async",
+                    Mnemos.toText(point, true, true),
+                    returned.getCanonicalName()
+                )
+            );
+        }
         final Future<?> result = this.executor.submit(
             // @checkstyle AnonInnerLength (23 lines)
             new Callable<Object>() {
@@ -109,10 +117,7 @@ public final class MethodAsyncRunner {
             }
         );
         Object res = null;
-        if (Future.class.isAssignableFrom(
-            MethodSignature.class.cast(point.getSignature())
-                .getMethod().getReturnType()
-        )) {
+        if (Future.class.isAssignableFrom(returned)) {
             res = result;
         }
         return res;
