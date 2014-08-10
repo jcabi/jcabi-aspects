@@ -13,23 +13,23 @@
 ~~ Redistribution and use in source and binary forms, with or without
 ~~ modification, are permitted provided that the following conditions
 ~~ are met: 1) Redistributions of source code must retain the above
-~~ copyright notice, this list of conditions and the following
+~~ copyright notice, the list of conditions and the following
 ~~ disclaimer. 2) Redistributions in binary form must reproduce the above
-~~ copyright notice, this list of conditions and the following
+~~ copyright notice, the list of conditions and the following
 ~~ disclaimer in the documentation and/or other materials provided
-~~ with the distribution. 3) Neither the name of the jcabi.com nor
+~~ with the distribution. 3) Neither the name of the jcabi.com, nor
 ~~ the names of its contributors may be used to endorse or promote
 ~~ products derived from this software without specific prior written
 ~~ permission.
 ~~
 ~~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES INCLUDING, BUT
 ~~ NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
 ~~ FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
 ~~ THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
 ~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 ~~ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-~~ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+~~ SERVICES, LOSS OF USE, DATA, PROFITS, OR BUSINESS INTERRUPTION)
 ~~ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
 ~~ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ~~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
@@ -39,8 +39,8 @@
 Logging Exceptions Thrown out of Java Methods
 
   Annotate your methods with
-  {{{./apidocs-${project.version}/com/jcabi/aspects/LogExceptions.html}<<<@LogExceptions>>>}}
-  annotation and every exception thrown out of the method
+  {{{./apidocs-${project.version}/com/jcabi/aspects/LogExceptions.html}<<<@LogExceptions>>>}}.
+  Annotation and every exception thrown out of the method
   will be logged through SLF4J:
 
 +--
@@ -52,11 +52,11 @@ public class Resource {
 }
 +--
 
-  In an exception occurs it will be logged through
+  If an exception occurs it will be logged through
   {{{http://www.slf4j.org/}SLF4J}} logging factility.
 
-  Also, take a look at {{{./annotation-loggable.html}<<<@Loggable>>>}}
-  annotation which does the same but also logs non-exceptional situations.
+  Also, take a look at {{{./annotation-loggable.html}<<<@Loggable>>>}}.
+  This annotation does the same, but also logs non-exceptional situations.
 
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.
