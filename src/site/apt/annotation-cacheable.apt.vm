@@ -13,23 +13,23 @@
 ~~ Redistribution and use in source and binary forms, with or without
 ~~ modification, are permitted provided that the following conditions
 ~~ are met: 1) Redistributions of source code must retain the above
-~~ copyright notice, this list of conditions and the following
+~~ copyright notice, the list of conditions and the following
 ~~ disclaimer. 2) Redistributions in binary form must reproduce the above
-~~ copyright notice, this list of conditions and the following
+~~ copyright notice, the list of conditions and the following
 ~~ disclaimer in the documentation and/or other materials provided
-~~ with the distribution. 3) Neither the name of the jcabi.com nor
+~~ with the distribution. 3) Neither the name of the jcabi.com, nor
 ~~ the names of its contributors may be used to endorse or promote
 ~~ products derived from this software without specific prior written
 ~~ permission.
 ~~
 ~~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES INCLUDING, BUT
 ~~ NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
 ~~ FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
 ~~ THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
 ~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 ~~ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-~~ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+~~ SERVICES, LOSS OF USE, DATA, PROFITS, OR BUSINESS INTERRUPTION)
 ~~ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
 ~~ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ~~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
@@ -54,10 +54,10 @@ public class Resource {
 
   If you call this method, say, every second, only every 5th call
   will make a real HTTP connection. The other four will return
-  a cached value. Cache is maintained in memory, in a concurrent hash map
-  (everything is thread safe).
+  a cached value. Cache is maintained in a concurrent hash map in memory.
+  (Everything is thread safe).
 
-  You can make a value cacheable forever (method's result will
+  You can make a value cacheable forever. (The method's result will
   never expire):
 
 +--
@@ -65,8 +65,8 @@ public class MyResource {
   @Cacheable(forever = true)
   public List<String> data() {
     List<String> data = new ArrayList<String>();
-    // some heavy calculations to be done only
-    // once per JVM lifetime
+    // some heavy calculations are to be done only
+    // once per JVM lifetime.
     return data;
   }
 }
@@ -74,53 +74,53 @@ public class MyResource {
 
   If a method throws an exception, it is not cached.
 
-  Since version 0.7.14 you can also annotate methods that should flush
+  Since version 0.7.14, you can also annotate methods that should flush the
   object's cache.
 
-  Since 0.7.18 you can flush before or after the call using
+  Since 0.7.18, you can flush before or after the call using
   {{{./apidocs-${project.version}/com/jcabi/aspects/Cacheable.html}<<<@Cacheable.FlushBefore>>>}}
   and
-  {{{./apidocs-${project.version}/com/jcabi/aspects/Cacheable.html}<<<@Cacheable.FlushAfter>>>}},
-  for example:
+  {{{./apidocs-${project.version}/com/jcabi/aspects/Cacheable.html}<<<@Cacheable.FlushAfter>>>}}.
+  For example:
 
 +--
 public class Page {
   @Cacheable
   public String get() {
-    // load data from external source, e.g. the network
-    return data;
+    // Load data from the external source; e.g. the network
+    return data.
   }
   @Cacheable.FlushBefore
   public void set(String data) {
-    // save data to the network
+    // Save data to the network.
   }
 }
 +--
 
-  Be aware of a potential problem with caching of mutable objects. For example,
+  Be aware of a potential problem with the caching of mutable objects. For example,
   if a method returns a <<<HashSet>>> and then you change it, a new call to
   the same method will return a modified set, instead of the one originally cached.
-  We strongly recommend to make sure that you cache only immutable objects:
+  We strongly recommend to make sure that you cache only immutable objects.
 
 +--
 public class Employees {
   @Cacheable
   public Set<Employee> all() {
     Set<Employee> employees = new HashSet<Employee>();
-    // pay attention to the use of unmodifiableSet(), which
-    // turns a mutable HashSet into an immutable one
+    // Pay attention to the use of unmodifiableSet() which
+    // turns a mutable HashSet into an immutable one.
     return Collections.unmodifiableSet(employees);
   }
 }
 +--
 
-  If you need a more fine-tunable mechanism we recommend to use
+  If you need a more fine-tunable mechanism, we recommend to use
   {{{http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/cache/package-summary.html}Google Guava}}.
-  Also, pay attention to {{{https://github.com/jsr107/jsr107spec}JSR-107}}, which is
+  Also, pay attention to {{{https://github.com/jsr107/jsr107spec}JSR-107}} which is
   a new coming Java caching standard.
 
   The mechanism is implemented with AOP/AspectJ. Read
-  {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.
+  {{{./example-weaving.html} to integrate it into your <<<pom.xml>>>}}.
 
   {{{http://www.yegor256.com/2014/08/03/cacheable-java-annotation.html}This blog post}}
-  gives more information about internal details of this mechanism.
+  gives more information about the internal details of this mechanism.
