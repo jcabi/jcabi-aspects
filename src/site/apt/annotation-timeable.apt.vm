@@ -14,23 +14,23 @@
 ~~ Redistribution and use in source and binary forms, with or without
 ~~ modification, are permitted provided that the following conditions
 ~~ are met: 1) Redistributions of source code must retain the above
-~~ copyright notice, this list of conditions and the following
+~~ copyright notice, the list of conditions and the following
 ~~ disclaimer. 2) Redistributions in binary form must reproduce the above
-~~ copyright notice, this list of conditions and the following
+~~ copyright notice, the list of conditions and the following
 ~~ disclaimer in the documentation and/or other materials provided
-~~ with the distribution. 3) Neither the name of the jcabi.com nor
+~~ with the distribution. 3) Neither the name of the jcabi.com, nor
 ~~ the names of its contributors may be used to endorse or promote
 ~~ products derived from this software without specific prior written
 ~~ permission.
 ~~
 ~~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES INCLUDING, BUT
 ~~ NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
 ~~ FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
 ~~ THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, CONSEQUENTIAL DAMAGES
 ~~ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-~~ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+~~ SERVICES, LOSS OF USE, DATA, PROFITS, OR BUSINESS INTERRUPTION)
 ~~ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
 ~~ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ~~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
@@ -41,7 +41,7 @@ Limit Java Method Execution Time
 
   Annotate your methods with
   {{{./apidocs-${project.version}/com/jcabi/aspects/Timeable.html}<<<@Timeable>>>}}
-  annotation and every time their execution takes more than allowed
+  annotation and every time their execution takes more than the allowed time,
   their thread will be interrupted:
 
 +--
@@ -56,20 +56,17 @@ public class Resource {
   The thread running this method will be terminated if it takes more
   than five seconds.
 
-  Important to note that in Java 1.5+ it is impossible to force thread
+  It is important to note that in Java 1.5+, it is impossible to force thread
   termination:
-  {{{http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html}Why Are Thread.stop, Thread.suspend, Thread.resume and Runtime.runFinalizersOnExit Deprecated?}}.
-  Thus, we can't just call {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html${hash}stop()}<<<Thread.stop()>>>}},
-  when a thread is over a specified time limit. The best thing we can do is to
-  call
+  {{{http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html}Why Are Thread.stop, Thread.suspend, Thread.resume, and Runtime.runFinalizersOnExit Deprecated?}}
+  We can't just call {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html${hash}stop()}<<<Thread.stop()>>>}}
+  when a thread is over a specified time limit. The best thing we can do is to call
   {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html${hash}interrupt()}<<<Thread${hash}interrupt()>>>}}
-  and hope that the thread itself
-  is checking its
+  and hope that the thread itself is checking its
   {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html${hash}isInterrupted()}<<<Thread${hash}isInterrupted()>>>}} status.
   If you want to design your long-running methods in a way that
   {{{./apidocs-${project.version}/com/jcabi/aspects/Timeable.html}<<<@Timeable>>>}}
-  can terminate them, embed
-  a checker into your most intessively used place, for example:
+  can terminate them, embed a checker into your most intessively used place. For example:
 
 +--
 public class Resource {
@@ -79,14 +76,14 @@ public class Resource {
       if (Thread.currentThread.isInterrupted()) {
         throw new IllegalStateException("time out");
       }
-      // execution as usual
+      // Execution as usual.
     }
   }
 }
 +--
 
   The mechanism is implemented with AOP/AspectJ. Read
-  {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.
+  {{{./example-weaving.html}to know how to integrate it into your <<<pom.xml>>>}}.
 
-  {{{http://www.yegor256.com/2014/06/20/limit-method-execution-time.html}This blog post}} gives more details about
+  {{{http://www.yegor256.com/2014/06/20/limit-method-execution-time.html}This blog post}} gives more details about the
   internal implementation of the mechanism.
