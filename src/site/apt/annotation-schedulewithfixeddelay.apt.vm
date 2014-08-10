@@ -13,23 +13,23 @@
 ~~ Redistribution and use in source and binary forms, with or without
 ~~ modification, are permitted provided that the following conditions
 ~~ are met: 1) Redistributions of source code must retain the above
-~~ copyright notice, this list of conditions and the following
+~~ copyright notice, the list of conditions and the following
 ~~ disclaimer. 2) Redistributions in binary form must reproduce the above
-~~ copyright notice, this list of conditions and the following
+~~ copyright notice, the list of conditions and the following
 ~~ disclaimer in the documentation and/or other materials provided
-~~ with the distribution. 3) Neither the name of the jcabi.com nor
+~~ with the distribution. 3) Neither the name of the jcabi.com, nor
 ~~ the names of its contributors may be used to endorse or promote
 ~~ products derived from this software without specific prior written
 ~~ permission.
 ~~
 ~~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES INCLUDING, BUT
 ~~ NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
 ~~ FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
 ~~ THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, CONSEQUENTIAL DAMAGES
 ~~ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-~~ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+~~ SERVICES, LOSS OF USE, DATA, PROFITS, OR BUSINESS INTERRUPTION)
 ~~ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
 ~~ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ~~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
@@ -65,17 +65,17 @@ public class Clock implements Runnable, Closeable {
 public class Main {
   public static void main(String[] args) {
     Clock clock = new Clock();
-    TimeUnit.SECONDS.sleep(5); // wait for five seconds
+    TimeUnit.SECONDS.sleep(5); // Wait for five seconds.
     clock.close();
   }
 }
 +--
 
-  If you class implements
+  If your class implements
   {{{http://docs.oracle.com/javase/7/docs/api/java/io/Closeable.html}<<<Closeable>>>}}
-  you can stop a routine thread by calling its
+  ,you can stop a routine thread by calling its
   {{{http://docs.oracle.com/javase/7/docs/api/java/io/Closeable.html#close()}<<<close()>>>}}
   method.
 
   The mechanism is implemented with AOP/AspectJ. Read
-  {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.
+  {{{./example-weaving.html}to know how to integrate it into your <<<pom.xml>>>}}.
