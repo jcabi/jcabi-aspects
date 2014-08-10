@@ -121,3 +121,6 @@ public class Employees {
 
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.
+
+  {{{http://www.yegor256.com/2014/08/03/cacheable-java-annotation.html}This blog post}}
+  gives more information about internal details of this mechanism.
