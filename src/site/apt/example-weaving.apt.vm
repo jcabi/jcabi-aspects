@@ -13,23 +13,23 @@
 ~~ Redistribution and use in source and binary forms, with or without
 ~~ modification, are permitted provided that the following conditions
 ~~ are met: 1) Redistributions of source code must retain the above
-~~ copyright notice, this list of conditions and the following
+~~ copyright notice, the list of conditions and the following
 ~~ disclaimer. 2) Redistributions in binary form must reproduce the above
-~~ copyright notice, this list of conditions and the following
+~~ copyright notice, the list of conditions and the following
 ~~ disclaimer in the documentation and/or other materials provided
-~~ with the distribution. 3) Neither the name of the jcabi.com nor
+~~ with the distribution. 3) Neither the name of the jcabi.com, nor
 ~~ the names of its contributors may be used to endorse or promote
 ~~ products derived from this software without specific prior written
 ~~ permission.
 ~~
 ~~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES INCLUDING, BUT
 ~~ NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
 ~~ FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
 ~~ THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, CONSEQUENTIAL DAMAGES
 ~~ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-~~ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+~~ SERVICES, LOSS OF USE, DATA, PROFITS, OR BUSINESS INTERRUPTION)
 ~~ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
 ~~ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ~~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
@@ -39,15 +39,15 @@
 Weaving Java Binaries
 
   {{{http://en.wikipedia.org/wiki/Aspect_weaver}Aspect weaving}} is a process
-  of modifying binary <<<.class>>> files after compilation, in order
-  to inject AOP advices at certain join points.
+  of modifying binary <<<.class>>> files after compilation in order
+  to inject AOP advice at certain join points.
 
-  First of all, you annotate your classes and methods and compile. Then,
-  you run AspectJ weaver, which modifies <<<.class>>> files, producing
+  First of all, you annotate your classes and methods, and then compile. Then
+  you run AspectJ weaver which modifies <<<.class>>> files, producing
   new "weaved" versions of them.
 
   Luckily, these steps can be automated.
-  All you need to do to start using our AOP aspects is to
+  All you need to do to start using our AOP aspects is
   add these two artifacts to your <<<pom.xml>>>:
 
 +--
@@ -66,7 +66,7 @@ Weaving Java Binaries
 
   Then, you use
   {{{http://plugin.jcabi.com/example-ajc.html}jcabi-maven-plugin}}
-  plugin, which executed AspectJ weaver that modifies your <<<.class>>> files:
+  plugin which executes AspectJ weaver to modify your <<<.class>>> files:
 
 +--
 <project>
