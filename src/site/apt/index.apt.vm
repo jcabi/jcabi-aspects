@@ -13,33 +13,33 @@
 ~~ Redistribution and use in source and binary forms, with or without
 ~~ modification, are permitted provided that the following conditions
 ~~ are met: 1) Redistributions of source code must retain the above
-~~ copyright notice, this list of conditions and the following
+~~ copyright notice, the list of conditions and the following
 ~~ disclaimer. 2) Redistributions in binary form must reproduce the above
-~~ copyright notice, this list of conditions and the following
+~~ copyright notice, the list of conditions and the following
 ~~ disclaimer in the documentation and/or other materials provided
-~~ with the distribution. 3) Neither the name of the jcabi.com nor
+~~ with the distribution. 3) Neither the name of the jcabi.com, nor
 ~~ the names of its contributors may be used to endorse or promote
 ~~ products derived from this software without specific prior written
 ~~ permission.
 ~~
 ~~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES INCLUDING, BUT
 ~~ NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
 ~~ FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
 ~~ THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, CONSEQUENTIAL DAMAGES
 ~~ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-~~ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+~~ SERVICES, LOSS OF USE, DATA, PROFITS, OR BUSINESS INTERRUPTION)
 ~~ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
 ~~ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ~~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 ~~ OF THE POSSIBILITY OF SUCH DAMAGE.
 ~~
 
-Useful Java AOP Aspects
+Useful Java AOP Aspects:
 
-  It's a collection of useful AOP aspects and Java annotations, which
-  allows you to modify the behavior of your Java application without
+  Useful Java AOP Aspects is a collection of useful AOP aspects and Java annotations which
+  allow you to modify the behavior of your Java application without
   writing lots of duplicate code.
   For example, you may want to retry HTTP
   resource downloading in case of a failure. You can implement a full
@@ -56,49 +56,49 @@ public class MyResource {
 }
 +--
 
-  <<<jcabi-aspects>>> works only together with {{{http://www.eclipse.org/aspectj/}AspectJ}},
-  an {{{http://en.wikipedia.org/wiki/Aspect-oriented_programming}Aspect Oriented Programming (AOP)}}
-  framework. At the moment we offer the following aspects
+  <<<jcabi-aspects>>> works  together only  with {{{http://www.eclipse.org/aspectj/}AspectJ}},
+  an {{{http://en.wikipedia.org/wiki/Aspect-oriented_programming}aspect oriented programming (AOP)}}
+  framework. At the moment, we offer the following aspects
   (we extend this list every few months):
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Async.html}<<<@Async>>>}} —
-     executes methods asynchronously
+     Executes methods asynchronously.
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Cacheable.html}<<<@Cacheable>>>}} —
-     chackes method results in {{{./annotation-cacheable.html}memory}}
+     Chackes method results in {{{./annotation-cacheable.html}memory}}.
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Immutable.html}<<<@Immutable>>>}} —
-     guarantees class true {{{./annotation-immutable.html}immutability}} in runtime
+     Guarantees class true {{{./annotation-immutable.html}immutability}} in runtime.
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/LogExceptions.html}<<<@LogExceptions>>>}} —
      logs {{{./annotation-logexceptions.html}exceptions}}
-     via {{{http://log.jcabi.com/apidocs-0.12.2/com/jcabi/log/Logger.html}<<<Logger>>>}}
+     via {{{http://log.jcabi.com/apidocs-0.12.2/com/jcabi/log/Logger.html}<<<Logger>>>}}.
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Quietly.html}<<<@Quietly>>>}} —
-     swallows all exceptions {{{./annotation-quietly.html}quietly}}
+     Swallows all exceptions {{{./annotation-quietly.html}quietly}}.
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Loggable.html}<<<@Loggable>>>}} —
-     logs method {{{./annotation-loggable.html}calls}} via
-     {{{http://log.jcabi.com/apidocs-0.12.2/com/jcabi/log/Logger.html}<<<Logger>>>}}
+     Logs method {{{./annotation-loggable.html}calls}} via
+     {{{http://log.jcabi.com/apidocs-0.12.2/com/jcabi/log/Logger.html}<<<Logger>>>}}.
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Parallel.html}<<<@Parallel>>>}} —
-     executes method in {{{./annotation-parallel.html}multiple threads}}
+     Executes method in {{{./annotation-parallel.html}multiple threads}}.
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/RetryOnFailure.html}<<<@RetryOnFailure>>>}} —
-     retries method execution {{{./annotation-retryonfailure.html}a few times}}
+     Retries the method execution {{{./annotation-retryonfailure.html}a few times}}.
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/ScheduleWithFixedDelay.html}<<<@ScheduleWithFixedDelay>>>}} —
-     schedules class execution in {{{./annotation-schedulewithfixeddelay.html}multiple threads}}
+     Schedules class execution in {{{./annotation-schedulewithfixeddelay.html}multiple threads}}.
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Timeable.html}<<<@Timeable>>>}} —
-     interrupts a method if it exceeds {{{./annotation-timeable.html}an allowed time frame}}
+     Interrupts a method if it exceeds {{{./annotation-timeable.html}an allowed time frame}}.
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/UnitedThrow.html}<<<@UnitedThrow>>>}} —
-     encapsulates all exceptions into {{{./annotation-unitedthrow.html}allowed one}}
+     Encapsulates all exceptions into {{{./annotation-unitedthrow.html}allowed one}}.
 
-  After you add that annotations to your code you should
-  configure your build system to {{{./example-weaving.html}"weave" your binaries after compilation}}
-  (this is mandatory, without this step annotations will have absolutely no effect!).
+  After you add these annotations to your code, you should
+  configure your build system to {{{./example-weaving.html}"weave" your binaries after compilation}}.
+  (This is mandatory! Without this step, annotations will have absolutely no effect)!
 
   If you have any questions, please submit an issue to
   {{{https://github.com/jcabi/jcabi-aspects/issues/new}Github}}.
@@ -107,7 +107,7 @@ public class MyResource {
 
 * Cutting Edge Version
 
-  If you want to use current version of the product, you can do it with
+  If you want to use a current version of the product, you can do it with
   this configuration in your <<<pom.xml>>>:
 
 +--
