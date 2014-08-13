@@ -40,11 +40,11 @@
  * &lt;/dependency&gt;</pre>
  *
  * <p>Read how to use {@code jcabi-aspects}
- * <a href="http://www.jcabi.com/jcabi-aspects">with Maven</a>.
+ * <a href="http://aspects.jcabi.com">with Maven</a>.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1.10
- * @see <a href="http://www.jcabi.com/jcabi-aspects">project website</a>
+ * @see <a href="http://aspects.jcabi.com">project website</a>
  */
 package com.jcabi.aspects;

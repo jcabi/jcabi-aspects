@@ -70,7 +70,7 @@ import java.util.concurrent.TimeUnit;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.16
- * @see <a href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
+ * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

@@ -70,7 +70,7 @@ import java.util.concurrent.TimeUnit;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.16
- * @see <a href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
+ * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
  * @see <a href="http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html">Why Are Thread.stop, Thread.suspend, Thread.resume and Runtime.runFinalizersOnExit Deprecated?</a>
  * @see <a href="http://www.yegor256.com/2014/06/20/limit-method-execution-time.html">Limit Java Method Execution Time, by Yegor Bugayenko</a>
  */

@@ -42,7 +42,7 @@ package com.jcabi.aspects;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.17
- * @see <a href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
+ * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
  * @checkstyle InterfaceIsType (500 lines)
  */
 @SuppressWarnings("PMD.AvoidConstantsInterface")

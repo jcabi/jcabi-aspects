@@ -44,7 +44,7 @@ import java.lang.annotation.Target;
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @since 0.7.22
- * @see <a href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects/</a>
+ * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

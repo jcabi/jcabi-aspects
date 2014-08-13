@@ -69,7 +69,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @version $Id$
  * @since 0.1.10
  * @see <a href="http://beanvalidation.org/1.0/spec/#appendix-methodlevelvalidation">Appendix C</a>
- * @see <a href="http://www.jcabi.com/jcabi-aspects/jsr-303.html">How it works</a>
+ * @see <a href="http://aspects.jcabi.com/jsr-303.html">How it works</a>
  */
 @Aspect
 @SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.TooManyMethods" })
@@ -331,7 +331,7 @@ public final class MethodValidator {
             Logger.error(
                 MethodValidator.class,
                 // @checkstyle LineLength (1 line)
-                "JSR-303 validator failed to initialize: %s (see http://www.jcabi.com/jcabi-aspects/jsr-303.html)",
+                "JSR-303 validator failed to initialize: %s (see http://aspects.jcabi.com/jsr-303.html)",
                 ex.getMessage()
             );
         // @checkstyle IllegalCatch (1 line)
