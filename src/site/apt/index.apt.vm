@@ -41,6 +41,7 @@ Useful Java AOP Aspects:
   Useful Java AOP Aspects is a collection of useful AOP aspects and Java annotations which
   allow you to modify the behavior of your Java application without
   writing lots of duplicate code.
+
   For example, you may want to retry HTTP
   resource downloading in case of a failure. You can implement a full
   <<<do/while>>> cycle yourself or you can annotate the method with
@@ -56,7 +57,7 @@ public class MyResource {
 }
 +--
 
-  <<<jcabi-aspects>>> works  together only  with {{{http://www.eclipse.org/aspectj/}AspectJ}},
+  <<<jcabi-aspects>>> works together only with {{{http://www.eclipse.org/aspectj/}AspectJ}},
   an {{{http://en.wikipedia.org/wiki/Aspect-oriented_programming}aspect oriented programming (AOP)}}
   framework. At the moment, we offer the following aspects
   (we extend this list every few months):
@@ -65,7 +66,7 @@ public class MyResource {
      Executes methods asynchronously.
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Cacheable.html}<<<@Cacheable>>>}} —
-     Chackes method results in {{{./annotation-cacheable.html}memory}}.
+     Checks method results in {{{./annotation-cacheable.html}memory}}.
 
    * {{{./apidocs-${project.version}/com/jcabi/aspects/Immutable.html}<<<@Immutable>>>}} —
      Guarantees class true {{{./annotation-immutable.html}immutability}} in runtime.
@@ -102,8 +103,15 @@ public class MyResource {
 
   If you have any questions, please submit an issue to
   {{{https://github.com/jcabi/jcabi-aspects/issues/new}Github}}.
-  If you want to discuss, please use our
-  {{{https://groups.google.com/forum/#!forum/jcabi}Google Group}}.
+
+  Also, check these blog articles, they are explaining how
+  the library works, in details:
+
+   * {{{http://www.yegor256.com/2014/06/01/aop-aspectj-java-method-logging.html}Java Method Logging with AOP and Annotations}}
+
+   * {{{http://www.yegor256.com/2014/08/03/cacheable-java-annotation.html}Cache Java Method Results}}
+
+   * {{{http://www.yegor256.com/2014/06/20/limit-method-execution-time.html}Limit Java Method Execution Time}}
 
 * Cutting Edge Version
 

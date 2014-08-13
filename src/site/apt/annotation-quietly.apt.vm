@@ -59,7 +59,7 @@ public class Resource {
   Also, take a look at {{{./annotation-logexceptions.html}<<<@LogExceptions>>>}}
   annotation. It does the same, but it propagates exceptions thrown to the
   caller.
-  
+
   Methods annotated with <<<@Quietly>>> must strictly have a <<<void>>>
   return type; otherwise, an exception will be thrown at runtime when the method
   is invoked. If you wish to check for non-compliant methods at compile time,
@@ -69,24 +69,22 @@ public class Resource {
 
 +--
 <plugin>
-    <groupId>org.bsc.maven</groupId>
-    <artifactId>maven-processor-plugin</artifactId>
-    <executions>
-        <execution>
-            <id>process</id>
-            <goals>
-                <goal>process</goal>
-            </goals>
-            <phase>generate-sources</phase>
-            <configuration>
-                <processors>
-                    <processor>
-                        com.jcabi.aspects.apt.QuietlyReturnTypeProcessor
-                    </processor>
-                </processors>
-            </configuration> 
-        </execution>
-    </executions>
+  <groupId>org.bsc.maven</groupId>
+  <artifactId>maven-processor-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>process</id>
+      <goals>
+        <goal>process</goal>
+      </goals>
+      <phase>generate-sources</phase>
+      <configuration>
+        <processors>
+          <processor>com.jcabi.aspects.apt.QuietlyReturnTypeProcessor</processor>
+        </processors>
+      </configuration>
+    </execution>
+  </executions>
 </plugin>
 +--
 

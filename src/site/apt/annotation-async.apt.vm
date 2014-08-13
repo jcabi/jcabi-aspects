@@ -82,24 +82,22 @@ public class Foo {
 
 +--
 <plugin>
-    <groupId>org.bsc.maven</groupId>
-    <artifactId>maven-processor-plugin</artifactId>
-    <executions>
-        <execution>
-            <id>process</id>
-            <goals>
-                <goal>process</goal>
-            </goals>
-            <phase>generate-sources</phase>
-            <configuration>
-                <processors>
-                    <processor>
-                        com.jcabi.aspects.apt.AsyncReturnTypeProcessor
-                    </processor>
-                </processors>
-            </configuration> 
-        </execution>
-    </executions>
+  <groupId>org.bsc.maven</groupId>
+  <artifactId>maven-processor-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>process</id>
+      <goals>
+        <goal>process</goal>
+      </goals>
+      <phase>generate-sources</phase>
+      <configuration>
+        <processors>
+          <processor>com.jcabi.aspects.apt.AsyncReturnTypeProcessor</processor>
+        </processors>
+      </configuration>
+    </execution>
+  </executions>
 </plugin>
 +--
 

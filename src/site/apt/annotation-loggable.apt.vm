@@ -38,8 +38,11 @@
 
 Logging Java method executions
 
+  Read this blog post first:
+  {{{http://www.yegor256.com/2014/06/01/aop-aspectj-java-method-logging.html}Java Method Logging with AOP and Annotations}}
+
   Annotate your methods with
-  {{{./apidocs-${project.version}/com/jcabi/aspects/Loggable.html}<<<@Loggable>>>}}.
+  {{{./apidocs-${project.version}/com/jcabi/aspects/Loggable.html}<<<@Loggable>>>}}
   annotation and every time they are called, your SLF4J logging
   facility will receive a message with the details of execution and the total
   execution time:
