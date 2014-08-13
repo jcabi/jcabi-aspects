@@ -4,7 +4,6 @@
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>jcabi-aspects - Project Dependencies</title>
-        <link media="all" rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"/>
         <link media="all" rel="stylesheet" type="text/css" href="./css/jcabi.css"/>
                             <script>
                 var _gaq = _gaq || [];
@@ -44,7 +43,7 @@
             <nav class="menu-section" role="navigation">
                 <ul class="menu" id="menu">
                                                                                     <li>
-                            Overview
+                            <span>Overview</span>
                                                             <ul>
                                                                                                     <li >
                             <span>                        <a href="index.html" title="Introduction">Introduction</a>
@@ -53,7 +52,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-0.17.1/index.html" title="JavaDoc 0.17.1">JavaDoc 0.17.1</a>
+                            <span>                        <a href="apidocs-0.17.2/index.html" title="JavaDoc 0.17.2">JavaDoc 0.17.2</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -73,7 +72,7 @@
                                                                                         </ul>
                                                     </li>
                                             <li>
-                            Examples
+                            <span>Examples</span>
                                                             <ul>
                                                                                                     <li >
                             <span>                        <a href="example-weaving.html" title="Weaving binaries">Weaving binaries</a>
@@ -96,7 +95,7 @@
                                                                                         </ul>
                                                     </li>
                                             <li>
-                            Annotations
+                            <span>Annotations</span>
                                                             <ul>
                                                                                                     <li >
                             <span>                        <a href="annotation-async.html" title="@Async">@Async</a>
@@ -167,7 +166,7 @@
                                                                                         </ul>
                                                     </li>
                                             <li>
-                            Project Documentation
+                            <span>Project Documentation</span>
                                                             <ul>
                                                                                                     <li >
                             <span>                        <a href="project-info.html" title="Project Information">Project Information</a>
@@ -232,7 +231,7 @@
                                                                                                                         <li >
                             <span>                        <a href="project-reports.html" title="Project Reports">Project Reports</a>
         </span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
                                                                                         </ul>
                                                     </li>
                                     </ul>
@@ -241,11 +240,10 @@
                 <main role="main">
                     <div class="content">
                         <header>
-                            <i class="menu-button fa fa-align-justify"></i>
                             <div class="logo">
                                 <a href="../"
                                     title=" logo ">
-                                    <img src="http://img.jcabi.com/logo-square.png"
+                                    <img src="http://img.jcabi.com/logo-square.svg"
                                         alt="jcabi"
                                                                                     width="64"
                                                                                                                             height="64"
@@ -253,24 +251,30 @@
                                     />
                                 </a>
                             </div>
-                            <div class="date">
-                                <div class="date-numbers">
-                                    <strong itemprop="version">0.17.1</strong>
+                            <div class="teamed">
+                                <a href="http://www.teamed.io">
+                                    <img src="http://img.teamed.io/btn.svg" alt="teamed.io logo"/>
+                                </a>
+                            </div>
+                            <ul class="badges">
+                                <li>
+                                    <strong itemprop="version">0.17.2</strong>
+                                </li>
+                                <li>
                                     
-                                    <time itemprop="datePublished" datetime="2014-06-25T12:11:08Z">
+                                    <time itemprop="datePublished" datetime="2014-08-13T09:11:27Z">
                                         
-                                        25-Jun-2014
+                                        13-Aug-2014
                                     </time>
-                                </div>
-                                                                                                    <div>
-                                        <iframe src="http://ghbtns.com/github-btn.html?user=jcabi&amp;repo=jcabi-aspects&amp;type=watch&amp;count=true&amp;size=large"
-                                            style="border-width:0px;overflow:hidden;width:170px;height:30px;">
-                                        </iframe>
-                                    </div>
-                                                            </div>
-                            <div id="here-goes-menu" class="menu-off"></div>
+                                </li>
+                                <li class="menu-button">menu</li>
+                            </ul>
                         </header>
-                        <article role="article" itemprop="articleBody">
+                        <div id="here-goes-menu" class="menu-off"></div>
+                                                                            <a href="https://github.com/jcabi/jcabi-aspects">
+                                <img src="http://img.jcabi.com/fork-me.svg" class="fork-me"/>
+                            </a>
+                                                <article role="article" itemprop="articleBody">
                             <a name="Project_Dependencies"></a>
 <div class="section">
 <h2>Project Dependencies<a name="Project_Dependencies"></a></h2><a name="Project_Dependencies_compile"></a>
@@ -287,7 +291,7 @@
 <tr class="b">
 <td>com.jcabi</td>
 <td><a class="externalLink" href="http://www.jcabi.com/jcabi-log">jcabi-log</a></td>
-<td>0.12.1</td>
+<td>0.14.1</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.jcabi.com/LICENSE.txt">BSD</a></td></tr>
 <tr class="a">
@@ -299,7 +303,7 @@
 <tr class="b">
 <td>org.aspectj</td>
 <td><a class="externalLink" href="http://www.aspectj.org">aspectjrt</a></td>
-<td>1.8.0</td>
+<td>1.8.1</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.eclipse.org/legal/epl-v10.html">Eclipse Public License - v 1.0</a></td></tr></table></div><a name="Project_Dependencies_test"></a>
 <div class="section">
@@ -368,12 +372,6 @@
 <th>Type</th>
 <th>License</th></tr>
 <tr class="b">
-<td>org.apache.commons</td>
-<td><a class="externalLink" href="http://commons.apache.org/proper/commons-lang/">commons-lang3</a></td>
-<td>3.3.2</td>
-<td>jar</td>
-<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
-<tr class="a">
 <td>org.slf4j</td>
 <td><a class="externalLink" href="http://www.slf4j.org">slf4j-api</a></td>
 <td>1.7.5</td>
@@ -441,7 +439,7 @@
 <div class="section">
 <h3>Dependency Tree<a name="Dependency_Tree"></a></h3>
 <ul>
-<li>com.jcabi:jcabi-aspects:jar:0.17.1 <img id="_img1" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep0', '_img1' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep0" style="display:none">
+<li>com.jcabi:jcabi-aspects:jar:0.17.2 <img id="_img1" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep0', '_img1' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep0" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>jcabi-aspects</th></tr>
@@ -451,7 +449,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://www.jcabi.com/jcabi-aspects">http://www.jcabi.com/jcabi-aspects</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.jcabi.com/LICENSE.txt">BSD</a></p></td></tr></table></div>
 <ul>
-<li>com.jcabi:jcabi-log:jar:0.12.1 (compile) <img id="_img3" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep2', '_img3' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep2" style="display:none">
+<li>com.jcabi:jcabi-log:jar:0.14.1 (compile) <img id="_img3" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep2', '_img3' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep2" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>jcabi-log</th></tr>
@@ -469,19 +467,8 @@
 <td>
 <p><b>Description: </b>The slf4j API</p>
 <p><b>URL: </b><a class="externalLink" href="http://www.slf4j.org">http://www.slf4j.org</a></p>
-<p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></p></td></tr></table></div></li>
-<li>org.apache.commons:commons-lang3:jar:3.3.2 (compile) <img id="_img7" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep6', '_img7' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep6" style="display:none">
-<table border="0" class="bodyTable">
-<tr class="a">
-<th>Apache Commons Lang</th></tr>
-<tr class="b">
-<td>
-<p><b>Description: </b>Apache Commons Lang, a package of Java utility classes for the
-  classes that are in java.lang's hierarchy, or are considered to be so
-  standard as to justify existence in java.lang.</p>
-<p><b>URL: </b><a class="externalLink" href="http://commons.apache.org/proper/commons-lang/">http://commons.apache.org/proper/commons-lang/</a></p>
-<p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
-<li>org.aspectj:aspectjrt:jar:1.8.0 (compile) <img id="_img9" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep8', '_img9' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep8" style="display:none">
+<p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></p></td></tr></table></div></li></ul></li>
+<li>org.aspectj:aspectjrt:jar:1.8.1 (compile) <img id="_img7" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep6', '_img7' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep6" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>AspectJ runtime</th></tr>
@@ -490,7 +477,7 @@
 <p><b>Description: </b>The runtime needed to execute a program using AspectJ</p>
 <p><b>URL: </b><a class="externalLink" href="http://www.aspectj.org">http://www.aspectj.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.eclipse.org/legal/epl-v10.html">Eclipse Public License - v 1.0</a></p></td></tr></table></div></li>
-<li>javax.validation:validation-api:jar:1.1.0.Final (compile) <img id="_img11" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep10', '_img11' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep10" style="display:none">
+<li>javax.validation:validation-api:jar:1.1.0.Final (compile) <img id="_img9" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep8', '_img9' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep8" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Bean Validation API</th></tr>
@@ -499,7 +486,7 @@
 <p><b>Description: </b>Bean Validation API</p>
 <p><b>URL: </b><a class="externalLink" href="http://beanvalidation.org">http://beanvalidation.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.hibernate:hibernate-validator:jar:5.0.0.Final (test) <img id="_img13" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep12', '_img13' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep12" style="display:none">
+<li>org.hibernate:hibernate-validator:jar:5.0.0.Final (test) <img id="_img11" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep10', '_img11' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep10" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Hibernate Validator Engine</th></tr>
@@ -509,7 +496,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://validator.hibernate.org/hibernate-validator">http://validator.hibernate.org/hibernate-validator</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.jboss.logging:jboss-logging:jar:3.1.1.GA (test) <img id="_img15" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep14', '_img15' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep14" style="display:none">
+<li>org.jboss.logging:jboss-logging:jar:3.1.1.GA (test) <img id="_img13" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep12', '_img13' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep12" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>JBoss Logging 3</th></tr>
@@ -518,7 +505,7 @@
 <p><b>Description: </b>The JBoss Logging Framework</p>
 <p><b>URL: </b><a class="externalLink" href="http://www.jboss.org">http://www.jboss.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.gnu.org/licenses/lgpl-2.1.txt">GNU Lesser General Public License, version 2.1</a></p></td></tr></table></div></li>
-<li>com.fasterxml:classmate:jar:0.8.0 (test) <img id="_img17" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep16', '_img17' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep16" style="display:none">
+<li>com.fasterxml:classmate:jar:0.8.0 (test) <img id="_img15" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep14', '_img15' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep14" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>ClassMate</th></tr>
@@ -528,7 +515,7 @@
         including resolving of field and method types.</p>
 <p><b>URL: </b><a class="externalLink" href="http://github.com/cowtowncoder/java-classmate">http://github.com/cowtowncoder/java-classmate</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.glassfish.web:javax.el:jar:2.2.4 (test) <img id="_img19" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep18', '_img19' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep18" style="display:none">
+<li>org.glassfish.web:javax.el:jar:2.2.4 (test) <img id="_img17" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep16', '_img17' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep16" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Expression Language 2.2 Implementation</th></tr>
@@ -538,7 +525,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://uel.java.net">http://uel.java.net</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html">CDDL + GPLv2 with classpath exception</a></p></td></tr></table></div>
 <ul>
-<li>javax.el:javax.el-api:jar:3.0.1-b04 (test) <img id="_img21" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep20', '_img21' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep20" style="display:none">
+<li>javax.el:javax.el-api:jar:3.0.1-b04 (test) <img id="_img19" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep18', '_img19' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep18" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Expression Language 3.0 API</th></tr>
@@ -547,7 +534,7 @@
 <p><b>Description: </b>Java.net - The Source for Java Technology Collaboration</p>
 <p><b>URL: </b><a class="externalLink" href="http://uel.java.net">http://uel.java.net</a></p>
 <p><b>Project License: </b><a class="externalLink" href="https://glassfish.dev.java.net/nonav/public/CDDL+GPL.html">CDDL + GPLv2 with classpath exception</a></p></td></tr></table></div></li></ul></li></ul></li>
-<li>junit:junit:jar:4.11 (test) <img id="_img23" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep22', '_img23' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep22" style="display:none">
+<li>junit:junit:jar:4.11 (test) <img id="_img21" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep20', '_img21' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep20" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>JUnit</th></tr>
@@ -557,7 +544,7 @@
         It is used by the developer who implements unit tests in Java.</p>
 <p><b>URL: </b><a class="externalLink" href="http://junit.org">http://junit.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/cpl1.0.txt">Common Public License Version 1.0</a></p></td></tr></table></div></li>
-<li>org.hamcrest:hamcrest-core:jar:1.3 (test) <img id="_img25" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep24', '_img25' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep24" style="display:none">
+<li>org.hamcrest:hamcrest-core:jar:1.3 (test) <img id="_img23" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep22', '_img23' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep22" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Hamcrest Core</th></tr>
@@ -566,7 +553,7 @@
 <p><b>Description: </b>This is the core API of hamcrest matcher framework to be used by third-party framework providers. This includes the a foundation set of matcher implementations for common operations.</p>
 <p><b>URL: </b><a class="externalLink" href="https://github.com/hamcrest/JavaHamcrest/hamcrest-core">https://github.com/hamcrest/JavaHamcrest/hamcrest-core</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></p></td></tr></table></div></li>
-<li>org.hamcrest:hamcrest-library:jar:1.3 (test) <img id="_img27" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep26', '_img27' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep26" style="display:none">
+<li>org.hamcrest:hamcrest-library:jar:1.3 (test) <img id="_img25" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep24', '_img25' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep24" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Hamcrest library</th></tr>
@@ -575,7 +562,7 @@
 <p><b>Description: </b>Hamcrest library of matcher implementations.</p>
 <p><b>URL: </b><a class="externalLink" href="https://github.com/hamcrest/JavaHamcrest/hamcrest-library">https://github.com/hamcrest/JavaHamcrest/hamcrest-library</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></p></td></tr></table></div></li>
-<li>org.mockito:mockito-core:jar:1.9.5 (test) <img id="_img29" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep28', '_img29' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep28" style="display:none">
+<li>org.mockito:mockito-core:jar:1.9.5 (test) <img id="_img27" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep26', '_img27' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep26" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Mockito</th></tr>
@@ -585,7 +572,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://www.mockito.org">http://www.mockito.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://code.google.com/p/mockito/wiki/License">The MIT License</a></p></td></tr></table></div>
 <ul>
-<li>org.objenesis:objenesis:jar:1.0 (test) <img id="_img31" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep30', '_img31' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep30" style="display:none">
+<li>org.objenesis:objenesis:jar:1.0 (test) <img id="_img29" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep28', '_img29' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep28" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Objenesis</th></tr>
@@ -594,7 +581,7 @@
 <p><b>Description: </b>A library for instantiating Java objects</p>
 <p><b>URL: </b><a class="externalLink" href="http://objenesis.googlecode.com/svn/docs/index.html">http://objenesis.googlecode.com/svn/docs/index.html</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://objenesis.googlecode.com/svn/docs/license.html">MIT License</a></p></td></tr></table></div></li></ul></li>
-<li>org.slf4j:slf4j-log4j12:jar:1.7.7 (test) <img id="_img33" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep32', '_img33' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep32" style="display:none">
+<li>org.slf4j:slf4j-log4j12:jar:1.7.7 (test) <img id="_img31" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep30', '_img31' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep30" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>SLF4J LOG4J-12 Binding</th></tr>
@@ -603,7 +590,7 @@
 <p><b>Description: </b>SLF4J LOG4J-12 Binding</p>
 <p><b>URL: </b><a class="externalLink" href="http://www.slf4j.org">http://www.slf4j.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></p></td></tr></table></div></li>
-<li>log4j:log4j:jar:1.2.17 (test) <img id="_img35" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep34', '_img35' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep34" style="display:none">
+<li>log4j:log4j:jar:1.2.17 (test) <img id="_img33" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep32', '_img33' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep32" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Apache Log4j</th></tr>
@@ -621,10 +608,9 @@
 <p><b>Eclipse Public License - v 1.0: </b>AspectJ runtime</p>
 <p><b>Common Public License Version 1.0: </b>JUnit</p>
 <p><b>GNU Lesser General Public License, version 2.1: </b>JBoss Logging 3</p>
-<p><b>The Apache Software License, Version 2.0: </b>Apache Commons Lang, Apache Log4j, Bean Validation API, ClassMate</p>
+<p><b>The Apache Software License, Version 2.0: </b>Apache Log4j, Bean Validation API, ClassMate</p>
 <p><b>MIT License: </b>Objenesis, SLF4J API Module, SLF4J LOG4J-12 Binding</p>
 <p><b>The MIT License: </b>Mockito</p></div>
-                            <img class="maven-logo" src="//img.jcabi.com/built-by-maven.png" alt="built by maven"/>
                         </article>
                     </div>
                 </main>
