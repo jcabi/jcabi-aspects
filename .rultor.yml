@@ -13,11 +13,15 @@ merge:
 
 deploy:
   script:
-    - "mvn clean deploy -Ppdd -Pqulice --errors --settings ../settings.xml"
+    - "mvn clean deploy -Pqulice --errors --settings ../settings.xml"
+    - "gem install pdd"
+    - "mvn clean"
+    - "pdd --source=$(pwd) --verbose --file=jcabi-aspects.xml"
+    - "s3cmd --no-progress put jcabi-aspects.xml --config=../s3cfg s3://pdd.teamed.io/jcabi-aspects.xml"
 
 release:
   script:
     - "mvn versions:set \"-DnewVersion=${tag}\""
     - "git commit -am \"${tag}\""
     - "mvn clean deploy -Pqulice -Psonatype -Pjcabi --errors --settings ../settings.xml"
-    - "mvn clean site-deploy -Psite -Prempl --errors --settings ../settings.xml"
+    - "mvn clean site-deploy -Psite --errors --settings ../settings.xml"
