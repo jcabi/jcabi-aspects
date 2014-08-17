@@ -7,14 +7,17 @@ assets:
 env:
   MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
 
+install:
+  - "sudo gem install pdd"
+
 merge:
   script:
     - "mvn clean install -Pqulice --errors --settings ../settings.xml"
+    - "pdd --source=$(pwd) --verbose --file=/dev/null"
 
 deploy:
   script:
     - "mvn clean deploy -Pqulice --errors --settings ../settings.xml"
-    - "gem install pdd"
     - "mvn clean"
     - "pdd --source=$(pwd) --verbose --file=jcabi-aspects.xml"
     - "s3cmd --no-progress put jcabi-aspects.xml --config=../s3cfg s3://pdd.teamed.io/jcabi-aspects.xml"
