@@ -110,7 +110,7 @@ public final class MethodValidator {
      * @param point Join point
      * @checkstyle LineLength (3 lines)
      */
-    @Before("initialization(*.new(.., @(javax.validation.* || javax.validation.constraints.*) (*), ..))")
+    @Before("execution(*.new(.., @(javax.validation.* || javax.validation.constraints.*) (*), ..))")
     public void beforeCtor(final JoinPoint point) {
         if (this.validator != null) {
             this.validate(

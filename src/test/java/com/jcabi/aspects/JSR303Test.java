@@ -96,7 +96,7 @@ public final class JSR303Test {
      */
     @Test(expected = ConstraintViolationException.class)
     public void validatesConstructorParameters() {
-        new JSR303Test.Bar(null);
+        new JSR303Test.ConstructorValidation(null);
     }
 
     /**
@@ -104,7 +104,7 @@ public final class JSR303Test {
      */
     @Test(expected = ConstraintViolationException.class)
     public void validatesChainedConstructorParameters() {
-        new JSR303Test.Bar();
+        new JSR303Test.ConstructorValidation();
     }
 
     @Retention(RetentionPolicy.RUNTIME)
@@ -153,20 +153,21 @@ public final class JSR303Test {
      * @version $Id$
      */
     @Loggable(Loggable.INFO)
-    private static final class Bar {
+    private static final class ConstructorValidation {
         /**
          * Public ctor.
          * @param param The param.
          * @checkstyle UnusedFormalParameter (2 lines)
          */
-        public Bar(@NotNull final String param) {
+        @SuppressWarnings("PMD.UnusedFormalParameter")
+        public ConstructorValidation(@NotNull final String param) {
             //Nothing to do.
         }
         /**
          * Public ctor that passes null to another ctor.
          * Supposed to fail validation.
          */
-        public Bar() {
+        public ConstructorValidation() {
             this(null);
         }
 
