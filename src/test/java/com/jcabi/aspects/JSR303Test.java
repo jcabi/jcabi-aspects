@@ -156,13 +156,13 @@ public final class JSR303Test {
     private static final class ConstructorValidation {
         /**
          * Public ctor.
-         * @param a First param
-         * @param b Second param
+         * @param first First param
+         * @param second Second param
          * @checkstyle UnusedFormalParameter (3 lines)
          */
         @SuppressWarnings("PMD.UnusedFormalParameter")
-        public ConstructorValidation(@NotNull final String a,
-            @NotNull final String b) {
+        public ConstructorValidation(@NotNull final String first,
+            @NotNull final String second) {
             //Nothing to do.
         }
         /**
