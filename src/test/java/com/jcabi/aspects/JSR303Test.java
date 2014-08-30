@@ -91,6 +91,22 @@ public final class JSR303Test {
         new JSR303Test.Foo().voidAlways();
     }
 
+    /**
+     * Validates constructor parameters for directly invoked constructors.
+     */
+    @Test(expected = ConstraintViolationException.class)
+    public void validatesConstructorParameters() {
+        new JSR303Test.ConstructorValidation(null);
+    }
+
+    /**
+     * Validates constructor parameters for other invoked constructors.
+     */
+    @Test(expected = ConstraintViolationException.class)
+    public void validatesChainedConstructorParameters() {
+        new JSR303Test.ConstructorValidation();
+    }
+
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.PARAMETER)
     private @interface NoMeaning {
@@ -128,6 +144,33 @@ public final class JSR303Test {
         public void voidAlways() {
             // nothing to do
         }
+    }
+
+    /**
+     * Dummy class for testing constructor validation.
+     *
+     * @author Carlos Miranda (miranda.cma@gmail.com)
+     * @version $Id$
+     */
+    @Loggable(Loggable.INFO)
+    private static final class ConstructorValidation {
+        /**
+         * Public ctor.
+         * @param param The param.
+         * @checkstyle UnusedFormalParameter (2 lines)
+         */
+        @SuppressWarnings("PMD.UnusedFormalParameter")
+        public ConstructorValidation(@NotNull final String param) {
+            //Nothing to do.
+        }
+        /**
+         * Public ctor that passes null to another ctor.
+         * Supposed to fail validation.
+         */
+        public ConstructorValidation() {
+            this(null);
+        }
+
     }
 
 }
