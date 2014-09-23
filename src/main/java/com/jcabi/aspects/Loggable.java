@@ -181,6 +181,14 @@ public @interface Loggable {
     boolean skipArgs() default false;
 
     /**
+     * The units to be used to measure method execution time.
+     * @since 0.18
+     * @todo #86 Let's document the usage of this parameter, including its
+     *  effects and default setting, in the annotation-loggable.apt.vm page.
+     */
+    TimeUnit precision() default TimeUnit.MILLISECONDS;
+
+    /**
      * Identifies an exception that is never logged by {@link Loggable} if/when
      * being thrown out of an annotated method.
      *

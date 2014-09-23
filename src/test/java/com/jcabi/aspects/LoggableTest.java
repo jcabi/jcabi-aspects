@@ -30,7 +30,12 @@
 package com.jcabi.aspects;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.concurrent.TimeUnit;
+import org.apache.log4j.SimpleLayout;
+import org.apache.log4j.WriterAppender;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -87,6 +92,27 @@ public final class LoggableTest {
     }
 
     /**
+     * Loggable can log duration with a specific time unit.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void logsDurationWithSpecifiedTimeUnit() throws Exception {
+        final StringWriter writer = new StringWriter();
+        org.apache.log4j.Logger.getRootLogger().addAppender(
+            new WriterAppender(new SimpleLayout(), writer)
+        );
+        LoggableTest.Foo.logsDurationInSeconds();
+        MatcherAssert.assertThat(
+            writer.toString(),
+            Matchers.anyOf(
+                Matchers.containsString("in 2s"),
+                Matchers.containsString("in 3s"),
+                Matchers.containsString("in 4s")
+            )
+        );
+    }
+
+    /**
      * Parent class, without logging.
      */
     private static class Parent {
@@ -139,6 +165,16 @@ public final class LoggableTest {
         @Loggable(value = Loggable.INFO, trim = false)
         public String revert(final String text) {
             return new StringBuffer(text).reverse().toString();
+        }
+        /**
+         * Method with different time unit specificaiton.
+         * @return Some text
+         * @throws Exception If terminated
+         */
+        @Loggable(precision = TimeUnit.SECONDS)
+        public static String logsDurationInSeconds() throws Exception {
+            TimeUnit.SECONDS.sleep(Tv.THREE);
+            return LoggableTest.Foo.hiddenText();
         }
         /**
          * Private static method.

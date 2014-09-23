@@ -33,6 +33,8 @@ import com.jcabi.aspects.Loggable;
 import com.jcabi.log.Logger;
 import com.jcabi.log.VerboseRunnable;
 import java.lang.reflect.Method;
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Executors;
@@ -66,10 +68,27 @@ import org.aspectj.lang.reflect.MethodSignature;
 public final class MethodLogger {
 
     /**
+     * Time unit suffixes.
+     */
+    @SuppressWarnings("PMD.UseConcurrentHashMap")
+    private static final Map<TimeUnit, String> SUFFIXES =
+        new EnumMap<TimeUnit, String>(TimeUnit.class);
+
+    /**
      * Currently running methods.
      */
     private final transient Set<MethodLogger.Marker> running =
         new ConcurrentSkipListSet<MethodLogger.Marker>();
+
+    static {
+        SUFFIXES.put(TimeUnit.DAYS, "days");
+        SUFFIXES.put(TimeUnit.HOURS, "hours");
+        SUFFIXES.put(TimeUnit.MINUTES, "min");
+        SUFFIXES.put(TimeUnit.SECONDS, "s");
+        SUFFIXES.put(TimeUnit.MILLISECONDS, "ms");
+        SUFFIXES.put(TimeUnit.MICROSECONDS, "µs");
+        SUFFIXES.put(TimeUnit.NANOSECONDS, "ns");
+    }
 
     /**
      * Public ctor.
@@ -226,7 +245,14 @@ public final class MethodLogger {
                         )
                     );
                 }
-                msg.append(Logger.format(" in %[nano]s", nano));
+                final TimeUnit precision = annotation.precision();
+                msg.append(
+                    Logger.format(
+                        " in %d%s",
+                        precision.convert(nano, TimeUnit.NANOSECONDS),
+                        SUFFIXES.get(precision)
+                    )
+                );
                 if (over) {
                     level = Loggable.WARN;
                     msg.append(" (too slow!)");
