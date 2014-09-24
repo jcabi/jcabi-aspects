@@ -3,8 +3,9 @@
     <head>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>jcabi-aspects - Encapsulate all exceptions into an allowed one.</title>
+        <title>jcabi-aspects &#x2013; Encapsulate all exceptions into an allowed one.</title>
         <link media="all" rel="stylesheet" type="text/css" href="./css/jcabi.css"/>
+        <link media="all" rel="stylesheet" type="text/css" href="./ico/ico.css"/>
                     <meta name="author" content="Krzysztof Krason" />
                             <script>
                 var _gaq = _gaq || [];
@@ -20,24 +21,8 @@
 <link rel="shortcut icon" href="http://img.jcabi.com/favicon.ico"/>
                                                                                                                 
 <link rel="author" href="https://plus.google.com/u/0/114792568016408327418?rel=author"/>
-                                            <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-        <script>
-            $(document).ready(
-                function() {
-                    $(".menu-button").click(
-                        function() {
-                            if ($("#here-goes-menu").attr("class") == "menu-off") {
-                                $("#menu").clone().attr("class", "mobile-menu").appendTo("#here-goes-menu");
-                                $("#here-goes-menu").attr("class", "menu-on");
-                            } else {
-                                $(".mobile-menu").hide();
-                                $("#here-goes-menu").attr("class", "menu-off");
-                            }
-                        }
-                    );
-                }
-            );
-        </script>
+                                            <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+        <script type="text/javascript" src="./js/jcabi.js"></script>
     </head>
     <body>
                 <section class="page" itemscope="" itemtype="http://schema.org/BlogPosting">
@@ -53,7 +38,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-0.17.2/index.html" title="JavaDoc 0.17.2">JavaDoc 0.17.2</a>
+                            <span>                        <a href="apidocs-0.18/index.html" title="JavaDoc 0.18">JavaDoc 0.18</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -176,7 +161,7 @@
                                                                                                                         <li >
                             <span>                        <a href="project-reports.html" title="Project Reports">Project Reports</a>
         </span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </li>
                                                                                         </ul>
                                                     </li>
                                     </ul>
@@ -203,17 +188,51 @@
                             </div>
                             <ul class="badges">
                                 <li>
-                                    <strong itemprop="version">0.17.2</strong>
+                                    <strong itemprop="version">0.18</strong>
                                 </li>
                                 <li>
                                     
-                                    <time itemprop="datePublished" datetime="2014-08-13T09:11:26Z">
+                                    <time itemprop="datePublished" datetime="2014-09-24T04:43:33Z">
                                         
-                                        13-Aug-2014
+                                        24-Sep-2014
                                     </time>
                                 </li>
                                 <li class="menu-button">menu</li>
                             </ul>
+                            <div class="social">
+                                <a href="http://www.facebook.com/sharer/sharer.php?u=URL"
+                                    title="Share on Facebook" class="ico">
+                                    <i class="icon-facebook"></i>
+                                </a>
+                                <a href="https://twitter.com/share?url=URL&amp;text=TITLE"
+                                    title="Share on Twitter" class="ico">
+                                    <i class="icon-twitter"></i>
+                                </a>
+                                <a href="https://plus.google.com/share?url=URL"
+                                    title="Share on Google+" class="ico">
+                                    <i class="icon-googleplus"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/cws/share?url=URL"
+                                    title="Share on LinkedIn" class="ico">
+                                    <i class="icon-linkedin"></i>
+                                </a>
+                                <a href="http://www.stumbleupon.com/submit?url=URL&amp;title=TITLE"
+                                    title="Share on StumbleUpon" class="ico">
+                                    <i class="icon-stumbleupon"></i>
+                                </a>
+                                <a href="http://digg.com/submit?phase=2&amp;url=URL&amp;title=TITLE"
+                                    title="Share on Digg" class="ico">
+                                    <i class="icon-digg"></i>
+                                </a>
+                                <a href="http://reddit.com/submit?url=URL&amp;title=TITLE"
+                                    title="Share on Reddit" class="ico">
+                                    <i class="icon-reddit"></i>
+                                </a>
+                                <a href="http://news.ycombinator.com/submitlink?u=URL&amp;t=TITLE"
+                                    title="Share on Hacker News" class="ico">
+                                    <i class="icon-hackernews"></i>
+                                </a>
+                            </div>
                         </header>
                         <div id="here-goes-menu" class="menu-off"></div>
                                                                             <a href="https://github.com/jcabi/jcabi-aspects">
@@ -221,8 +240,8 @@
                             </a>
                                                 <article role="article" itemprop="articleBody">
                             <!--  --><!-- Copyright (c) 2011, jcabi.com --><!-- All rights reserved. --><!--  --><!-- Redistribution and use in source and binary forms, with or without --><!-- modification, are permitted provided that the following conditions --><!-- are met: 1) Redistributions of source code must retain the above --><!-- copyright notice, the list of conditions and the following --><!-- disclaimer. 2) Redistributions in binary form must reproduce the above --><!-- copyright notice, the list of conditions and the following --><!-- disclaimer in the documentation and/or other materials provided --><!-- with the distribution. 3) Neither the name of the jcabi.com, nor --><!-- the names of its contributors may be used to endorse or promote --><!-- products derived from this software without specific prior written --><!-- permission. --><!--  --><!-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS --><!-- "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES INCLUDING, BUT --><!-- NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND --><!-- FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL --><!-- THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, --><!-- INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, CONSEQUENTIAL DAMAGES --><!-- (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR --><!-- SERVICES, LOSS OF USE, DATA, PROFITS, OR BUSINESS INTERRUPTION) --><!-- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, --><!-- STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) --><!-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED --><!-- OF THE POSSIBILITY OF SUCH DAMAGE. --><!--  --><div class="section">
-<h2>Unification of Exceptions Thrown from Java Methods<a name="Unification_of_Exceptions_Thrown_from_Java_Methods"></a></h2>
-<p>Annotate your methods with <a href="./apidocs-0.17.2/com/jcabi/aspects/UnitedThrows.html"><tt>@UnitedThrows</tt></a> annotation and every exception thrown out of the method will be an instance of the required type:</p>
+<h2><a name="Unification_of_Exceptions_Thrown_from_Java_Methods"></a>Unification of Exceptions Thrown from Java Methods</h2>
+<p>Annotate your methods with <a href="./apidocs-0.18/com/jcabi/aspects/UnitedThrows.html"><tt>@UnitedThrows</tt></a> annotation and every exception thrown out of the method will be an instance of the required type:</p>
 <div class="source">
 <pre>public class Thrower {
   @UnitedThrow
