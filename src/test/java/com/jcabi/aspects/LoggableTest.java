@@ -32,10 +32,12 @@ package com.jcabi.aspects;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.concurrent.TimeUnit;
+import org.apache.log4j.PatternLayout;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
 import org.cthul.matchers.CthulMatchers;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -109,6 +111,24 @@ public final class LoggableTest {
     }
 
     /**
+     * Loggable can log methods that specify their own logger name.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void logsWithExplicitLoggerName() throws Exception {
+        final StringWriter writer = new StringWriter();
+        org.apache.log4j.Logger.getRootLogger().addAppender(
+            new WriterAppender(new PatternLayout("%t %c: %m%n"), writer)
+        );
+        LoggableTest.Foo.explicitLoggerName();
+        MatcherAssert.assertThat(
+            // @checkstyle MultipleStringLiterals (2 lines)
+            writer.toString(),
+            Matchers.containsString("test-logger")
+        );
+    }
+
+    /**
      * Parent class, without logging.
      */
     private static class Parent {
@@ -150,6 +170,15 @@ public final class LoggableTest {
         @Timeable(limit = 1, unit = TimeUnit.HOURS)
         public static String text() throws Exception {
             TimeUnit.SECONDS.sleep(2L);
+            return LoggableTest.Foo.hiddenText();
+        }
+        /**
+         * Method annotated with Loggable specifying explicit logger name.
+         * @return A String
+         * @throws Exception If terminated
+         */
+        @Loggable(value = Loggable.DEBUG, name = "test-logger", prepend = true)
+        public static String explicitLoggerName() throws Exception {
             return LoggableTest.Foo.hiddenText();
         }
         /**

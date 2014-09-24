@@ -190,6 +190,15 @@ public @interface Loggable {
     int precision() default 2;
 
     /**
+     * The name of the logger to be used. If not specified, defaults to the
+     * class name of the annotated class or method.
+     * @since 0.18
+     * @todo #85 Let's document the usage of this parameter in the
+     *  annotation-loggable.apt.vm site page.
+     */
+    String name() default "";
+
+    /**
      * Identifies an exception that is never logged by {@link Loggable} if/when
      * being thrown out of an annotated method.
      *
