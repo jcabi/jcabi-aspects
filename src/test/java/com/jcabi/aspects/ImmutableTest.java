@@ -77,6 +77,22 @@ public final class ImmutableTest {
     }
 
     /**
+     * Immutable can pass immutable classes.
+     */
+    @Test
+    public void passesImmutableObjectsWithNonPrivateFields() {
+        new TruelyImmutableWithNonPrivateFields();
+    }
+
+    /**
+     * Immutable can catch mutable classes with interfaces.
+     */
+    @Test(expected = IllegalStateException.class)
+    public void catchedTypesMutableByClassInheritance() {
+        new MutableByInheritance();
+    }
+
+    /**
      * Supposedly immutable class.
      */
     @Immutable
@@ -124,11 +140,11 @@ public final class ImmutableTest {
         /**
          * Something static final.
          */
-        private static final Pattern PATTERN = Pattern.compile(".*");
+        private static final Pattern PATTERN = Pattern.compile(".?");
         /**
          * Something just static.
          */
-        private static Pattern ptrn = Pattern.compile(".+");
+        private static Pattern ptrn = Pattern.compile("\\d+");
         /**
          * Immutable class member.
          */
@@ -146,6 +162,61 @@ public final class ImmutableTest {
          */
         @Immutable.Array
         private final transient String[] texts = new String[] {"foo"};
+    }
+
+    /**
+     * Truely immutable class with non-private fields.
+     * @checkstyle VisibilityModifier (25 lines)
+     */
+    @Immutable
+    private static final class TruelyImmutableWithNonPrivateFields {
+        /**
+         * Something static final.
+         */
+        private static final Pattern PATTERN = Pattern.compile(".*");
+        /**
+         * Something just static.
+         */
+        private static Pattern ptrn = Pattern.compile(".+");
+        /**
+         * Immutable class member.
+         */
+        private final transient String data = null;
+        /**
+         * Another immutable class member.
+         */
+        private final transient int number = 2;
+        /**
+         * Another immutable class member.
+         */
+        private final transient String text = "Hello!";
+    }
+
+    /**
+     * Almost immutable class. It can be inherited, because it is non-final;
+     * thus methods in the child class can return nonsensical values (e.g.
+     * getters that do no return the original value of their corresponding
+     * fields). Moreover, immutability cannot be forced to a subclass.
+     * See <a href=
+     * "http://marxsoftware.blogspot.se/2009/09/
+     * is-java-immutable-class-always-final.html">
+     * Is java immutable class always final?</a>
+     */
+    @Immutable
+    private static class MutableByInheritance {
+        /**
+         * Immutable class member.
+         */
+        private final transient String data = null;
+
+        /**
+         * Could be overloaded by a child of the class and then return
+         * nonsensical value.
+         * @return A value that could differ from what is expected if returned by an overriding method
+         */
+        public String getData() {
+            return this.data;
+        }
     }
 
 }

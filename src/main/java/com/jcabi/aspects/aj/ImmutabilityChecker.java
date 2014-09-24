@@ -98,6 +98,13 @@ public final class ImmutabilityChecker {
                             type.getName()
                         )
                     );
+                } else if (!Modifier.isFinal(type.getModifiers())) {
+                    throw new Violation(
+                        String.format(
+                            "Class '%s' is not final",
+                            type.getName()
+                        )
+                    );
                 }
                 try {
                     this.fields(type);
@@ -173,14 +180,6 @@ public final class ImmutabilityChecker {
                 throw new ImmutabilityChecker.Violation(
                     String.format(
                         "field '%s' is not final",
-                        field
-                    )
-                );
-            }
-            if (!Modifier.isPrivate(field.getModifiers())) {
-                throw new ImmutabilityChecker.Violation(
-                    String.format(
-                        "field '%s' is not private",
                         field
                     )
                 );
