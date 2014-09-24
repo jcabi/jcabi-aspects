@@ -35,7 +35,7 @@
     <skin>
         <groupId>com.jcabi</groupId>
         <artifactId>jcabi-maven-skin</artifactId>
-        <version>1.4</version>
+        <version>1.5.1</version>
     </skin>
     <bannerLeft>
         <name>jcabi</name>
