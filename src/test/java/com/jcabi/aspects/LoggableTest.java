@@ -232,6 +232,7 @@ public final class LoggableTest {
          * @param regex The regex pattern
          */
         public RegexContainsMatcher(final String regex) {
+            super();
             this.pattern = Pattern.compile(regex);
         }
         @Override
