@@ -34,8 +34,8 @@ import java.io.StringWriter;
 import java.util.concurrent.TimeUnit;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
+import org.cthul.matchers.CthulMatchers;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -104,11 +104,7 @@ public final class LoggableTest {
         LoggableTest.Foo.logsDurationInSeconds();
         MatcherAssert.assertThat(
             writer.toString(),
-            Matchers.anyOf(
-                Matchers.containsString("in 2s"),
-                Matchers.containsString("in 3s"),
-                Matchers.containsString("in 4s")
-            )
+            CthulMatchers.containsPattern("in \\d.\\d{3}")
         );
     }
 
@@ -171,9 +167,9 @@ public final class LoggableTest {
          * @return Some text
          * @throws Exception If terminated
          */
-        @Loggable(precision = TimeUnit.SECONDS)
+        @Loggable(precision = Tv.THREE)
         public static String logsDurationInSeconds() throws Exception {
-            TimeUnit.SECONDS.sleep(Tv.THREE);
+            TimeUnit.SECONDS.sleep(2);
             return LoggableTest.Foo.hiddenText();
         }
         /**
