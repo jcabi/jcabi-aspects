@@ -47,7 +47,7 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
-@SuppressWarnings({ "PMD.TooManyMethods" })
+@SuppressWarnings("PMD.TooManyMethods")
 public final class LoggableTest {
 
     /**
@@ -226,29 +226,28 @@ public final class LoggableTest {
         /**
          * Regex to match against.
          */
-        private transient final Pattern pattern;
+        private final transient Pattern pattern;
         /**
          * Ctor.
          * @param regex The regex pattern
          */
-        public RegexContainsMatcher(String regex){
+        public RegexContainsMatcher(final String regex) {
             this.pattern = Pattern.compile(regex);
         }
         @Override
-        public boolean matchesSafely(String str){
-            return pattern.matcher(str).find();
-
+        public boolean matchesSafely(final String str) {
+            return this.pattern.matcher(str).find();
         }
         @Override
-        public void describeTo(Description description){
+        public void describeTo(final Description description) {
             description.appendText("matches regex=");
         }
         /**
          * Matcher for regex patterns.
-         * @param regex
-         * @return
+         * @param regex The regex pattern
+         * @return Matcher for containing regex pattern
          */
-        public static RegexContainsMatcher contains(String regex){
+        public static RegexContainsMatcher contains(final String regex) {
             return new RegexContainsMatcher(regex);
         }
     }
