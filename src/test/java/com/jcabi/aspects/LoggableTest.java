@@ -32,12 +32,14 @@ package com.jcabi.aspects;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
-import org.cthul.matchers.CthulMatchers;
+import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Test;
 
 /**
@@ -45,7 +47,7 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
-@SuppressWarnings({ "PMD.TestClassWithoutTestCases", "PMD.TooManyMethods" })
+@SuppressWarnings({ "PMD.TooManyMethods" })
 public final class LoggableTest {
 
     /**
@@ -106,7 +108,7 @@ public final class LoggableTest {
         LoggableTest.Foo.logsDurationInSeconds();
         MatcherAssert.assertThat(
             writer.toString(),
-            CthulMatchers.containsPattern("in \\d.\\d{3}")
+            RegexContainsMatcher.contains("in \\d.\\d{3}")
         );
     }
 
@@ -217,4 +219,37 @@ public final class LoggableTest {
         }
     }
 
+    /**
+     * Matcher that checks if a string contains the given pattern.
+     */
+    private static class RegexContainsMatcher extends TypeSafeMatcher<String> {
+        /**
+         * Regex to match against.
+         */
+        private transient final Pattern pattern;
+        /**
+         * Ctor.
+         * @param regex The regex pattern
+         */
+        public RegexContainsMatcher(String regex){
+            this.pattern = Pattern.compile(regex);
+        }
+        @Override
+        public boolean matchesSafely(String str){
+            return pattern.matcher(str).find();
+
+        }
+        @Override
+        public void describeTo(Description description){
+            description.appendText("matches regex=");
+        }
+        /**
+         * Matcher for regex patterns.
+         * @param regex
+         * @return
+         */
+        public static RegexContainsMatcher contains(String regex){
+            return new RegexContainsMatcher(regex);
+        }
+    }
 }
