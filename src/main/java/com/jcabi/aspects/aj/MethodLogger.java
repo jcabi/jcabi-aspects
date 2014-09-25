@@ -189,13 +189,13 @@ public final class MethodLogger {
             new MethodLogger.Marker(point, annotation);
         this.running.add(marker);
         try {
-            final Class<?> type = method.getDeclaringClass();
+            final Object logger = this.logger(method, annotation.name());
             int level = annotation.value();
             final int limit = annotation.limit();
             if (annotation.prepend()) {
                 LogHelper.log(
                     level,
-                    type,
+                    logger,
                     new StringBuilder(
                         Mnemos.toText(
                             point,
@@ -208,7 +208,7 @@ public final class MethodLogger {
             final Object result = point.proceed();
             final long nano = System.nanoTime() - start;
             final boolean over = nano > annotation.unit().toNanos(limit);
-            if (LogHelper.enabled(level, type) || over) {
+            if (LogHelper.enabled(level, logger) || over) {
                 final StringBuilder msg = new StringBuilder();
                 msg.append(
                     Mnemos.toText(
@@ -226,14 +226,21 @@ public final class MethodLogger {
                         )
                     );
                 }
-                msg.append(Logger.format(" in %[nano]s", nano));
+                msg.append(
+                    Logger.format(
+                        String.format(
+                            " in %%[nano].%ds", annotation.precision()
+                        ),
+                        nano
+                    )
+                );
                 if (over) {
                     level = Loggable.WARN;
                     msg.append(" (too slow!)");
                 }
                 LogHelper.log(
                     level,
-                    type,
+                    logger,
                     msg.toString()
                 );
             }
@@ -265,6 +272,22 @@ public final class MethodLogger {
         } finally {
             this.running.remove(marker);
         }
+    }
+
+    /**
+     * Get the destination logger for this method.
+     * @param method The method
+     * @param name The Loggable annotation
+     * @return The logger that will be used
+     */
+    private Object logger(final Method method, final String name) {
+        final Object source;
+        if (name.isEmpty()) {
+            source = method.getDeclaringClass();
+        } else {
+            source = name;
+        }
+        return source;
     }
 
     /**

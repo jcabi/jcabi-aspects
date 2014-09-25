@@ -76,7 +76,7 @@ final class LogHelper {
      * @param log Destination log
      * @return TRUE if enabled
      */
-    public static boolean enabled(final int level, final Class<?> log) {
+    public static boolean enabled(final int level, final Object log) {
         boolean enabled;
         if (level == Loggable.TRACE) {
             enabled = Logger.isTraceEnabled(log);

@@ -30,7 +30,16 @@
 package com.jcabi.aspects;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
+import org.apache.log4j.PatternLayout;
+import org.apache.log4j.SimpleLayout;
+import org.apache.log4j.WriterAppender;
+import org.hamcrest.Description;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Test;
 
 /**
@@ -38,7 +47,7 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
-@SuppressWarnings({ "PMD.TestClassWithoutTestCases", "PMD.TooManyMethods" })
+@SuppressWarnings("PMD.TooManyMethods")
 public final class LoggableTest {
 
     /**
@@ -87,6 +96,41 @@ public final class LoggableTest {
     }
 
     /**
+     * Loggable can log duration with a specific time unit.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void logsDurationWithSpecifiedTimeUnit() throws Exception {
+        final StringWriter writer = new StringWriter();
+        org.apache.log4j.Logger.getRootLogger().addAppender(
+            new WriterAppender(new SimpleLayout(), writer)
+        );
+        LoggableTest.Foo.logsDurationInSeconds();
+        MatcherAssert.assertThat(
+            writer.toString(),
+            RegexContainsMatcher.contains("in \\d.\\d{3}")
+        );
+    }
+
+    /**
+     * Loggable can log methods that specify their own logger name.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void logsWithExplicitLoggerName() throws Exception {
+        final StringWriter writer = new StringWriter();
+        org.apache.log4j.Logger.getRootLogger().addAppender(
+            new WriterAppender(new PatternLayout("%t %c: %m%n"), writer)
+        );
+        LoggableTest.Foo.explicitLoggerName();
+        MatcherAssert.assertThat(
+            // @checkstyle MultipleStringLiterals (2 lines)
+            writer.toString(),
+            Matchers.containsString("test-logger")
+        );
+    }
+
+    /**
      * Parent class, without logging.
      */
     private static class Parent {
@@ -131,6 +175,15 @@ public final class LoggableTest {
             return LoggableTest.Foo.hiddenText();
         }
         /**
+         * Method annotated with Loggable specifying explicit logger name.
+         * @return A String
+         * @throws Exception If terminated
+         */
+        @Loggable(value = Loggable.DEBUG, name = "test-logger", prepend = true)
+        public static String explicitLoggerName() throws Exception {
+            return LoggableTest.Foo.hiddenText();
+        }
+        /**
          * Revert string.
          * @param text Some text
          * @return Reverted text
@@ -139,6 +192,16 @@ public final class LoggableTest {
         @Loggable(value = Loggable.INFO, trim = false)
         public String revert(final String text) {
             return new StringBuffer(text).reverse().toString();
+        }
+        /**
+         * Method with different time unit specificaiton.
+         * @return Some text
+         * @throws Exception If terminated
+         */
+        @Loggable(precision = Tv.THREE)
+        public static String logsDurationInSeconds() throws Exception {
+            TimeUnit.SECONDS.sleep(2);
+            return LoggableTest.Foo.hiddenText();
         }
         /**
          * Private static method.
@@ -156,4 +219,37 @@ public final class LoggableTest {
         }
     }
 
+    /**
+     * Matcher that checks if a string contains the given pattern.
+     */
+    private static class RegexContainsMatcher extends TypeSafeMatcher<String> {
+        /**
+         * Regex to match against.
+         */
+        private final transient Pattern pattern;
+        /**
+         * Ctor.
+         * @param regex The regex pattern
+         */
+        public RegexContainsMatcher(final String regex) {
+            super();
+            this.pattern = Pattern.compile(regex);
+        }
+        @Override
+        public boolean matchesSafely(final String str) {
+            return this.pattern.matcher(str).find();
+        }
+        @Override
+        public void describeTo(final Description description) {
+            description.appendText("matches regex=");
+        }
+        /**
+         * Matcher for regex patterns.
+         * @param regex The regex pattern
+         * @return Matcher for containing regex pattern
+         */
+        public static RegexContainsMatcher contains(final String regex) {
+            return new RegexContainsMatcher(regex);
+        }
+    }
 }

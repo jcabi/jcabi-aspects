@@ -37,6 +37,7 @@ import org.junit.Test;
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @checkstyle ConstantUsageCheck (500 lines)
  */
 @SuppressWarnings({
     "PMD.UnusedPrivateField",
