@@ -34,6 +34,7 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Immutable} annotation and its implementation.
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
@@ -66,6 +67,15 @@ public final class ImmutableTest {
     @Test(expected = IllegalStateException.class)
     public void catchedMutableTypesWithInterfaces() {
         new MutableWithInterface();
+    }
+
+    /**
+     * Immutable can catch mutable classes with mutable implementation of
+     * immutable interfaces.
+     */
+    @Test(expected = IllegalStateException.class)
+    public void catchedMutableTypesWithImplementationOfImmutableInterface() {
+        new MutableWithImmutableInterface();
     }
 
     /**
@@ -133,6 +143,47 @@ public final class ImmutableTest {
     }
 
     /**
+     * Other vague interface.
+     */
+    @Immutable
+    private interface ImmutableInterface {
+        /**
+         * This function seems to be harmless.
+         * @param input An input
+         */
+        void willBreakImmutability(int input);
+    }
+
+    /**
+     * Mutable class implementing immutable interface.
+     */
+    @Immutable
+    private static final class MutableWithImmutableInterface {
+        /**
+         * Supposedly immutable field that is not immutable after all.
+         */
+        private final ImmutableInterface impl = new ImmutableInterface() {
+            private int state = 1;
+
+            /**
+             * This function breaks the immutability promised by the interface.
+             */
+            @Override
+            public void willBreakImmutability(final int newstate) {
+                this.state = newstate;
+            }
+        };
+
+        /**
+         * Stupid getter.
+         * @return A handle to mutate the object. Not good...
+         */
+        public ImmutableInterface getImpl() {
+            return this.impl;
+        }
+    }
+
+    /**
      * Truely immutable class.
      */
     @Immutable
@@ -166,6 +217,7 @@ public final class ImmutableTest {
 
     /**
      * Truely immutable class with non-private fields.
+     *
      * @checkstyle VisibilityModifier (25 lines)
      */
     @Immutable
@@ -212,6 +264,7 @@ public final class ImmutableTest {
         /**
          * Could be overloaded by a child of the class and then return
          * nonsensical value.
+         *
          * @return A value that could differ from what is expected if returned by an overriding method
          */
         public String getData() {
