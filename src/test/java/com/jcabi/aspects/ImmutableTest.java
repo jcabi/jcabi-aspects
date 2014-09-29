@@ -226,23 +226,23 @@ public final class ImmutableTest {
         /**
          * Something static final.
          */
-        private static final Pattern PATTERN = Pattern.compile(".*");
+        public static final Pattern PATTERN = Pattern.compile(".*");
         /**
          * Something just static.
          */
-        private static Pattern ptrn = Pattern.compile(".+");
+        public static final Pattern PTRN = Pattern.compile(".+");
         /**
          * Immutable class member.
          */
-        private final transient String data = null;
+        public final String data = null;
         /**
          * Another immutable class member.
          */
-        private final transient int number = 2;
+        public final int number = 2;
         /**
          * Another immutable class member.
          */
-        private final transient String text = "Hello!";
+        public final String text = "Hello!";
     }
 
     /**
