@@ -181,6 +181,12 @@ public @interface Loggable {
     boolean skipArgs() default false;
 
     /**
+     * Add toString() result to log line.
+     * @since 0.8.1
+     */
+    boolean logThis() default false;
+
+    /**
      * The precision (number of fractional digits) to be used when displaying
      * the measured execution time.
      * @since 0.18

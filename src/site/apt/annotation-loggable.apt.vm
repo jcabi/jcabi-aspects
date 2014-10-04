@@ -153,5 +153,23 @@ public class VerboseClass {
 }
 +--
 
+  Since version 0.8.1, it is possible to add result of toString() method into
+  the log line by setting <<<logThis>>> to true in <<<@Loggable>>> annotaton:
+
++--
+public class LoggingThis {
+  private final String name = "John";
+
+  @Loggable(logThis = true)
+  public List<String> get(String name) {
+    // Returns a long list of texts which are not
+    // important and should not pollute the log.
+  }
+
+  public String toString() {
+    return String.format("{name=%s}", this.name);
+  }
+}
++--
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.

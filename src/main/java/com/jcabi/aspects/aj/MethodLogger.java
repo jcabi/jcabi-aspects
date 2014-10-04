@@ -172,7 +172,10 @@ public final class MethodLogger {
      * @return The result of call
      * @throws Throwable If something goes wrong inside
      * @checkstyle ExecutableStatementCount (50 lines)
+     * @todo #87 Refactor this method into smaller ones and remove both PMD
+     *  and Checkstyle suppress.
      */
+    @SuppressWarnings("PMD.ExcessiveMethodLength")
     private Object wrap(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation) throws Throwable {
         if (Thread.interrupted()) {
@@ -200,7 +203,8 @@ public final class MethodLogger {
                         Mnemos.toText(
                             point,
                             annotation.trim(),
-                            annotation.skipArgs()
+                            annotation.skipArgs(),
+                            annotation.logThis()
                         )
                     ).append(": entered").toString()
                 );
@@ -214,7 +218,8 @@ public final class MethodLogger {
                     Mnemos.toText(
                         point,
                         annotation.trim(),
-                        annotation.skipArgs()
+                        annotation.skipArgs(),
+                        annotation.logThis()
                     )
                 ).append(':');
                 if (!method.getReturnType().equals(Void.TYPE)) {
@@ -258,7 +263,8 @@ public final class MethodLogger {
                         Mnemos.toText(
                             point,
                             annotation.trim(),
-                            annotation.skipArgs()
+                            annotation.skipArgs(),
+                            annotation.logThis()
                         ),
                         Mnemos.toText(ex),
                         trace.getClassName(),

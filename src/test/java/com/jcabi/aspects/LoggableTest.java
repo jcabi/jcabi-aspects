@@ -49,6 +49,10 @@ import org.junit.Test;
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class LoggableTest {
+    /**
+     * Foo toString result.
+     */
+    private static final transient String RESULT = "some text";
 
     /**
      * Loggable can log simple calls.
@@ -113,6 +117,23 @@ public final class LoggableTest {
     }
 
     /**
+     * Loggable can log toString method.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void logsToStringResult() throws Exception {
+        final StringWriter writer = new StringWriter();
+        org.apache.log4j.Logger.getRootLogger().addAppender(
+            new WriterAppender(new SimpleLayout(), writer)
+        );
+        new LoggableTest.Foo().last("TEST");
+        MatcherAssert.assertThat(
+            writer.toString(),
+            RegexContainsMatcher.contains(LoggableTest.RESULT)
+        );
+    }
+
+    /**
      * Loggable can log methods that specify their own logger name.
      * @throws Exception If something goes wrong
      */
@@ -154,7 +175,7 @@ public final class LoggableTest {
     private static final class Foo extends LoggableTest.Parent {
         @Override
         public String toString() {
-            return "some text";
+            return LoggableTest.RESULT;
         }
         /**
          * Get self instance.
@@ -202,6 +223,16 @@ public final class LoggableTest {
         public static String logsDurationInSeconds() throws Exception {
             TimeUnit.SECONDS.sleep(2);
             return LoggableTest.Foo.hiddenText();
+        }
+
+        /**
+         * Get last char.
+         * @param text Text to get last char from.
+         * @return Last char.
+         */
+        @Loggable(value = Loggable.INFO, logThis = true)
+        public String last(final String text) {
+            return text.substring(text.length() - 1);
         }
         /**
          * Private static method.

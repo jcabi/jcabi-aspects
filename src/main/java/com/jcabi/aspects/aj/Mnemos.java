@@ -67,6 +67,30 @@ final class Mnemos {
      * @param point The point
      * @param trim Shall we trim long texts?
      * @param skip Shall we skip details and output just dots?
+     * @param logthis Shall we add toString result to log?
+     * @return Text representation of it
+     * @since 0.8.1
+     * @checkstyle ParameterNumber (3 lines)
+     */
+    public static String toText(final ProceedingJoinPoint point,
+        final boolean trim, final boolean skip, final boolean logthis) {
+        final String additional;
+        if (logthis && (point.getThis() != null)) {
+            additional = point.getThis().toString();
+        } else {
+            additional = "";
+        }
+        return Mnemos.toText(
+            MethodSignature.class.cast(point.getSignature()).getMethod(),
+            point.getArgs(), additional,
+            trim, skip
+        );
+    }
+    /**
+     * Make a string out of point.
+     * @param point The point
+     * @param trim Shall we trim long texts?
+     * @param skip Shall we skip details and output just dots?
      * @return Text representation of it
      * @since 0.7.19
      */
@@ -109,15 +133,19 @@ final class Mnemos {
      * Make a string out of method.
      * @param method The method
      * @param args Actual arguments of the method
+     * @param additional Additional text to add before log line
      * @param trim Shall we trim long texts?
      * @param skip Shall we skip details and output just dots?
      * @return Text representation of it
-     * @since 0.7.19
+     * @since 0.8.1
      * @checkstyle ParameterNumber (4 lines)
      */
     public static String toText(final Method method, final Object[] args,
-        final boolean trim, final boolean skip) {
+        final String additional, final boolean trim, final boolean skip) {
         final StringBuilder log = new StringBuilder();
+        if (additional != null) {
+            log.append(additional);
+        }
         log.append('#').append(method.getName()).append('(');
         if (skip) {
             log.append(Mnemos.DOTS);
@@ -131,6 +159,21 @@ final class Mnemos {
         }
         log.append(')');
         return log.toString();
+    }
+
+    /**
+     * Make a string out of method.
+     * @param method The method
+     * @param args Actual arguments of the method
+     * @param trim Shall we trim long texts?
+     * @param skip Shall we skip details and output just dots?
+     * @return Text representation of it
+     * @since 0.7.19
+     * @checkstyle ParameterNumber (4 lines)
+     */
+    public static String toText(final Method method, final Object[] args,
+        final boolean trim, final boolean skip) {
+        return Mnemos.toText(method, args, "", trim, skip);
     }
 
     /**
