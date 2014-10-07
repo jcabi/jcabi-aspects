@@ -38,7 +38,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-0.19/index.html" title="JavaDoc 0.19">JavaDoc 0.19</a>
+                            <span>                        <a href="apidocs-0.20/index.html" title="JavaDoc 0.20">JavaDoc 0.20</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -188,13 +188,13 @@
                             </div>
                             <ul class="badges">
                                 <li>
-                                    <strong itemprop="version">0.19</strong>
+                                    <strong itemprop="version">0.20</strong>
                                 </li>
                                 <li>
                                     
-                                    <time itemprop="datePublished" datetime="2014-09-26T12:03:21Z">
+                                    <time itemprop="datePublished" datetime="2014-10-07T10:06:12Z">
                                         
-                                        26-Sep-2014
+                                        07-Oct-2014
                                     </time>
                                 </li>
                                 <li class="menu-button">menu</li>
@@ -242,7 +242,7 @@
                             <!--  --><!-- Copyright (c) 2011, jcabi.com --><!-- All rights reserved. --><!--  --><!-- Redistribution and use in source and binary forms, with or without --><!-- modification, are permitted provided that the following conditions --><!-- are met: 1) Redistributions of source code must retain the above --><!-- copyright notice, the list of conditions and the following --><!-- disclaimer. 2) Redistributions in binary form must reproduce the above --><!-- copyright notice, the list of conditions and the following --><!-- disclaimer in the documentation and/or other materials provided --><!-- with the distribution. 3) Neither the name of the jcabi.com, nor --><!-- the names of its contributors may be used to endorse or promote --><!-- products derived from this software without specific prior written --><!-- permission. --><!--  --><!-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS --><!-- "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES INCLUDING, BUT --><!-- NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND --><!-- FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL --><!-- THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, --><!-- INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES --><!-- (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR --><!-- SERVICES, LOSS OF USE, DATA, PROFITS, OR BUSINESS INTERRUPTION) --><!-- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, --><!-- STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) --><!-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED --><!-- OF THE POSSIBILITY OF SUCH DAMAGE. --><!--  --><div class="section">
 <h2><a name="Logging_Java_method_executions"></a>Logging Java method executions</h2>
 <p>Read this blog post first: <a class="externalLink" href="http://www.yegor256.com/2014/06/01/aop-aspectj-java-method-logging.html">Java Method Logging with AOP and Annotations</a></p>
-<p>Annotate your methods with <a href="./apidocs-0.19/com/jcabi/aspects/Loggable.html"><tt>@Loggable</tt></a> annotation and every time they are called, your SLF4J logging facility will receive a message with the details of execution and the total execution time:</p>
+<p>Annotate your methods with <a href="./apidocs-0.20/com/jcabi/aspects/Loggable.html"><tt>@Loggable</tt></a> annotation and every time they are called, your SLF4J logging facility will receive a message with the details of execution and the total execution time:</p>
 <div class="source">
 <pre>public class Resource {
   @Loggable(Loggable.DEBUG)
@@ -301,6 +301,21 @@ public class JaxRsResource {
   public List&lt;String&gt; get(String name) {
     // Returns a long list of texts which are not
     // important and should not pollute the log.
+  }
+}</pre></div>
+<p>Since version 0.8.1, it is possible to add result of toString() method into the log line by setting <tt>logThis</tt> to true in <tt>@Loggable</tt> annotaton:</p>
+<div class="source">
+<pre>public class LoggingThis {
+  private final String name = &quot;John&quot;;
+
+  @Loggable(logThis = true)
+  public List&lt;String&gt; get(String name) {
+    // Returns a long list of texts which are not
+    // important and should not pollute the log.
+  }
+
+  public String toString() {
+    return String.format(&quot;{name=%s}&quot;, this.name);
   }
 }</pre></div>
 <p>The mechanism is implemented with AOP/AspectJ. Read <a href="./example-weaving.html">how to integrate it into your <tt>pom.xml</tt></a>.</p></div>
