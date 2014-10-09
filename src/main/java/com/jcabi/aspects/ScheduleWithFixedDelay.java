@@ -67,6 +67,13 @@ import java.util.concurrent.TimeUnit;
  * method should be explicitly called
  * at the moment you want it to stop.
  *
+ * <p><b>NOTE:</b> It should be pointed out that in order to ensure that there
+ * are no duplicate executions, you can only schedule an execution once between
+ * all equal objects (i.e. instances that are equal as per
+ * {@link Object#equals(Object)})). Invoking the same method multiple times,
+ * without stopping it first, will result in an {@link IllegalStateException}
+ * being thrown.
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.16
