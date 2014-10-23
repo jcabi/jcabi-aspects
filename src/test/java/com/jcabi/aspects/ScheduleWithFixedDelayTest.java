@@ -58,8 +58,23 @@ public final class ScheduleWithFixedDelayTest {
         TimeUnit.SECONDS.sleep(1L);
         MatcherAssert.assertThat(counter.get(), Matchers.greaterThan(0L));
         sample.close();
-        TimeUnit.MILLISECONDS.sleep((long) Tv.TEN);
+        TimeUnit.MILLISECONDS.sleep(Tv.TEN);
         MatcherAssert.assertThat(counter.get(), Matchers.lessThan(0L));
+    }
+
+    /**
+     * ScheduleWithFixedDelay can stop a scheduled run before the first
+     * execution occurs.
+     * @throws Exception If something goes wrong.
+     */
+    @Test
+    public void canStopBeforeFirstScheduledRun() throws Exception {
+        final AtomicLong counter = new AtomicLong();
+        final ScheduleWithFixedDelayTest.LongDelaySample sample =
+            new ScheduleWithFixedDelayTest.LongDelaySample(counter);
+        sample.close();
+        TimeUnit.MILLISECONDS.sleep(Tv.HUNDRED);
+        MatcherAssert.assertThat(counter.get(), Matchers.is(0L));
     }
 
     /**
@@ -85,6 +100,32 @@ public final class ScheduleWithFixedDelayTest {
         @Override
         public void close() throws IOException {
             this.counter.set(-1L);
+        }
+    }
+
+    /**
+     * Sample class with long delay.
+     */
+    @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.MINUTES)
+    private static final class LongDelaySample implements Runnable, Closeable {
+        /**
+         * Encapsulated counter.
+         */
+        private final transient AtomicLong counter;
+        /**
+         * Public ctor.
+         * @param cnt Counter to encapsulate
+         */
+        LongDelaySample(final AtomicLong cnt) {
+            this.counter = cnt;
+        }
+        @Override
+        public void run() {
+            this.counter.addAndGet(1L);
+        }
+        @Override
+        public void close() {
+            // Nothing to do.
         }
     }
 
