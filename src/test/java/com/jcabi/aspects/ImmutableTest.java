@@ -214,6 +214,10 @@ public final class ImmutableTest {
          */
         @Immutable.Array
         private final transient String[] texts = new String[] {"foo"};
+        /**
+         * Immutable iface.
+         */
+        private final transient ImmutableInterface iface = null;
     }
 
     /**
