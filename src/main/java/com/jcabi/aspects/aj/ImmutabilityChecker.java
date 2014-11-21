@@ -98,7 +98,9 @@ public final class ImmutabilityChecker {
                             type.getName()
                         )
                     );
-                } else if (!Modifier.isFinal(type.getModifiers())) {
+                }
+                if (!type.isInterface()
+                    && !Modifier.isFinal(type.getModifiers())) {
                     throw new Violation(
                         String.format(
                             "Class '%s' is not final",
