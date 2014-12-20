@@ -68,8 +68,8 @@ public final class MethodLogger {
     /**
      * Currently running methods.
      */
-    private final transient Set<MethodLogger.Marker> running =
-        new ConcurrentSkipListSet<MethodLogger.Marker>();
+    private final transient Set<Marker> running =
+        new ConcurrentSkipListSet<Marker>();
 
     /**
      * Public ctor.
@@ -171,11 +171,7 @@ public final class MethodLogger {
      * @param annotation The annotation
      * @return The result of call
      * @throws Throwable If something goes wrong inside
-     * @checkstyle ExecutableStatementCount (50 lines)
-     * @todo #87 Refactor this method into smaller ones and remove both PMD
-     *  and Checkstyle suppress.
      */
-    @SuppressWarnings("PMD.ExcessiveMethodLength")
     private Object wrap(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation) throws Throwable {
         if (Thread.interrupted()) {
@@ -194,7 +190,6 @@ public final class MethodLogger {
         try {
             final Object logger = this.logger(method, annotation.name());
             int level = annotation.value();
-            final int limit = annotation.limit();
             if (annotation.prepend()) {
                 LogHelper.log(
                     level,
@@ -211,42 +206,14 @@ public final class MethodLogger {
             }
             final Object result = point.proceed();
             final long nano = System.nanoTime() - start;
-            final boolean over = nano > annotation.unit().toNanos(limit);
-            if (LogHelper.enabled(level, logger) || over) {
-                final StringBuilder msg = new StringBuilder();
-                msg.append(
-                    Mnemos.toText(
-                        point,
-                        annotation.trim(),
-                        annotation.skipArgs(),
-                        annotation.logThis()
-                    )
-                ).append(':');
-                if (!method.getReturnType().equals(Void.TYPE)) {
-                    msg.append(' ').append(
-                        Mnemos.toText(
-                            result,
-                            annotation.trim(),
-                            annotation.skipResult()
-                        )
-                    );
-                }
-                msg.append(
-                    Logger.format(
-                        String.format(
-                            " in %%[nano].%ds", annotation.precision()
-                        ),
-                        nano
-                    )
-                );
-                if (over) {
+            if (LogHelper.enabled(level, logger)
+                || this.over(annotation, nano)) {
+                if (this.over(annotation, nano)) {
                     level = Loggable.WARN;
-                    msg.append(" (too slow!)");
                 }
                 LogHelper.log(
-                    level,
-                    logger,
-                    msg.toString()
+                    level, logger,
+                    this.message(point, method, annotation, result, nano)
                 );
             }
             return result;
@@ -278,6 +245,60 @@ public final class MethodLogger {
         } finally {
             this.running.remove(marker);
         }
+    }
+
+    /**
+     * Has time for method execution passed.
+     * @param annotation Loggable annotation.
+     * @param nano Execution time.
+     * @return Is over time limit.
+     */
+    private boolean over(final Loggable annotation, final long nano) {
+        return nano > annotation.unit().toNanos(annotation.limit());
+    }
+
+    /**
+     * Prepared message for log.
+     * @param point JointPoint to use.
+     * @param method Method for which to log.
+     * @param annotation Loggable annotation.
+     * @param result Method result.
+     * @param nano Method execution time.
+     * @return Log message.
+     * @checkstyle ParameterNumberCheck (3 lines)
+     */
+    private String message(final ProceedingJoinPoint point, final Method method,
+        final Loggable annotation, final Object result, final long nano) {
+        final StringBuilder msg = new StringBuilder();
+        msg.append(
+            Mnemos.toText(
+                point,
+                annotation.trim(),
+                annotation.skipArgs(),
+                annotation.logThis()
+            )
+        ).append(':');
+        if (!method.getReturnType().equals(Void.TYPE)) {
+            msg.append(' ').append(
+                Mnemos.toText(
+                    result,
+                    annotation.trim(),
+                    annotation.skipResult()
+                )
+            );
+        }
+        msg.append(
+            Logger.format(
+                String.format(
+                    " in %%[nano].%ds", annotation.precision()
+                ),
+                nano
+            )
+        );
+        if (this.over(annotation, nano)) {
+            msg.append(" (too slow!)");
+        }
+        return msg.toString();
     }
 
     /**
