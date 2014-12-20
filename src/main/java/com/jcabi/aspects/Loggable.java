@@ -199,8 +199,6 @@ public @interface Loggable {
      * The name of the logger to be used. If not specified, defaults to the
      * class name of the annotated class or method.
      * @since 0.18
-     * @todo #85 Let's document the usage of this parameter in the
-     *  annotation-loggable.apt.vm site page.
      */
     String name() default "";
 

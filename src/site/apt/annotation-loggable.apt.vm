@@ -171,5 +171,20 @@ public class LoggingThis {
   }
 }
 +--
+
+  Since version 0.18, it is possible to use a custom target logger for
+  logging in <<<@Loggable>>>, by setting <<<name>>> parameter to the desired
+  logger. When this parameter is not set (or set to an empty string) target
+  logger will be of the method class (this is the same behaviour as before 0.18
+  release).
+
++--
+public class LoggingName {
+  @Loggable(name = "custom-logger)
+  public List<String> get(String name) {
+      // will log to custom-logger
+  }
+}
++--
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.
