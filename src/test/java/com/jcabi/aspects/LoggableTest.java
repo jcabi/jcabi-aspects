@@ -31,6 +31,9 @@ package com.jcabi.aspects;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import org.apache.log4j.PatternLayout;
@@ -47,7 +50,7 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidUsingShortType" })
 public final class LoggableTest {
     /**
      * Foo toString result.
@@ -134,6 +137,62 @@ public final class LoggableTest {
     }
 
     /**
+     * Loggable can log byte array results.
+     */
+    @Test
+    public void logsByteArray() {
+        final StringWriter writer = new StringWriter();
+        org.apache.log4j.Logger.getRootLogger().addAppender(
+            new WriterAppender(new SimpleLayout(), writer)
+        );
+        final byte[] result = new LoggableTest.Foo().logsByteArray();
+        MatcherAssert.assertThat(
+            writer.toString(),
+            Matchers.not(
+                Matchers.containsString(
+                    ClassCastException.class.getSimpleName()
+                )
+            )
+        );
+        final Collection<String> bytes = new LinkedList<String>();
+        for (final byte part : result) {
+            bytes.add(Byte.toString(part));
+        }
+        MatcherAssert.assertThat(
+            writer.toString(),
+            Matchers.stringContainsInOrder(bytes)
+        );
+    }
+
+    /**
+     * Loggable can log short array results.
+     */
+    @Test
+    public void logsShortArray() {
+        final StringWriter writer = new StringWriter();
+        org.apache.log4j.Logger.getRootLogger().addAppender(
+            new WriterAppender(new SimpleLayout(), writer)
+        );
+        final short[] result = new LoggableTest.Foo().logsShortArray();
+        MatcherAssert.assertThat(
+            writer.toString(),
+            Matchers.not(
+                Matchers.containsString(
+                    ClassCastException.class.getSimpleName()
+                )
+            )
+        );
+        final Collection<String> shorts = new LinkedList<String>();
+        for (final short part : result) {
+            shorts.add(Short.toString(part));
+        }
+        MatcherAssert.assertThat(
+            writer.toString(),
+            Matchers.stringContainsInOrder(shorts)
+        );
+    }
+
+    /**
      * Loggable can log methods that specify their own logger name.
      * @throws Exception If something goes wrong
      */
@@ -215,7 +274,7 @@ public final class LoggableTest {
             return new StringBuffer(text).reverse().toString();
         }
         /**
-         * Method with different time unit specificaiton.
+         * Method with different time unit specification.
          * @return Some text
          * @throws Exception If terminated
          */
@@ -224,7 +283,29 @@ public final class LoggableTest {
             TimeUnit.SECONDS.sleep(2);
             return LoggableTest.Foo.hiddenText();
         }
-
+        /**
+         * Method returns byte array.
+         * @return Byte array.
+         */
+        @Loggable
+        public byte[] logsByteArray() {
+            final byte[] bytes = new byte[Tv.TEN];
+            new Random().nextBytes(bytes);
+            return bytes;
+        }
+        /**
+         * Method returns short array.
+         * @return Byte array.
+         */
+        @Loggable
+        public short[] logsShortArray() {
+            final short[] shorts = new short[Tv.TEN];
+            final Random random = new Random();
+            for (int idx = 0; idx < shorts.length; ++idx) {
+                shorts[idx] = (short) random.nextInt();
+            }
+            return shorts;
+        }
         /**
          * Get last char.
          * @param text Text to get last char from.

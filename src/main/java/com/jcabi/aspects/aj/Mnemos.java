@@ -32,6 +32,7 @@ package com.jcabi.aspects.aj;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 
@@ -42,7 +43,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @version $Id$
  */
 @Immutable
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidUsingShortType" })
 final class Mnemos {
 
     /**
@@ -285,19 +286,17 @@ final class Mnemos {
      * Make a string out of an object.
      * @param arg The argument
      * @return Text representation of it
+     * @todo #109 Add handling of int, long, float, double, char and boolean
+     *  arrays.
      */
     private static String toText(final Object arg) {
         String text;
         if (arg.getClass().isArray()) {
-            final StringBuilder bldr = new StringBuilder();
-            bldr.append('[');
-            for (final Object item : (Object[]) arg) {
-                if (bldr.length() > 1) {
-                    bldr.append(Mnemos.COMMA);
-                }
-                bldr.append(Mnemos.toText(item, false, false));
+            if (arg instanceof Object[]) {
+                text = Mnemos.objectArrays((Object[]) arg);
+            } else {
+                text = Mnemos.primitiveArrays(arg);
             }
-            text = bldr.append(']').toString();
         } else {
             final String origin = arg.toString();
             if (arg instanceof String || origin.contains(" ")
@@ -310,4 +309,37 @@ final class Mnemos {
         return text;
     }
 
+    /**
+     * Text representation of object arrays.
+     * @param arg Array to change into String.
+     * @return Array in String.
+     */
+    private static String objectArrays(final Object[] arg) {
+        final StringBuilder bldr = new StringBuilder();
+        bldr.append('[');
+        for (final Object item : arg) {
+            if (bldr.length() > 1) {
+                bldr.append(Mnemos.COMMA);
+            }
+            bldr.append(Mnemos.toText(item, false, false));
+        }
+        return bldr.append(']').toString();
+    }
+
+    /**
+     * Text representation of primitive arrays.
+     * @param arg Array to change into String.
+     * @return Array in String.
+     */
+    private static String primitiveArrays(final Object arg) {
+        final String text;
+        if (arg instanceof byte[]) {
+            text = Arrays.toString((byte[]) arg);
+        } else if (arg instanceof short[]) {
+            text = Arrays.toString((short[]) arg);
+        } else {
+            text = "[unknown]";
+        }
+        return text;
+    }
 }
