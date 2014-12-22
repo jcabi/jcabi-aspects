@@ -183,8 +183,20 @@ public class LoggingName {
   @Loggable(name = "com.foo.my-custom-logger")
   public List<String> get(String name) {
       // will log to com.foo.my-custom-logger
++--
+
+  Since version 0.18, it is possible to specify the precision of measured
+  execution time by providing the number of fractional digits in <<<precision>>>
+  parameter of <<<@Loggable>>>. The default precision is set to 2.
+
++--
+public class LoggingPrecision {
+  @Loggable(precision = 4)
+  public List<String> get(String name) {
+      // time logged will have 4 fractional digits
   }
 }
 +--
+
   The mechanism is implemented with AOP/AspectJ. Read
   {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.
