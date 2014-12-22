@@ -180,9 +180,9 @@ public class LoggingThis {
 
 +--
 public class LoggingName {
-  @Loggable(name = "custom-logger)
+  @Loggable(name = "com.foo.my-custom-logger")
   public List<String> get(String name) {
-      // will log to custom-logger
+      // will log to com.foo.my-custom-logger
   }
 }
 +--
