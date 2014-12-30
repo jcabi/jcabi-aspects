@@ -74,17 +74,11 @@ public final class ImmutableTest {
     /**
      * Immutable can catch mutable classes with mutable implementation of
      * immutable interfaces.
-     * @todo #104 Assignment is not intersected, that's why this test
-     *  doesn't work. We simply don't catch the moment when an object
-     *  is assigned to the private filed of another object. That's why
-     *  we can't tell when such a mutable class is being used. I think we
-     *  should introduce a new AspectJ join point in ImmutabilityChecker,
-     *  which will catch assignments.
      */
-    @Ignore
     @Test(expected = IllegalStateException.class)
     public void catchesMutableTypesWithImplementationOfImmutableInterface() {
-        new MutableWithImmutableInterface();
+        MutableWithImmutableInterface obj = new MutableWithImmutableInterface();
+        obj.getImpl().willBreakImmutability(5);
     }
 
     /**
