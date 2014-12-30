@@ -128,11 +128,9 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
-                <version>1.4</version>
+                <version>1.7</version>
                 <configuration>
-                    <complianceLevel>1.6</complianceLevel>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <complianceLevel>1.8</complianceLevel>
                     <deprecation>true</deprecation>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <showWeaveInfo>true</showWeaveInfo>
