@@ -130,7 +130,8 @@ public final class ImmutabilityChecker {
      * @param field The field to check
      * @throws Violation If it is mutable.
      */
-    private void checkArray(Object obj, final Field field) throws Violation {
+    private void checkArray(final Object obj, final Field field)
+        throws Violation {
         field.setAccessible(true);
         if (field.isAnnotationPresent(Immutable.Array.class)) {
             try {
@@ -143,8 +144,8 @@ public final class ImmutabilityChecker {
                     ),
                     ex
                 );
-            } catch (IllegalAccessException e) {
-                throwViolationFieldNotAccessible(field);
+            } catch (final IllegalAccessException ex) {
+                this.throwViolationFieldNotAccessible(field);
             }
         } else {
             // @checkstyle LineLength (3 lines)
@@ -176,7 +177,7 @@ public final class ImmutabilityChecker {
      * @param type Type to check
      * @throws ImmutabilityChecker.Violation If it is mutable
      */
-    private void fields(Object obj, final Class<?> type)
+    private void fields(final Object obj, final Class<?> type)
         throws ImmutabilityChecker.Violation {
         final Field[] fields = type.getDeclaredFields();
         for (int pos = 0; pos < fields.length; ++pos) {
@@ -195,10 +196,8 @@ public final class ImmutabilityChecker {
             try {
                 field.setAccessible(true);
                 if (field.getType() != type) {
-                    // This check is for declared field type
                     this.check(obj, field.getType());
-                    // And this one is for actual implementation
-                    Object fieldValue = field.get(obj);
+                    final Object fieldValue = field.get(obj);
                     if (fieldValue != null
                         && !field.getType().equals(fieldValue.getClass())) {
                         this.check(obj, fieldValue.getClass());
@@ -215,20 +214,20 @@ public final class ImmutabilityChecker {
                     ),
                     ex
                 );
-            } catch (IllegalAccessException ex) {
-                throwViolationFieldNotAccessible(field);
+            } catch (final IllegalAccessException ex) {
+                this.throwViolationFieldNotAccessible(field);
             }
         }
     }
-    
+
     /**
      * Throws an {@link Violation} exception with text about unaccessibility of
      * the field.
-     * 
+     *
      * @param field The field
      * @throws ImmutabilityChecker.Violation Always
      */
-    private void throwViolationFieldNotAccessible(final Field field) 
+    private void throwViolationFieldNotAccessible(final Field field)
         throws ImmutabilityChecker.Violation {
         throw new ImmutabilityChecker.Violation(
             String.format(

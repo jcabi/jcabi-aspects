@@ -30,7 +30,6 @@
 package com.jcabi.aspects;
 
 import java.util.regex.Pattern;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -77,7 +76,9 @@ public final class ImmutableTest {
      */
     @Test(expected = IllegalStateException.class)
     public void catchesMutableTypesWithImplementationOfImmutableInterface() {
-        MutableWithImmutableInterface obj = new MutableWithImmutableInterface();
+        final MutableWithImmutableInterface obj = 
+            new MutableWithImmutableInterface();
+        // @checkstyle MagicNumberCheck (1 line)
         obj.getImpl().willBreakImmutability(5);
     }
 
