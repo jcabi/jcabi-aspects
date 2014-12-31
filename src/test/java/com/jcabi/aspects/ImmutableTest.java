@@ -76,7 +76,7 @@ public final class ImmutableTest {
      */
     @Test(expected = IllegalStateException.class)
     public void catchesMutableTypesWithImplementationOfImmutableInterface() {
-        final MutableWithImmutableInterface obj = 
+        final MutableWithImmutableInterface obj =
             new MutableWithImmutableInterface();
         // @checkstyle MagicNumberCheck (1 line)
         obj.getImpl().willBreakImmutability(5);
