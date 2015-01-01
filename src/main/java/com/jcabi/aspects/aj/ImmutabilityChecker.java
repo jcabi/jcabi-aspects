@@ -194,15 +194,7 @@ public final class ImmutabilityChecker {
                 );
             }
             try {
-                field.setAccessible(true);
-                if (field.getType() != type) {
-                    this.check(obj, field.getType());
-                    final Object fieldValue = field.get(obj);
-                    if (fieldValue != null
-                        && !field.getType().equals(fieldValue.getClass())) {
-                        this.check(obj, fieldValue.getClass());
-                    }
-                }
+                this.checkDeclaredAndActualTypes(obj, field, type);
                 if (field.getType().isArray()) {
                     this.checkArray(obj, field);
                 }
@@ -214,9 +206,35 @@ public final class ImmutabilityChecker {
                     ),
                     ex
                 );
-            } catch (final IllegalAccessException ex) {
-                this.throwViolationFieldNotAccessible(field);
             }
+        }
+    }
+    
+    /**
+     * Checks if both declared and actual types of the field within the object
+     * are immutable.
+     * 
+     * @param obj The given object
+     * @param field The given field
+     * @param type The type to be skipped
+     * @throws ImmutabilityChecker.Violation If they are mutable
+     */
+    private void checkDeclaredAndActualTypes(final Object obj,
+        final Field field, final Class<?> type)
+        throws ImmutabilityChecker.Violation {
+        field.setAccessible(true);
+        if (field.getType() != type) {
+            this.check(obj, field.getType());
+        }
+        Object fieldValue = null;
+        try {
+            fieldValue = field.get(obj);
+        } catch (IllegalAccessException e) {
+            this.throwViolationFieldNotAccessible(field);
+        }
+        if (fieldValue != null
+            && !field.getType().equals(fieldValue.getClass())) {
+            this.check(obj, fieldValue.getClass());
         }
     }
 
