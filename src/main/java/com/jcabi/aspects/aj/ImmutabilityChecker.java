@@ -209,11 +209,11 @@ public final class ImmutabilityChecker {
             }
         }
     }
-    
+
     /**
      * Checks if both declared and actual types of the field within the object
      * are immutable.
-     * 
+     *
      * @param obj The given object
      * @param field The given field
      * @param type The type to be skipped
@@ -229,7 +229,7 @@ public final class ImmutabilityChecker {
         Object fieldValue = null;
         try {
             fieldValue = field.get(obj);
-        } catch (IllegalAccessException e) {
+        } catch (final IllegalAccessException ex) {
             this.throwViolationFieldNotAccessible(field);
         }
         if (fieldValue != null
