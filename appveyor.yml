@@ -1,14 +1,33 @@
-version: 1.{build}
+version: '{build}'
+skip_tags: true
+clone_depth: 10
+environment:
+  matrix:
+    - JAVA_HOME: C:\Program Files\Java\jdk1.7.0
+    - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
 branches:
   only:
     - master
   except:
     - gh-pages
 os: Windows Server 2012
-before_build:
+install:
+  - ps: >-
+      $MVNDIR = 'C:\bin\apache-maven-3.2.3\'
+      if(!(Test-Path -Path $MVNDIR )){
+        Write-Host (Test-Path -Path $MVNDIR)
+        Write-Host 'Installing Maven'
+        cinst maven
+      } else {
+        Write-Host 'Found Maven cached installation'
+      }
+  - cmd: SET PATH=C:\bin\apache-maven-3.2.3\bin;%JAVA_HOME%\bin;%PATH:C:\Ruby193\bin;=%
+  - cmd: mvn --version
   - cmd: java -version
-  - cmd: choco install maven
-  - cmd: mvn -version
+build_script:
+  - mvn clean package -B -Dmaven.test.skip=true
 test_script:
-  - cmd: mvn clean install -Pqulice
+  - mvn clean install --batch-mode -Pqulice
+cache:
+  - C:\bin\apache-maven-3.2.3\
 
