@@ -13,14 +13,16 @@ branches:
 os: Windows Server 2012
 install:
   - ps: |
-      (new-object System.Net.WebClient).DownloadFile('http://www.us.apache.org/dist/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.zip', 'C:\maven-bin.zip')
-      $shell = New-Object -ComObject shell.application
-      $zip = $shell.NameSpace("c:\maven-bin.zip")
-      MkDir("C:\maven")
-      foreach ($item in $zip.items()) {
-        $shell.Namespace("C:\maven").CopyHere($item)
+      if (!(Test-Path -Path "C:\maven" )) {
+        (new-object System.Net.WebClient).DownloadFile('http://www.us.apache.org/dist/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.zip', 'C:\maven-bin.zip')
+        $shell = New-Object -ComObject shell.application
+        $zip = $shell.NameSpace("c:\maven-bin.zip")
+        MkDir("C:\maven")
+        foreach ($item in $zip.items()) {
+          $shell.Namespace("C:\maven").CopyHere($item)
+        }
+        Dir -Recurse C:\maven | Get-Childitem
       }
-      Dir -Recurse "C:\maven" | Select Fullname
   - cmd: SET PATH=C:\maven\bin;%JAVA_HOME%\bin;%PATH:C:\Ruby193\bin;=%
   - cmd: mvn --version
   - cmd: java -version
@@ -29,5 +31,5 @@ build_script:
 test_script:
   - mvn clean install --batch-mode -Pqulice
 cache:
-  - C:\bin\apache-maven-3.2.3\
+  - C:\maven\
 
