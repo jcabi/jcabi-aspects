@@ -13,11 +13,14 @@ branches:
 os: Windows Server 2012
 install:
   - ps: |
+      Dir -Recurse C:\ | Get-Childitem
       if (!(Test-Path -Path "C:\maven" )) {
+        Write-Host "Downloading Maven..."
         (new-object System.Net.WebClient).DownloadFile('http://www.us.apache.org/dist/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.zip', 'C:\maven-bin.zip')
         $shell = New-Object -ComObject shell.application
         $zip = $shell.NameSpace("c:\maven-bin.zip")
         MkDir("C:\maven")
+        Write-Host "Unzipping Maven..."
         foreach ($item in $zip.items()) {
           $shell.Namespace("C:\maven").CopyHere($item)
         }
