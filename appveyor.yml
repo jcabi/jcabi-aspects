@@ -20,6 +20,7 @@ install:
       foreach ($item in $zip.items()) {
         $shell.Namespace("C:\maven").CopyHere($item)
       }
+      Dir -Recurse "C:\maven" | Select Fullname
   - cmd: SET PATH=C:\maven\bin;%JAVA_HOME%\bin;%PATH:C:\Ruby193\bin;=%
   - cmd: mvn --version
   - cmd: java -version
