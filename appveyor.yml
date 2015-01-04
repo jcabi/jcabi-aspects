@@ -19,10 +19,10 @@ install:
         Write-Host "Downloading Maven..."
         (new-object System.Net.WebClient).DownloadFile('http://www.us.apache.org/dist/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.zip', 'C:\maven\bin.zip')
         Write-Host "Unzipping Maven..."
-        [System.IO.Compression.ZipFile]::ExtractToDirectory("C:\maven\bin.zip", "C:\maven\3.2.5")
+        [System.IO.Compression.ZipFile]::ExtractToDirectory("C:\maven\bin.zip", "C:\maven")
       }
       Dir -Recurse C:\maven | Get-Childitem
-  - cmd: SET PATH=C:\maven\3.2.5\bin;%JAVA_HOME%\bin;%PATH:C:\Ruby193\bin;=%
+  - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;%PATH:C:\Ruby193\bin;=%
   - cmd: mvn --version
   - cmd: java -version
 build_script:
