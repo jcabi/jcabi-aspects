@@ -14,18 +14,19 @@ os: Windows Server 2012
 install:
   - ps: |
       if (!(Test-Path -Path "C:\maven" )) {
-        Write-Host "Downloading Maven..."
-        (new-object System.Net.WebClient).DownloadFile('http://www.us.apache.org/dist/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.zip', 'C:\maven-bin.zip')
-        $shell = New-Object -ComObject shell.application
-        $zip = $shell.NameSpace("c:\maven-bin.zip")
         MkDir("C:\maven")
+        Write-Host "Downloading Maven..."
+        (new-object System.Net.WebClient).DownloadFile('http://www.us.apache.org/dist/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.zip', 'C:\maven\bin.zip')
         Write-Host "Unzipping Maven..."
+        $shell = New-Object -ComObject shell.application
+        $zip = $shell.NameSpace("C:\maven\bin.zip")
+        MkDir("C:\maven\3.2.5")
         foreach ($item in $zip.items()) {
-          $shell.Namespace("C:\maven").CopyHere($item)
+          $shell.Namespace("C:\maven\3.2.5").CopyHere($item)
         }
       }
       Dir -Recurse C:\maven | Get-Childitem
-  - cmd: SET PATH=C:\maven\bin;%JAVA_HOME%\bin;%PATH:C:\Ruby193\bin;=%
+  - cmd: SET PATH=C:\maven\3.2.5\bin;%JAVA_HOME%\bin;%PATH:C:\Ruby193\bin;=%
   - cmd: mvn --version
   - cmd: java -version
 build_script:
