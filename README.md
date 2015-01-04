@@ -4,6 +4,7 @@
 [![DevOps By Rultor.com](http://www.rultor.com/b/jcabi/jcabi-aspects)](http://www.rultor.com/p/jcabi/jcabi-aspects)
 
 [![Build Status](https://travis-ci.org/jcabi/jcabi-aspects.svg?branch=master)](https://travis-ci.org/jcabi/jcabi-aspects)
+[![Build status](https://ci.appveyor.com/api/projects/status/ut87e89ykj3v269x/branch/master?svg=true)](https://ci.appveyor.com/project/yegor256/jcabi-aspects/branch/master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects)
 
 More details are here: [aspects.jcabi.com](http://aspects.jcabi.com/index.html).
