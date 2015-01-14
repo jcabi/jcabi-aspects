@@ -78,6 +78,7 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
             <scope>compile</scope>
+            <version>1.8.4</version>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
@@ -128,7 +129,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
-                <version>1.4</version>
+                <version>1.7</version>
                 <configuration>
                     <complianceLevel>1.6</complianceLevel>
                     <source>1.6</source>
