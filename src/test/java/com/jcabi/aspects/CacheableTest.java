@@ -54,8 +54,8 @@ public final class CacheableTest {
     /**
      * Cacheable can cache calls.
      * @throws Exception If something goes wrong
-     * @todo Make sure that this test runs under Java 8 and remove the Ignore
-     *  annotation then.
+     * @todo #124:30min Make sure that this test runs under Java 8 and remove
+     *  the Ignore annotation then.
      */
     @Test
     @Ignore
