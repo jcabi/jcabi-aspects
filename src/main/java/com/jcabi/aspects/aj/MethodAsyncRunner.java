@@ -56,7 +56,8 @@ public final class MethodAsyncRunner {
      * Thread pool for asynchronous execution.
      */
     private final transient ExecutorService executor =
-        Executors.newCachedThreadPool(
+        Executors.newFixedThreadPool(
+            Runtime.getRuntime().availableProcessors(),
             new NamedThreads(
                 "async",
                 "Asynchronous method execution"
