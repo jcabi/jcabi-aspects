@@ -66,10 +66,9 @@ public final class ImmutabilityChecker {
      */
     @After("initialization((@com.jcabi.aspects.Immutable *).new(..))")
     public void after(final JoinPoint point) {
-        final Object object = point.getTarget();
-        final Class<?> type = object.getClass();
+        final Class<?> type = point.getTarget().getClass();
         try {
-            this.check(object, type);
+            this.check(type);
         } catch (final ImmutabilityChecker.Violation ex) {
             throw new IllegalStateException(
                 String.format(
@@ -84,11 +83,10 @@ public final class ImmutabilityChecker {
 
     /**
      * This class is immutable?
-     * @param obj The object to check
      * @param type The class to check
      * @throws ImmutabilityChecker.Violation If it is mutable
      */
-    private void check(final Object obj, final Class<?> type)
+    private void check(final Class<?> type)
         throws ImmutabilityChecker.Violation {
         synchronized (this.immutable) {
             if (!this.ignore(type)) {
@@ -111,7 +109,7 @@ public final class ImmutabilityChecker {
                     );
                 }
                 try {
-                    this.fields(obj, type);
+                    this.fields(type);
                 } catch (final ImmutabilityChecker.Violation ex) {
                     throw new ImmutabilityChecker.Violation(
                         String.format("Class '%s' is mutable", type.getName()),
@@ -125,47 +123,14 @@ public final class ImmutabilityChecker {
     }
 
     /**
-     * This array field immutable?
-     * @param obj The object which has the array
-     * @param field The field to check
-     * @throws Violation If it is mutable.
-     */
-    private void checkArray(final Object obj, final Field field)
-        throws Violation {
-        field.setAccessible(true);
-        if (field.isAnnotationPresent(Immutable.Array.class)) {
-            try {
-                this.check(field.get(obj), field.getType().getComponentType());
-            } catch (final ImmutabilityChecker.Violation ex) {
-                throw new ImmutabilityChecker.Violation(
-                    String.format(
-                        "Field array component type '%s' is mutable",
-                        field.getType().getComponentType().getName()
-                    ),
-                    ex
-                );
-            } catch (final IllegalAccessException ex) {
-                this.throwViolationFieldNotAccessible(field);
-            }
-        } else {
-            // @checkstyle LineLength (3 lines)
-            throw new ImmutabilityChecker.Violation(
-                String.format(
-                    "Field '%s' is an array and is not annotated with @Immutable.Array",
-                    field.getName()
-                )
-            );
-        }
-    }
-
-    /**
      * This class should be ignored and never checked any more?
      * @param type The type to check
      * @return TRUE if this class shouldn't be checked
      */
     private boolean ignore(final Class<?> type) {
         // @checkstyle BooleanExpressionComplexity (5 lines)
-        return type.getName().startsWith("java.lang.")
+        return type.equals(Object.class)
+            || type.equals(String.class)
             || type.isPrimitive()
             || type.getName().startsWith("org.aspectj.runtime.reflect.")
             || this.immutable.contains(type);
@@ -173,11 +138,10 @@ public final class ImmutabilityChecker {
 
     /**
      * All its fields are safe?
-     * @param obj The object to check
      * @param type Type to check
      * @throws ImmutabilityChecker.Violation If it is mutable
      */
-    private void fields(final Object obj, final Class<?> type)
+    private void fields(final Class<?> type)
         throws ImmutabilityChecker.Violation {
         final Field[] fields = type.getDeclaredFields();
         for (int pos = 0; pos < fields.length; ++pos) {
@@ -188,15 +152,14 @@ public final class ImmutabilityChecker {
             if (!Modifier.isFinal(field.getModifiers())) {
                 throw new ImmutabilityChecker.Violation(
                     String.format(
-                        "field '%s' is not final",
-                        field
+                        "field '%s' is not final in %s",
+                        field, type.getName()
                     )
                 );
             }
             try {
-                this.checkDeclaredAndActualTypes(obj, field, type);
                 if (field.getType().isArray()) {
-                    this.checkArray(obj, field);
+                    this.checkArray(field);
                 }
             } catch (final ImmutabilityChecker.Violation ex) {
                 throw new ImmutabilityChecker.Violation(
@@ -211,48 +174,33 @@ public final class ImmutabilityChecker {
     }
 
     /**
-     * Checks if both declared and actual types of the field within the object
-     * are immutable.
-     *
-     * @param obj The given object
-     * @param field The given field
-     * @param type The type to be skipped
-     * @throws ImmutabilityChecker.Violation If they are mutable
+     * This array field immutable?
+     * @param field The field to check
+     * @throws Violation If it is mutable.
      */
-    private void checkDeclaredAndActualTypes(final Object obj,
-        final Field field, final Class<?> type)
+    private void checkArray(final Field field)
         throws ImmutabilityChecker.Violation {
-        field.setAccessible(true);
-        if (field.getType() != type) {
-            this.check(obj, field.getType());
+        if (!field.isAnnotationPresent(Immutable.Array.class)) {
+            throw new ImmutabilityChecker.Violation(
+                String.format(
+                    // @checkstyle LineLength (1 line)
+                    "Field '%s' is an array and is not annotated with @Immutable.Array",
+                    field.getName()
+                )
+            );
         }
-        Object fieldValue = null;
+        final Class<?> type = field.getType().getComponentType();
         try {
-            fieldValue = field.get(obj);
-        } catch (final IllegalAccessException ex) {
-            this.throwViolationFieldNotAccessible(field);
+            this.check(type);
+        } catch (final ImmutabilityChecker.Violation ex) {
+            throw new ImmutabilityChecker.Violation(
+                String.format(
+                    "Field array component type '%s' is mutable",
+                    type.getName()
+                ),
+                ex
+            );
         }
-        if (fieldValue != null
-            && !field.getType().equals(fieldValue.getClass())) {
-            this.check(obj, fieldValue.getClass());
-        }
-    }
-
-    /**
-     * Throws an {@link Violation} exception with text about unaccessibility of
-     * the field.
-     *
-     * @param field The field
-     * @throws ImmutabilityChecker.Violation Always
-     */
-    private void throwViolationFieldNotAccessible(final Field field)
-        throws ImmutabilityChecker.Violation {
-        throw new ImmutabilityChecker.Violation(
-            String.format(
-                "Field '%s' is not accessible",
-                field
-            )
-        );
     }
 
     /**
@@ -275,8 +223,7 @@ public final class ImmutabilityChecker {
          * @param msg Message
          * @param cause Cause of it
          */
-        public Violation(final String msg,
-            final ImmutabilityChecker.Violation cause) {
+        public Violation(final String msg, final Exception cause) {
             super(msg, cause);
         }
     }

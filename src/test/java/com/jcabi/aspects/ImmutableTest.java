@@ -30,6 +30,7 @@
 package com.jcabi.aspects;
 
 import java.util.regex.Pattern;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -64,7 +65,14 @@ public final class ImmutableTest {
 
     /**
      * Immutable can catch mutable classes with interfaces.
+     * @todo #128:30min This test and the next one are ignored because
+     *  this functionality was removed in #128. It simply didn't work
+     *  correctly and I didn't manage to reproduce it. I suspect that
+     *  that the issue appears when one constructor is calling another
+     *  constructor. Anyway, let's try to investigate and re-implement
+     *  the functionality again.
      */
+    @Ignore
     @Test(expected = IllegalStateException.class)
     public void catchesMutableTypesWithInterfaces() {
         new MutableWithInterface();
@@ -74,6 +82,7 @@ public final class ImmutableTest {
      * Immutable can catch mutable classes with mutable implementation of
      * immutable interfaces.
      */
+    @Ignore
     @Test(expected = IllegalStateException.class)
     public void catchesMutableTypesWithImplementationOfImmutableInterface() {
         final MutableWithImmutableInterface obj =
@@ -87,7 +96,9 @@ public final class ImmutableTest {
      */
     @Test
     public void passesImmutableObjects() {
-        new TruelyImmutable();
+        final Object obj = new TruelyImmutable(
+            new TruelyImmutableWithNonPrivateFields()
+        );
     }
 
     /**
@@ -210,7 +221,7 @@ public final class ImmutableTest {
         /**
          * Another immutable class member.
          */
-        private final transient String text = "Hello, world!";
+        private final transient String text;
         /**
          * An immutable array member.
          */
@@ -220,6 +231,26 @@ public final class ImmutableTest {
          * Immutable iface.
          */
         private final transient ImmutableInterface iface = null;
+        /**
+         * Ctor.
+         */
+        public TruelyImmutable() {
+            this("Hello, world!");
+        }
+        /**
+         * Ctor.
+         * @param ipt Input
+         */
+        public TruelyImmutable(final TruelyImmutableWithNonPrivateFields ipt) {
+            this(ipt.text);
+        }
+        /**
+         * Ctor.
+         * @param ipt Input
+         */
+        public TruelyImmutable(final String ipt) {
+            this.text = ipt;
+        }
     }
 
     /**
@@ -267,7 +298,6 @@ public final class ImmutableTest {
          * Immutable class member.
          */
         private final transient String data = null;
-
         /**
          * Could be overloaded by a child of the class and then return
          * nonsensical value.
