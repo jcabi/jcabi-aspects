@@ -41,6 +41,11 @@ import org.junit.Test;
 public final class MnemosTest {
 
     /**
+     * The representation of a empty array.
+     */
+    private final String emptyArray = "[]";
+
+    /**
      * Mnemos can build a string from an object.
      * @throws Exception If something goes wrong
      */
@@ -52,9 +57,9 @@ public final class MnemosTest {
             new Object[] {"\u20ac-plain", "'\u20ac-plain'"},
             new Object[] {"test ", "'test '"},
             new Object[] {null, "NULL"},
-            new Object[] {new String[0], "[]"},
+            new Object[] {new String[0], this.emptyArray},
             new Object[] {new String[] {"abc", "x"}, "['abc', 'x']"},
-            new Object[] {new Object[] {null, 5}, "[NULL, 5]"},
+            new Object[] {new Object[] {null, 5}, "[NULL, 5]"}
         };
         for (final Object[] pair : pairs) {
             MatcherAssert.assertThat(
@@ -93,9 +98,9 @@ public final class MnemosTest {
     @Test
     public void buildsTextFromIntArray() throws Exception {
         final Object[][] pairs = new Object[][] {
-            new Object[] {new int[0], "[]"},
+            new Object[] {new int[0], this.emptyArray},
             new Object[] {new int[] {1}, "[1]"},
-            new Object[] {new int[] {1, 2, 3}, "[1, 2, 3]"},
+            new Object[] {new int[] {1, 2, 3}, "[1, 2, 3]"}
         };
         for (final Object[] pair : pairs) {
             MatcherAssert.assertThat(
@@ -112,9 +117,9 @@ public final class MnemosTest {
     @Test
     public void buildsTextFromLongArray() throws Exception {
         final Object[][] pairs = new Object[][] {
-            new Object[] {new long[0], "[]"},
-            new Object[] {new long[] {1L}, "[1]"},
-            new Object[] {new long[] {1L, 2L, 3L}, "[1, 2, 3]"}
+            new Object[] {new long[0], this.emptyArray},
+            new Object[] {new long[] {2L}, "[2]"},
+            new Object[] {new long[] {2L, 3L, 4L}, "[2, 3, 4]"}
         };
         for (final Object[] pair : pairs) {
             MatcherAssert.assertThat(
@@ -131,7 +136,7 @@ public final class MnemosTest {
     @Test
     public void buildsTextFromFloatArray() throws Exception {
         final Object[][] pairs = new Object[][] {
-            new Object[] {new float[0], "[]"},
+            new Object[] {new float[0], this.emptyArray},
             new Object[] {new float[] {1.01f}, "[1.01]"},
             new Object[] {
                 new float[] {1.01f, 2.02f, 3.03f},
@@ -153,9 +158,9 @@ public final class MnemosTest {
     @Test
     public void buildsTextFromDoubleArray() throws Exception {
         final Object[][] pairs = new Object[][] {
-            new Object[] {new double[0], "[]"},
-            new Object[] {new double[] {1.01}, "[1.01]"},
-            new Object[] {new double[] {1.01, 2.02, 3.03}, "[1.01, 2.02, 3.03]"}
+            new Object[] {new double[0], this.emptyArray},
+            new Object[] {new double[] {2.01}, "[2.01]"},
+            new Object[] {new double[] {2.01, 2.02, 2.03}, "[2.01, 2.02, 2.03]"}
         };
         for (final Object[] pair : pairs) {
             MatcherAssert.assertThat(
@@ -172,7 +177,7 @@ public final class MnemosTest {
     @Test
     public void buildsTextFromCharArray() throws Exception {
         final Object[][] pairs = new Object[][] {
-            new Object[] {new char[0], "[]"},
+            new Object[] {new char[0], this.emptyArray},
             new Object[] {new char[] {'a'}, "[a]"},
             new Object[] {new char[] {'a', 'b', 'c'}, "[a, b, c]"}
         };
@@ -191,7 +196,7 @@ public final class MnemosTest {
     @Test
     public void buildsTextFromBooleanArray() throws Exception {
         final Object[][] pairs = new Object[][] {
-            new Object[] {new boolean[0], "[]"},
+            new Object[] {new boolean[0], this.emptyArray},
             new Object[] {new boolean[] {true}, "[true]"},
             new Object[] {
                 new boolean[] {true, false, false},
