@@ -64,7 +64,7 @@ public final class MnemosTest {
         this.validateText(pairs);
     }
 
-	/**
+    /**
      * Mnemos can handle toxic objects gracefully.
      * @throws Exception If something goes wrong
      */
