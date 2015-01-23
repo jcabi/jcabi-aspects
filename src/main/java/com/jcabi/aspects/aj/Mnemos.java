@@ -286,8 +286,6 @@ final class Mnemos {
      * Make a string out of an object.
      * @param arg The argument
      * @return Text representation of it
-     * @todo #109 Add handling of int, long, float, double, char and boolean
-     *  arrays.
      */
     private static String toText(final Object arg) {
         String text;
@@ -333,10 +331,22 @@ final class Mnemos {
      */
     private static String primitiveArrays(final Object arg) {
         final String text;
-        if (arg instanceof byte[]) {
+        if (arg instanceof char[]) {
+            text = Arrays.toString((char[]) arg);
+        } else if (arg instanceof byte[]) {
             text = Arrays.toString((byte[]) arg);
         } else if (arg instanceof short[]) {
             text = Arrays.toString((short[]) arg);
+        } else if (arg instanceof int[]) {
+            text = Arrays.toString((int[]) arg);
+        } else if (arg instanceof long[]) {
+            text = Arrays.toString((long[]) arg);
+        } else if (arg instanceof float[]) {
+            text = Arrays.toString((float[]) arg);
+        } else if (arg instanceof double[]) {
+            text = Arrays.toString((double[]) arg);
+        } else if (arg instanceof boolean[]) {
+            text = Arrays.toString((boolean[]) arg);
         } else {
             text = "[unknown]";
         }
