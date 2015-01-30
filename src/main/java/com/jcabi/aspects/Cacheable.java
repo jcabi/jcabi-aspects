@@ -123,7 +123,7 @@ public @interface Cacheable {
      *
      * @since 0.21
      */
-    Class<?>[] before() default {};
+    Class<?>[] before() default { };
 
     /**
      * After-flushing trigger(s).
@@ -145,7 +145,7 @@ public @interface Cacheable {
      *
      * @since 0.21
      */
-    Class<?>[] after() default {};
+    Class<?>[] after() default { };
 
     /**
      * Identifies a method that should flush all cached entities of

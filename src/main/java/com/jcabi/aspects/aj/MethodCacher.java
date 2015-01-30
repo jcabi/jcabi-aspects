@@ -98,7 +98,7 @@ public final class MethodCacher {
                     }
                 }
             ),
-            1, 1, TimeUnit.SECONDS
+            1L, 1L, TimeUnit.SECONDS
         );
     }
 
@@ -115,13 +115,33 @@ public final class MethodCacher {
      */
     @Around("execution(* *(..)) && @annotation(com.jcabi.aspects.Cacheable)")
     public Object cache(final ProceedingJoinPoint point) throws Throwable {
-        final Key key = new MethodCacher.Key(point);
-        Tunnel tunnel;
+        final MethodCacher.Key key = new MethodCacher.Key(point);
+        MethodCacher.Tunnel tunnel;
+        final Method method = MethodSignature.class
+            .cast(point.getSignature())
+            .getMethod();
+        final Cacheable annot = method.getAnnotation(Cacheable.class);
         synchronized (this.tunnels) {
+            for (final Class<?> before : annot.before()) {
+                final boolean flag = Boolean.class.cast(
+                    before.getMethod("flushBefore").invoke(method.getClass())
+                );
+                if (flag) {
+                    this.preflush(point);
+                }
+            }
             tunnel = this.tunnels.get(key);
             if (tunnel == null || tunnel.expired()) {
                 tunnel = new MethodCacher.Tunnel(point, key);
                 this.tunnels.put(key, tunnel);
+            }
+            for (final Class<?> after : annot.after()) {
+                final boolean flag = Boolean.class.cast(
+                    after.getMethod("flushAfter").invoke(method.getClass())
+                );
+                if (flag) {
+                    this.postflush(point);
+                }
             }
         }
         return tunnel.through();
@@ -191,7 +211,7 @@ public final class MethodCacher {
                 if (!key.sameTarget(point)) {
                     continue;
                 }
-                final Tunnel removed = this.tunnels.remove(key);
+                final MethodCacher.Tunnel removed = this.tunnels.remove(key);
                 final Method method = MethodSignature.class
                     .cast(point.getSignature())
                     .getMethod();
@@ -217,9 +237,9 @@ public final class MethodCacher {
      */
     private void clean() {
         synchronized (this.tunnels) {
-            for (final Key key : this.tunnels.keySet()) {
+            for (final MethodCacher.Key key : this.tunnels.keySet()) {
                 if (this.tunnels.get(key).expired()) {
-                    final Tunnel tunnel = this.tunnels.remove(key);
+                    final MethodCacher.Tunnel tunnel = this.tunnels.remove(key);
                     LogHelper.log(
                         key.getLevel(),
                         this,
@@ -243,7 +263,7 @@ public final class MethodCacher {
         /**
          * Key related to this tunnel.
          */
-        private final transient Key key;
+        private final transient MethodCacher.Key key;
         /**
          * Was it already executed?
          */
@@ -261,7 +281,7 @@ public final class MethodCacher {
          * @param pnt Joint point
          * @param akey The key related to it
          */
-        protected Tunnel(final ProceedingJoinPoint pnt, final Key akey) {
+        Tunnel(final ProceedingJoinPoint pnt, final MethodCacher.Key akey) {
             this.point = pnt;
             this.key = akey;
         }
@@ -284,15 +304,17 @@ public final class MethodCacher {
                     .cast(this.point.getSignature())
                     .getMethod();
                 final Cacheable annot = method.getAnnotation(Cacheable.class);
-                String suffix;
+                final String suffix;
                 if (annot.forever()) {
                     this.lifetime = Long.MAX_VALUE;
                     suffix = "valid forever";
                 } else if (annot.lifetime() == 0) {
-                    this.lifetime = 0;
+                    this.lifetime = 0L;
                     suffix = "invalid immediately";
                 } else {
-                    final long msec = annot.unit().toMillis(annot.lifetime());
+                    final long msec = annot.unit().toMillis(
+                        (long) annot.lifetime()
+                    );
                     this.lifetime = start + msec;
                     suffix = Logger.format("valid for %[ms]s", msec);
                 }
@@ -357,7 +379,7 @@ public final class MethodCacher {
          * Public ctor.
          * @param point Joint point
          */
-        protected Key(final ProceedingJoinPoint point) {
+        Key(final JoinPoint point) {
             this.method = MethodSignature.class
                 .cast(point.getSignature()).getMethod();
             this.target = MethodCacher.Key.targetize(point);
@@ -378,7 +400,7 @@ public final class MethodCacher {
         }
         @Override
         public boolean equals(final Object obj) {
-            boolean equals;
+            final boolean equals;
             if (this == obj) {
                 equals = true;
             } else if (obj instanceof MethodCacher.Key) {
@@ -426,7 +448,7 @@ public final class MethodCacher {
          * @return The target
          */
         private static Object targetize(final JoinPoint point) {
-            Object tgt;
+            final Object tgt;
             final Method method = MethodSignature.class
                 .cast(point.getSignature()).getMethod();
             if (Modifier.isStatic(method.getModifiers())) {

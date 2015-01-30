@@ -54,6 +54,7 @@ public final class CacheableTest {
 
     /**
      * Random.
+     * @checkstyle ConstantUsageCheck (3 lines)
      */
     private static final Random RANDOM = new SecureRandom();
 
@@ -244,7 +245,7 @@ public final class CacheableTest {
     /**
      * Dummy class, for tests above.
      */
-    private static final class Bar {
+    public static final class Bar {
         /**
          * Get some number.
          * @return The number
