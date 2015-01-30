@@ -104,16 +104,60 @@ public @interface Cacheable {
     boolean forever() default false;
 
     /**
+     * Before-flushing trigger(s).
+     *
+     * <p>Before calling the method, call static method {@code flushBefore()}
+     * in this class and, according to its result, either flush or not.
+     * For example:
+     *
+     * <pre> class Foo {
+     *   &#64;Cacheable(before = Foo.class)
+     *   int read() {
+     *     // return some number
+     *   }
+     *   public static boolean flushBefore() {
+     *   // if TRUE is returned, flushing will happen before
+     *   // the call to #read()
+     *   }
+     * }</pre>
+     *
+     * @since 0.21
+     */
+    Class<?>[] before() default {};
+
+    /**
+     * After-flushing trigger(s).
+     *
+     * <p>After calling the method, call static method {@code flushAfter()}
+     * in this class and, according to its result, either flush or not.
+     * For example:
+     *
+     * <pre> class Foo {
+     *   &#64;Cacheable(after = Foo.class)
+     *   int read() {
+     *     // return some number
+     *   }
+     *   public static boolean flushAfter() {
+     *   // if TRUE is returned, flushing will happen after
+     *   // the call to #read()
+     *   }
+     * }</pre>
+     *
+     * @since 0.21
+     */
+    Class<?>[] after() default {};
+
+    /**
      * Identifies a method that should flush all cached entities of
      * this class/object.
      * @since 0.7.14
-     * @deprecated It is identical to {@link FlushBefore}
+     * @deprecated It is identical to {@link Cacheable.FlushBefore}
      */
     @Documented
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
     @Deprecated
-    public @interface Flush {
+    @interface Flush {
     }
 
     /**
@@ -124,7 +168,7 @@ public @interface Cacheable {
     @Documented
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
-    public @interface FlushBefore {
+    @interface FlushBefore {
     }
 
     /**
@@ -135,7 +179,7 @@ public @interface Cacheable {
     @Documented
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
-    public @interface FlushAfter {
+    @interface FlushAfter {
     }
 
 }

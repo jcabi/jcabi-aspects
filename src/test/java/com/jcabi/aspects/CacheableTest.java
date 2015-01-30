@@ -29,6 +29,7 @@
  */
 package com.jcabi.aspects;
 
+import java.security.SecureRandom;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -50,6 +51,11 @@ import org.junit.Test;
  */
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.DoNotUseThreads" })
 public final class CacheableTest {
+
+    /**
+     * Random.
+     */
+    private static final Random RANDOM = new SecureRandom();
 
     /**
      * Cacheable can cache calls.
@@ -126,7 +132,7 @@ public final class CacheableTest {
         final Callable<Boolean> task = new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
-                start.await(1, TimeUnit.SECONDS);
+                start.await(1L, TimeUnit.SECONDS);
                 values.add(foo.get().toString());
                 done.countDown();
                 return true;
@@ -138,7 +144,7 @@ public final class CacheableTest {
                 executor.submit(task);
             }
             start.countDown();
-            done.await(Tv.THIRTY, TimeUnit.SECONDS);
+            done.await((long) Tv.THIRTY, TimeUnit.SECONDS);
             MatcherAssert.assertThat(values.size(), Matchers.equalTo(1));
             never.interrupt();
         } finally {
@@ -147,14 +153,22 @@ public final class CacheableTest {
     }
 
     /**
+     * Cacheable can flush with a static trigger.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void flushesWithStaticTrigger() throws Exception {
+        final CacheableTest.Bar bar = new CacheableTest.Bar();
+        MatcherAssert.assertThat(
+            bar.get(),
+            Matchers.not(Matchers.equalTo(bar.get()))
+        );
+    }
+
+    /**
      * Dummy class, for tests above.
      */
     private static final class Foo {
-        /**
-         * Random.
-         */
-        @SuppressWarnings("PMD.UnusedPrivateField")
-        private static final Random RANDOM = new Random();
         /**
          * Encapsulated long.
          */
@@ -187,7 +201,7 @@ public final class CacheableTest {
         @Cacheable(lifetime = 1, unit = TimeUnit.SECONDS)
         @Loggable(Loggable.DEBUG)
         public CacheableTest.Foo get() {
-            return new CacheableTest.Foo(CacheableTest.Foo.RANDOM.nextLong());
+            return new CacheableTest.Foo(CacheableTest.RANDOM.nextLong());
         }
         /**
          * Sleep forever, to abuse caching system.
@@ -216,7 +230,7 @@ public final class CacheableTest {
          */
         @Cacheable(lifetime = 1, unit = TimeUnit.SECONDS)
         public static String staticGet() {
-            return Long.toString(CacheableTest.Foo.RANDOM.nextLong());
+            return Long.toString(CacheableTest.RANDOM.nextLong());
         }
         /**
          * Flush it.
@@ -224,6 +238,27 @@ public final class CacheableTest {
         @Cacheable.FlushBefore
         public static void staticFlush() {
             // nothing to do
+        }
+    }
+
+    /**
+     * Dummy class, for tests above.
+     */
+    private static final class Bar {
+        /**
+         * Get some number.
+         * @return The number
+         */
+        @Cacheable(before = Bar.class)
+        public long get() {
+            return CacheableTest.RANDOM.nextLong();
+        }
+        /**
+         * Flush before?
+         * @return TRUE if flush is required
+         */
+        public static boolean flushBefore() {
+            return true;
         }
     }
 
