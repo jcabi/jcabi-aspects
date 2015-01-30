@@ -294,63 +294,73 @@
 <a class="jxr_linenumber" name="L286" href="#L286">286</a> <em class="jxr_javadoccomment">     * Make a string out of an object.</em>
 <a class="jxr_linenumber" name="L287" href="#L287">287</a> <em class="jxr_javadoccomment">     * @param arg The argument</em>
 <a class="jxr_linenumber" name="L288" href="#L288">288</a> <em class="jxr_javadoccomment">     * @return Text representation of it</em>
-<a class="jxr_linenumber" name="L289" href="#L289">289</a> <em class="jxr_javadoccomment">     * @todo #109 Add handling of int, long, float, double, char and boolean</em>
-<a class="jxr_linenumber" name="L290" href="#L290">290</a> <em class="jxr_javadoccomment">     *  arrays.</em>
-<a class="jxr_linenumber" name="L291" href="#L291">291</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L292" href="#L292">292</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String toText(<strong class="jxr_keyword">final</strong> Object arg) {
-<a class="jxr_linenumber" name="L293" href="#L293">293</a>         String text;
-<a class="jxr_linenumber" name="L294" href="#L294">294</a>         <strong class="jxr_keyword">if</strong> (arg.getClass().isArray()) {
-<a class="jxr_linenumber" name="L295" href="#L295">295</a>             <strong class="jxr_keyword">if</strong> (arg instanceof Object[]) {
-<a class="jxr_linenumber" name="L296" href="#L296">296</a>                 text = Mnemos.objectArrays((Object[]) arg);
-<a class="jxr_linenumber" name="L297" href="#L297">297</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L298" href="#L298">298</a>                 text = Mnemos.primitiveArrays(arg);
-<a class="jxr_linenumber" name="L299" href="#L299">299</a>             }
-<a class="jxr_linenumber" name="L300" href="#L300">300</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L301" href="#L301">301</a>             <strong class="jxr_keyword">final</strong> String origin = arg.toString();
-<a class="jxr_linenumber" name="L302" href="#L302">302</a>             <strong class="jxr_keyword">if</strong> (arg instanceof String || origin.contains(<span class="jxr_string">" "</span>)
-<a class="jxr_linenumber" name="L303" href="#L303">303</a>                 || origin.isEmpty()) {
-<a class="jxr_linenumber" name="L304" href="#L304">304</a>                 text = String.format(<span class="jxr_string">"'%s'"</span>, origin);
-<a class="jxr_linenumber" name="L305" href="#L305">305</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L306" href="#L306">306</a>                 text = origin;
-<a class="jxr_linenumber" name="L307" href="#L307">307</a>             }
-<a class="jxr_linenumber" name="L308" href="#L308">308</a>         }
-<a class="jxr_linenumber" name="L309" href="#L309">309</a>         <strong class="jxr_keyword">return</strong> text;
-<a class="jxr_linenumber" name="L310" href="#L310">310</a>     }
-<a class="jxr_linenumber" name="L311" href="#L311">311</a> 
-<a class="jxr_linenumber" name="L312" href="#L312">312</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L313" href="#L313">313</a> <em class="jxr_javadoccomment">     * Text representation of object arrays.</em>
-<a class="jxr_linenumber" name="L314" href="#L314">314</a> <em class="jxr_javadoccomment">     * @param arg Array to change into String.</em>
-<a class="jxr_linenumber" name="L315" href="#L315">315</a> <em class="jxr_javadoccomment">     * @return Array in String.</em>
-<a class="jxr_linenumber" name="L316" href="#L316">316</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L317" href="#L317">317</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String objectArrays(<strong class="jxr_keyword">final</strong> Object[] arg) {
-<a class="jxr_linenumber" name="L318" href="#L318">318</a>         <strong class="jxr_keyword">final</strong> StringBuilder bldr = <strong class="jxr_keyword">new</strong> StringBuilder();
-<a class="jxr_linenumber" name="L319" href="#L319">319</a>         bldr.append('[');
-<a class="jxr_linenumber" name="L320" href="#L320">320</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> Object item : arg) {
-<a class="jxr_linenumber" name="L321" href="#L321">321</a>             <strong class="jxr_keyword">if</strong> (bldr.length() &gt; 1) {
-<a class="jxr_linenumber" name="L322" href="#L322">322</a>                 bldr.append(Mnemos.COMMA);
-<a class="jxr_linenumber" name="L323" href="#L323">323</a>             }
-<a class="jxr_linenumber" name="L324" href="#L324">324</a>             bldr.append(Mnemos.toText(item, false, false));
-<a class="jxr_linenumber" name="L325" href="#L325">325</a>         }
-<a class="jxr_linenumber" name="L326" href="#L326">326</a>         <strong class="jxr_keyword">return</strong> bldr.append(']').toString();
-<a class="jxr_linenumber" name="L327" href="#L327">327</a>     }
-<a class="jxr_linenumber" name="L328" href="#L328">328</a> 
-<a class="jxr_linenumber" name="L329" href="#L329">329</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L330" href="#L330">330</a> <em class="jxr_javadoccomment">     * Text representation of primitive arrays.</em>
-<a class="jxr_linenumber" name="L331" href="#L331">331</a> <em class="jxr_javadoccomment">     * @param arg Array to change into String.</em>
-<a class="jxr_linenumber" name="L332" href="#L332">332</a> <em class="jxr_javadoccomment">     * @return Array in String.</em>
-<a class="jxr_linenumber" name="L333" href="#L333">333</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L334" href="#L334">334</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String primitiveArrays(<strong class="jxr_keyword">final</strong> Object arg) {
-<a class="jxr_linenumber" name="L335" href="#L335">335</a>         <strong class="jxr_keyword">final</strong> String text;
-<a class="jxr_linenumber" name="L336" href="#L336">336</a>         <strong class="jxr_keyword">if</strong> (arg instanceof byte[]) {
+<a class="jxr_linenumber" name="L289" href="#L289">289</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L290" href="#L290">290</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String toText(<strong class="jxr_keyword">final</strong> Object arg) {
+<a class="jxr_linenumber" name="L291" href="#L291">291</a>         String text;
+<a class="jxr_linenumber" name="L292" href="#L292">292</a>         <strong class="jxr_keyword">if</strong> (arg.getClass().isArray()) {
+<a class="jxr_linenumber" name="L293" href="#L293">293</a>             <strong class="jxr_keyword">if</strong> (arg instanceof Object[]) {
+<a class="jxr_linenumber" name="L294" href="#L294">294</a>                 text = Mnemos.objectArrays((Object[]) arg);
+<a class="jxr_linenumber" name="L295" href="#L295">295</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L296" href="#L296">296</a>                 text = Mnemos.primitiveArrays(arg);
+<a class="jxr_linenumber" name="L297" href="#L297">297</a>             }
+<a class="jxr_linenumber" name="L298" href="#L298">298</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L299" href="#L299">299</a>             <strong class="jxr_keyword">final</strong> String origin = arg.toString();
+<a class="jxr_linenumber" name="L300" href="#L300">300</a>             <strong class="jxr_keyword">if</strong> (arg instanceof String || origin.contains(<span class="jxr_string">" "</span>)
+<a class="jxr_linenumber" name="L301" href="#L301">301</a>                 || origin.isEmpty()) {
+<a class="jxr_linenumber" name="L302" href="#L302">302</a>                 text = String.format(<span class="jxr_string">"'%s'"</span>, origin);
+<a class="jxr_linenumber" name="L303" href="#L303">303</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L304" href="#L304">304</a>                 text = origin;
+<a class="jxr_linenumber" name="L305" href="#L305">305</a>             }
+<a class="jxr_linenumber" name="L306" href="#L306">306</a>         }
+<a class="jxr_linenumber" name="L307" href="#L307">307</a>         <strong class="jxr_keyword">return</strong> text;
+<a class="jxr_linenumber" name="L308" href="#L308">308</a>     }
+<a class="jxr_linenumber" name="L309" href="#L309">309</a> 
+<a class="jxr_linenumber" name="L310" href="#L310">310</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L311" href="#L311">311</a> <em class="jxr_javadoccomment">     * Text representation of object arrays.</em>
+<a class="jxr_linenumber" name="L312" href="#L312">312</a> <em class="jxr_javadoccomment">     * @param arg Array to change into String.</em>
+<a class="jxr_linenumber" name="L313" href="#L313">313</a> <em class="jxr_javadoccomment">     * @return Array in String.</em>
+<a class="jxr_linenumber" name="L314" href="#L314">314</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L315" href="#L315">315</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String objectArrays(<strong class="jxr_keyword">final</strong> Object[] arg) {
+<a class="jxr_linenumber" name="L316" href="#L316">316</a>         <strong class="jxr_keyword">final</strong> StringBuilder bldr = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="L317" href="#L317">317</a>         bldr.append('[');
+<a class="jxr_linenumber" name="L318" href="#L318">318</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> Object item : arg) {
+<a class="jxr_linenumber" name="L319" href="#L319">319</a>             <strong class="jxr_keyword">if</strong> (bldr.length() &gt; 1) {
+<a class="jxr_linenumber" name="L320" href="#L320">320</a>                 bldr.append(Mnemos.COMMA);
+<a class="jxr_linenumber" name="L321" href="#L321">321</a>             }
+<a class="jxr_linenumber" name="L322" href="#L322">322</a>             bldr.append(Mnemos.toText(item, false, false));
+<a class="jxr_linenumber" name="L323" href="#L323">323</a>         }
+<a class="jxr_linenumber" name="L324" href="#L324">324</a>         <strong class="jxr_keyword">return</strong> bldr.append(']').toString();
+<a class="jxr_linenumber" name="L325" href="#L325">325</a>     }
+<a class="jxr_linenumber" name="L326" href="#L326">326</a> 
+<a class="jxr_linenumber" name="L327" href="#L327">327</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L328" href="#L328">328</a> <em class="jxr_javadoccomment">     * Text representation of primitive arrays.</em>
+<a class="jxr_linenumber" name="L329" href="#L329">329</a> <em class="jxr_javadoccomment">     * @param arg Array to change into String.</em>
+<a class="jxr_linenumber" name="L330" href="#L330">330</a> <em class="jxr_javadoccomment">     * @return Array in String.</em>
+<a class="jxr_linenumber" name="L331" href="#L331">331</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L332" href="#L332">332</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String primitiveArrays(<strong class="jxr_keyword">final</strong> Object arg) {
+<a class="jxr_linenumber" name="L333" href="#L333">333</a>         <strong class="jxr_keyword">final</strong> String text;
+<a class="jxr_linenumber" name="L334" href="#L334">334</a>         <strong class="jxr_keyword">if</strong> (arg instanceof <strong class="jxr_keyword">char</strong>[]) {
+<a class="jxr_linenumber" name="L335" href="#L335">335</a>             text = Arrays.toString((<strong class="jxr_keyword">char</strong>[]) arg);
+<a class="jxr_linenumber" name="L336" href="#L336">336</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (arg instanceof byte[]) {
 <a class="jxr_linenumber" name="L337" href="#L337">337</a>             text = Arrays.toString((byte[]) arg);
 <a class="jxr_linenumber" name="L338" href="#L338">338</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (arg instanceof <strong class="jxr_keyword">short</strong>[]) {
 <a class="jxr_linenumber" name="L339" href="#L339">339</a>             text = Arrays.toString((<strong class="jxr_keyword">short</strong>[]) arg);
-<a class="jxr_linenumber" name="L340" href="#L340">340</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L341" href="#L341">341</a>             text = <span class="jxr_string">"[unknown]"</span>;
-<a class="jxr_linenumber" name="L342" href="#L342">342</a>         }
-<a class="jxr_linenumber" name="L343" href="#L343">343</a>         <strong class="jxr_keyword">return</strong> text;
-<a class="jxr_linenumber" name="L344" href="#L344">344</a>     }
-<a class="jxr_linenumber" name="L345" href="#L345">345</a> }
+<a class="jxr_linenumber" name="L340" href="#L340">340</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (arg instanceof <strong class="jxr_keyword">int</strong>[]) {
+<a class="jxr_linenumber" name="L341" href="#L341">341</a>             text = Arrays.toString((<strong class="jxr_keyword">int</strong>[]) arg);
+<a class="jxr_linenumber" name="L342" href="#L342">342</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (arg instanceof <strong class="jxr_keyword">long</strong>[]) {
+<a class="jxr_linenumber" name="L343" href="#L343">343</a>             text = Arrays.toString((<strong class="jxr_keyword">long</strong>[]) arg);
+<a class="jxr_linenumber" name="L344" href="#L344">344</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (arg instanceof <strong class="jxr_keyword">float</strong>[]) {
+<a class="jxr_linenumber" name="L345" href="#L345">345</a>             text = Arrays.toString((<strong class="jxr_keyword">float</strong>[]) arg);
+<a class="jxr_linenumber" name="L346" href="#L346">346</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (arg instanceof <strong class="jxr_keyword">double</strong>[]) {
+<a class="jxr_linenumber" name="L347" href="#L347">347</a>             text = Arrays.toString((<strong class="jxr_keyword">double</strong>[]) arg);
+<a class="jxr_linenumber" name="L348" href="#L348">348</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (arg instanceof <strong class="jxr_keyword">boolean</strong>[]) {
+<a class="jxr_linenumber" name="L349" href="#L349">349</a>             text = Arrays.toString((<strong class="jxr_keyword">boolean</strong>[]) arg);
+<a class="jxr_linenumber" name="L350" href="#L350">350</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L351" href="#L351">351</a>             text = <span class="jxr_string">"[unknown]"</span>;
+<a class="jxr_linenumber" name="L352" href="#L352">352</a>         }
+<a class="jxr_linenumber" name="L353" href="#L353">353</a>         <strong class="jxr_keyword">return</strong> text;
+<a class="jxr_linenumber" name="L354" href="#L354">354</a>     }
+<a class="jxr_linenumber" name="L355" href="#L355">355</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2012&#x2013;2015 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
