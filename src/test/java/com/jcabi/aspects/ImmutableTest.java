@@ -30,7 +30,6 @@
 package com.jcabi.aspects;
 
 import java.util.regex.Pattern;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -61,34 +60,6 @@ public final class ImmutableTest {
     @Test(expected = IllegalStateException.class)
     public void catchedMutableTypesWithArrays() {
         new MutableWithArray();
-    }
-
-    /**
-     * Immutable can catch mutable classes with interfaces.
-     * @todo #128:30min This test and the next one are ignored because
-     *  this functionality was removed in #128. It simply didn't work
-     *  correctly and I didn't manage to reproduce it. I suspect that
-     *  that the issue appears when one constructor is calling another
-     *  constructor. Anyway, let's try to investigate and re-implement
-     *  the functionality again.
-     */
-    @Ignore
-    @Test(expected = IllegalStateException.class)
-    public void catchesMutableTypesWithInterfaces() {
-        new MutableWithInterface();
-    }
-
-    /**
-     * Immutable can catch mutable classes with mutable implementation of
-     * immutable interfaces.
-     */
-    @Ignore
-    @Test(expected = IllegalStateException.class)
-    public void catchesMutableTypesWithImplementationOfImmutableInterface() {
-        final MutableWithImmutableInterface obj =
-            new MutableWithImmutableInterface();
-        // @checkstyle MagicNumberCheck (1 line)
-        obj.getImpl().willBreakImmutability(5);
     }
 
     /**
@@ -141,23 +112,6 @@ public final class ImmutableTest {
     }
 
     /**
-     * Vague and mutable interface.
-     */
-    private interface MutableInterface {
-    }
-
-    /**
-     * Mutable class because of mutable interface.
-     */
-    @Immutable
-    private static final class MutableWithInterface {
-        /**
-         * Vague class member.
-         */
-        private final transient MutableInterface data = null;
-    }
-
-    /**
      * Other vague interface.
      */
     @Immutable
@@ -167,34 +121,6 @@ public final class ImmutableTest {
          * @param input An input
          */
         void willBreakImmutability(int input);
-    }
-
-    /**
-     * Mutable class implementing immutable interface.
-     */
-    @Immutable
-    private static final class MutableWithImmutableInterface {
-        /**
-         * Supposedly immutable field that is not immutable after all.
-         */
-        private final ImmutableInterface impl = new ImmutableInterface() {
-            private int state = 1;
-            /**
-             * This function breaks the immutability promised by the interface.
-             */
-            @Override
-            public void willBreakImmutability(final int newstate) {
-                this.state = newstate;
-            }
-        };
-
-        /**
-         * Stupid getter.
-         * @return A handle to mutate the object. Not good...
-         */
-        public ImmutableInterface getImpl() {
-            return this.impl;
-        }
     }
 
     /**
