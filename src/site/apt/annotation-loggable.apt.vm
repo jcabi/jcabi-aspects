@@ -74,7 +74,7 @@ public class Resource {
   the moment.
 
   Since version 0.7.13, an entire class can be annotated. In this case, all
-  methods will be logged (except <<<toString()>>>, <<<hashCode()>>>,
+  public (!) methods will be logged (except <<<toString()>>>, <<<hashCode()>>>,
   and <<<equals(Object)>>>).
 
 +--
