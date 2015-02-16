@@ -89,4 +89,7 @@ Weaving Java Binaries
 </project>
 +--
 
+  {{{./example-weaving-eclipse.html}Additional configuration for eclipse 
+  users}}.
+
   That's it.
