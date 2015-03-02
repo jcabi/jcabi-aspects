@@ -1,29 +1,22 @@
-architect: 
-- yegor256
-- dmarkov
-install: 
-- sudo gem install pdd
-assets: 
-   secring.gpg: yegor256/home#assets/secring.gpg
-   settings.xml: yegor256/home#assets/jcabi/settings.xml
-   pubring.gpg: yegor256/home#assets/pubring.gpg
-   s3cfg: yegor256/home#assets/s3cfg
-merge: 
-   script: |-
-      mvn clean install -Pqulice --errors --settings ../settings.xml
-      mvn clean
-      pdd --source=$(pwd) --verbose --file=/dev/null
-deploy: 
-   script: |-
-      mvn clean deploy -Pqulice --errors --settings ../settings.xml
-      mvn clean
-      pdd --source=$(pwd) --verbose --file=jcabi-aspects.xml
-      s3cmd --no-progress put jcabi-aspects.xml --config=../s3cfg s3://pdd.teamed.io/jcabi-aspects.xml
-env: 
-   MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
-release: 
-   script: |-
-      mvn versions:set "-DnewVersion=${tag}"
-      git commit -am "${tag}"
-      mvn clean deploy -Pqulice -Psonatype -Pjcabi --errors --settings ../settings.xml
-      mvn clean site-deploy -Psite --errors --settings ../settings.xml
+architect: [yegor256, dmarkov]
+install: [sudo gem install pdd]
+assets: {secring.gpg: yegor256/home#assets/secring.gpg, settings.xml: yegor256/home#assets/jcabi/settings.xml,
+  pubring.gpg: yegor256/home#assets/pubring.gpg, s3cfg: yegor256/home#assets/s3cfg}
+merge:
+  script: |-
+    mvn clean install -Pqulice --errors --settings ../settings.xml
+    mvn clean
+    pdd --source=$(pwd) --verbose --file=/dev/null
+deploy:
+  script: |-
+    mvn clean deploy -Pqulice --errors --settings ../settings.xml
+    mvn clean
+    pdd --source=$(pwd) --verbose --file=jcabi-aspects.xml
+    s3cmd --no-progress put jcabi-aspects.xml --config=../s3cfg s3://pdd.teamed.io/jcabi-aspects.xml
+env: {MAVEN_OPTS: '-XX:MaxPermSize=256m -Xmx1g'}
+release:
+  script: |-
+    mvn versions:set "-DnewVersion=${tag}"
+    git commit -am "${tag}"
+    mvn clean deploy -Pqulice -Psonatype -Pjcabi --errors --settings ../settings.xml
+    mvn clean site-deploy -Psite --errors --settings ../settings.xml
