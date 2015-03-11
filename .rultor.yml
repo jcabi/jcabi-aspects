@@ -1,6 +1,6 @@
 architect:
-- yegor256
 - dmarkov
+- yegor256
 install:
 - sudo gem install pdd
 assets:
