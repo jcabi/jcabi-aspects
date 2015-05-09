@@ -38,7 +38,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-0.21.1/index.html" title="JavaDoc 0.21.1">JavaDoc 0.21.1</a>
+                            <span>                        <a href="apidocs-0.22/index.html" title="JavaDoc 0.22">JavaDoc 0.22</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -188,13 +188,13 @@
                             </div>
                             <ul class="badges">
                                 <li>
-                                    <strong itemprop="version">0.21.1</strong>
+                                    <strong itemprop="version">0.22</strong>
                                 </li>
                                 <li>
                                     
-                                    <time itemprop="datePublished" datetime="2015-02-16T06:19:43Z">
+                                    <time itemprop="datePublished" datetime="2015-05-09T07:00:30Z">
                                         
-                                        16-Feb-2015
+                                        09-May-2015
                                     </time>
                                 </li>
                                 <li class="menu-button">menu</li>
@@ -241,7 +241,7 @@
                                                 <article role="article" itemprop="articleBody">
                             <!--  --><!-- Copyright (c) 2012-2015, jcabi.com --><!-- All rights reserved. --><!--  --><!-- Redistribution and use in source and binary forms, with or without --><!-- modification, are permitted provided that the following conditions --><!-- are met: 1) Redistributions of source code must retain the above --><!-- copyright notice, the list of conditions, and the following --><!-- disclaimer. 2) Redistributions in binary form must reproduce the above --><!-- copyright notice, the list of conditions, and the following --><!-- disclaimer in the documentation and/or other materials provided --><!-- with the distribution. 3) Neither the name of the jcabi.com, nor --><!-- the names of its contributors may be used to endorse or promote --><!-- products derived from this software without specific prior written --><!-- permission. --><!--  --><!-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS --><!-- "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES INCLUDING, BUT --><!-- NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, AND --><!-- FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL --><!-- THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, --><!-- INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES --><!-- (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR --><!-- SERVICES; LOSS OF USE, DATA, PROFITS, OR BUSINESS INTERRUPTION) --><!-- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, --><!-- STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE), --><!-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED --><!-- OF THE POSSIBILITY OF SUCH DAMAGE. --><!--  --><div class="section">
 <h2><a name="Asynchronous_Execution_of_Methods"></a>Asynchronous Execution of Methods</h2>
-<p>Methods annotated with <a href="./apidocs-0.21.1/com/jcabi/aspects/Async.html"><tt>@Async</tt></a> will return immediately to its caller while its operation executes asynchronously:</p>
+<p>Methods annotated with <a href="./apidocs-0.22/com/jcabi/aspects/Async.html"><tt>@Async</tt></a> will return immediately to its caller while its operation executes asynchronously:</p>
 <div class="source">
 <pre>public class Foo {
   @Async
@@ -259,7 +259,7 @@
     // return an instance of Future interface
   }
 }</pre></div>
-<p>Methods annotated with <tt>@Quietly</tt> must strictly have a <tt>void</tt> or <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html"><tt>Future</tt></a> return type. Otherwise, an exception will be thrown at runtime when the method is invoked. If you wish to check for non-compliant methods at compile time, you may incorporate the annotation processor <a href="./apidocs-0.21.1/com/jcabi/aspects/apt/AsyncReturnTypeProcessor.html"><tt>AsyncReturnTypeProcessor</tt></a> during your build. Example usage with <tt>maven-processor-plugin</tt>:</p>
+<p>Methods annotated with <tt>@Quietly</tt> must strictly have a <tt>void</tt> or <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html"><tt>Future</tt></a> return type. Otherwise, an exception will be thrown at runtime when the method is invoked. If you wish to check for non-compliant methods at compile time, you may incorporate the annotation processor <a href="./apidocs-0.22/com/jcabi/aspects/apt/AsyncReturnTypeProcessor.html"><tt>AsyncReturnTypeProcessor</tt></a> during your build. Example usage with <tt>maven-processor-plugin</tt>:</p>
 <div class="source">
 <pre>&lt;plugin&gt;
   &lt;groupId&gt;org.bsc.maven&lt;/groupId&gt;
