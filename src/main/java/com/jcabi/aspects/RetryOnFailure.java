@@ -80,6 +80,11 @@ public @interface RetryOnFailure {
     Class<? extends Throwable>[] types() default { Throwable.class };
 
     /**
+     * Exception types to ignore.
+     */
+    Class<? extends Throwable>[] ignore() default { };
+
+    /**
      * Shall it be fully verbose (show full exception trace) or just
      * exception message?
      */
