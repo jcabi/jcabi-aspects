@@ -19,8 +19,7 @@ deploy:
     mvn clean
     pdd --source=$(pwd) --verbose --file=jcabi-aspects.xml
     s3cmd --no-progress put jcabi-aspects.xml --config=../s3cfg s3://pdd.teamed.io/jcabi-aspects.xml
-  commanders:
-  - yegor256
+  commanders: []
 env:
   MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
 release:
