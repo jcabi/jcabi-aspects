@@ -1,5 +1,4 @@
 architect:
-- yegor256
 - dmarkov
 install:
 - sudo gem install pdd
