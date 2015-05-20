@@ -15,6 +15,7 @@ merge:
     pdd --source=$(pwd) --verbose --file=/dev/null
   commanders:
   - carlosmiranda
+  - darkled
   - ggajos
   - krzyk
   - longtimeago
