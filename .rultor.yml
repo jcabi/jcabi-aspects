@@ -22,7 +22,6 @@ merge:
   - krzyk
   - longtimeago
   - pinaf
-  - yegor256
 deploy:
   script: |-
     mvn clean deploy -Pqulice --errors --settings ../settings.xml
