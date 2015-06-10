@@ -40,117 +40,122 @@ package com.jcabi.aspects;
  * }</pre>
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Simon Njenga (simtuje@gmail.com)
  * @version $Id$
- * @since 0.7.17
+ * @since 0.22.1
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
- * @checkstyle InterfaceIsType (500 lines)
  */
-@SuppressWarnings("PMD.AvoidConstantsInterface")
-public interface Tv {
+public final class Tv {
 
     /**
      * Three.
      */
-    int THREE = 3;
+    public static final int THREE = 3;
 
     /**
      * Four.
      */
-    int FOUR = 4;
+    public static final int FOUR = 4;
 
     /**
      * Five.
      */
-    int FIVE = 5;
+    public static final int FIVE = 5;
 
     /**
      * Six.
      */
-    int SIX = 6;
+    public static final int SIX = 6;
 
     /**
      * Seven.
      */
-    int SEVEN = 7;
+    public static final int SEVEN = 7;
 
     /**
      * Eight.
      */
-    int EIGHT = 8;
+    public static final int EIGHT = 8;
 
     /**
      * Nine.
      */
-    int NINE = 9;
+    public static final int NINE = 9;
 
     /**
      * Ten.
      */
-    int TEN = 10;
+    public static final int TEN = 10;
 
     /**
      * Fifteen.
      */
-    int FIFTEEN = 15;
+    public static final int FIFTEEN = 15;
 
     /**
      * Twenty.
      */
-    int TWENTY = 20;
+    public static final int TWENTY = 20;
 
     /**
      * Thirty.
      */
-    int THIRTY = 30;
+    public static final int THIRTY = 30;
 
     /**
      * Forty.
      */
-    int FORTY = 40;
+    public static final int FORTY = 40;
 
     /**
      * Fifty.
      */
-    int FIFTY = 50;
+    public static final int FIFTY = 50;
 
     /**
      * Sixty.
      */
-    int SIXTY = 60;
+    public static final int SIXTY = 60;
 
     /**
      * Seventy.
      */
-    int SEVENTY = 70;
+    public static final int SEVENTY = 70;
 
     /**
      * Eighty.
      */
-    int EIGHTY = 80;
+    public static final int EIGHTY = 80;
 
     /**
      * Ninety.
      */
-    int NINETY = 90;
+    public static final int NINETY = 90;
 
     /**
      * Hundren.
      */
-    int HUNDRED = 100;
+    public static final int HUNDRED = 100;
 
     /**
      * Thousand.
      */
-    int THOUSAND = 1000;
+    public static final int THOUSAND = 1000;
 
     /**
      * Million.
      */
-    int MILLION = 1000000;
+    public static final int MILLION = 1000000;
 
     /**
      * Billion.
      */
-    int BILLION = 1000000000;
+    public static final int BILLION = 1000000000;
 
+    /**
+     * Private constructor.
+     */
+    private Tv() {
+        throw new IllegalStateException("Utility class - cannot instantiate!");
+    }
 }
