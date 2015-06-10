@@ -38,4 +38,5 @@ release:
     git commit -am "${tag}"
     mvn clean deploy -Pqulice -Psonatype -Pjcabi --errors --settings ../settings.xml
     mvn clean site-deploy -Psite --errors --settings ../settings.xml
-  commanders: []
+  commanders:
+  - yegor256
