@@ -140,7 +140,6 @@ public final class JSR303Test {
         /**
          * Ignores when void.
          */
-        @NotNull
         public void voidAlways() {
             // nothing to do
         }

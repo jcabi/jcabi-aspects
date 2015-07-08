@@ -66,4 +66,13 @@ final class JoinPointUtils {
         }
         return tgt;
     }
+
+    /**
+     * Get current method.
+     * @param point Join point
+     * @return Current method in join point
+     */
+    public static Method currentMethod(final JoinPoint point) {
+        return ((MethodSignature) point.getSignature()).getMethod();
+    }
 }

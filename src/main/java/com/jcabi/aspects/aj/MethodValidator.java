@@ -30,22 +30,17 @@
 package com.jcabi.aspects.aj;
 
 import com.jcabi.log.Logger;
-import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import javax.validation.Constraint;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
 import javax.validation.Valid;
 import javax.validation.Validation;
-import javax.validation.ValidationException;
 import javax.validation.Validator;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.metadata.ConstraintDescriptor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -78,7 +73,9 @@ public final class MethodValidator {
     /**
      * JSR-303 Validator.
      */
-    private final transient Validator validator = MethodValidator.build();
+    private final transient Validator validator = Validation
+        .buildDefaultValidatorFactory()
+        .getValidator();
 
     /**
      * Validate arguments of a method.
@@ -92,11 +89,10 @@ public final class MethodValidator {
     @Before("execution(* *(.., @(javax.validation.* || javax.validation.constraints.*) (*), ..))")
     public void beforeMethod(final JoinPoint point) {
         if (this.validator != null) {
-            this.validate(
-                point,
-                MethodSignature.class.cast(point.getSignature())
-                    .getMethod()
-                    .getParameterAnnotations()
+            this.validateMethod(
+                point.getThis(),
+                MethodSignature.class.cast(point.getSignature()).getMethod(),
+                point.getArgs()
             );
         }
     }
@@ -113,11 +109,13 @@ public final class MethodValidator {
     @Before("preinitialization(*.new(.., @(javax.validation.* || javax.validation.constraints.*) (*), ..))")
     public void beforeCtor(final JoinPoint point) {
         if (this.validator != null) {
-            this.validate(
-                point,
+            @SuppressWarnings("unchecked")
+            final Constructor<Object> constructor = (Constructor<Object>)
                 ConstructorSignature.class.cast(point.getSignature())
-                    .getConstructor()
-                    .getParameterAnnotations()
+                    .getConstructor();
+            this.validateConstructor(
+                constructor,
+                point.getArgs()
             );
         }
     }
@@ -138,101 +136,66 @@ public final class MethodValidator {
         returning = "result"
     )
     public void after(final JoinPoint point, final Object result) {
-        final Method method = MethodSignature.class.cast(
-            point.getSignature()
-        ).getMethod();
-        if (method.isAnnotationPresent(NotNull.class) && result == null
-            && !method.getReturnType().equals(Void.TYPE)) {
-            throw new ConstraintViolationException(
-                method.getAnnotation(NotNull.class).message(),
-                new HashSet<ConstraintViolation<?>>(
-                    Collections.<ConstraintViolation<?>>singletonList(
-                        MethodValidator.violation(
-                            result,
-                            method.getAnnotation(NotNull.class).message()
-                        )
-                    )
+        this.checkForViolations(
+            this.validator
+                .forExecutables()
+                .validateReturnValue(
+                    point.getThis(),
+                    JoinPointUtils.currentMethod(point),
+                    result
                 )
-            );
-        }
-        if (method.isAnnotationPresent(Valid.class) && result != null) {
-            final Set<ConstraintViolation<Object>> violations =
-                this.validate(result);
-            if (!violations.isEmpty()) {
-                throw new ConstraintViolationException(violations);
-            }
-        }
+        );
     }
 
     /**
-     * Validate method at the given point.
-     * @param point Join point
-     * @param params Parameters (their annotations)
+     * Validates method parameters.
+     * @param object Object at pointcut
+     * @param method Method at pointcut
+     * @param args Parameters of the method
      */
-    private void validate(final JoinPoint point, final Annotation[][] params) {
-        final Set<ConstraintViolation<?>> violations =
-            new HashSet<ConstraintViolation<?>>(0);
-        for (int pos = 0; pos < params.length; ++pos) {
-            violations.addAll(
-                this.validate(pos, point.getArgs()[pos], params[pos])
-            );
-        }
+    private void validateMethod(final Object object, final Method method,
+        final Object[] args) {
+        this.checkForViolations(
+            this.validator
+                .forExecutables()
+                .validateParameters(
+                    object,
+                    method,
+                    args
+                )
+        );
+    }
+
+    /**
+     * Validates constructor parameters.
+     * @param ctr Constructor at pointcut
+     * @param args Parameters of the method
+     */
+    private void validateConstructor(final Constructor<Object> ctr,
+        final Object[] args) {
+        this.checkForViolations(
+            this.validator
+                .forExecutables()
+                .validateConstructorParameters(
+                    ctr,
+                    args
+                )
+        );
+    }
+
+    /**
+     * Checks if violations set is empty and throws a
+     * {@link ConstraintViolationException} if it isn't.
+     * @param violations JSR303 violations.
+     */
+    private void checkForViolations(
+        final Set<ConstraintViolation<Object>> violations) {
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(
                 MethodValidator.pack(violations),
                 violations
             );
         }
-    }
-
-    /**
-     * Validate one method argument against its annotations.
-     * @param pos Position of the argument in method signature
-     * @param arg The argument
-     * @param annotations Array of annotations
-     * @return A set of violations
-     * @todo #61 It's a temporary design, which enables only NotNull,
-     *  Valid, and Pattern annotations. In the future we should use
-     *  JSR-303 Validator, when they implement validation of values (see
-     *  their appendix C).
-     */
-    private Set<ConstraintViolation<?>> validate(final int pos,
-        final Object arg, final Annotation[] annotations) {
-        final Set<ConstraintViolation<?>> violations =
-            new HashSet<ConstraintViolation<?>>(0);
-        for (final Annotation antn : annotations) {
-            if (antn.annotationType().equals(NotNull.class)) {
-                if (arg == null) {
-                    violations.add(
-                        MethodValidator.violation(
-                            String.format("param #%d", pos),
-                            NotNull.class.cast(antn).message()
-                        )
-                    );
-                }
-            } else if (antn.annotationType().equals(Valid.class)
-                && arg != null) {
-                violations.addAll(this.validate(arg));
-            } else if (antn.annotationType().equals(Pattern.class)) {
-                if (arg != null && !arg.toString()
-                    .matches(Pattern.class.cast(antn).regexp())) {
-                    violations.add(
-                        MethodValidator.violation(
-                            String.format("param #%d '%s'", pos, arg),
-                            Pattern.class.cast(antn).message()
-                        )
-                    );
-                }
-            } else if (antn.annotationType()
-                .isAnnotationPresent(Constraint.class)) {
-                Logger.warn(
-                    this,
-                    "%[type]s annotation is not supported at the moment",
-                    antn.annotationType()
-                );
-            }
-        }
-        return violations;
     }
 
     /**
@@ -301,7 +264,8 @@ public final class MethodValidator {
      * @param errs All violations
      * @return The full text
      */
-    private static String pack(final Collection<ConstraintViolation<?>> errs) {
+    private static String pack(
+        final Collection<ConstraintViolation<Object>> errs) {
         final StringBuilder text = new StringBuilder(0);
         for (final ConstraintViolation<?> violation : errs) {
             if (text.length() > 0) {
@@ -310,39 +274,6 @@ public final class MethodValidator {
             text.append(violation.getMessage());
         }
         return text.toString();
-    }
-
-    /**
-     * Build validator.
-     * @return Validator to use in the singleton
-     */
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    private static Validator build() {
-        Validator val = null;
-        try {
-            val = Validation.buildDefaultValidatorFactory().getValidator();
-            Logger.info(
-                MethodValidator.class,
-                // @checkstyle LineLength (1 line)
-                "JSR-303 validator %[type]s instantiated by jcabi-aspects ${project.version}/${buildNumber}",
-                val
-            );
-        } catch (final ValidationException ex) {
-            Logger.error(
-                MethodValidator.class,
-                // @checkstyle LineLength (1 line)
-                "JSR-303 validator failed to initialize: %s (see http://aspects.jcabi.com/jsr-303.html)",
-                ex.getMessage()
-            );
-        // @checkstyle IllegalCatch (1 line)
-        } catch (final Throwable ex) {
-            Logger.error(
-                MethodValidator.class,
-                "JSR-303 validator thrown during initialization: %[exception]s",
-                ex
-            );
-        }
-        return val;
     }
 
     /**
