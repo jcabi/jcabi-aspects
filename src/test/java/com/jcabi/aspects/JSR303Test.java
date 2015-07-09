@@ -59,9 +59,9 @@ public final class JSR303Test {
     /**
      * NotNull can throw when regex doesn't match.
      * @todo #169:30min When I replaced our own validation with that of
-     * hibernate-validator for #34, this test stopped working in openJDK6,
-     * but remained working in all the other JDKs we're using on Travis CI.
-     * This test should pass without errors.
+     *  hibernate-validator for #34, this test stopped working in openJDK6,
+     *  but remained working in all the other JDKs we're using on Travis CI.
+     *  This test should pass without errors.
      * @throws Exception If something goes wrong
      */
     @Ignore
