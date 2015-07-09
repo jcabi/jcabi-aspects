@@ -29,19 +29,14 @@
  */
 package com.jcabi.aspects.aj;
 
-import com.jcabi.log.Logger;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import javax.validation.Path;
-import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import javax.validation.metadata.ConstraintDescriptor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -199,67 +194,6 @@ public final class MethodValidator {
     }
 
     /**
-     * Create one simple violation.
-     * @param arg The argument passed
-     * @param msg Error message to show
-     * @return The violation
-     */
-    private static ConstraintViolation<?> violation(final Object arg,
-        final String msg) {
-        // @checkstyle AnonInnerLength (50 lines)
-        return new ConstraintViolation<String>() {
-            @Override
-            public String toString() {
-                return String.format("%s %s", arg, msg);
-            }
-            @Override
-            public ConstraintDescriptor<?> getConstraintDescriptor() {
-                return null;
-            }
-            @Override
-            public Object getInvalidValue() {
-                return arg;
-            }
-            @Override
-            public Object getLeafBean() {
-                return null;
-            }
-            @Override
-            public String getMessage() {
-                return msg;
-            }
-            @Override
-            public String getMessageTemplate() {
-                return msg;
-            }
-            @Override
-            public Path getPropertyPath() {
-                return null;
-            }
-            @Override
-            public String getRootBean() {
-                return "";
-            }
-            @Override
-            public Class<String> getRootBeanClass() {
-                return String.class;
-            }
-            @Override
-            public Object[] getExecutableParameters() {
-                return new Object[0];
-            }
-            @Override
-            public Object getExecutableReturnValue() {
-                return null;
-            }
-            @Override
-            public <U> U unwrap(final Class<U> type) {
-                return null;
-            }
-        };
-    }
-
-    /**
      * Pack violations into string.
      * @param errs All violations
      * @return The full text
@@ -275,31 +209,4 @@ public final class MethodValidator {
         }
         return text.toString();
     }
-
-    /**
-     * Check validity of an object, when it is annotated with {@link Valid}.
-     * @param object The object to validate
-     * @return Found violations
-     * @param <T> Type of violations
-     */
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    private <T> Set<ConstraintViolation<T>> validate(final T object) {
-        Set<ConstraintViolation<T>> violations;
-        try {
-            violations = this.validator.validate(object);
-        // @checkstyle IllegalCatch (1 line)
-        } catch (final Throwable ex) {
-            Logger.error(
-                this,
-                // @checkstyle LineLength (1 line)
-                "JSR-303 validator %[type]s thrown %s while validating %[type]s",
-                this.validator,
-                ex,
-                object
-            );
-            violations = new HashSet<ConstraintViolation<T>>(0);
-        }
-        return violations;
-    }
-
 }
