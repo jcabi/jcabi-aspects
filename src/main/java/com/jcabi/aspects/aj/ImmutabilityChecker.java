@@ -30,6 +30,7 @@
 package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.aspects.version.Version;
 import com.jcabi.log.Logger;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -73,8 +74,10 @@ public final class ImmutabilityChecker {
             throw new IllegalStateException(
                 String.format(
                     // @checkstyle LineLength (1 line)
-                    "%s is not immutable, can't use it (jcabi-aspects ${project.version}/${buildNumber})",
-                    type
+                    "%s is not immutable, can't use it (jcabi-aspects %s/%s)",
+                    type,
+                    Version.CURRENT.projectVersion(),
+                    Version.CURRENT.buildNumber()
                 ),
                 ex
             );

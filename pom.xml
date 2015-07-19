@@ -93,19 +93,6 @@
         </dependency>
     </dependencies>
     <build>
-        <!-- Comment this line if you don't see source code in your IDE -->
-        <sourceDirectory>${project.build.directory}/filtered-sources/java</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>${basedir}/src/main/java</directory>
-                <filtering>true</filtering>
-                <targetPath>${project.build.directory}/filtered-sources/java</targetPath>
-            </resource>
-            <resource>
-                <directory>${basedir}/src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -154,6 +141,24 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>templating-maven-plugin</artifactId>
+                <version>1.0-alpha-3</version>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>filter-sources</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceDirectory>${basedir}/src/main/java-templates</sourceDirectory>
+                    <outputDirectory>${project.build.directory}/generated-sources/java-templates/</outputDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>

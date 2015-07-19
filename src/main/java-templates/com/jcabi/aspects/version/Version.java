@@ -27,66 +27,54 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.aspects.aj;
-
-import com.jcabi.aspects.version.Version;
-import com.jcabi.log.Logger;
-import java.util.concurrent.ThreadFactory;
+package com.jcabi.aspects.version;
 
 /**
- * Factory of named threads, used in {@link MethodLogger},
- * {@link MethodCacher}, {@link MethodInterrupter}, etc.
- *
- * <p>This custom class is used instead of a default ThreadFactory in order
- * to name scheduled threads correctly on construction.
- *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * Current version of the project. Generated from a template at build time.
+ * @author Georgy Vlasov (wlasowegor@gmail.com)
  * @version $Id$
- * @since 0.7.17
+ * @since 0.23
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
-final class NamedThreads implements ThreadFactory {
+public enum Version {
+    /**
+     * Current version.
+     */
+    CURRENT("${project.version}", "${buildNumber}");
 
     /**
-     * Name of the thread.
+     * Project version.
      */
-    private final transient String name;
+    private final String version;
 
     /**
-     * Purpose of these threads.
+     * Build number.
      */
-    private final transient String purpose;
-
-    /**
-     * Thread group to use.
-     */
-    private final transient ThreadGroup group = new ThreadGroup("jcabi");
+    private final String build;
 
     /**
      * Public ctor.
-     * @param suffix Suffix of thread names
-     * @param desc Description of purpose
+     * @param ver Maven's project.version property
+     * @param buildnum Maven's buildNumber property created with
+     *  buildnumber-maven-plugin
      */
-    public NamedThreads(final String suffix, final String desc) {
-        this.name = String.format("jcabi-%s", suffix);
-        this.purpose = desc;
+    Version(final String ver, final String buildnum) {
+        this.version = ver;
+        this.build = buildnum;
     }
 
-    @Override
-    public Thread newThread(final Runnable runnable) {
-        final Thread thread = new Thread(this.group, runnable);
-        thread.setName(this.name);
-        thread.setDaemon(true);
-        Logger.info(
-            this,
-            // @checkstyle LineLength (1 line)
-            "jcabi-aspects %s/%s started new daemon thread %s for %s",
-            Version.CURRENT.projectVersion(),
-            Version.CURRENT.buildNumber(),
-            this.name,
-            this.purpose
-        );
-        return thread;
+    /**
+     * Returns project version number.
+     * @return Project version number
+     */
+    public String projectVersion() {
+        return this.version;
     }
 
+    /**
+     * Returns project build number.
+     * @return Build number
+     */
+    public String buildNumber() {
+        return this.build;
+    }
 }

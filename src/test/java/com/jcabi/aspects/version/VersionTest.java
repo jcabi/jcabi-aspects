@@ -27,66 +27,47 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.aspects.aj;
+package com.jcabi.aspects.version;
 
-import com.jcabi.aspects.version.Version;
-import com.jcabi.log.Logger;
-import java.util.concurrent.ThreadFactory;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Factory of named threads, used in {@link MethodLogger},
- * {@link MethodCacher}, {@link MethodInterrupter}, etc.
- *
- * <p>This custom class is used instead of a default ThreadFactory in order
- * to name scheduled threads correctly on construction.
- *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * Unit tests for {@link Version}.
+ * @author Georgy Vlasov (wlasowegor@gmail.com)
  * @version $Id$
- * @since 0.7.17
+ * @since 0.23
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
-final class NamedThreads implements ThreadFactory {
+public final class VersionTest {
 
     /**
-     * Name of the thread.
+     * Version.CURRENT contains actual project version and not a
+     * "${project.version}" placeholder.
+     * @throws Exception If fails
      */
-    private final transient String name;
-
-    /**
-     * Purpose of these threads.
-     */
-    private final transient String purpose;
-
-    /**
-     * Thread group to use.
-     */
-    private final transient ThreadGroup group = new ThreadGroup("jcabi");
-
-    /**
-     * Public ctor.
-     * @param suffix Suffix of thread names
-     * @param desc Description of purpose
-     */
-    public NamedThreads(final String suffix, final String desc) {
-        this.name = String.format("jcabi-%s", suffix);
-        this.purpose = desc;
-    }
-
-    @Override
-    public Thread newThread(final Runnable runnable) {
-        final Thread thread = new Thread(this.group, runnable);
-        thread.setName(this.name);
-        thread.setDaemon(true);
-        Logger.info(
-            this,
-            // @checkstyle LineLength (1 line)
-            "jcabi-aspects %s/%s started new daemon thread %s for %s",
+    @Test
+    public void projectVersionIsInsertedAtBuild() throws Exception {
+        MatcherAssert.assertThat(
             Version.CURRENT.projectVersion(),
-            Version.CURRENT.buildNumber(),
-            this.name,
-            this.purpose
+            Matchers.not(
+                Matchers.equalTo("${projectVersion}")
+            )
         );
-        return thread;
     }
 
+    /**
+     * Version.CURRENT contains actual build number and not a
+     * "${buildNumber}" placeholder.
+     * @throws Exception If fails
+     */
+    @Test
+    public void buildNumberIsInsertedAtBuild() throws Exception {
+        MatcherAssert.assertThat(
+            Version.CURRENT.buildNumber(),
+            Matchers.not(
+                Matchers.equalTo("${buildNumber}")
+            )
+        );
+    }
 }
