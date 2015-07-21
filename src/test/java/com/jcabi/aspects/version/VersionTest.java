@@ -42,12 +42,12 @@ import org.junit.Test;
 public final class VersionTest {
 
     /**
-     * Version.CURRENT contains actual project version and not a
+     * Version.CURRENT can contain actual project version and not a
      * "${project.version}" placeholder.
      * @throws Exception If fails
      */
     @Test
-    public void projectVersionIsInsertedAtBuild() throws Exception {
+    public void containsCorrectVersionNumber() throws Exception {
         MatcherAssert.assertThat(
             Version.CURRENT.projectVersion(),
             Matchers.not(
@@ -57,12 +57,12 @@ public final class VersionTest {
     }
 
     /**
-     * Version.CURRENT contains actual build number and not a
+     * Version.CURRENT can contain actual build number and not a
      * "${buildNumber}" placeholder.
      * @throws Exception If fails
      */
     @Test
-    public void buildNumberIsInsertedAtBuild() throws Exception {
+    public void containsCorrectBuildNumber() throws Exception {
         MatcherAssert.assertThat(
             Version.CURRENT.buildNumber(),
             Matchers.not(
