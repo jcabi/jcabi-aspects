@@ -74,6 +74,10 @@ public final class ImmutabilityChecker {
             throw new IllegalStateException(
                 String.format(
                     // @checkstyle LineLength (1 line)
+                    // @todo #167:30min Inserting correct version/buildnumber
+                    //  here and in other instances where Version.CURRENT is
+                    //  used (not only in this class, but in every class that
+                    //  uses Version.CURRENT) should be covered by a test.
                     "%s is not immutable, can't use it (jcabi-aspects %s/%s)",
                     type,
                     Version.CURRENT.projectVersion(),
