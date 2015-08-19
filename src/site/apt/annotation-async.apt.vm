@@ -72,7 +72,7 @@ public class Foo {
 }
 +--
 
-  Methods annotated with <<<@Quietly>>> must strictly have a <<<void>>> or
+  Methods annotated with <<<@Async>>> must strictly have a <<<void>>> or
   {{{http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html}<<<Future>>>}}
   return type. Otherwise, an exception will be thrown at runtime when the method
   is invoked. If you wish to check for non-compliant methods at compile time,
