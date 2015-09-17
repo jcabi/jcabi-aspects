@@ -64,7 +64,6 @@ public final class JSR303Test {
      *  This test should pass without errors.
      * @throws Exception If something goes wrong
      */
-    @Ignore
     @Test(expected = ConstraintViolationException.class)
     public void throwsWhenRegularExpressionDoesntMatch() throws Exception {
         new JSR303Test.Foo().foo("some text");
