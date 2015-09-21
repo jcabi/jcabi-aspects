@@ -29,6 +29,7 @@
  */
 package com.jcabi.aspects.aj;
 
+import com.jcabi.aspects.version.Version;
 import com.jcabi.log.Logger;
 import java.util.concurrent.ThreadFactory;
 
@@ -79,8 +80,11 @@ final class NamedThreads implements ThreadFactory {
         Logger.info(
             this,
             // @checkstyle LineLength (1 line)
-            "jcabi-aspects ${project.version}/${buildNumber} started new daemon thread %s for %s",
-            this.name, this.purpose
+            "jcabi-aspects %s/%s started new daemon thread %s for %s",
+            Version.CURRENT.projectVersion(),
+            Version.CURRENT.buildNumber(),
+            this.name,
+            this.purpose
         );
         return thread;
     }

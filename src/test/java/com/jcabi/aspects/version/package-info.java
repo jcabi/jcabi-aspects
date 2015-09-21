@@ -27,52 +27,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.aspects.aj;
-
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.reflect.MethodSignature;
 
 /**
- * Utility methods that deal with JoinPoints.
- *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * Project version and buildNumber generated at build time, tests.
+ * @author Georgy Vlasov (wlasowegor@gmail.com)
  * @version $Id$
- * @since 0.7.22
+ * @since 0.23
  */
-final class JoinPointUtils {
-
-    /**
-     * Utility class constructor.
-     */
-    private JoinPointUtils() {
-        // intentionally left empty
-    }
-
-    /**
-     * Calculate log target.
-     * @param point Proceeding point
-     * @return The target
-     */
-    public static Object targetize(final JoinPoint point) {
-        Object tgt;
-        final Method method = MethodSignature.class
-            .cast(point.getSignature()).getMethod();
-        if (Modifier.isStatic(method.getModifiers())) {
-            tgt = method.getDeclaringClass();
-        } else {
-            tgt = point.getTarget();
-        }
-        return tgt;
-    }
-
-    /**
-     * Get current method.
-     * @param point Join point
-     * @return Current method in join point
-     */
-    public static Method currentMethod(final JoinPoint point) {
-        return ((MethodSignature) point.getSignature()).getMethod();
-    }
-}
+package com.jcabi.aspects.version;

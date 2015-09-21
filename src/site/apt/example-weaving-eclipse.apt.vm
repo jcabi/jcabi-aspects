@@ -1,0 +1,89 @@
+ ------
+ Weaving Java Binaries in Eclipse IDE
+ ------
+ Agathia
+ ------
+ 2015-02-15
+ ------
+
+~~
+~~ Copyright (c) 2015, jcabi.com
+~~ All rights reserved.
+~~
+~~ Redistribution and use in source and binary forms, with or without
+~~ modification, are permitted provided that the following conditions
+~~ are met: 1) Redistributions of source code must retain the above
+~~ copyright notice, the list of conditions and the following
+~~ disclaimer. 2) Redistributions in binary form must reproduce the above
+~~ copyright notice, the list of conditions and the following
+~~ disclaimer in the documentation and/or other materials provided
+~~ with the distribution. 3) Neither the name of the jcabi.com, nor
+~~ the names of its contributors may be used to endorse or promote
+~~ products derived from this software without specific prior written
+~~ permission.
+~~
+~~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES INCLUDING, BUT
+~~ NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+~~ FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+~~ THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, CONSEQUENTIAL DAMAGES
+~~ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+~~ SERVICES, LOSS OF USE, DATA, PROFITS, OR BUSINESS INTERRUPTION)
+~~ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+~~ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+~~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+~~ OF THE POSSIBILITY OF SUCH DAMAGE.
+~~
+
+Weaving Java Binaries in Eclipse
+
+  After {{{./example-weaving.html}configuring jcabi-maven-plugin}} in your 
+  <<<pom.xml>>>, Eclipse may report the error:  
+  <<<Plugin execution not covered by lifecycle configuration: 
+  com.jcabi:jcabi-maven-plugin:0.12:ajc (execution: default, phase: 
+  process-classes)>>>
+  
+  This can be resolved by adding a new plugin to the <<<pluginManagement>>>
+  section of <<<pom.xml>>> as follows:
+
++--
+<pluginManagement>
+  <plugins>
+    <!--This plugin's configuration is used to store Eclipse m2e settings
+      only. It has no influence on the Maven build itself. -->
+    <plugin>
+      <groupId>org.eclipse.m2e</groupId>
+      <artifactId>lifecycle-mapping</artifactId>
+      <version>1.0.0</version>
+      <configuration>
+        <lifecycleMappingMetadata>
+          <pluginExecutions>
+            <pluginExecution>
+              <pluginExecutionFilter>
+                <groupId>com.jcabi</groupId>
+                <artifactId>jcabi-maven-plugin</artifactId>
+                <versionRange>[0.0,)</versionRange>
+                <goals>
+                  <goal>ajc</goal>
+                </goals>
+              </pluginExecutionFilter>
+              <action>
+                <execute />
+              </action>
+            </pluginExecution>
+          </pluginExecutions>
+        </lifecycleMappingMetadata>
+      </configuration>
+    </plugin>
+  </plugins>
+</pluginManagement>
++--
+
+  Note that adding this section is in addition to defining the <<<plugin>>> 
+  outside of the <<<pluginManagement>>> element.
+
+  That's it.
+
+  Credit to Andrew White and {{{http://stackoverflow.com/a/6372575}this answer 
+  on StackOverflow}} for showing the way.

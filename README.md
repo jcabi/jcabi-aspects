@@ -6,6 +6,10 @@
 [![Build Status](https://travis-ci.org/jcabi/jcabi-aspects.svg?branch=master)](https://travis-ci.org/jcabi/jcabi-aspects)
 [![Build status](https://ci.appveyor.com/api/projects/status/ut87e89ykj3v269x/branch/master?svg=true)](https://ci.appveyor.com/project/yegor256/jcabi-aspects/branch/master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects)
+[![JavaDoc](https://img.shields.io/badge/javadoc-html-blue.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-aspects)
+
+[![Issue Stats](http://issuestats.com/github/jcabi/jcabi-aspects/badge/issue)](http://issuestats.com/github/jcabi/jcabi-aspects)
+[![Issue Stats](http://issuestats.com/github/jcabi/jcabi-aspects/badge/pr)](http://issuestats.com/github/jcabi/jcabi-aspects)
 
 More details are here: [aspects.jcabi.com](http://aspects.jcabi.com/index.html).
 Also, read this blog post: [Java Method Logging with AOP and Annotations](http://www.yegor256.com/2014/06/01/aop-aspectj-java-method-logging.html).

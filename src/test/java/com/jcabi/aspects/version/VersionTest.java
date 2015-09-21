@@ -27,52 +27,47 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.aspects.aj;
+package com.jcabi.aspects.version;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.reflect.MethodSignature;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Utility methods that deal with JoinPoints.
- *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * Unit tests for {@link Version}.
+ * @author Georgy Vlasov (wlasowegor@gmail.com)
  * @version $Id$
- * @since 0.7.22
+ * @since 0.23
  */
-final class JoinPointUtils {
+public final class VersionTest {
 
     /**
-     * Utility class constructor.
+     * Version.CURRENT can contain actual project version and not a
+     * "${project.version}" placeholder.
+     * @throws Exception If fails
      */
-    private JoinPointUtils() {
-        // intentionally left empty
+    @Test
+    public void containsCorrectVersionNumber() throws Exception {
+        MatcherAssert.assertThat(
+            Version.CURRENT.projectVersion(),
+            Matchers.not(
+                Matchers.equalTo("${projectVersion}")
+            )
+        );
     }
 
     /**
-     * Calculate log target.
-     * @param point Proceeding point
-     * @return The target
+     * Version.CURRENT can contain actual build number and not a
+     * "${buildNumber}" placeholder.
+     * @throws Exception If fails
      */
-    public static Object targetize(final JoinPoint point) {
-        Object tgt;
-        final Method method = MethodSignature.class
-            .cast(point.getSignature()).getMethod();
-        if (Modifier.isStatic(method.getModifiers())) {
-            tgt = method.getDeclaringClass();
-        } else {
-            tgt = point.getTarget();
-        }
-        return tgt;
-    }
-
-    /**
-     * Get current method.
-     * @param point Join point
-     * @return Current method in join point
-     */
-    public static Method currentMethod(final JoinPoint point) {
-        return ((MethodSignature) point.getSignature()).getMethod();
+    @Test
+    public void containsCorrectBuildNumber() throws Exception {
+        MatcherAssert.assertThat(
+            Version.CURRENT.buildNumber(),
+            Matchers.not(
+                Matchers.equalTo("${buildNumber}")
+            )
+        );
     }
 }

@@ -27,52 +27,54 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.aspects.aj;
-
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.reflect.MethodSignature;
+package com.jcabi.aspects.version;
 
 /**
- * Utility methods that deal with JoinPoints.
- *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * Current version of the project. Generated from a template at build time.
+ * @author Georgy Vlasov (wlasowegor@gmail.com)
  * @version $Id$
- * @since 0.7.22
+ * @since 0.23
  */
-final class JoinPointUtils {
+public enum Version {
+    /**
+     * Current version.
+     */
+    CURRENT("${project.version}", "${buildNumber}");
 
     /**
-     * Utility class constructor.
+     * Project version.
      */
-    private JoinPointUtils() {
-        // intentionally left empty
+    private final String version;
+
+    /**
+     * Build number.
+     */
+    private final String build;
+
+    /**
+     * Public ctor.
+     * @param ver Maven's project.version property
+     * @param buildnum Maven's buildNumber property created with
+     *  buildnumber-maven-plugin
+     */
+    Version(final String ver, final String buildnum) {
+        this.version = ver;
+        this.build = buildnum;
     }
 
     /**
-     * Calculate log target.
-     * @param point Proceeding point
-     * @return The target
+     * Returns project version number.
+     * @return Project version number
      */
-    public static Object targetize(final JoinPoint point) {
-        Object tgt;
-        final Method method = MethodSignature.class
-            .cast(point.getSignature()).getMethod();
-        if (Modifier.isStatic(method.getModifiers())) {
-            tgt = method.getDeclaringClass();
-        } else {
-            tgt = point.getTarget();
-        }
-        return tgt;
+    public String projectVersion() {
+        return this.version;
     }
 
     /**
-     * Get current method.
-     * @param point Join point
-     * @return Current method in join point
+     * Returns project build number.
+     * @return Build number
      */
-    public static Method currentMethod(final JoinPoint point) {
-        return ((MethodSignature) point.getSignature()).getMethod();
+    public String buildNumber() {
+        return this.build;
     }
 }
