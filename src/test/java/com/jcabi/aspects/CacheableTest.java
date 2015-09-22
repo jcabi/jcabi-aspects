@@ -85,15 +85,15 @@ public final class CacheableTest {
         MatcherAssert.assertThat(first, Matchers.equalTo(second));
         try {
             TimeUnit.SECONDS.sleep(2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (final InterruptedException ex) {
+            throw new IllegalStateException(ex);
         }
         final String thrid = foo.asyncGet().toString();
         MatcherAssert.assertThat(first, Matchers.equalTo(thrid));
         try {
             TimeUnit.SECONDS.sleep(2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (final InterruptedException ex) {
+            throw new IllegalStateException(ex);
         }
         final String forth = foo.asyncGet().toString();
         MatcherAssert.assertThat(first, Matchers.not(Matchers.equalTo(forth)));
