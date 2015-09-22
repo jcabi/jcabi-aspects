@@ -73,11 +73,14 @@ public final class MethodCacher {
      * Calling tunnels.
      * @checkstyle LineLength (2 lines)
      */
-    private final transient ConcurrentMap<Key, Tunnel> tunnels =
-        new ConcurrentHashMap<Key, Tunnel>(0);
+    private final transient ConcurrentMap<MethodCacher.Key, MethodCacher.Tunnel> tunnels =
+        new ConcurrentHashMap<MethodCacher.Key, MethodCacher.Tunnel>(0);
 
-    private final transient BlockingQueue<Key> updateKeys =
-        new LinkedBlockingQueue<Key>();
+    /**
+     * save the keys which need update.
+     */
+    private final transient BlockingQueue<MethodCacher.Key> updateKeys =
+        new LinkedBlockingQueue<MethodCacher.Key>();
 
     /**
      * Service that cleans cache.
@@ -90,6 +93,9 @@ public final class MethodCacher {
             )
         );
 
+    /**
+     * Service that update cache.
+     */
     private final transient ScheduledExecutorService updater =
         Executors.newSingleThreadScheduledExecutor(
             new NamedThreads(
@@ -156,11 +162,15 @@ public final class MethodCacher {
             }
             tunnel = this.tunnels.get(key);
             if (tunnel == null) {
-                tunnel = new MethodCacher.Tunnel(point, key, annot.asyncUpdate());
+                tunnel = new MethodCacher.Tunnel(
+                    point, key, annot.asyncUpdate()
+                );
                 this.tunnels.put(key, tunnel);
             } else if (tunnel.expired()) {
                 if (!tunnel.asyncUpdate()) {
-                    tunnel = new MethodCacher.Tunnel(point, key, annot.asyncUpdate());
+                    tunnel = new MethodCacher.Tunnel(
+                        point, key, annot.asyncUpdate()
+                    );
                     this.tunnels.put(key, tunnel);
                 } else {
                     this.updateKeys.offer(key);
@@ -269,7 +279,8 @@ public final class MethodCacher {
     private void clean() {
         synchronized (this.tunnels) {
             for (final MethodCacher.Key key : this.tunnels.keySet()) {
-                if (this.tunnels.get(key).expired() && !this.tunnels.get(key).asyncUpdate()) {
+                if (this.tunnels.get(key).expired()
+                    && !this.tunnels.get(key).asyncUpdate()) {
                     final MethodCacher.Tunnel tunnel = this.tunnels.remove(key);
                     LogHelper.log(
                         key.getLevel(),
@@ -283,6 +294,9 @@ public final class MethodCacher {
         }
     }
 
+    /**
+     * Update cache.
+     */
     private void update() {
         final String format = "%s:%s";
         while (true) {
@@ -290,7 +304,8 @@ public final class MethodCacher {
                 final MethodCacher.Key key = updateKeys.take();
                 final MethodCacher.Tunnel tunnel = this.tunnels.get(key);
                 if (tunnel != null && tunnel.expired()) {
-                    final MethodCacher.Tunnel newTunnel = new MethodCacher.Tunnel(tunnel);
+                    final MethodCacher.Tunnel newTunnel =
+                        new MethodCacher.Tunnel(tunnel);
                     newTunnel.through();
                     this.tunnels.put(key, newTunnel);
                 }
@@ -326,7 +341,9 @@ public final class MethodCacher {
          * Key related to this tunnel.
          */
         private final transient MethodCacher.Key key;
-
+        /**
+         * Whether asynchronous update.
+         */
         private final transient boolean asyncUpdate;
         /**
          * Was it already executed?
@@ -351,7 +368,14 @@ public final class MethodCacher {
             this.asyncUpdate = tunnel.asyncUpdate;
         }
 
-        Tunnel(final ProceedingJoinPoint pnt, final MethodCacher.Key akey, final boolean asyncUpdate) {
+        /**
+         * Public ctor.
+         * @param pnt ProceedingJoinPoint
+         * @param akey MethodCacher.Key
+         * @param asyncUpdate boolean
+         */
+        Tunnel(final ProceedingJoinPoint pnt,
+            final MethodCacher.Key akey, final boolean asyncUpdate) {
             this.point = pnt;
             this.key = akey;
             this.asyncUpdate = asyncUpdate;
@@ -416,6 +440,10 @@ public final class MethodCacher {
             return this.executed && this.lifetime < System.currentTimeMillis();
         }
 
+        /**
+         * Whether asynchronous update.
+         * @return TRUE if asynchronous update
+         */
         public boolean asyncUpdate() {
             return asyncUpdate;
         }
