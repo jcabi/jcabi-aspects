@@ -74,6 +74,33 @@ public final class CacheableTest {
     }
 
     /**
+     * Cacheable can Asynchronous update.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void asyncUpdateCacheSimpleCall() {
+        final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
+        final String first = foo.asyncGet().toString();
+        final String second = foo.asyncGet().toString();
+        MatcherAssert.assertThat(first, Matchers.equalTo(second));
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        final String thrid = foo.asyncGet().toString();
+        MatcherAssert.assertThat(first, Matchers.equalTo(thrid));
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        final String forth = foo.asyncGet().toString();
+        MatcherAssert.assertThat(first, Matchers.not(Matchers.equalTo(forth)));
+        MatcherAssert.assertThat(thrid, Matchers.equalTo(thrid));
+    }
+
+    /**
      * Cacheable can cache static calls.
      * @throws Exception If something goes wrong
      */
@@ -198,6 +225,12 @@ public final class CacheableTest {
         @Cacheable(lifetime = 1, unit = TimeUnit.SECONDS)
         @Loggable(Loggable.DEBUG)
         public CacheableTest.Foo get() {
+            return new CacheableTest.Foo(CacheableTest.RANDOM.nextLong());
+        }
+
+        @Cacheable(lifetime = 1, unit = TimeUnit.SECONDS, asyncUpdate = true)
+        @Loggable(Loggable.DEBUG)
+        public CacheableTest.Foo asyncGet() {
             return new CacheableTest.Foo(CacheableTest.RANDOM.nextLong());
         }
         /**

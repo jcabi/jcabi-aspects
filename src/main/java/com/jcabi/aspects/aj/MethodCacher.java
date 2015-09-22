@@ -36,11 +36,7 @@ import com.jcabi.log.VerboseRunnable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -74,16 +70,26 @@ public final class MethodCacher {
     private final transient ConcurrentMap<MethodCacher.Key, MethodCacher.Tunnel> tunnels =
         new ConcurrentHashMap<MethodCacher.Key, MethodCacher.Tunnel>(0);
 
+    private final transient BlockingQueue<MethodCacher.Key> updateKeys = new LinkedBlockingQueue<MethodCacher.Key>();
+
     /**
      * Service that cleans cache.
      */
     private final transient ScheduledExecutorService cleaner =
         Executors.newSingleThreadScheduledExecutor(
             new NamedThreads(
-                "cacheable",
+                "cacheable-clean",
                 "automated cleaning of expired @Cacheable values"
             )
         );
+
+    private final transient ScheduledExecutorService updater =
+            Executors.newSingleThreadScheduledExecutor(
+                    new NamedThreads(
+                            "cacheable-update",
+                            "async update of expired @Cacheable values"
+                    )
+            );
 
     /**
      * Public ctor.
@@ -99,6 +105,17 @@ public final class MethodCacher {
                 }
             ),
             1L, 1L, TimeUnit.SECONDS
+        );
+        this.updater.schedule(
+            new VerboseRunnable(
+                 new Runnable() {
+                     @Override
+                     public void run() {
+                         MethodCacher.this.update();
+                     }
+                 }
+            ),
+            0L, TimeUnit.SECONDS
         );
     }
 
@@ -131,9 +148,16 @@ public final class MethodCacher {
                 }
             }
             tunnel = this.tunnels.get(key);
-            if (tunnel == null || tunnel.expired()) {
-                tunnel = new MethodCacher.Tunnel(point, key);
+            if (tunnel == null) {
+                tunnel = new MethodCacher.Tunnel(point, key, annot.asyncUpdate());
                 this.tunnels.put(key, tunnel);
+            } else if (tunnel.expired()) {
+                if (!tunnel.asyncUpdate()) {
+                    tunnel = new MethodCacher.Tunnel(point, key, annot.asyncUpdate());
+                    this.tunnels.put(key, tunnel);
+                } else {
+                    this.updateKeys.offer(key);
+                }
             }
             for (final Class<?> after : annot.after()) {
                 final boolean flag = Boolean.class.cast(
@@ -238,7 +262,7 @@ public final class MethodCacher {
     private void clean() {
         synchronized (this.tunnels) {
             for (final MethodCacher.Key key : this.tunnels.keySet()) {
-                if (this.tunnels.get(key).expired()) {
+                if (this.tunnels.get(key).expired() && !this.tunnels.get(key).asyncUpdate()) {
                     final MethodCacher.Tunnel tunnel = this.tunnels.remove(key);
                     LogHelper.log(
                         key.getLevel(),
@@ -248,6 +272,36 @@ public final class MethodCacher {
                         tunnel
                     );
                 }
+            }
+        }
+    }
+
+    private void update() {
+        while (true) {
+            try {
+                final MethodCacher.Key key = updateKeys.take();
+                final MethodCacher.Tunnel tunnel = this.tunnels.get(key);
+                if (tunnel != null && tunnel.expired()) {
+                    final MethodCacher.Tunnel newTunnel = new MethodCacher.Tunnel(tunnel);
+                    newTunnel.through();
+                    this.tunnels.put(key, newTunnel);
+                }
+            } catch (InterruptedException ex) {
+                LogHelper.log(
+                    Loggable.ERROR,
+                    this,
+                    "%s:%s",
+                    ex.getMessage(),
+                    ex
+                );
+            } catch (Throwable throwable) {
+                LogHelper.log(
+                    Loggable.ERROR,
+                    this,
+                    "%s:%s",
+                    throwable.getMessage(),
+                    throwable
+                );
             }
         }
     }
@@ -264,6 +318,8 @@ public final class MethodCacher {
          * Key related to this tunnel.
          */
         private final transient MethodCacher.Key key;
+
+        private final transient boolean asyncUpdate;
         /**
          * Was it already executed?
          */
@@ -276,15 +332,23 @@ public final class MethodCacher {
          * Cached value.
          */
         private transient Object cached;
+
         /**
          * Public ctor.
-         * @param pnt Joint point
-         * @param akey The key related to it
+         * @param tunnel MethodCacher.Tunnel
          */
-        Tunnel(final ProceedingJoinPoint pnt, final MethodCacher.Key akey) {
+        Tunnel(final MethodCacher.Tunnel tunnel) {
+            this.point = tunnel.point;
+            this.key = tunnel.key;
+            this.asyncUpdate = tunnel.asyncUpdate;
+        }
+
+        Tunnel(final ProceedingJoinPoint pnt, final MethodCacher.Key akey, final boolean asyncUpdate) {
             this.point = pnt;
             this.key = akey;
+            this.asyncUpdate = asyncUpdate;
         }
+
         @Override
         public String toString() {
             return Mnemos.toText(this.cached, true, false);
@@ -342,6 +406,10 @@ public final class MethodCacher {
          */
         public boolean expired() {
             return this.executed && this.lifetime < System.currentTimeMillis();
+        }
+
+        public boolean asyncUpdate() {
+            return asyncUpdate;
         }
     }
 

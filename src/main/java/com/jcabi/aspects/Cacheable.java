@@ -104,6 +104,11 @@ public @interface Cacheable {
     boolean forever() default false;
 
     /**
+     *  Returns the current store after the expiration, and then asynchronously update the data
+     */
+    boolean asyncUpdate() default false;
+
+    /**
      * Before-flushing trigger(s).
      *
      * <p>Before calling the method, call static method {@code flushBefore()}
