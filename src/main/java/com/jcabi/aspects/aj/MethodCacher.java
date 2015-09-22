@@ -36,8 +36,14 @@ import com.jcabi.log.VerboseRunnable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
-import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -67,10 +73,11 @@ public final class MethodCacher {
      * Calling tunnels.
      * @checkstyle LineLength (2 lines)
      */
-    private final transient ConcurrentMap<MethodCacher.Key, MethodCacher.Tunnel> tunnels =
-        new ConcurrentHashMap<MethodCacher.Key, MethodCacher.Tunnel>(0);
+    private final transient ConcurrentMap<Key, Tunnel> tunnels =
+        new ConcurrentHashMap<Key, Tunnel>(0);
 
-    private final transient BlockingQueue<MethodCacher.Key> updateKeys = new LinkedBlockingQueue<MethodCacher.Key>();
+    private final transient BlockingQueue<Key> updateKeys =
+        new LinkedBlockingQueue<Key>();
 
     /**
      * Service that cleans cache.
@@ -84,12 +91,12 @@ public final class MethodCacher {
         );
 
     private final transient ScheduledExecutorService updater =
-            Executors.newSingleThreadScheduledExecutor(
-                    new NamedThreads(
-                            "cacheable-update",
-                            "async update of expired @Cacheable values"
-                    )
-            );
+        Executors.newSingleThreadScheduledExecutor(
+            new NamedThreads(
+                "cacheable-update",
+                "async update of expired @Cacheable values"
+            )
+        );
 
     /**
      * Public ctor.
@@ -277,6 +284,7 @@ public final class MethodCacher {
     }
 
     private void update() {
+        final String format = "%s:%s";
         while (true) {
             try {
                 final MethodCacher.Key key = updateKeys.take();
@@ -286,19 +294,19 @@ public final class MethodCacher {
                     newTunnel.through();
                     this.tunnels.put(key, newTunnel);
                 }
-            } catch (InterruptedException ex) {
+            } catch (final InterruptedException ex) {
                 LogHelper.log(
                     Loggable.ERROR,
                     this,
-                    "%s:%s",
+                    format,
                     ex.getMessage(),
                     ex
                 );
-            } catch (Throwable throwable) {
+            } catch (final Throwable throwable) {
                 LogHelper.log(
                     Loggable.ERROR,
                     this,
-                    "%s:%s",
+                    format,
                     throwable.getMessage(),
                     throwable
                 );
