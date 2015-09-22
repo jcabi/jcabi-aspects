@@ -78,7 +78,7 @@ public final class CacheableTest {
      * @throws Exception If something goes wrong
      */
     @Test
-    public void asyncUpdateCacheSimpleCall() {
+    public void asyncUpdateCacheSimpleCall() throws Exception {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.asyncGet().toString();
         final String second = foo.asyncGet().toString();
@@ -97,7 +97,6 @@ public final class CacheableTest {
         }
         final String forth = foo.asyncGet().toString();
         MatcherAssert.assertThat(first, Matchers.not(Matchers.equalTo(forth)));
-        MatcherAssert.assertThat(thrid, Matchers.equalTo(thrid));
     }
 
     /**
@@ -228,6 +227,10 @@ public final class CacheableTest {
             return new CacheableTest.Foo(CacheableTest.RANDOM.nextLong());
         }
 
+        /**
+         * Download some text.
+         * @return Downloaded text
+         */
         @Cacheable(lifetime = 1, unit = TimeUnit.SECONDS, asyncUpdate = true)
         @Loggable(Loggable.DEBUG)
         public CacheableTest.Foo asyncGet() {

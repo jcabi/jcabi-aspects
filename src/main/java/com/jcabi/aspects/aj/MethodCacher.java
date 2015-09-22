@@ -36,7 +36,6 @@ import com.jcabi.log.VerboseRunnable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -44,6 +43,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -77,9 +77,9 @@ public final class MethodCacher {
         new ConcurrentHashMap<MethodCacher.Key, MethodCacher.Tunnel>(0);
 
     /**
-     * save the keys which need update.
+     * Save the keys which need update.
      */
-    private final transient BlockingQueue<MethodCacher.Key> updateKeys =
+    private final transient BlockingQueue<MethodCacher.Key> updatekeys =
         new LinkedBlockingQueue<MethodCacher.Key>();
 
     /**
@@ -121,12 +121,12 @@ public final class MethodCacher {
         );
         this.updater.schedule(
             new VerboseRunnable(
-                 new Runnable() {
-                     @Override
-                     public void run() {
-                         MethodCacher.this.update();
-                     }
-                 }
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        MethodCacher.this.update();
+                    }
+                }
             ),
             0L, TimeUnit.SECONDS
         );
@@ -173,7 +173,7 @@ public final class MethodCacher {
                     );
                     this.tunnels.put(key, tunnel);
                 } else {
-                    this.updateKeys.offer(key);
+                    this.updatekeys.offer(key);
                 }
             }
             for (final Class<?> after : annot.after()) {
@@ -301,7 +301,7 @@ public final class MethodCacher {
         final String format = "%s:%s";
         while (true) {
             try {
-                final MethodCacher.Key key = updateKeys.take();
+                final MethodCacher.Key key = this.updatekeys.take();
                 final MethodCacher.Tunnel tunnel = this.tunnels.get(key);
                 if (tunnel != null && tunnel.expired()) {
                     final MethodCacher.Tunnel newTunnel =
@@ -344,7 +344,7 @@ public final class MethodCacher {
         /**
          * Whether asynchronous update.
          */
-        private final transient boolean asyncUpdate;
+        private final transient boolean asyncupdate;
         /**
          * Was it already executed?
          */
@@ -365,20 +365,20 @@ public final class MethodCacher {
         Tunnel(final MethodCacher.Tunnel tunnel) {
             this.point = tunnel.point;
             this.key = tunnel.key;
-            this.asyncUpdate = tunnel.asyncUpdate;
+            this.asyncupdate = tunnel.asyncupdate;
         }
 
         /**
          * Public ctor.
          * @param pnt ProceedingJoinPoint
          * @param akey MethodCacher.Key
-         * @param asyncUpdate boolean
+         * @param aupdate Boolean
          */
         Tunnel(final ProceedingJoinPoint pnt,
-            final MethodCacher.Key akey, final boolean asyncUpdate) {
+            final MethodCacher.Key akey, final boolean aupdate) {
             this.point = pnt;
             this.key = akey;
-            this.asyncUpdate = asyncUpdate;
+            this.asyncupdate = aupdate;
         }
 
         @Override
@@ -445,7 +445,7 @@ public final class MethodCacher {
          * @return TRUE if asynchronous update
          */
         public boolean asyncUpdate() {
-            return asyncUpdate;
+            return this.asyncupdate;
         }
     }
 
