@@ -297,8 +297,8 @@ public final class MethodCacher {
     /**
      * Update cache.
      */
+    @SuppressWarnings("PMD.AvoidCatchingThrowable")
     private void update() {
-        final String format = "%s:%s";
         while (true) {
             try {
                 final MethodCacher.Key key = this.updatekeys.take();
@@ -313,17 +313,17 @@ public final class MethodCacher {
                 LogHelper.log(
                     Loggable.ERROR,
                     this,
-                    format,
+                    "%s:%s",
                     ex.getMessage(),
                     ex
                 );
-            } catch (final Throwable throwable) {
-                LogHelper.log(
-                    Loggable.ERROR,
-                    this,
-                    format,
-                    throwable.getMessage(),
-                    throwable
+            } catch (final Throwable ex) {
+                throw new IllegalStateException(
+                    String.format(
+                        "%s: Exception thrown",
+                        ex.getMessage()
+                    ),
+                    ex
                 );
             }
         }
