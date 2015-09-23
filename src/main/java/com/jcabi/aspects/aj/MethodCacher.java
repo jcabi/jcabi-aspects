@@ -161,20 +161,14 @@ public final class MethodCacher {
                 }
             }
             tunnel = this.tunnels.get(key);
-            if (tunnel == null) {
+            if (this.isCreateTunnel(tunnel)) {
                 tunnel = new MethodCacher.Tunnel(
                     point, key, annot.asyncUpdate()
                 );
                 this.tunnels.put(key, tunnel);
-            } else if (tunnel.expired()) {
-                if (!tunnel.asyncUpdate()) {
-                    tunnel = new MethodCacher.Tunnel(
-                        point, key, annot.asyncUpdate()
-                    );
-                    this.tunnels.put(key, tunnel);
-                } else {
-                    this.updatekeys.offer(key);
-                }
+            }
+            if (tunnel.expired() && tunnel.asyncUpdate()) {
+                this.updatekeys.offer(key);
             }
             for (final Class<?> after : annot.after()) {
                 final boolean flag = Boolean.class.cast(
@@ -186,6 +180,15 @@ public final class MethodCacher {
             }
         }
         return tunnel.through();
+    }
+
+    /**
+     * Whether create a new Tunnel.
+     * @param tunnel MethodCacher.Tunnel
+     * @return Boolean
+     */
+    private boolean isCreateTunnel(final MethodCacher.Tunnel tunnel) {
+        return tunnel == null || (tunnel.expired() && !tunnel.asyncUpdate());
     }
 
     /**
@@ -304,6 +307,7 @@ public final class MethodCacher {
                 final MethodCacher.Key key = this.updatekeys.take();
                 final MethodCacher.Tunnel tunnel = this.tunnels.get(key);
                 if (tunnel != null && tunnel.expired()) {
+                    // @checkstyle AvoidInstantiatingObjectsInLoops (1 line)
                     final MethodCacher.Tunnel newTunnel =
                         new MethodCacher.Tunnel(tunnel);
                     newTunnel.through();
@@ -345,7 +349,7 @@ public final class MethodCacher {
         /**
          * Whether asynchronous update.
          */
-        private final transient boolean asyncupdate;
+        private final transient boolean asynchupdate;
         /**
          * Was it already executed?
          */
@@ -366,7 +370,7 @@ public final class MethodCacher {
         Tunnel(final MethodCacher.Tunnel tunnel) {
             this.point = tunnel.point;
             this.key = tunnel.key;
-            this.asyncupdate = tunnel.asyncupdate;
+            this.asynchupdate = tunnel.asynchupdate;
         }
 
         /**
@@ -379,7 +383,7 @@ public final class MethodCacher {
             final MethodCacher.Key akey, final boolean aupdate) {
             this.point = pnt;
             this.key = akey;
-            this.asyncupdate = aupdate;
+            this.asynchupdate = aupdate;
         }
 
         @Override
@@ -446,7 +450,7 @@ public final class MethodCacher {
          * @return TRUE if asynchronous update
          */
         public boolean asyncUpdate() {
-            return this.asyncupdate;
+            return this.asynchupdate;
         }
     }
 
