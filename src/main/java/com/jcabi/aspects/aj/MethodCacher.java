@@ -317,12 +317,13 @@ public final class MethodCacher {
                     ex.getMessage(),
                     ex
                 );
+            // @checkstyle IllegalCatch (1 line)
             } catch (final Throwable ex) {
-                throw new IllegalStateException(
-                    String.format(
-                        "%s: Exception thrown",
-                        ex.getMessage()
-                    ),
+                LogHelper.log(
+                    Loggable.ERROR,
+                    this,
+                    "Exception message is %s, Exception is %s",
+                    ex.getMessage(),
                     ex
                 );
             }
