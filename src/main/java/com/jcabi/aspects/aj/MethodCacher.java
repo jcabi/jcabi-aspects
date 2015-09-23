@@ -66,7 +66,9 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @since 0.8
  */
 @Aspect
-@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
+@SuppressWarnings(
+    { "PMD.DoNotUseThreads", "PMD.TooManyMethods", "PMD.GodClass" }
+)
 public final class MethodCacher {
 
     /**
@@ -198,7 +200,8 @@ public final class MethodCacher {
      * @since 0.7.14
      * @deprecated Since 0.7.17, and preflush() should be used
      * @throws Throwable If something goes wrong inside
-     * @checkstyle IllegalThrows (3 lines)
+     * @checkstyle IllegalThrows (4 lines)
+     * @checkstyle MethodsOrderCheck (3 lines)
      */
     @Deprecated
     public Object flush(final ProceedingJoinPoint point) throws Throwable {
@@ -214,6 +217,7 @@ public final class MethodCacher {
      *
      * @param point Joint point
      * @since 0.7.14
+     * @checkstyle MethodsOrderCheck (3 lines)
      */
     @Before(
         // @checkstyle StringLiteralsConcatenation (3 lines)
@@ -233,6 +237,7 @@ public final class MethodCacher {
      *
      * @param point Joint point
      * @since 0.7.18
+     * @checkstyle MethodsOrderCheck (3 lines)
      */
     @After(
         // @checkstyle StringLiteralsConcatenation (2 lines)
@@ -307,9 +312,7 @@ public final class MethodCacher {
                 final MethodCacher.Key key = this.updatekeys.take();
                 final MethodCacher.Tunnel tunnel = this.tunnels.get(key);
                 if (tunnel != null && tunnel.expired()) {
-                    // @checkstyle AvoidInstantiatingObjectsInLoops (1 line)
-                    final MethodCacher.Tunnel newTunnel =
-                        new MethodCacher.Tunnel(tunnel);
+                    final MethodCacher.Tunnel newTunnel = tunnel.copy();
                     newTunnel.through();
                     this.tunnels.put(key, newTunnel);
                 }
@@ -365,16 +368,6 @@ public final class MethodCacher {
 
         /**
          * Public ctor.
-         * @param tunnel MethodCacher.Tunnel
-         */
-        Tunnel(final MethodCacher.Tunnel tunnel) {
-            this.point = tunnel.point;
-            this.key = tunnel.key;
-            this.asynchupdate = tunnel.asynchupdate;
-        }
-
-        /**
-         * Public ctor.
          * @param pnt ProceedingJoinPoint
          * @param akey MethodCacher.Key
          * @param aupdate Boolean
@@ -389,6 +382,16 @@ public final class MethodCacher {
         @Override
         public String toString() {
             return Mnemos.toText(this.cached, true, false);
+        }
+
+        /**
+         * Public ctor.
+         * @return MethodCacher.Tunnel
+         */
+        public Tunnel copy() {
+            return new Tunnel(
+                this.point, this.key, this.asynchupdate
+            );
         }
         /**
          * Get a result through the tunnel.
