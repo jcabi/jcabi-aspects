@@ -62,10 +62,6 @@ public final class ImmutabilityChecker {
      *
      * <p>Try NOT to change the signature of this method, in order to keep
      * it backward compatible.
-     * @todo #167:30min Inserting correct version/buildnumber
-     *  here and in other instances where Version.CURRENT is
-     *  used (not only in this class, but in every class that
-     *  uses Version.CURRENT) should be covered by a test.
      * @param point Joint point
      */
     @After("initialization((@com.jcabi.aspects.Immutable *).new(..))")

@@ -30,6 +30,8 @@
 package com.jcabi.aspects;
 
 import java.util.regex.Pattern;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -86,6 +88,35 @@ public final class ImmutableTest {
     @Test(expected = IllegalStateException.class)
     public void catchesTypesMutableByClassInheritance() {
         new MutableByInheritance();
+    }
+
+    /**
+     * Test Version.
+     */
+    @Test
+    public void testVersion() {
+        try {
+            new Mutable();
+        } catch (final IllegalStateException ex) {
+            MatcherAssert.assertThat(
+                ex.getMessage(),
+                Matchers.not(
+                    Matchers.containsString(
+                        "${projectVersion}"
+                    )
+                )
+            );
+            MatcherAssert.assertThat(
+                ex.getMessage(),
+                Matchers.not(
+                    Matchers.containsString(
+                        "${buildNumber}"
+                    )
+                )
+            );
+            return;
+        }
+        MatcherAssert.assertThat("should not happen.", false);
     }
 
     /**
