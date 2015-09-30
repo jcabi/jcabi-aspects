@@ -80,23 +80,21 @@ public final class NamedThreadsTest {
         );
     }
 
+    /**
+     * Simple string appender.
+     * @author Haris Peco (snpe60@gmail.com)
+     * @version $Id
+     */
     @SuppressWarnings("PMD.AvoidStringBufferField")
     private class StringAppender extends AppenderSkeleton {
         /**
          * String buffer.
          */
         private final StringBuilder buffer = new StringBuilder();
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public boolean requiresLayout() {
             return false;
         }
-
-        /**
-         * {@inheritDoc}
-         */
         @Override
         // @checkstyle MethodBodyCommentsCheck (2 lines)
         public void close() {
@@ -111,9 +109,6 @@ public final class NamedThreadsTest {
             return this.buffer.toString();
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         protected void append(final LoggingEvent event) {
             this.buffer.append(event.getMessage());
