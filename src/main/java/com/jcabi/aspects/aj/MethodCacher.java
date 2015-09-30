@@ -70,10 +70,10 @@ public final class MethodCacher {
      * @checkstyle LineLength (2 lines)
      */
     private final transient ConcurrentMap<MethodCacher.Key, MethodCacher.Tunnel> tunnels =
-        new ConcurrentHashMap<Key, Tunnel>(0);
+        new ConcurrentHashMap<MethodCacher.Key, MethodCacher.Tunnel>(0);
 
     /**
-     * Save the keys which need update.
+     * Save the keys of caches which need update.
      */
     private final transient BlockingQueue<Key> updatekeys =
         new LinkedBlockingQueue<MethodCacher.Key>();
@@ -136,23 +136,13 @@ public final class MethodCacher {
     }
 
     /**
-     * Whether create a new Tunnel.
-     * @param tunnel MethodCacher.Tunnel
-     * @return Boolean
-     */
-    private boolean isCreateTunnel(final MethodCacher.Tunnel tunnel) {
-        return tunnel == null || (tunnel.expired() && !tunnel.asyncUpdate());
-    }
-
-    /**
      * Flush cache.
      * @param point Join point
      * @return Value of the method
      * @since 0.7.14
      * @deprecated Since 0.7.17, and preflush() should be used
      * @throws Throwable If something goes wrong inside
-     * @checkstyle IllegalThrows (4 lines)
-     * @checkstyle MethodsOrderCheck (3 lines)
+     * @checkstyle IllegalThrows (3 lines)
      */
     @Deprecated
     public Object flush(final ProceedingJoinPoint point) throws Throwable {
@@ -168,7 +158,6 @@ public final class MethodCacher {
      *
      * @param point Joint point
      * @since 0.7.14
-     * @checkstyle MethodsOrderCheck (3 lines)
      */
     @Before(
         // @checkstyle StringLiteralsConcatenation (3 lines)
@@ -188,7 +177,6 @@ public final class MethodCacher {
      *
      * @param point Joint point
      * @since 0.7.18
-     * @checkstyle MethodsOrderCheck (3 lines)
      */
     @After(
         // @checkstyle StringLiteralsConcatenation (2 lines)
@@ -233,6 +221,15 @@ public final class MethodCacher {
     }
 
     /**
+     * Whether create a new Tunnel.
+     * @param tunnel MethodCacher.Tunnel
+     * @return Boolean
+     */
+    private boolean isCreateTunnel(final MethodCacher.Tunnel tunnel) {
+        return tunnel == null || (tunnel.expired() && !tunnel.asyncUpdate());
+    }
+
+    /**
      * Mutable caching/calling tunnel, it is thread-safe.
      */
     protected static final class Tunnel {
@@ -247,7 +244,7 @@ public final class MethodCacher {
         /**
          * Whether asynchronous update.
          */
-        private final transient boolean asynchupdate;
+        private final transient boolean async;
         /**
          * Was it already executed?
          */
@@ -265,13 +262,13 @@ public final class MethodCacher {
          * Public ctor.
          * @param pnt ProceedingJoinPoint
          * @param akey MethodCacher.Key
-         * @param aupdate Boolean
+         * @param asy Boolean
          */
         Tunnel(final ProceedingJoinPoint pnt,
-            final MethodCacher.Key akey, final boolean aupdate) {
+            final MethodCacher.Key akey, final boolean asy) {
             this.point = pnt;
             this.key = akey;
-            this.asynchupdate = aupdate;
+            this.async = asy;
         }
 
         @Override
@@ -280,12 +277,12 @@ public final class MethodCacher {
         }
 
         /**
-         * Public ctor.
+         * Get a new instance.
          * @return MethodCacher.Tunnel
          */
         public Tunnel copy() {
             return new Tunnel(
-                this.point, this.key, this.asynchupdate
+                this.point, this.key, this.async
             );
         }
         /**
@@ -348,7 +345,7 @@ public final class MethodCacher {
          * @return TRUE if asynchronous update
          */
         public boolean asyncUpdate() {
-            return this.asynchupdate;
+            return this.async;
         }
     }
 

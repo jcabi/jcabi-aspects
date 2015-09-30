@@ -81,22 +81,20 @@ public final class CacheableTest {
     public void asyncUpdateCacheSimpleCall() throws Exception {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.asyncGet().toString();
-        final String second = foo.asyncGet().toString();
-        MatcherAssert.assertThat(first, Matchers.equalTo(second));
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        } catch (final InterruptedException ex) {
-            throw new IllegalStateException(ex);
-        }
-        final String thrid = foo.asyncGet().toString();
-        MatcherAssert.assertThat(first, Matchers.equalTo(thrid));
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        } catch (final InterruptedException ex) {
-            throw new IllegalStateException(ex);
-        }
-        final String forth = foo.asyncGet().toString();
-        MatcherAssert.assertThat(first, Matchers.not(Matchers.equalTo(forth)));
+        MatcherAssert.assertThat(
+            first,
+            Matchers.equalTo(foo.asyncGet().toString())
+        );
+        TimeUnit.SECONDS.sleep(2);
+        MatcherAssert.assertThat(
+            first,
+            Matchers.equalTo(foo.asyncGet().toString())
+        );
+        TimeUnit.SECONDS.sleep(2);
+        MatcherAssert.assertThat(
+            first,
+            Matchers.not(Matchers.equalTo(foo.asyncGet().toString()))
+        );
     }
 
     /**

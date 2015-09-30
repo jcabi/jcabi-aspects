@@ -63,7 +63,7 @@ public final class UpdateMethodCacher {
         );
 
     /**
-     * Save the keys which need update.
+     * Save the keys of caches which need update.
      */
     private final transient BlockingQueue<MethodCacher.Key> updatekeys;
 
