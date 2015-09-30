@@ -54,7 +54,7 @@ public final class NamedThreadsTest {
     @SuppressWarnings("PMD.DoNotUseThreads")
     public void testVersion() {
         final org.apache.log4j.Logger root = LogManager.getRootLogger();
-        final Level oldLevel = root.getLevel();
+        final Level level = root.getLevel();
         root.setLevel(Level.INFO);
         final StringWriter writer = new StringWriter();
         final WriterAppender appender =
@@ -84,7 +84,7 @@ public final class NamedThreadsTest {
             );
         } finally {
             root.removeAppender(appender);
-            root.setLevel(oldLevel);
+            root.setLevel(level);
         }
     }
 

@@ -99,10 +99,10 @@ public final class ImmutableTest {
     }
 
     /**
-     * Test Version.
+     * Informs version on error.
      */
     @Test
-    public void testVersion() {
+    public void informsVersionOnError() {
         this.thrown.expect(IllegalStateException.class);
         this.thrown.expectMessage(Version.CURRENT.projectVersion());
         this.thrown.expectMessage(Version.CURRENT.buildNumber());
