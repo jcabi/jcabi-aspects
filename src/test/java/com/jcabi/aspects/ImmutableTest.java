@@ -31,9 +31,9 @@ package com.jcabi.aspects;
 
 import com.jcabi.aspects.version.Version;
 import java.util.regex.Pattern;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Test case for {@link Immutable} annotation and its implementation.
@@ -48,6 +48,13 @@ import org.junit.Test;
     "PMD.FinalFieldCouldBeStatic"
 })
 public final class ImmutableTest {
+
+    /**
+     * Exception rule.
+     */
+    @Rule
+    // @checkstyle VisibilityModifierCheck (1 line)
+    public final transient ExpectedException thrown = ExpectedException.none();
 
     /**
      * Immutable can catch mutable classes.
@@ -96,25 +103,10 @@ public final class ImmutableTest {
      */
     @Test
     public void testVersion() {
-        try {
-            new Mutable();
-        } catch (final IllegalStateException ex) {
-            final String message = ex.getMessage();
-            MatcherAssert.assertThat(
-                message,
-                Matchers.containsString(
-                    Version.CURRENT.projectVersion()
-                )
-            );
-            MatcherAssert.assertThat(
-                message,
-                Matchers.containsString(
-                    Version.CURRENT.buildNumber()
-                )
-            );
-            return;
-        }
-        MatcherAssert.assertThat("should not happen.", false);
+        this.thrown.expect(IllegalStateException.class);
+        this.thrown.expectMessage(Version.CURRENT.projectVersion());
+        this.thrown.expectMessage(Version.CURRENT.buildNumber());
+        new Mutable();
     }
 
     /**
