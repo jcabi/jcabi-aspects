@@ -86,11 +86,17 @@ public final class NamedThreadsTest {
          * String buffer.
          */
         private final StringBuilder buffer = new StringBuilder();
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public boolean requiresLayout() {
             return false;
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         // @checkstyle MethodBodyCommentsCheck (2 lines)
         public void close() {
@@ -105,6 +111,9 @@ public final class NamedThreadsTest {
             return this.buffer.toString();
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected void append(final LoggingEvent event) {
             this.buffer.append(event.getMessage());
