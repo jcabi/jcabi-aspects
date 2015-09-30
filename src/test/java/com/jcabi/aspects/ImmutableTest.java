@@ -29,6 +29,7 @@
  */
 package com.jcabi.aspects;
 
+import com.jcabi.aspects.version.Version;
 import java.util.regex.Pattern;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -98,20 +99,17 @@ public final class ImmutableTest {
         try {
             new Mutable();
         } catch (final IllegalStateException ex) {
+            final String message = ex.getMessage();
             MatcherAssert.assertThat(
-                ex.getMessage(),
-                Matchers.not(
-                    Matchers.containsString(
-                        "${projectVersion}"
-                    )
+                message,
+                Matchers.containsString(
+                    Version.CURRENT.projectVersion()
                 )
             );
             MatcherAssert.assertThat(
-                ex.getMessage(),
-                Matchers.not(
-                    Matchers.containsString(
-                        "${buildNumber}"
-                    )
+                message,
+                Matchers.containsString(
+                    Version.CURRENT.buildNumber()
                 )
             );
             return;

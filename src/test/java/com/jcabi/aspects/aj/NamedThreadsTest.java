@@ -29,9 +29,12 @@
  */
 package com.jcabi.aspects.aj;
 
-import org.apache.log4j.AppenderSkeleton;
+import com.jcabi.aspects.version.Version;
+import java.io.StringWriter;
+import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
-import org.apache.log4j.spi.LoggingEvent;
+import org.apache.log4j.SimpleLayout;
+import org.apache.log4j.WriterAppender;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -41,6 +44,7 @@ import org.junit.Test;
  *
  * @author Haris Peco (snpe60@gmail.com)
  * @version $Id$
+ * @since 0.22
  */
 public final class NamedThreadsTest {
     /**
@@ -50,68 +54,38 @@ public final class NamedThreadsTest {
     @SuppressWarnings("PMD.DoNotUseThreads")
     public void testVersion() {
         final org.apache.log4j.Logger root = LogManager.getRootLogger();
-        root.setLevel(org.apache.log4j.Level.INFO);
-        final StringAppender app = new StringAppender();
-        root.addAppender(app);
-        new NamedThreads("test", "desc").newThread(
-            new Runnable() {
-                @Override
-                // @checkstyle MethodBodyCommentsCheck (2 lines)
-                public void run() {
-                    // do nothing
-                }
-            });
-        final String message = app.getBuffer();
-        MatcherAssert.assertThat(
-            message,
-            Matchers.not(
+        final Level oldLevel = root.getLevel();
+        root.setLevel(Level.INFO);
+        final StringWriter writer = new StringWriter();
+        final WriterAppender appender =
+            new WriterAppender(new SimpleLayout(), writer);
+        root.addAppender(appender);
+        try {
+            new NamedThreads("test", "desc").newThread(
+                new Runnable() {
+                    @Override
+                    // @checkstyle MethodBodyCommentsCheck (2 lines)
+                    public void run() {
+                        // do nothing
+                    }
+                });
+            final String message = writer.toString();
+            MatcherAssert.assertThat(
+                message,
                 Matchers.containsString(
-                    "${projectVersion}"
+                    Version.CURRENT.projectVersion()
                 )
-            )
-        );
-        MatcherAssert.assertThat(
-            message,
-            Matchers.not(
+            );
+            MatcherAssert.assertThat(
+                message,
                 Matchers.containsString(
-                    "${buildNumber}"
+                    Version.CURRENT.buildNumber()
                 )
-            )
-        );
+            );
+        } finally {
+            root.removeAppender(appender);
+            root.setLevel(oldLevel);
+        }
     }
 
-    /**
-     * Simple string appender.
-     * @author Haris Peco (snpe60@gmail.com)
-     * @version $Id
-     */
-    @SuppressWarnings("PMD.AvoidStringBufferField")
-    private class StringAppender extends AppenderSkeleton {
-        /**
-         * String buffer.
-         */
-        private final StringBuilder buffer = new StringBuilder();
-        @Override
-        public boolean requiresLayout() {
-            return false;
-        }
-        @Override
-        // @checkstyle MethodBodyCommentsCheck (2 lines)
-        public void close() {
-            // do nothing
-        }
-
-        /**
-         * Returns string buffer.
-         * @return String buffer
-         */
-        public String getBuffer() {
-            return this.buffer.toString();
-        }
-
-        @Override
-        protected void append(final LoggingEvent event) {
-            this.buffer.append(event.getMessage());
-        }
-    }
 }
