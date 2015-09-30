@@ -83,7 +83,7 @@ public final class QuietExceptionsLogger {
         // @checkstyle IllegalCatch (1 line)
         } catch (final Throwable ex) {
             Logger.warn(
-                JoinPointUtils.targetize(point),
+                new ImprovedJoinPoint(point).targetize(),
                 "%[exception]s",
                 ex
             );

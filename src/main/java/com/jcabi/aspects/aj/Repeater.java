@@ -76,6 +76,7 @@ public final class Repeater {
         int attempt = 0;
         final long begin = System.nanoTime();
         final Class<? extends Throwable>[] types = rof.types();
+        final ImprovedJoinPoint joinpoint = new ImprovedJoinPoint(point);
         while (true) {
             final long start = System.nanoTime();
             try {
@@ -94,7 +95,7 @@ public final class Repeater {
                 ++attempt;
                 if (rof.verbose()) {
                     Logger.warn(
-                        JoinPointUtils.targetize(point),
+                        joinpoint.targetize(),
                         // @checkstyle LineLength (1 line)
                         "#%s(): attempt #%d of %d failed in %[nano]s (%[nano]s waiting already) with %[exception]s",
                         method.getName(),
@@ -103,7 +104,7 @@ public final class Repeater {
                     );
                 } else {
                     Logger.warn(
-                        JoinPointUtils.targetize(point),
+                           joinpoint.targetize(),
                         // @checkstyle LineLength (1 line)
                         "#%s(): attempt #%d/%d failed with %[type]s in %[nano]s (%[nano]s in total): %s",
                         method.getName(),

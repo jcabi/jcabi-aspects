@@ -32,47 +32,103 @@ package com.jcabi.aspects.aj;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.aspectj.lang.reflect.SourceLocation;
 
 /**
- * Utility methods that deal with JoinPoints.
+ * This class implements the methods from JointPoint interface.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @author Shelan Perera (shelanrc@gmail.com)
  * @version $Id$
- * @since 0.7.22
+ * @since 1.0
  */
-final class JoinPointUtils {
+public class ImprovedJoinPoint implements JoinPoint {
 
     /**
-     * Utility class constructor.
+     *
      */
-    private JoinPointUtils() {
-        // intentionally left empty
+    private final transient JoinPoint joinpoint;
+
+    /**
+     * Constructor for BaseJointPoint.
+     *
+     * @param jpt Parameter of joinpoint instance for the constructor
+     */
+    ImprovedJoinPoint(final JoinPoint jpt) {
+        this.joinpoint = jpt;
+    }
+
+    @Override
+    public final String toString() {
+        return this.joinpoint.toString();
+    }
+    @Override
+    public final String toShortString() {
+        return this.joinpoint.toShortString();
+    }
+    @Override
+    public final String toLongString() {
+        return this.joinpoint.toLongString();
+    }
+    @Override
+    public final Object getThis() {
+        return this.joinpoint.getThis();
+    }
+
+    @Override
+    public final Object getTarget() {
+        return this.joinpoint.getTarget();
+    }
+
+    @Override
+    public final Object[] getArgs() {
+        return this.joinpoint.getArgs();
+    }
+
+    @Override
+    public final Signature getSignature() {
+        return this.joinpoint.getSignature();
+    }
+
+    @Override
+    public final SourceLocation getSourceLocation() {
+        return this.joinpoint.getSourceLocation();
+    }
+
+    @Override
+    public final String getKind() {
+        return this.joinpoint.getKind();
+    }
+
+    @Override
+    public final JoinPoint.StaticPart getStaticPart() {
+        return this.joinpoint.getStaticPart();
     }
 
     /**
      * Calculate log target.
-     * @param point Proceeding point
+     *
      * @return The target
      */
-    public static Object targetize(final JoinPoint point) {
-        Object tgt;
+    public final Object targetize() {
+        final Object target;
         final Method method = MethodSignature.class
-            .cast(point.getSignature()).getMethod();
+                .cast(this.joinpoint.getSignature()).getMethod();
         if (Modifier.isStatic(method.getModifiers())) {
-            tgt = method.getDeclaringClass();
+            target = method.getDeclaringClass();
         } else {
-            tgt = point.getTarget();
+            target = this.joinpoint.getTarget();
         }
-        return tgt;
+        return target;
     }
 
     /**
      * Get current method.
-     * @param point Join point
+     *
      * @return Current method in join point
      */
-    public static Method currentMethod(final JoinPoint point) {
-        return ((MethodSignature) point.getSignature()).getMethod();
+    public final Method currentMethod() {
+        return ((MethodSignature) this.joinpoint.getSignature()).getMethod();
     }
 }

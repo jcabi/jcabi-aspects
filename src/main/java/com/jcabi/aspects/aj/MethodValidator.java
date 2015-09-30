@@ -136,7 +136,7 @@ public final class MethodValidator {
                 .forExecutables()
                 .validateReturnValue(
                     point.getThis(),
-                    JoinPointUtils.currentMethod(point),
+                    new ImprovedJoinPoint(point).currentMethod(),
                     result
                 )
         );
