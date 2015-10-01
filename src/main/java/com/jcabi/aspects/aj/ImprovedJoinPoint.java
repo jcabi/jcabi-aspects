@@ -43,7 +43,7 @@ import org.aspectj.lang.reflect.SourceLocation;
  * @version $Id$
  * @since 1.0
  */
-public class ImprovedJoinPoint implements JoinPoint {
+final class ImprovedJoinPoint implements JoinPoint {
 
     /**
      *
@@ -51,58 +51,58 @@ public class ImprovedJoinPoint implements JoinPoint {
     private final transient JoinPoint joinpoint;
 
     /**
-     * Constructor for BaseJointPoint.
+     * Constructor.
      *
-     * @param jpt Parameter of joinpoint instance for the constructor
+     * @param jpt Origin instance
      */
     ImprovedJoinPoint(final JoinPoint jpt) {
         this.joinpoint = jpt;
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return this.joinpoint.toString();
     }
     @Override
-    public final String toShortString() {
+    public String toShortString() {
         return this.joinpoint.toShortString();
     }
     @Override
-    public final String toLongString() {
+    public String toLongString() {
         return this.joinpoint.toLongString();
     }
     @Override
-    public final Object getThis() {
+    public Object getThis() {
         return this.joinpoint.getThis();
     }
 
     @Override
-    public final Object getTarget() {
+    public Object getTarget() {
         return this.joinpoint.getTarget();
     }
 
     @Override
-    public final Object[] getArgs() {
+    public Object[] getArgs() {
         return this.joinpoint.getArgs();
     }
 
     @Override
-    public final Signature getSignature() {
+    public Signature getSignature() {
         return this.joinpoint.getSignature();
     }
 
     @Override
-    public final SourceLocation getSourceLocation() {
+    public SourceLocation getSourceLocation() {
         return this.joinpoint.getSourceLocation();
     }
 
     @Override
-    public final String getKind() {
+    public String getKind() {
         return this.joinpoint.getKind();
     }
 
     @Override
-    public final JoinPoint.StaticPart getStaticPart() {
+    public JoinPoint.StaticPart getStaticPart() {
         return this.joinpoint.getStaticPart();
     }
 
@@ -111,7 +111,7 @@ public class ImprovedJoinPoint implements JoinPoint {
      *
      * @return The target
      */
-    public final Object targetize() {
+    public Object targetize() {
         final Object target;
         final Method method = MethodSignature.class
                 .cast(this.joinpoint.getSignature()).getMethod();
@@ -128,7 +128,7 @@ public class ImprovedJoinPoint implements JoinPoint {
      *
      * @return Current method in join point
      */
-    public final Method currentMethod() {
+    public Method currentMethod() {
         return ((MethodSignature) this.joinpoint.getSignature()).getMethod();
     }
 }
