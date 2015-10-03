@@ -70,7 +70,7 @@ public final class ExceptionsLogger {
         // @checkstyle IllegalCatch (1 line)
         } catch (final Throwable ex) {
             Logger.warn(
-                JoinPointUtils.targetize(point),
+                new ImprovedJoinPoint(point).targetize(),
                 "%[exception]s",
                 ex
             );
