@@ -312,7 +312,7 @@ final class Mnemos {
      * @param arg Array to change into String.
      * @return Array in String.
      */
-    private static String objectArrays(final Object[] arg) {
+    private static String objectArrays(final Object... arg) {
         final StringBuilder bldr = new StringBuilder();
         bldr.append('[');
         for (final Object item : arg) {

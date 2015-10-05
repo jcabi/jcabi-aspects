@@ -183,7 +183,7 @@ public final class MnemosTest {
      * Method that validates the text built from an object.
      * @param pairs The object pairs to validate.
      */
-    private void validateText(final Object[][] pairs) {
+    private void validateText(final Object[]... pairs) {
         for (final Object[] pair : pairs) {
             MatcherAssert.assertThat(
                 Mnemos.toText(pair[0], false, false),

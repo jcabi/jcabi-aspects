@@ -42,9 +42,10 @@ import org.mockito.Mockito;
  * @since 0.1.10
  * @checkstyle IllegalThrows (500 lines)
  */
-@SuppressWarnings(
-    { "PMD.AvoidCatchingThrowable", "PMD.AvoidThrowingRawExceptionTypes" }
-)
+@SuppressWarnings
+    (
+        { "PMD.AvoidCatchingThrowable", "PMD.AvoidThrowingRawExceptionTypes" }
+    )
 public final class QuietExceptionsLoggerTest {
     /**
      * Call method that doesn't throw exception.

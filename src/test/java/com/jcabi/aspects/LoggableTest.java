@@ -226,11 +226,12 @@ public final class LoggableTest {
     /**
      * Dummy class, for tests above.
      */
-    @Loggable(
-        value = Loggable.DEBUG,
-        prepend = true,
-        limit = 1, unit = TimeUnit.MILLISECONDS
-    )
+    @Loggable
+        (
+            value = Loggable.DEBUG,
+            prepend = true,
+            limit = 1, unit = TimeUnit.MILLISECONDS
+        )
     private static final class Foo extends LoggableTest.Parent {
         @Override
         public String toString() {

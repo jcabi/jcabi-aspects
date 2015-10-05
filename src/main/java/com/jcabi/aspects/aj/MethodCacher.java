@@ -171,12 +171,13 @@ public final class MethodCacher {
      * @param point Joint point
      * @since 0.7.14
      */
-    @Before(
-        // @checkstyle StringLiteralsConcatenation (3 lines)
-        "execution(* *(..))"
-        + " && (@annotation(com.jcabi.aspects.Cacheable.Flush)"
-        + " || @annotation(com.jcabi.aspects.Cacheable.FlushBefore))"
-    )
+    @Before
+        (
+            // @checkstyle StringLiteralsConcatenation (3 lines)
+            "execution(* *(..))"
+            + " && (@annotation(com.jcabi.aspects.Cacheable.Flush)"
+            + " || @annotation(com.jcabi.aspects.Cacheable.FlushBefore))"
+        )
     public void preflush(final JoinPoint point) {
         this.flush(point, "before the call");
     }
@@ -190,11 +191,12 @@ public final class MethodCacher {
      * @param point Joint point
      * @since 0.7.18
      */
-    @After(
-        // @checkstyle StringLiteralsConcatenation (2 lines)
-        "execution(* *(..))"
-        + " && @annotation(com.jcabi.aspects.Cacheable.FlushAfter)"
-    )
+    @After
+        (
+            // @checkstyle StringLiteralsConcatenation (2 lines)
+            "execution(* *(..))"
+            + " && @annotation(com.jcabi.aspects.Cacheable.FlushAfter)"
+        )
     public void postflush(final JoinPoint point) {
         this.flush(point, "after the call");
     }

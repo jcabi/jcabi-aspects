@@ -58,14 +58,15 @@ public final class SingleException {
      * @param point Joint point
      * @return The result of call
      * @throws Throwable If something goes wrong inside
-     * @checkstyle IllegalThrowsCheck (8 lines)
      */
-    @Around(
-        // @checkstyle StringLiteralsConcatenation (2 lines)
-        "execution(* * (..))"
-        + " && @annotation(com.jcabi.aspects.UnitedThrow)"
-    )
+    @Around
+        (
+            // @checkstyle StringLiteralsConcatenation (2 lines)
+            "execution(* * (..))"
+            + " && @annotation(com.jcabi.aspects.UnitedThrow)"
+        )
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    // @checkstyle IllegalThrowsCheck (1 line)
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         final Method method =
             MethodSignature.class.cast(point.getSignature()).getMethod();

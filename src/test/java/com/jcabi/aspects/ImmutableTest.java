@@ -42,11 +42,14 @@ import org.junit.rules.ExpectedException;
  * @version $Id$
  * @checkstyle ConstantUsageCheck (500 lines)
  */
-@SuppressWarnings({
-    "PMD.UnusedPrivateField",
-    "PMD.UnusedLocalVariable",
-    "PMD.FinalFieldCouldBeStatic"
-})
+@SuppressWarnings
+    (
+        {
+            "PMD.UnusedPrivateField",
+            "PMD.UnusedLocalVariable",
+            "PMD.FinalFieldCouldBeStatic"
+        }
+    )
 public final class ImmutableTest {
 
     /**

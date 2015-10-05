@@ -98,11 +98,12 @@ public final class RepeaterTest {
         MatcherAssert.assertThat(
             new Callable<Boolean>() {
                 @Override
-                @RetryOnFailure(
-                    attempts = Tv.THREE,
-                    types = {ArrayIndexOutOfBoundsException.class },
-                    verbose = false
-                )
+                @RetryOnFailure
+                    (
+                        attempts = Tv.THREE,
+                        types = {ArrayIndexOutOfBoundsException.class },
+                        verbose = false
+                    )
                 public Boolean call() {
                     if (calls.get() < Tv.THREE - 1) {
                         calls.incrementAndGet();
@@ -126,11 +127,12 @@ public final class RepeaterTest {
         try {
             new Callable<Boolean>() {
                 @Override
-                @RetryOnFailure(
-                    attempts = Tv.THREE,
-                    types = {IllegalArgumentException.class },
-                    verbose = false
-                )
+                @RetryOnFailure
+                    (
+                        attempts = Tv.THREE,
+                        types = {IllegalArgumentException.class },
+                        verbose = false
+                    )
                 public Boolean call() {
                     if (calls.get() < Tv.THREE - 1) {
                         calls.incrementAndGet();
@@ -154,11 +156,12 @@ public final class RepeaterTest {
         MatcherAssert.assertThat(
             new Callable<Boolean>() {
                 @Override
-                @RetryOnFailure(
-                    attempts = Tv.THREE,
-                    verbose = false,
-                    types = {IndexOutOfBoundsException.class }
-                )
+                @RetryOnFailure
+                    (
+                        attempts = Tv.THREE,
+                        verbose = false,
+                        types = {IndexOutOfBoundsException.class }
+                    )
                 public Boolean call() {
                     if (calls.get() < Tv.THREE - 1) {
                         calls.incrementAndGet();

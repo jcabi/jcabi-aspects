@@ -35,7 +35,7 @@
     <parent>
         <groupId>com.jcabi</groupId>
         <artifactId>jcabi</artifactId>
-        <version>1.17</version>
+        <version>1.20</version>
     </parent>
     <artifactId>jcabi-aspects</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -183,7 +183,7 @@
                         <groupId>com.qulice</groupId>
                         <artifactId>qulice-maven-plugin</artifactId>
                         <configuration>
-                            <excludes>
+                            <excludes combine.children="append">
                                 <exclude>checkstyle:/src/it/.*</exclude>
                                 <exclude>checkstyle:/src/site/apt/.*</exclude>
                                 <exclude>pmd:/src/it/.*</exclude>

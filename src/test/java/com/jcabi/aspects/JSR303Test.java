@@ -169,7 +169,7 @@ public final class JSR303Test {
          * @param param The param.
          */
         public ConstructorValidation(@NotNull final String param) {
-            this(param.toString(), "foo");
+            this(param, "foo");
         }
     }
 

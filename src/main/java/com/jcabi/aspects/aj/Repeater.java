@@ -162,7 +162,7 @@ public final class Repeater {
      */
     private static boolean matches(
         final Class<? extends Throwable> thrown,
-        final Class<? extends Throwable>[] types
+        final Class<? extends Throwable>... types
     ) {
         boolean matches = false;
         for (final Class<? extends Throwable> type : types) {
