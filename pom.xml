@@ -202,9 +202,12 @@
         </profile>
         <profile>
             <id>coveralls</id>
+            <!-- It doesn't work because cobertura is disabled, see above -->
+            <!--
             <activation>
                 <file><exists>pom.xml</exists></file>
             </activation>
+            -->
             <build>
                 <plugins>
                     <plugin>
