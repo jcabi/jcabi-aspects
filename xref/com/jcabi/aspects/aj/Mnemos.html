@@ -48,7 +48,7 @@
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment"> * Utility class with text functions for making mnemos.</em>
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment"> * @author Yegor Bugayenko (yegor@tpc2.com)</em>
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> * @version $Id$</em>
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> * @version $Id: 35fc6b63be4735097536555667fb11d3450e67b5 $</em>
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  @Immutable
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  @SuppressWarnings({ <span class="jxr_string">"PMD.TooManyMethods"</span>, <span class="jxr_string">"PMD.AvoidUsingShortType"</span> })
@@ -320,7 +320,7 @@
 <a class="jxr_linenumber" name="L312" href="#L312">312</a> <em class="jxr_javadoccomment">     * @param arg Array to change into String.</em>
 <a class="jxr_linenumber" name="L313" href="#L313">313</a> <em class="jxr_javadoccomment">     * @return Array in String.</em>
 <a class="jxr_linenumber" name="L314" href="#L314">314</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L315" href="#L315">315</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String objectArrays(<strong class="jxr_keyword">final</strong> Object[] arg) {
+<a class="jxr_linenumber" name="L315" href="#L315">315</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String objectArrays(<strong class="jxr_keyword">final</strong> Object... arg) {
 <a class="jxr_linenumber" name="L316" href="#L316">316</a>         <strong class="jxr_keyword">final</strong> StringBuilder bldr = <strong class="jxr_keyword">new</strong> StringBuilder();
 <a class="jxr_linenumber" name="L317" href="#L317">317</a>         bldr.append('[');
 <a class="jxr_linenumber" name="L318" href="#L318">318</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> Object item : arg) {
