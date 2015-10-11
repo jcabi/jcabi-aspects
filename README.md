@@ -5,9 +5,11 @@
 
 [![Build Status](https://travis-ci.org/jcabi/jcabi-aspects.svg?branch=master)](https://travis-ci.org/jcabi/jcabi-aspects)
 [![Build status](https://ci.appveyor.com/api/projects/status/ut87e89ykj3v269x/branch/master?svg=true)](https://ci.appveyor.com/project/yegor256/jcabi-aspects/branch/master)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects)
 [![Coverage Status](https://coveralls.io/repos/jcabi/jcabi-aspects/badge.svg?branch=master&service=github)](https://coveralls.io/github/jcabi/jcabi-aspects?branch=master)
 [![JavaDoc](https://img.shields.io/badge/javadoc-html-blue.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-aspects)
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects)
+[![Dependencies](https://www.versioneye.com/user/projects/561ac498a193340f3200105a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/561ac498a193340f3200105a)
 
 [![Issue Stats](http://issuestats.com/github/jcabi/jcabi-aspects/badge/issue)](http://issuestats.com/github/jcabi/jcabi-aspects)
 [![Issue Stats](http://issuestats.com/github/jcabi/jcabi-aspects/badge/pr)](http://issuestats.com/github/jcabi/jcabi-aspects)
