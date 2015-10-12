@@ -32,15 +32,13 @@ package com.jcabi.aspects.aj;
 import com.jcabi.aspects.Cacheable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.log.Logger;
-import com.jcabi.log.VerboseRunnable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -64,7 +62,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @since 0.8
  */
 @Aspect
-@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
+@SuppressWarnings("PMD.TooManyMethods")
 public final class MethodCacher {
 
     /**
@@ -75,31 +73,16 @@ public final class MethodCacher {
         new ConcurrentHashMap<MethodCacher.Key, MethodCacher.Tunnel>(0);
 
     /**
-     * Service that cleans cache.
+     * Save the keys of caches which need update.
      */
-    private final transient ScheduledExecutorService cleaner =
-        Executors.newSingleThreadScheduledExecutor(
-            new NamedThreads(
-                "cacheable",
-                "automated cleaning of expired @Cacheable values"
-            )
-        );
+    private final transient BlockingQueue<Key> updatekeys =
+        new LinkedBlockingQueue<MethodCacher.Key>();
 
     /**
      * Public ctor.
      */
     public MethodCacher() {
-        this.cleaner.scheduleWithFixedDelay(
-            new VerboseRunnable(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        MethodCacher.this.clean();
-                    }
-                }
-            ),
-            1L, 1L, TimeUnit.SECONDS
-        );
+        new UpdateMethodCacher(this.tunnels, this.updatekeys).start();
     }
 
     /**
@@ -131,9 +114,14 @@ public final class MethodCacher {
                 }
             }
             tunnel = this.tunnels.get(key);
-            if (tunnel == null || tunnel.expired()) {
-                tunnel = new MethodCacher.Tunnel(point, key);
+            if (this.isCreateTunnel(tunnel)) {
+                tunnel = new MethodCacher.Tunnel(
+                    point, key, annot.asyncUpdate()
+                );
                 this.tunnels.put(key, tunnel);
+            }
+            if (tunnel.expired() && tunnel.asyncUpdate()) {
+                this.updatekeys.offer(key);
             }
             for (final Class<?> after : annot.after()) {
                 final boolean flag = Boolean.class.cast(
@@ -235,29 +223,18 @@ public final class MethodCacher {
     }
 
     /**
-     * Clean cache.
+     * Whether create a new Tunnel.
+     * @param tunnel MethodCacher.Tunnel
+     * @return Boolean
      */
-    private void clean() {
-        synchronized (this.tunnels) {
-            for (final MethodCacher.Key key : this.tunnels.keySet()) {
-                if (this.tunnels.get(key).expired()) {
-                    final MethodCacher.Tunnel tunnel = this.tunnels.remove(key);
-                    LogHelper.log(
-                        key.getLevel(),
-                        this,
-                        "%s:%s expired in cache",
-                        key,
-                        tunnel
-                    );
-                }
-            }
-        }
+    private boolean isCreateTunnel(final MethodCacher.Tunnel tunnel) {
+        return tunnel == null || (tunnel.expired() && !tunnel.asyncUpdate());
     }
 
     /**
      * Mutable caching/calling tunnel, it is thread-safe.
      */
-    private static final class Tunnel {
+    protected static final class Tunnel {
         /**
          * Proceeding join point.
          */
@@ -266,6 +243,10 @@ public final class MethodCacher {
          * Key related to this tunnel.
          */
         private final transient MethodCacher.Key key;
+        /**
+         * Whether asynchronous update.
+         */
+        private final transient boolean async;
         /**
          * Was it already executed?
          */
@@ -278,18 +259,33 @@ public final class MethodCacher {
          * Cached value.
          */
         private transient Object cached;
+
         /**
          * Public ctor.
-         * @param pnt Joint point
-         * @param akey The key related to it
+         * @param pnt ProceedingJoinPoint
+         * @param akey MethodCacher.Key
+         * @param asy Boolean
          */
-        Tunnel(final ProceedingJoinPoint pnt, final MethodCacher.Key akey) {
+        Tunnel(final ProceedingJoinPoint pnt,
+            final MethodCacher.Key akey, final boolean asy) {
             this.point = pnt;
             this.key = akey;
+            this.async = asy;
         }
+
         @Override
         public String toString() {
             return Mnemos.toText(this.cached, true, false);
+        }
+
+        /**
+         * Get a new instance.
+         * @return MethodCacher.Tunnel
+         */
+        public Tunnel copy() {
+            return new Tunnel(
+                this.point, this.key, this.async
+            );
         }
         /**
          * Get a result through the tunnel.
@@ -345,12 +341,20 @@ public final class MethodCacher {
         public boolean expired() {
             return this.executed && this.lifetime < System.currentTimeMillis();
         }
+
+        /**
+         * Whether asynchronous update.
+         * @return TRUE if asynchronous update
+         */
+        public boolean asyncUpdate() {
+            return this.async;
+        }
     }
 
     /**
      * Key of a callable target.
      */
-    private static final class Key {
+    protected static final class Key {
         /**
          * When instantiated.
          */
@@ -392,6 +396,15 @@ public final class MethodCacher {
                 this.level = Loggable.DEBUG;
             }
         }
+
+        /**
+         * Get log level.
+         * @return Log level of current method.
+         */
+        public int getLevel() {
+            return this.level;
+        }
+
         @Override
         public String toString() {
             return Mnemos.toText(this.method, this.arguments, true, false);
@@ -461,13 +474,6 @@ public final class MethodCacher {
             return tgt;
         }
 
-        /**
-         * Get log level.
-         * @return Log level of current method.
-         */
-        private int getLevel() {
-            return this.level;
-        }
     }
 
 }
