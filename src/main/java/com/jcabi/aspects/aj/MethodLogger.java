@@ -192,9 +192,9 @@ public final class MethodLogger {
         final MethodLogger.Marker marker =
             new MethodLogger.Marker(point, annotation);
         this.running.add(marker);
+        int level = annotation.value();
         try {
             final Object logger = this.logger(method, annotation.name());
-            int level = annotation.value();
             if (annotation.prepend()) {
                 LogHelper.log(
                     level,
@@ -228,7 +228,7 @@ public final class MethodLogger {
                 && !ex.getClass().isAnnotationPresent(Loggable.Quiet.class)) {
                 final StackTraceElement trace = ex.getStackTrace()[0];
                 LogHelper.log(
-                    Loggable.ERROR,
+                    level,
                     method.getDeclaringClass(),
                     Logger.format(
                         "%s: thrown %s out of %s#%s[%d] in %[nano]s",
