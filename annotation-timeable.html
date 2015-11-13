@@ -256,7 +256,7 @@
   @Timeable(limit = 1, unit = TimeUnit.SECONDS)
   public String load(String resource) {
     while (true) {
-      if (Thread.currentThread.isInterrupted()) {
+      if (Thread.currentThread().isInterrupted()) {
         throw new IllegalStateException(&quot;time out&quot;);
       }
       // Execution as usual.
