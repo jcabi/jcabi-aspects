@@ -73,7 +73,7 @@ public class Resource {
   @Timeable(limit = 1, unit = TimeUnit.SECONDS)
   public String load(String resource) {
     while (true) {
-      if (Thread.currentThread.isInterrupted()) {
+      if (Thread.currentThread().isInterrupted()) {
         throw new IllegalStateException("time out");
       }
       // Execution as usual.
