@@ -1,6 +1,6 @@
 ## Puzzles
 
-There are 1 active puzzles (28 total), updated on 2015-12-09T11:37:57Z:
+There are 1 active puzzles (28 total), updated on 2015-12-09T12:50:36Z:
 
 unknown ?
 &nbsp;[133-94684a15](https://github.com/jcabi/jcabi-aspects/issues/33) src/test/java/com/jcabi/aspects/ImmutableTest.java:57-58
