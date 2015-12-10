@@ -6,8 +6,8 @@ Role | Members
 ---|---
 PM | @dmarkov
 CR | @darkled, @caarlos0, @carlosmiranda, @dmzaytsev, @pinaf, @ggajos, @krzyk, @longtimeago
-DEV | @cyberone, @olegsimanov, @prondzyn, @shelan, @yamstranger, @bertram25
-IMP | @cyberone, @olegsimanov, @prondzyn, @shelan, @yamstranger, @bertram25
+DEV | @cyberone, @piddubnyi, @ivanjunckes, @jrdalpra, @olegsimanov, @prondzyn, @shelan, @yamstranger, @bertram25
+IMP | @cyberone, @piddubnyi, @ivanjunckes, @jrdalpra, @olegsimanov, @prondzyn, @shelan, @yamstranger, @bertram25
 ARC | 
 DES | 
 PO | @yegor256
