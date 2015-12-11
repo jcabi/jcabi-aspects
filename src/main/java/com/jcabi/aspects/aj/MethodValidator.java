@@ -84,11 +84,20 @@ public final class MethodValidator {
     @Before("execution(* *(.., @(javax.validation.* || javax.validation.constraints.*) (*), ..))")
     public void beforeMethod(final JoinPoint point) {
         if (this.validator != null) {
-            this.validateMethod(
-                point.getThis(),
-                MethodSignature.class.cast(point.getSignature()).getMethod(),
-                point.getArgs()
-            );
+            try {
+                this.validateMethod(
+                    point.getThis(),
+                    MethodSignature.class.cast(point.getSignature()).getMethod(),
+                        point.getArgs()
+                );
+            } catch (final Exception validatorException) {
+                if (!(validatorException instanceof
+                        javax.validation.ConstraintDeclarationException &&
+                        validatorException.getMessage().contains("HV000151"))) {
+                    throw (RuntimeException)validatorException;
+                }
+
+            }
         }
     }
 

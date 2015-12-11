@@ -107,6 +107,38 @@ public final class JSR303Test {
         new JSR303Test.ConstructorValidation(null);
     }
 
+    /**
+     * Tests message overriding in annotations.
+     */
+    @Test
+    public void validatesMessageOverriding() {
+        new Bar().foo("");
+    }
+
+    /**
+     * Dummy interface for tests above
+     */
+    public interface Interface {
+        /**
+         * Dummy method for tests above
+         * @param value dummy variable
+         */
+        void foo(@NotNull(message = "foo") String value);
+    }
+
+    /**
+     * Dummy class for tests above
+     */
+    public static class Bar implements Interface {
+        /**
+         * Dummy method for tests above
+         * @param value dummy variable
+         */
+        public void foo(@NotNull final String value) {
+            // nothing to do
+        }
+    }
+
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.PARAMETER)
     private @interface NoMeaning {
