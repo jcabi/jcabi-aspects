@@ -5,7 +5,7 @@ There are 1 active puzzles (28 total):
 
 <del>unknown</del> [`?`](../master/?)<br/>
 &nbsp;&nbsp;&nbsp;[<del>133-94684a15</del>](https://github.com/jcabi/jcabi-aspects/issues/33) [`ImmutableTest.java:57-58`](../master/src/test/java/com/jcabi/aspects/ImmutableTest.java#L57-L58)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**33-e5af3af3** [`Immutable.java:65-68`](../master/src/main/java/com/jcabi/aspects/Immutable.java#L65-L68)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[**33-e5af3af3**](https://github.com/jcabi/jcabi-aspects/issues/49) [`Immutable.java:65-68`](../master/src/main/java/com/jcabi/aspects/Immutable.java#L65-L68)<br/>
 &nbsp;&nbsp;&nbsp;<del>61-1692fcb2</del> [`MethodValidator.java:194-197`](../master/src/main/java/com/jcabi/aspects/aj/MethodValidator.java#L194-L197)<br/>
 &nbsp;&nbsp;&nbsp;[<del>1-b7897109</del>](https://github.com/jcabi/jcabi-aspects/issues/32) [`Quietly.java:44-47`](../master/src/main/java/com/jcabi/aspects/Quietly.java#L44-L47)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<del>32-9b5b2ac8</del>](https://github.com/jcabi/jcabi-aspects/issues/41) [`Quietly.java:44-48`](../master/src/main/java/com/jcabi/aspects/Quietly.java#L44-L48)<br/>
