@@ -128,7 +128,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
-                <version>1.7</version>
+                <version>1.8</version>
                 <configuration>
                     <complianceLevel>1.6</complianceLevel>
                     <source>1.6</source>
@@ -157,7 +157,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>templating-maven-plugin</artifactId>
-                <version>1.0-alpha-3</version>
+                <version>1.0.0</version>
                 <executions>
                     <execution>
                         <id>default-cli</id>
@@ -229,7 +229,7 @@
                     <plugin>
                         <groupId>org.eluder.coveralls</groupId>
                         <artifactId>coveralls-maven-plugin</artifactId>
-                        <version>4.0.0</version>
+                        <version>4.1.0</version>
                         <executions>
                             <execution>
                                 <phase>site</phase>
