@@ -60,7 +60,7 @@ final class NamedThreads implements ThreadFactory {
     /**
      * Thread group to use.
      */
-    private final transient ThreadGroup group = new ThreadGroup("jcabi");
+    private final transient ThreadGroup group;
 
     /**
      * Public ctor.
@@ -70,6 +70,7 @@ final class NamedThreads implements ThreadFactory {
     public NamedThreads(final String suffix, final String desc) {
         this.name = String.format("jcabi-%s", suffix);
         this.purpose = desc;
+        this.group = new ThreadGroup("jcabi");
     }
 
     @Override

@@ -60,10 +60,17 @@ public final class MethodScheduler {
 
     /**
      * Objects and their running services.
-     * @checkstyle LineLength (2 lines)
      */
-    private final transient ConcurrentMap<Object, MethodScheduler.Service> services =
-        new ConcurrentHashMap<Object, MethodScheduler.Service>(0);
+    private final transient
+        ConcurrentMap<Object, MethodScheduler.Service> services;
+
+    /**
+     * Ctor.
+     */
+    public MethodScheduler() {
+        this.services =
+            new ConcurrentHashMap<Object, MethodScheduler.Service>(0);
+    }
 
     /**
      * Instantiate a new routine task.
@@ -140,11 +147,11 @@ public final class MethodScheduler {
         /**
          * Execution counter.
          */
-        private final transient AtomicLong counter = new AtomicLong();
+        private final transient AtomicLong counter;
         /**
          * When started.
          */
-        private final transient long start = System.currentTimeMillis();
+        private final transient long start;
         /**
          * How long to wait for the task to finish.
          */
@@ -165,6 +172,8 @@ public final class MethodScheduler {
          */
         protected Service(final Runnable runnable, final Object obj,
             final ScheduleWithFixedDelay annt) {
+            this.start = System.currentTimeMillis();
+            this.counter = new AtomicLong();
             this.object = obj;
             this.executor = Executors.newScheduledThreadPool(
                 annt.threads(),

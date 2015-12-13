@@ -71,14 +71,14 @@ public final class MethodLogger {
     /**
      * Currently running methods.
      */
-    private final transient Set<Marker> running =
-        new ConcurrentSkipListSet<Marker>();
+    private final transient Set<Marker> running;
 
     /**
      * Public ctor.
      */
     @SuppressWarnings("PMD.DoNotUseThreads")
     public MethodLogger() {
+        this.running = new ConcurrentSkipListSet<Marker>();
         final ScheduledExecutorService monitor =
             Executors.newSingleThreadScheduledExecutor(
                 new NamedThreads(
@@ -393,16 +393,16 @@ public final class MethodLogger {
         /**
          * When the method was started, in milliseconds.
          */
-        private final transient long started = System.currentTimeMillis();
+        private final transient long started;
         /**
          * Which monitoring cycle was logged recently.
          */
-        private final transient AtomicInteger logged = new AtomicInteger();
+        private final transient AtomicInteger logged;
         /**
          * The thread it's running in.
          */
         @SuppressWarnings("PMD.DoNotUseThreads")
-        private final transient Thread thread = Thread.currentThread();
+        private final transient Thread thread;
         /**
          * Joint point.
          */
@@ -417,8 +417,11 @@ public final class MethodLogger {
          * @param annt Annotation
          */
         protected Marker(final ProceedingJoinPoint pnt, final Loggable annt) {
+            this.started = System.currentTimeMillis();
+            this.logged = new AtomicInteger();
             this.point = pnt;
             this.annotation = annt;
+            this.thread = Thread.currentThread();
         }
         /**
          * Monitor it's status and log the problem, if any.

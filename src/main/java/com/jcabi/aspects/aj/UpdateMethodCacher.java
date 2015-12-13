@@ -47,20 +47,14 @@ public final class UpdateMethodCacher {
 
     /**
      * Calling tunnels.
-     * @checkstyle LineLength (2 lines)
      */
-    private final transient ConcurrentMap<MethodCacher.Key, MethodCacher.Tunnel> tunnels;
+    private final transient
+        ConcurrentMap<MethodCacher.Key, MethodCacher.Tunnel> tunnels;
 
     /**
      * Service that cleans cache.
      */
-    private final transient ScheduledExecutorService cleaner =
-        Executors.newSingleThreadScheduledExecutor(
-            new NamedThreads(
-                "cacheable-clean",
-                "automated cleaning of expired @Cacheable values"
-            )
-        );
+    private final transient ScheduledExecutorService cleaner;
 
     /**
      * Save the keys of caches which need update.
@@ -70,13 +64,7 @@ public final class UpdateMethodCacher {
     /**
      * Service that update cache.
      */
-    private final transient ScheduledExecutorService updater =
-        Executors.newSingleThreadScheduledExecutor(
-            new NamedThreads(
-                "cacheable-update",
-                "async update of expired @Cacheable values"
-            )
-        );
+    private final transient ScheduledExecutorService updater;
 
     /**
      * Public ctor.
@@ -88,6 +76,18 @@ public final class UpdateMethodCacher {
         final BlockingQueue<MethodCacher.Key> ukeys) {
         this.tunnels = tls;
         this.updatekeys = ukeys;
+        this.cleaner = Executors.newSingleThreadScheduledExecutor(
+            new NamedThreads(
+                "cacheable-clean",
+                "automated cleaning of expired @Cacheable values"
+            )
+        );
+        this.updater = Executors.newSingleThreadScheduledExecutor(
+            new NamedThreads(
+                "cacheable-update",
+                "async update of expired @Cacheable values"
+            )
+        );
     }
 
     /**

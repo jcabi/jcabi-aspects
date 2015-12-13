@@ -57,7 +57,14 @@ public final class ImmutableTest {
      */
     @Rule
     // @checkstyle VisibilityModifierCheck (1 line)
-    public final transient ExpectedException thrown = ExpectedException.none();
+    public final transient ExpectedException thrown;
+
+    /**
+     * Ctor.
+     */
+    public ImmutableTest() {
+        this.thrown = ExpectedException.none();
+    }
 
     /**
      * Immutable can catch mutable classes.
@@ -163,11 +170,11 @@ public final class ImmutableTest {
         /**
          * Immutable class member.
          */
-        private final transient String data = null;
+        private final transient String data;
         /**
          * Another immutable class member.
          */
-        private final transient int number = 2;
+        private final transient int number;
         /**
          * Another immutable class member.
          */
@@ -176,11 +183,11 @@ public final class ImmutableTest {
          * An immutable array member.
          */
         @Immutable.Array
-        private final transient String[] texts = new String[] {"foo"};
+        private final transient String[] texts;
         /**
          * Immutable iface.
          */
-        private final transient ImmutableInterface iface = null;
+        private final transient ImmutableInterface iface;
         /**
          * Ctor.
          */
@@ -198,8 +205,13 @@ public final class ImmutableTest {
          * Ctor.
          * @param ipt Input
          */
+        @SuppressWarnings("PMD.NullAssignment")
         public TruelyImmutable(final String ipt) {
             this.text = ipt;
+            this.texts = new String[] {"foo"};
+            this.iface = null;
+            this.data = null;
+            this.number = 2;
         }
     }
 

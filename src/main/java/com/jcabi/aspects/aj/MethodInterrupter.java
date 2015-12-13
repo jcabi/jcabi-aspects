@@ -63,24 +63,24 @@ public final class MethodInterrupter {
     /**
      * Calls being watched.
      */
-    private final transient Set<MethodInterrupter.Call> calls =
-        new ConcurrentSkipListSet<MethodInterrupter.Call>();
+    private final transient Set<MethodInterrupter.Call> calls;
 
     /**
      * Service that interrupts threads.
      */
-    private final transient ScheduledExecutorService interrupter =
-        Executors.newSingleThreadScheduledExecutor(
-            new NamedThreads(
-                "timeable",
-                "interrupting of @Timeable annotated methods"
-            )
-        );
+    private final transient ScheduledExecutorService interrupter;
 
     /**
      * Public ctor.
      */
     public MethodInterrupter() {
+        this.calls = new ConcurrentSkipListSet<MethodInterrupter.Call>();
+        this.interrupter = Executors.newSingleThreadScheduledExecutor(
+            new NamedThreads(
+                "timeable",
+                "interrupting of @Timeable annotated methods"
+            )
+        );
         this.interrupter.scheduleWithFixedDelay(
             new VerboseRunnable(
                 new Runnable() {
@@ -140,11 +140,11 @@ public final class MethodInterrupter {
         /**
          * The thread called.
          */
-        private final transient Thread thread = Thread.currentThread();
+        private final transient Thread thread;
         /**
          * When started.
          */
-        private final transient long start = System.currentTimeMillis();
+        private final transient long start;
         /**
          * When will expire.
          */
@@ -158,6 +158,8 @@ public final class MethodInterrupter {
          * @param pnt Joint point
          */
         public Call(final ProceedingJoinPoint pnt) {
+            this.thread = Thread.currentThread();
+            this.start = System.currentTimeMillis();
             this.point = pnt;
             final Method method = MethodSignature.class
                 .cast(pnt.getSignature())

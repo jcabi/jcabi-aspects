@@ -107,6 +107,9 @@ public final class JSR303Test {
         new JSR303Test.ConstructorValidation(null);
     }
 
+    /**
+     * Annotation.
+     */
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.PARAMETER)
     private @interface NoMeaning {

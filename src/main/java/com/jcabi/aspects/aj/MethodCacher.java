@@ -67,21 +67,23 @@ public final class MethodCacher {
 
     /**
      * Calling tunnels.
-     * @checkstyle LineLength (2 lines)
      */
-    private final transient ConcurrentMap<MethodCacher.Key, MethodCacher.Tunnel> tunnels =
-        new ConcurrentHashMap<MethodCacher.Key, MethodCacher.Tunnel>(0);
+    private final transient
+        ConcurrentMap<MethodCacher.Key, MethodCacher.Tunnel> tunnels;
 
     /**
      * Save the keys of caches which need update.
      */
-    private final transient BlockingQueue<Key> updatekeys =
-        new LinkedBlockingQueue<MethodCacher.Key>();
+    private final transient BlockingQueue<Key> updatekeys;
 
     /**
      * Public ctor.
      */
     public MethodCacher() {
+        this.tunnels =
+            new ConcurrentHashMap<MethodCacher.Key, MethodCacher.Tunnel>(0);
+        this.updatekeys =
+            new LinkedBlockingQueue<MethodCacher.Key>();
         new UpdateMethodCacher(this.tunnels, this.updatekeys).start();
     }
 
@@ -358,11 +360,11 @@ public final class MethodCacher {
         /**
          * When instantiated.
          */
-        private final transient long start = System.currentTimeMillis();
+        private final transient long start;
         /**
          * How many times the key was already accessed.
          */
-        private final transient AtomicInteger accessed = new AtomicInteger();
+        private final transient AtomicInteger accessed;
         /**
          * Method.
          */
@@ -386,6 +388,8 @@ public final class MethodCacher {
          * @param point Joint point
          */
         Key(final JoinPoint point) {
+            this.start = System.currentTimeMillis();
+            this.accessed = new AtomicInteger();
             this.method = MethodSignature.class
                 .cast(point.getSignature()).getMethod();
             this.target = MethodCacher.Key.targetize(point);
