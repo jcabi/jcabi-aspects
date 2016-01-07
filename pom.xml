@@ -39,7 +39,7 @@
     </parent>
     <artifactId>jcabi-aspects</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>bundle</packaging>
     <name>jcabi-aspects</name>
     <description>Collection of convenient and useful Java annotations</description>
     <issueManagement>
@@ -171,6 +171,12 @@
                     <sourceDirectory>${basedir}/src/main/java-templates</sourceDirectory>
                     <outputDirectory>${project.build.directory}/generated-sources/java-templates/</outputDirectory>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.0.0</version>
+                <extensions>true</extensions>
             </plugin>
         </plugins>
     </build>
