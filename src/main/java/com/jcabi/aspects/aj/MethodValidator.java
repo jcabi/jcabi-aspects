@@ -149,7 +149,7 @@ public final class MethodValidator {
      * @param object Object at pointcut
      * @param method Method at pointcut
      * @param args Parameters of the method
-     * @todo 194:30min We need to find a way to disable the constraint rule
+     * @todo #194:30min We need to find a way to disable the constraint rule
      *  OverridingMethodMustNotAlterParameterConstraints instead
      *  of catching the exception.
      *  See https://hibernate.atlassian.net/browse/HV-1044
