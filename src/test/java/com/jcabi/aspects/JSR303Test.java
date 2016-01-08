@@ -37,7 +37,10 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Test case for {@link JSR-303} annotations and their implementations.
@@ -45,6 +48,16 @@ import org.junit.Test;
  * @version $Id$
  */
 public final class JSR303Test {
+    /**
+     * The test message.
+     */
+    private static final String OVERRIDEN_MSG = "this is a message";
+
+    /**
+     * Expected exception rule.
+     */
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     /**
      * NotNull can throw when invalid method parameters.
@@ -105,6 +118,25 @@ public final class JSR303Test {
     @Test(expected = ConstraintViolationException.class)
     public void validatesChainedConstructorParameters() {
         new JSR303Test.ConstructorValidation(null);
+    }
+
+    /**
+     * NotNull can override the message.
+     */
+    @Test
+    @Ignore
+    public void overridesMessage() {
+        this.thrown.expect(ConstraintViolationException.class);
+        this.thrown.expectMessage(JSR303Test.OVERRIDEN_MSG);
+        new JSR303Test.Bar().test(null);
+    }
+
+    /**
+     * Validator can skip a constraint rule.
+     */
+    @Test
+    public void skipsConstraintRule() {
+        new JSR303Test.Bar().test("value");
     }
 
     /**
@@ -173,6 +205,28 @@ public final class JSR303Test {
          */
         public ConstructorValidation(@NotNull final String param) {
             this(param, "foo");
+        }
+    }
+
+    /**
+     * Dummy interface for testing messages overriding.
+     */
+    private interface Fum {
+        /**
+         * Test method.
+         * @param value Value
+         */
+        void test(@NotNull(message = JSR303Test.OVERRIDEN_MSG) String value);
+    }
+
+    /**
+     * Dummy class for testing messages overriding.
+     */
+    @Loggable(Loggable.INFO)
+    private static class Bar implements JSR303Test.Fum {
+        @Override
+        public void test(@NotNull final String value) {
+            //Nothing to do.
         }
     }
 
