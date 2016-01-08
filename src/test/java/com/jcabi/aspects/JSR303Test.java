@@ -47,6 +47,7 @@ import org.junit.rules.ExpectedException;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class JSR303Test {
     /**
      * The test message.
@@ -57,7 +58,7 @@ public final class JSR303Test {
      * Expected exception rule.
      */
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    public final transient ExpectedException thrown = ExpectedException.none();
 
     /**
      * NotNull can throw when invalid method parameters.
