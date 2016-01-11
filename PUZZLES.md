@@ -1,6 +1,6 @@
 ## Puzzles
 
-There are 1 active puzzles (28 total):
+There are 2 active puzzles (30 total):
 
 
 <del>unknown</del> [`?`](../master/?)<br/>
@@ -31,3 +31,5 @@ There are 1 active puzzles (28 total):
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<del>169-0e4b9121</del> [`JSR303Test.java:61-64`](../master/src/test/java/com/jcabi/aspects/JSR303Test.java#L61-L64)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[<del>167</del>](https://github.com/jcabi/jcabi-aspects/issues/167) [`?`](../master/?)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<del>167-78e42157</del> [`ImmutabilityChecker.java:65-68`](../master/src/main/java/com/jcabi/aspects/aj/ImmutabilityChecker.java#L65-L68)<br/>
+[#194](https://github.com/jcabi/jcabi-aspects/issues/194):[<del>194</del>](https://github.com/jcabi/jcabi-aspects/issues/194) [`?`](../master/?)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[**194-8b58eead**]() [`MethodValidator.java:152-156`](../master/src/main/java/com/jcabi/aspects/aj/MethodValidator.java#L152-L156)<br/>
