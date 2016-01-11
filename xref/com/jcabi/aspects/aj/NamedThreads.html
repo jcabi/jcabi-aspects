@@ -49,7 +49,7 @@
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment"> * to name scheduled threads correctly on construction.</em>
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> * @author Yegor Bugayenko (yegor@tpc2.com)</em>
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment"> * @version $Id: c1e344fedbe73ad6e9f503722434ef5a88f8575b $</em>
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment"> * @version $Id: 4ca48c8178c50b355c4d88b5d0865602c019dbcc $</em>
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment"> * @since 0.7.17</em>
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  @SuppressWarnings(<span class="jxr_string">"PMD.DoNotUseThreads"</span>)
@@ -68,7 +68,7 @@
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment">     * Thread group to use.</em>
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> ThreadGroup group = <strong class="jxr_keyword">new</strong> ThreadGroup(<span class="jxr_string">"jcabi"</span>);
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> ThreadGroup group;
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>  
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     * Public ctor.</em>
@@ -78,28 +78,29 @@
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/jcabi/aspects/aj/NamedThreads.html">NamedThreads</a>(<strong class="jxr_keyword">final</strong> String suffix, <strong class="jxr_keyword">final</strong> String desc) {
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>          <strong class="jxr_keyword">this</strong>.name = String.format(<span class="jxr_string">"jcabi-%s"</span>, suffix);
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          <strong class="jxr_keyword">this</strong>.purpose = desc;
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>      }
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>  
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>      @Override
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>      <strong class="jxr_keyword">public</strong> Thread newThread(<strong class="jxr_keyword">final</strong> Runnable runnable) {
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>          <strong class="jxr_keyword">final</strong> Thread thread = <strong class="jxr_keyword">new</strong> Thread(<strong class="jxr_keyword">this</strong>.group, runnable);
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>          thread.setName(<strong class="jxr_keyword">this</strong>.name);
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>          thread.setDaemon(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>          Logger.info(
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>              <strong class="jxr_keyword">this</strong>,
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>              <em class="jxr_comment">// @checkstyle LineLength (1 line)</em>
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>              <span class="jxr_string">"jcabi-aspects %s/%s started new daemon thread %s for %s"</span>,
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>              Version.CURRENT.projectVersion(),
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>              Version.CURRENT.buildNumber(),
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>              <strong class="jxr_keyword">this</strong>.name,
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>              <strong class="jxr_keyword">this</strong>.purpose
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>          );
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>          <strong class="jxr_keyword">return</strong> thread;
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>      }
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>  
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>  }
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          <strong class="jxr_keyword">this</strong>.group = <strong class="jxr_keyword">new</strong> ThreadGroup(<span class="jxr_string">"jcabi"</span>);
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>      }
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>      @Override
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>      <strong class="jxr_keyword">public</strong> Thread newThread(<strong class="jxr_keyword">final</strong> Runnable runnable) {
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>          <strong class="jxr_keyword">final</strong> Thread thread = <strong class="jxr_keyword">new</strong> Thread(<strong class="jxr_keyword">this</strong>.group, runnable);
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          thread.setName(<strong class="jxr_keyword">this</strong>.name);
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>          thread.setDaemon(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          Logger.info(
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>              <strong class="jxr_keyword">this</strong>,
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>              <em class="jxr_comment">// @checkstyle LineLength (1 line)</em>
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>              <span class="jxr_string">"jcabi-aspects %s/%s started new daemon thread %s for %s"</span>,
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>              Version.CURRENT.projectVersion(),
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>              Version.CURRENT.buildNumber(),
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>              <strong class="jxr_keyword">this</strong>.name,
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>              <strong class="jxr_keyword">this</strong>.purpose
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>          );
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>          <strong class="jxr_keyword">return</strong> thread;
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>      }
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>  
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2015 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2016 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>

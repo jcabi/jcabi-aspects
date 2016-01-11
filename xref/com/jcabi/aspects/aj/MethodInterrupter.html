@@ -61,7 +61,7 @@
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;The class is thread-safe.</em>
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  <em class="jxr_javadoccomment"> * @author Yegor Bugayenko (yegor@tpc2.com)</em>
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment"> * @version $Id: 37f9c928b3948141f903e03f39162935a980e039 $</em>
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment"> * @version $Id: 97b0b4b1b3a3b35f7e4be545649f39b58fe6ebe5 $</em>
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment"> * @since 0.7.16</em>
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  @Aspect
@@ -71,24 +71,24 @@
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>  <em class="jxr_javadoccomment">     * Calls being watched.</em>
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> Set&lt;MethodInterrupter.Call&gt; calls =
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>          <strong class="jxr_keyword">new</strong> ConcurrentSkipListSet&lt;MethodInterrupter.Call&gt;();
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>  
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">     * Service that interrupts threads.</em>
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> ScheduledExecutorService interrupter =
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>          Executors.newSingleThreadScheduledExecutor(
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>              <strong class="jxr_keyword">new</strong> <a href="../../../../com/jcabi/aspects/aj/NamedThreads.html">NamedThreads</a>(
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>                  <span class="jxr_string">"timeable"</span>,
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>                  <span class="jxr_string">"interrupting of @Timeable annotated methods"</span>
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>              )
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>          );
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>  
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>  <em class="jxr_javadoccomment">     * Public ctor.</em>
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/jcabi/aspects/aj/MethodInterrupter.html">MethodInterrupter</a>() {
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> Set&lt;MethodInterrupter.Call&gt; calls;
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">     * Service that interrupts threads.</em>
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> ScheduledExecutorService interrupter;
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>  
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment">     * Public ctor.</em>
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/jcabi/aspects/aj/MethodInterrupter.html">MethodInterrupter</a>() {
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>          <strong class="jxr_keyword">this</strong>.calls = <strong class="jxr_keyword">new</strong> ConcurrentSkipListSet&lt;MethodInterrupter.Call&gt;();
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>          <strong class="jxr_keyword">this</strong>.interrupter = Executors.newSingleThreadScheduledExecutor(
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>              <strong class="jxr_keyword">new</strong> <a href="../../../../com/jcabi/aspects/aj/NamedThreads.html">NamedThreads</a>(
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>                  <span class="jxr_string">"timeable"</span>,
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>                  <span class="jxr_string">"interrupting of @Timeable annotated methods"</span>
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>              )
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>          );
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>          <strong class="jxr_keyword">this</strong>.interrupter.scheduleWithFixedDelay(
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>              <strong class="jxr_keyword">new</strong> VerboseRunnable(
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>                  <strong class="jxr_keyword">new</strong> Runnable() {
@@ -148,11 +148,11 @@
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>         <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L141" href="#L141">141</a> <em class="jxr_javadoccomment">         * The thread called.</em>
 <a class="jxr_linenumber" name="L142" href="#L142">142</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> Thread thread = Thread.currentThread();
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> Thread thread;
 <a class="jxr_linenumber" name="L144" href="#L144">144</a>         <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L145" href="#L145">145</a> <em class="jxr_javadoccomment">         * When started.</em>
 <a class="jxr_linenumber" name="L146" href="#L146">146</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L147" href="#L147">147</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> <strong class="jxr_keyword">long</strong> start = System.currentTimeMillis();
+<a class="jxr_linenumber" name="L147" href="#L147">147</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> <strong class="jxr_keyword">long</strong> start;
 <a class="jxr_linenumber" name="L148" href="#L148">148</a>         <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L149" href="#L149">149</a> <em class="jxr_javadoccomment">         * When will expire.</em>
 <a class="jxr_linenumber" name="L150" href="#L150">150</a> <em class="jxr_javadoccomment">         */</em>
@@ -166,61 +166,63 @@
 <a class="jxr_linenumber" name="L158" href="#L158">158</a> <em class="jxr_javadoccomment">         * @param pnt Joint point</em>
 <a class="jxr_linenumber" name="L159" href="#L159">159</a> <em class="jxr_javadoccomment">         */</em>
 <a class="jxr_linenumber" name="L160" href="#L160">160</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../com/jcabi/aspects/aj/MethodInterrupter.html">Call</a>(<strong class="jxr_keyword">final</strong> ProceedingJoinPoint pnt) {
-<a class="jxr_linenumber" name="L161" href="#L161">161</a>             <strong class="jxr_keyword">this</strong>.point = pnt;
-<a class="jxr_linenumber" name="L162" href="#L162">162</a>             <strong class="jxr_keyword">final</strong> Method method = MethodSignature.<strong class="jxr_keyword">class</strong>
-<a class="jxr_linenumber" name="L163" href="#L163">163</a>                 .<strong class="jxr_keyword">cast</strong>(pnt.getSignature())
-<a class="jxr_linenumber" name="L164" href="#L164">164</a>                 .getMethod();
-<a class="jxr_linenumber" name="L165" href="#L165">165</a>             <strong class="jxr_keyword">final</strong> <a href="../../../../com/jcabi/aspects/Timeable.html">Timeable</a> annt = method.getAnnotation(Timeable.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L166" href="#L166">166</a>             <strong class="jxr_keyword">this</strong>.deadline = <strong class="jxr_keyword">this</strong>.start + annt.unit().toMillis(annt.limit());
-<a class="jxr_linenumber" name="L167" href="#L167">167</a>         }
-<a class="jxr_linenumber" name="L168" href="#L168">168</a>         @Override
-<a class="jxr_linenumber" name="L169" href="#L169">169</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compareTo(<strong class="jxr_keyword">final</strong> <a href="../../../../com/jcabi/aspects/aj/MethodInterrupter.html">Call</a> obj) {
-<a class="jxr_linenumber" name="L170" href="#L170">170</a>             <strong class="jxr_keyword">int</strong> compare;
-<a class="jxr_linenumber" name="L171" href="#L171">171</a>             <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong>.deadline &gt; obj.deadline) {
-<a class="jxr_linenumber" name="L172" href="#L172">172</a>                 compare = 1;
-<a class="jxr_linenumber" name="L173" href="#L173">173</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong>.deadline &lt; obj.deadline) {
-<a class="jxr_linenumber" name="L174" href="#L174">174</a>                 compare = -1;
-<a class="jxr_linenumber" name="L175" href="#L175">175</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>                 compare = 0;
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>             }
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>             <strong class="jxr_keyword">return</strong> compare;
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>         }
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L181" href="#L181">181</a> <em class="jxr_javadoccomment">         * Is it expired already?</em>
-<a class="jxr_linenumber" name="L182" href="#L182">182</a> <em class="jxr_javadoccomment">         * @return TRUE if expired</em>
-<a class="jxr_linenumber" name="L183" href="#L183">183</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> expired() {
-<a class="jxr_linenumber" name="L185" href="#L185">185</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.deadline &lt; System.currentTimeMillis();
-<a class="jxr_linenumber" name="L186" href="#L186">186</a>         }
-<a class="jxr_linenumber" name="L187" href="#L187">187</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L188" href="#L188">188</a> <em class="jxr_javadoccomment">         * This thread is stopped already (interrupt if not)?</em>
-<a class="jxr_linenumber" name="L189" href="#L189">189</a> <em class="jxr_javadoccomment">         * @return TRUE if it's already dead</em>
-<a class="jxr_linenumber" name="L190" href="#L190">190</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L191" href="#L191">191</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> interrupted() {
-<a class="jxr_linenumber" name="L192" href="#L192">192</a>             <strong class="jxr_keyword">boolean</strong> dead;
-<a class="jxr_linenumber" name="L193" href="#L193">193</a>             <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong>.thread.isAlive()) {
-<a class="jxr_linenumber" name="L194" href="#L194">194</a>                 <strong class="jxr_keyword">this</strong>.thread.interrupt();
-<a class="jxr_linenumber" name="L195" href="#L195">195</a>                 <strong class="jxr_keyword">final</strong> Method method = MethodSignature.<strong class="jxr_keyword">class</strong>
-<a class="jxr_linenumber" name="L196" href="#L196">196</a>                     .<strong class="jxr_keyword">cast</strong>(<strong class="jxr_keyword">this</strong>.point.getSignature())
-<a class="jxr_linenumber" name="L197" href="#L197">197</a>                     .getMethod();
-<a class="jxr_linenumber" name="L198" href="#L198">198</a>                 Logger.warn(
-<a class="jxr_linenumber" name="L199" href="#L199">199</a>                     method.getDeclaringClass(),
-<a class="jxr_linenumber" name="L200" href="#L200">200</a>                     <span class="jxr_string">"%s: interrupted on %[ms]s timeout (over %[ms]s)"</span>,
-<a class="jxr_linenumber" name="L201" href="#L201">201</a>                     Mnemos.toText(<strong class="jxr_keyword">this</strong>.point, <strong class="jxr_keyword">true</strong>, false),
-<a class="jxr_linenumber" name="L202" href="#L202">202</a>                     System.currentTimeMillis() - <strong class="jxr_keyword">this</strong>.start,
-<a class="jxr_linenumber" name="L203" href="#L203">203</a>                     <strong class="jxr_keyword">this</strong>.deadline - <strong class="jxr_keyword">this</strong>.start
-<a class="jxr_linenumber" name="L204" href="#L204">204</a>                 );
-<a class="jxr_linenumber" name="L205" href="#L205">205</a>                 dead = false;
-<a class="jxr_linenumber" name="L206" href="#L206">206</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L207" href="#L207">207</a>                 dead = <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="L208" href="#L208">208</a>             }
-<a class="jxr_linenumber" name="L209" href="#L209">209</a>             <strong class="jxr_keyword">return</strong> dead;
-<a class="jxr_linenumber" name="L210" href="#L210">210</a>         }
-<a class="jxr_linenumber" name="L211" href="#L211">211</a>     }
-<a class="jxr_linenumber" name="L212" href="#L212">212</a> 
-<a class="jxr_linenumber" name="L213" href="#L213">213</a> }
+<a class="jxr_linenumber" name="L161" href="#L161">161</a>             <strong class="jxr_keyword">this</strong>.thread = Thread.currentThread();
+<a class="jxr_linenumber" name="L162" href="#L162">162</a>             <strong class="jxr_keyword">this</strong>.start = System.currentTimeMillis();
+<a class="jxr_linenumber" name="L163" href="#L163">163</a>             <strong class="jxr_keyword">this</strong>.point = pnt;
+<a class="jxr_linenumber" name="L164" href="#L164">164</a>             <strong class="jxr_keyword">final</strong> Method method = MethodSignature.<strong class="jxr_keyword">class</strong>
+<a class="jxr_linenumber" name="L165" href="#L165">165</a>                 .<strong class="jxr_keyword">cast</strong>(pnt.getSignature())
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>                 .getMethod();
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>             <strong class="jxr_keyword">final</strong> <a href="../../../../com/jcabi/aspects/Timeable.html">Timeable</a> annt = method.getAnnotation(Timeable.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>             <strong class="jxr_keyword">this</strong>.deadline = <strong class="jxr_keyword">this</strong>.start + annt.unit().toMillis(annt.limit());
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>         }
+<a class="jxr_linenumber" name="L170" href="#L170">170</a>         @Override
+<a class="jxr_linenumber" name="L171" href="#L171">171</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compareTo(<strong class="jxr_keyword">final</strong> <a href="../../../../com/jcabi/aspects/aj/MethodInterrupter.html">Call</a> obj) {
+<a class="jxr_linenumber" name="L172" href="#L172">172</a>             <strong class="jxr_keyword">int</strong> compare;
+<a class="jxr_linenumber" name="L173" href="#L173">173</a>             <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong>.deadline &gt; obj.deadline) {
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>                 compare = 1;
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong>.deadline &lt; obj.deadline) {
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>                 compare = -1;
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>                 compare = 0;
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>             }
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>             <strong class="jxr_keyword">return</strong> compare;
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>         }
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L183" href="#L183">183</a> <em class="jxr_javadoccomment">         * Is it expired already?</em>
+<a class="jxr_linenumber" name="L184" href="#L184">184</a> <em class="jxr_javadoccomment">         * @return TRUE if expired</em>
+<a class="jxr_linenumber" name="L185" href="#L185">185</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> expired() {
+<a class="jxr_linenumber" name="L187" href="#L187">187</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.deadline &lt; System.currentTimeMillis();
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>         }
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L190" href="#L190">190</a> <em class="jxr_javadoccomment">         * This thread is stopped already (interrupt if not)?</em>
+<a class="jxr_linenumber" name="L191" href="#L191">191</a> <em class="jxr_javadoccomment">         * @return TRUE if it's already dead</em>
+<a class="jxr_linenumber" name="L192" href="#L192">192</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> interrupted() {
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>             <strong class="jxr_keyword">boolean</strong> dead;
+<a class="jxr_linenumber" name="L195" href="#L195">195</a>             <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong>.thread.isAlive()) {
+<a class="jxr_linenumber" name="L196" href="#L196">196</a>                 <strong class="jxr_keyword">this</strong>.thread.interrupt();
+<a class="jxr_linenumber" name="L197" href="#L197">197</a>                 <strong class="jxr_keyword">final</strong> Method method = MethodSignature.<strong class="jxr_keyword">class</strong>
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>                     .<strong class="jxr_keyword">cast</strong>(<strong class="jxr_keyword">this</strong>.point.getSignature())
+<a class="jxr_linenumber" name="L199" href="#L199">199</a>                     .getMethod();
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>                 Logger.warn(
+<a class="jxr_linenumber" name="L201" href="#L201">201</a>                     method.getDeclaringClass(),
+<a class="jxr_linenumber" name="L202" href="#L202">202</a>                     <span class="jxr_string">"%s: interrupted on %[ms]s timeout (over %[ms]s)"</span>,
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>                     Mnemos.toText(<strong class="jxr_keyword">this</strong>.point, <strong class="jxr_keyword">true</strong>, false),
+<a class="jxr_linenumber" name="L204" href="#L204">204</a>                     System.currentTimeMillis() - <strong class="jxr_keyword">this</strong>.start,
+<a class="jxr_linenumber" name="L205" href="#L205">205</a>                     <strong class="jxr_keyword">this</strong>.deadline - <strong class="jxr_keyword">this</strong>.start
+<a class="jxr_linenumber" name="L206" href="#L206">206</a>                 );
+<a class="jxr_linenumber" name="L207" href="#L207">207</a>                 dead = false;
+<a class="jxr_linenumber" name="L208" href="#L208">208</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L209" href="#L209">209</a>                 dead = <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L210" href="#L210">210</a>             }
+<a class="jxr_linenumber" name="L211" href="#L211">211</a>             <strong class="jxr_keyword">return</strong> dead;
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>         }
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>     }
+<a class="jxr_linenumber" name="L214" href="#L214">214</a> 
+<a class="jxr_linenumber" name="L215" href="#L215">215</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2015 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2016 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>

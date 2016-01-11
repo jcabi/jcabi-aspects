@@ -61,7 +61,7 @@
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  <em class="jxr_javadoccomment"> * with {@link Loggable} annotation.</em>
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  <em class="jxr_javadoccomment"> * @author Yegor Bugayenko (yegor@tpc2.com)</em>
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment"> * @version $Id: b18b2d7f542f879abfad66f252ead4c1c7021fe0 $</em>
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment"> * @version $Id: 31099c53a13dff24fd2c3bc8046d90a4be6fd865 $</em>
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment"> * @since 0.7.2</em>
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment"> * @checkstyle IllegalThrows (500 lines)</em>
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  <em class="jxr_javadoccomment"> */</em>
@@ -79,14 +79,14 @@
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     * Currently running methods.</em>
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> Set&lt;Marker&gt; running =
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>          <strong class="jxr_keyword">new</strong> ConcurrentSkipListSet&lt;Marker&gt;();
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>  
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment">     * Public ctor.</em>
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>      @SuppressWarnings(<span class="jxr_string">"PMD.DoNotUseThreads"</span>)
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/jcabi/aspects/aj/MethodLogger.html">MethodLogger</a>() {
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> Set&lt;Marker&gt; running;
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment">     * Public ctor.</em>
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>      @SuppressWarnings(<span class="jxr_string">"PMD.DoNotUseThreads"</span>)
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/jcabi/aspects/aj/MethodLogger.html">MethodLogger</a>() {
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          <strong class="jxr_keyword">this</strong>.running = <strong class="jxr_keyword">new</strong> ConcurrentSkipListSet&lt;Marker&gt;();
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>          <strong class="jxr_keyword">final</strong> ScheduledExecutorService monitor =
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>              Executors.newSingleThreadScheduledExecutor(
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>                  <strong class="jxr_keyword">new</strong> <a href="../../../../com/jcabi/aspects/aj/NamedThreads.html">NamedThreads</a>(
@@ -401,16 +401,16 @@
 <a class="jxr_linenumber" name="L393" href="#L393">393</a>         <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L394" href="#L394">394</a> <em class="jxr_javadoccomment">         * When the method was started, in milliseconds.</em>
 <a class="jxr_linenumber" name="L395" href="#L395">395</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L396" href="#L396">396</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> <strong class="jxr_keyword">long</strong> started = System.currentTimeMillis();
+<a class="jxr_linenumber" name="L396" href="#L396">396</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> <strong class="jxr_keyword">long</strong> started;
 <a class="jxr_linenumber" name="L397" href="#L397">397</a>         <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L398" href="#L398">398</a> <em class="jxr_javadoccomment">         * Which monitoring cycle was logged recently.</em>
 <a class="jxr_linenumber" name="L399" href="#L399">399</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L400" href="#L400">400</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> AtomicInteger logged = <strong class="jxr_keyword">new</strong> AtomicInteger();
+<a class="jxr_linenumber" name="L400" href="#L400">400</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> AtomicInteger logged;
 <a class="jxr_linenumber" name="L401" href="#L401">401</a>         <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L402" href="#L402">402</a> <em class="jxr_javadoccomment">         * The thread it's running in.</em>
 <a class="jxr_linenumber" name="L403" href="#L403">403</a> <em class="jxr_javadoccomment">         */</em>
 <a class="jxr_linenumber" name="L404" href="#L404">404</a>         @SuppressWarnings(<span class="jxr_string">"PMD.DoNotUseThreads"</span>)
-<a class="jxr_linenumber" name="L405" href="#L405">405</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> Thread thread = Thread.currentThread();
+<a class="jxr_linenumber" name="L405" href="#L405">405</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> Thread thread;
 <a class="jxr_linenumber" name="L406" href="#L406">406</a>         <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L407" href="#L407">407</a> <em class="jxr_javadoccomment">         * Joint point.</em>
 <a class="jxr_linenumber" name="L408" href="#L408">408</a> <em class="jxr_javadoccomment">         */</em>
@@ -425,67 +425,70 @@
 <a class="jxr_linenumber" name="L417" href="#L417">417</a> <em class="jxr_javadoccomment">         * @param annt Annotation</em>
 <a class="jxr_linenumber" name="L418" href="#L418">418</a> <em class="jxr_javadoccomment">         */</em>
 <a class="jxr_linenumber" name="L419" href="#L419">419</a>         <strong class="jxr_keyword">protected</strong> <a href="../../../../com/jcabi/aspects/aj/MethodLogger.html">Marker</a>(<strong class="jxr_keyword">final</strong> ProceedingJoinPoint pnt, <strong class="jxr_keyword">final</strong> <a href="../../../../com/jcabi/aspects/Loggable.html">Loggable</a> annt) {
-<a class="jxr_linenumber" name="L420" href="#L420">420</a>             <strong class="jxr_keyword">this</strong>.point = pnt;
-<a class="jxr_linenumber" name="L421" href="#L421">421</a>             <strong class="jxr_keyword">this</strong>.annotation = annt;
-<a class="jxr_linenumber" name="L422" href="#L422">422</a>         }
-<a class="jxr_linenumber" name="L423" href="#L423">423</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L424" href="#L424">424</a> <em class="jxr_javadoccomment">         * Monitor it's status and log the problem, if any.</em>
-<a class="jxr_linenumber" name="L425" href="#L425">425</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L426" href="#L426">426</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> monitor() {
-<a class="jxr_linenumber" name="L427" href="#L427">427</a>             <strong class="jxr_keyword">final</strong> TimeUnit unit = <strong class="jxr_keyword">this</strong>.annotation.unit();
-<a class="jxr_linenumber" name="L428" href="#L428">428</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> threshold = <strong class="jxr_keyword">this</strong>.annotation.limit();
-<a class="jxr_linenumber" name="L429" href="#L429">429</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> age = unit.convert(
-<a class="jxr_linenumber" name="L430" href="#L430">430</a>                 System.currentTimeMillis() - <strong class="jxr_keyword">this</strong>.started, TimeUnit.MILLISECONDS
-<a class="jxr_linenumber" name="L431" href="#L431">431</a>             );
-<a class="jxr_linenumber" name="L432" href="#L432">432</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> cycle = (<strong class="jxr_keyword">int</strong>) ((age - threshold) / threshold);
-<a class="jxr_linenumber" name="L433" href="#L433">433</a>             <strong class="jxr_keyword">if</strong> (cycle &gt; <strong class="jxr_keyword">this</strong>.logged.get()) {
-<a class="jxr_linenumber" name="L434" href="#L434">434</a>                 <strong class="jxr_keyword">final</strong> Method method = MethodSignature.<strong class="jxr_keyword">class</strong>.<strong class="jxr_keyword">cast</strong>(
-<a class="jxr_linenumber" name="L435" href="#L435">435</a>                     <strong class="jxr_keyword">this</strong>.point.getSignature()
-<a class="jxr_linenumber" name="L436" href="#L436">436</a>                 ).getMethod();
-<a class="jxr_linenumber" name="L437" href="#L437">437</a>                 Logger.warn(
-<a class="jxr_linenumber" name="L438" href="#L438">438</a>                     method.getDeclaringClass(),
-<a class="jxr_linenumber" name="L439" href="#L439">439</a>                     <span class="jxr_string">"%s: takes more than %[ms]s, %[ms]s already, thread=%s/%s"</span>,
-<a class="jxr_linenumber" name="L440" href="#L440">440</a>                     Mnemos.toText(<strong class="jxr_keyword">this</strong>.point, <strong class="jxr_keyword">true</strong>, <strong class="jxr_keyword">this</strong>.annotation.skipArgs()),
-<a class="jxr_linenumber" name="L441" href="#L441">441</a>                     TimeUnit.MILLISECONDS.convert(threshold, unit),
-<a class="jxr_linenumber" name="L442" href="#L442">442</a>                     TimeUnit.MILLISECONDS.convert(age, unit),
-<a class="jxr_linenumber" name="L443" href="#L443">443</a>                     <strong class="jxr_keyword">this</strong>.thread.getName(),
-<a class="jxr_linenumber" name="L444" href="#L444">444</a>                     <strong class="jxr_keyword">this</strong>.thread.getState()
-<a class="jxr_linenumber" name="L445" href="#L445">445</a>                 );
-<a class="jxr_linenumber" name="L446" href="#L446">446</a>                 Logger.debug(
-<a class="jxr_linenumber" name="L447" href="#L447">447</a>                     method.getDeclaringClass(),
-<a class="jxr_linenumber" name="L448" href="#L448">448</a>                     <span class="jxr_string">"%s: thread %s/%s stacktrace: %s"</span>,
-<a class="jxr_linenumber" name="L449" href="#L449">449</a>                     Mnemos.toText(<strong class="jxr_keyword">this</strong>.point, <strong class="jxr_keyword">true</strong>, <strong class="jxr_keyword">this</strong>.annotation.skipArgs()),
-<a class="jxr_linenumber" name="L450" href="#L450">450</a>                     <strong class="jxr_keyword">this</strong>.thread.getName(),
-<a class="jxr_linenumber" name="L451" href="#L451">451</a>                     <strong class="jxr_keyword">this</strong>.thread.getState(),
-<a class="jxr_linenumber" name="L452" href="#L452">452</a>                     MethodLogger.textualize(<strong class="jxr_keyword">this</strong>.thread.getStackTrace())
-<a class="jxr_linenumber" name="L453" href="#L453">453</a>                 );
-<a class="jxr_linenumber" name="L454" href="#L454">454</a>                 <strong class="jxr_keyword">this</strong>.logged.set(cycle);
-<a class="jxr_linenumber" name="L455" href="#L455">455</a>             }
-<a class="jxr_linenumber" name="L456" href="#L456">456</a>         }
-<a class="jxr_linenumber" name="L457" href="#L457">457</a>         @Override
-<a class="jxr_linenumber" name="L458" href="#L458">458</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> hashCode() {
-<a class="jxr_linenumber" name="L459" href="#L459">459</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.point.hashCode();
-<a class="jxr_linenumber" name="L460" href="#L460">460</a>         }
-<a class="jxr_linenumber" name="L461" href="#L461">461</a>         @Override
-<a class="jxr_linenumber" name="L462" href="#L462">462</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> equals(<strong class="jxr_keyword">final</strong> Object obj) {
-<a class="jxr_linenumber" name="L463" href="#L463">463</a>             <strong class="jxr_keyword">return</strong> obj == <strong class="jxr_keyword">this</strong> || MethodLogger.Marker.<strong class="jxr_keyword">class</strong>.<strong class="jxr_keyword">cast</strong>(obj)
-<a class="jxr_linenumber" name="L464" href="#L464">464</a>                 .point.equals(<strong class="jxr_keyword">this</strong>.point);
-<a class="jxr_linenumber" name="L465" href="#L465">465</a>         }
-<a class="jxr_linenumber" name="L466" href="#L466">466</a>         @Override
-<a class="jxr_linenumber" name="L467" href="#L467">467</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compareTo(<strong class="jxr_keyword">final</strong> <a href="../../../../com/jcabi/aspects/aj/MethodLogger.html">Marker</a> marker) {
-<a class="jxr_linenumber" name="L468" href="#L468">468</a>             <strong class="jxr_keyword">int</strong> cmp = 0;
-<a class="jxr_linenumber" name="L469" href="#L469">469</a>             <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong>.started &lt; marker.started) {
-<a class="jxr_linenumber" name="L470" href="#L470">470</a>                 cmp = 1;
-<a class="jxr_linenumber" name="L471" href="#L471">471</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong>.started &gt; marker.started) {
-<a class="jxr_linenumber" name="L472" href="#L472">472</a>                 cmp = -1;
-<a class="jxr_linenumber" name="L473" href="#L473">473</a>             }
-<a class="jxr_linenumber" name="L474" href="#L474">474</a>             <strong class="jxr_keyword">return</strong> cmp;
-<a class="jxr_linenumber" name="L475" href="#L475">475</a>         }
-<a class="jxr_linenumber" name="L476" href="#L476">476</a>     }
-<a class="jxr_linenumber" name="L477" href="#L477">477</a> 
-<a class="jxr_linenumber" name="L478" href="#L478">478</a> }
+<a class="jxr_linenumber" name="L420" href="#L420">420</a>             <strong class="jxr_keyword">this</strong>.started = System.currentTimeMillis();
+<a class="jxr_linenumber" name="L421" href="#L421">421</a>             <strong class="jxr_keyword">this</strong>.logged = <strong class="jxr_keyword">new</strong> AtomicInteger();
+<a class="jxr_linenumber" name="L422" href="#L422">422</a>             <strong class="jxr_keyword">this</strong>.point = pnt;
+<a class="jxr_linenumber" name="L423" href="#L423">423</a>             <strong class="jxr_keyword">this</strong>.annotation = annt;
+<a class="jxr_linenumber" name="L424" href="#L424">424</a>             <strong class="jxr_keyword">this</strong>.thread = Thread.currentThread();
+<a class="jxr_linenumber" name="L425" href="#L425">425</a>         }
+<a class="jxr_linenumber" name="L426" href="#L426">426</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L427" href="#L427">427</a> <em class="jxr_javadoccomment">         * Monitor it's status and log the problem, if any.</em>
+<a class="jxr_linenumber" name="L428" href="#L428">428</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L429" href="#L429">429</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> monitor() {
+<a class="jxr_linenumber" name="L430" href="#L430">430</a>             <strong class="jxr_keyword">final</strong> TimeUnit unit = <strong class="jxr_keyword">this</strong>.annotation.unit();
+<a class="jxr_linenumber" name="L431" href="#L431">431</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> threshold = <strong class="jxr_keyword">this</strong>.annotation.limit();
+<a class="jxr_linenumber" name="L432" href="#L432">432</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> age = unit.convert(
+<a class="jxr_linenumber" name="L433" href="#L433">433</a>                 System.currentTimeMillis() - <strong class="jxr_keyword">this</strong>.started, TimeUnit.MILLISECONDS
+<a class="jxr_linenumber" name="L434" href="#L434">434</a>             );
+<a class="jxr_linenumber" name="L435" href="#L435">435</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> cycle = (<strong class="jxr_keyword">int</strong>) ((age - threshold) / threshold);
+<a class="jxr_linenumber" name="L436" href="#L436">436</a>             <strong class="jxr_keyword">if</strong> (cycle &gt; <strong class="jxr_keyword">this</strong>.logged.get()) {
+<a class="jxr_linenumber" name="L437" href="#L437">437</a>                 <strong class="jxr_keyword">final</strong> Method method = MethodSignature.<strong class="jxr_keyword">class</strong>.<strong class="jxr_keyword">cast</strong>(
+<a class="jxr_linenumber" name="L438" href="#L438">438</a>                     <strong class="jxr_keyword">this</strong>.point.getSignature()
+<a class="jxr_linenumber" name="L439" href="#L439">439</a>                 ).getMethod();
+<a class="jxr_linenumber" name="L440" href="#L440">440</a>                 Logger.warn(
+<a class="jxr_linenumber" name="L441" href="#L441">441</a>                     method.getDeclaringClass(),
+<a class="jxr_linenumber" name="L442" href="#L442">442</a>                     <span class="jxr_string">"%s: takes more than %[ms]s, %[ms]s already, thread=%s/%s"</span>,
+<a class="jxr_linenumber" name="L443" href="#L443">443</a>                     Mnemos.toText(<strong class="jxr_keyword">this</strong>.point, <strong class="jxr_keyword">true</strong>, <strong class="jxr_keyword">this</strong>.annotation.skipArgs()),
+<a class="jxr_linenumber" name="L444" href="#L444">444</a>                     TimeUnit.MILLISECONDS.convert(threshold, unit),
+<a class="jxr_linenumber" name="L445" href="#L445">445</a>                     TimeUnit.MILLISECONDS.convert(age, unit),
+<a class="jxr_linenumber" name="L446" href="#L446">446</a>                     <strong class="jxr_keyword">this</strong>.thread.getName(),
+<a class="jxr_linenumber" name="L447" href="#L447">447</a>                     <strong class="jxr_keyword">this</strong>.thread.getState()
+<a class="jxr_linenumber" name="L448" href="#L448">448</a>                 );
+<a class="jxr_linenumber" name="L449" href="#L449">449</a>                 Logger.debug(
+<a class="jxr_linenumber" name="L450" href="#L450">450</a>                     method.getDeclaringClass(),
+<a class="jxr_linenumber" name="L451" href="#L451">451</a>                     <span class="jxr_string">"%s: thread %s/%s stacktrace: %s"</span>,
+<a class="jxr_linenumber" name="L452" href="#L452">452</a>                     Mnemos.toText(<strong class="jxr_keyword">this</strong>.point, <strong class="jxr_keyword">true</strong>, <strong class="jxr_keyword">this</strong>.annotation.skipArgs()),
+<a class="jxr_linenumber" name="L453" href="#L453">453</a>                     <strong class="jxr_keyword">this</strong>.thread.getName(),
+<a class="jxr_linenumber" name="L454" href="#L454">454</a>                     <strong class="jxr_keyword">this</strong>.thread.getState(),
+<a class="jxr_linenumber" name="L455" href="#L455">455</a>                     MethodLogger.textualize(<strong class="jxr_keyword">this</strong>.thread.getStackTrace())
+<a class="jxr_linenumber" name="L456" href="#L456">456</a>                 );
+<a class="jxr_linenumber" name="L457" href="#L457">457</a>                 <strong class="jxr_keyword">this</strong>.logged.set(cycle);
+<a class="jxr_linenumber" name="L458" href="#L458">458</a>             }
+<a class="jxr_linenumber" name="L459" href="#L459">459</a>         }
+<a class="jxr_linenumber" name="L460" href="#L460">460</a>         @Override
+<a class="jxr_linenumber" name="L461" href="#L461">461</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> hashCode() {
+<a class="jxr_linenumber" name="L462" href="#L462">462</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.point.hashCode();
+<a class="jxr_linenumber" name="L463" href="#L463">463</a>         }
+<a class="jxr_linenumber" name="L464" href="#L464">464</a>         @Override
+<a class="jxr_linenumber" name="L465" href="#L465">465</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> equals(<strong class="jxr_keyword">final</strong> Object obj) {
+<a class="jxr_linenumber" name="L466" href="#L466">466</a>             <strong class="jxr_keyword">return</strong> obj == <strong class="jxr_keyword">this</strong> || MethodLogger.Marker.<strong class="jxr_keyword">class</strong>.<strong class="jxr_keyword">cast</strong>(obj)
+<a class="jxr_linenumber" name="L467" href="#L467">467</a>                 .point.equals(<strong class="jxr_keyword">this</strong>.point);
+<a class="jxr_linenumber" name="L468" href="#L468">468</a>         }
+<a class="jxr_linenumber" name="L469" href="#L469">469</a>         @Override
+<a class="jxr_linenumber" name="L470" href="#L470">470</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compareTo(<strong class="jxr_keyword">final</strong> <a href="../../../../com/jcabi/aspects/aj/MethodLogger.html">Marker</a> marker) {
+<a class="jxr_linenumber" name="L471" href="#L471">471</a>             <strong class="jxr_keyword">int</strong> cmp = 0;
+<a class="jxr_linenumber" name="L472" href="#L472">472</a>             <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong>.started &lt; marker.started) {
+<a class="jxr_linenumber" name="L473" href="#L473">473</a>                 cmp = 1;
+<a class="jxr_linenumber" name="L474" href="#L474">474</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong>.started &gt; marker.started) {
+<a class="jxr_linenumber" name="L475" href="#L475">475</a>                 cmp = -1;
+<a class="jxr_linenumber" name="L476" href="#L476">476</a>             }
+<a class="jxr_linenumber" name="L477" href="#L477">477</a>             <strong class="jxr_keyword">return</strong> cmp;
+<a class="jxr_linenumber" name="L478" href="#L478">478</a>         }
+<a class="jxr_linenumber" name="L479" href="#L479">479</a>     }
+<a class="jxr_linenumber" name="L480" href="#L480">480</a> 
+<a class="jxr_linenumber" name="L481" href="#L481">481</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2015 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2016 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>
