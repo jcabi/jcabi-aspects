@@ -5,7 +5,7 @@ The following members are in the project team:
 Role | Members
 ---|---
 PM | @dmarkov
-CR | @darkled, @caarlos0, @carlosmiranda, @dmzaytsev, @pinaf, @ggajos, @krzyk, @longtimeago
+CR | @darkled, @caarlos0, @carlosmiranda, @dmzaytsev, @pinaf, @ggajos, @krzyk, @mkordas, @longtimeago
 DEV | @cyberone, @piddubnyi, @ivanjunckes, @jrdalpra, @prondzyn, @shelan, @yamstranger, @bertram25
 IMP | @cyberone, @piddubnyi, @ivanjunckes, @jrdalpra, @prondzyn, @shelan, @yamstranger, @bertram25
 ARC | 
