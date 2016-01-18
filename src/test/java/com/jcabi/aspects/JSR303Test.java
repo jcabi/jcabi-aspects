@@ -37,7 +37,6 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -125,7 +124,6 @@ public final class JSR303Test {
      * NotNull can override the message.
      */
     @Test
-    @Ignore
     public void overridesMessage() {
         this.thrown.expect(ConstraintViolationException.class);
         this.thrown.expectMessage(JSR303Test.OVERRIDEN_MSG);
