@@ -33,7 +33,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Set;
-import javax.validation.ConstraintDeclarationException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validation;
@@ -149,28 +148,17 @@ public final class MethodValidator {
      * @param object Object at pointcut
      * @param method Method at pointcut
      * @param args Parameters of the method
-     * @todo #194:30min We need to find a way to disable the constraint rule
-     *  OverridingMethodMustNotAlterParameterConstraints instead
-     *  of catching the exception.
-     *  See https://hibernate.atlassian.net/browse/HV-1044
-     *  After that don't forget to enable test JSR303Test#overridesMessage()
      */
     private void validateMethod(final Object object, final Method method,
         final Object... args) {
-        try {
-            this.checkForViolations(this.validator
-                .forExecutables()
-                .validateParameters(
-                    object,
-                    method,
-                    args
-                )
-            );
-        } catch (final ConstraintDeclarationException ex) {
-            if (!ex.getMessage().startsWith("HV000151")) {
-                throw new ConstraintDeclarationException(ex);
-            }
-        }
+        this.checkForViolations(this.validator
+            .forExecutables()
+            .validateParameters(
+                object,
+                method,
+                args
+            )
+        );
     }
 
     /**
