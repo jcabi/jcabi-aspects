@@ -112,8 +112,9 @@ public final class Repeater {
                         System.nanoTime() - begin, Repeater.message(ex)
                     );
                 }
-                if (attempt >= rof.attempts()) {
-                    throw ex;
+
+                if (rof.attempts() != -1 && attempt >= rof.attempts()) {
+                     throw ex;
                 }
                 if (rof.delay() > 0) {
                     this.delay(rof, attempt);
