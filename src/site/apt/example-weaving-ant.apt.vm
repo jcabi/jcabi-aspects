@@ -79,14 +79,14 @@ Weaving Java Binaries using Ant build strategy
 +--
 <!-- here comes your javac strategy -->
 <target name="compile">
-		<echo message="Compile using Java version ${ant.java.version}."/>
-		<javac includeantruntime="false" encoding="UTF-8" srcdir="${sourcedir}" destdir="${targetdir}" classpathref="classpath" />
-	</target>
+	<echo message="Compile using Java version ${ant.java.version}."/>
+	<javac includeantruntime="false" encoding="UTF-8" srcdir="${sourcedir}" destdir="${targetdir}" classpathref="classpath" />
+</target>
 
 <!-- This is the final target process that you do before deploy your app / prepare your project package. -->
 <target name="package" depends="clean, compile, weave-binary">
-		<!-- here comes your package project behavior -->
-	</target>
+	<!-- here comes your package project behavior -->
+</target>
 +--
 
   {{{https://eclipse.org/aspectj/doc/next/devguide/antTasks-iajc.html}Check for more iajc configuration options}}.
