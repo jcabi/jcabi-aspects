@@ -65,10 +65,10 @@ Weaving Java Binaries using Ant build strategy
 
 <!--Responsible to weave/merge the javac binary code result with aj binaries -->
 <target name="weave-binary">
-	<iajc showWeaveInfo="true" inpath="${targetdir}" destDir="${targetdir}" fork="true">
-		<aspectpath refid="aspect.path"/>
-		<classpath refid="ajclasspath" />
-	</iajc>		
+    <iajc showWeaveInfo="true" inpath="${targetdir}" destDir="${targetdir}" fork="true">
+        <aspectpath refid="aspect.path"/>
+        <classpath refid="ajclasspath" />
+    </iajc>		
 </target>
 +--
 
@@ -79,13 +79,13 @@ Weaving Java Binaries using Ant build strategy
 +--
 <!-- here comes your javac strategy -->
 <target name="compile">
-	<echo message="Compile using Java version ${ant.java.version}."/>
-	<javac includeantruntime="false" encoding="UTF-8" srcdir="${sourcedir}" destdir="${targetdir}" classpathref="classpath" />
+    <echo message="Compile using Java version ${ant.java.version}."/>
+    <javac includeantruntime="false" encoding="UTF-8" srcdir="${sourcedir}" destdir="${targetdir}" classpathref="classpath" />
 </target>
 
 <!-- This is the final target process that you do before deploy your app / prepare your project package. -->
 <target name="package" depends="clean, compile, weave-binary">
-	<!-- here comes your package project behavior -->
+    <!-- here comes your package project behavior -->
 </target>
 +--
 
