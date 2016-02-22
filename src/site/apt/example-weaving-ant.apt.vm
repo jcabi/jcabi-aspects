@@ -46,24 +46,24 @@ Weaving Java Binaries using Ant build strategy
   you run AspectJ weaver which modifies <<<.class>>> files, producing
   new "weaved" versions of them.
 
-  Sometimes when you're working on legacy system Maven build is not available
+  Sometimes when you're working on legacy system, Maven build is not available
   and in a lot of them, the build system is provided by ant macros.
   Luckily, we can provide a production working example.
-  All you need to do to start using our AOP aspects with an Ant build are
+  All you need to do to start using our AOP aspects with an Ant build is to
   include {{{https://eclipse.org/aspectj/doc/next/devguide/antTasks-iajc.html}aspectjrt}} 
   into your lib path and add these macros to your <<<build.xml>>>:
 
 +--
 <path id="classpath">
-	<pathelement location="${aspectjrt.jar}"/>
+    <pathelement location="${aspectjrt.jar}"/>
 </path>
 
 <!-- Define aspectj element path -->
 <path id="aspect.path">
-	<pathelement path="${aspectj.jar}"/>
+    <pathelement path="${aspectj.jar}"/>
 </path>
 
-<!--Resposible to weave/merge the javac binary code result with aj binaries -->
+<!--Responsible to weave/merge the javac binary code result with aj binaries -->
 <target name="weave-binary">
 	<iajc showWeaveInfo="true" inpath="${targetdir}" destDir="${targetdir}" fork="true">
 		<aspectpath refid="aspect.path"/>
