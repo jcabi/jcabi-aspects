@@ -343,7 +343,7 @@ public final class MethodCacher {
          */
         public boolean expired() {
             final boolean expired = this.lifetime < System.currentTimeMillis();
-            final boolean collected = cached.get() == null;
+            final boolean collected = this.executed && this.cached.get() == null;
             return this.executed && (expired || collected);
         }
 
