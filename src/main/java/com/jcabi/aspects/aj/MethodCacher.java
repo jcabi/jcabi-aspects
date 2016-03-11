@@ -262,6 +262,10 @@ public final class MethodCacher {
          * Cached value.
          */
         private transient SoftReference<Object> cached;
+        /**
+         * Has non-null result?
+         */
+        private transient boolean hasresult;
 
         /**
          * Public ctor.
@@ -300,7 +304,9 @@ public final class MethodCacher {
         public synchronized Object through() throws Throwable {
             if (!this.executed) {
                 final long start = System.currentTimeMillis();
-                this.cached = new SoftReference<Object>(this.point.proceed());
+                final Object result = this.point.proceed();
+                this.hasresult = result != null;
+                this.cached = new SoftReference<Object>(result);
                 final Method method = MethodSignature.class
                     .cast(this.point.getSignature())
                     .getMethod();
@@ -343,7 +349,9 @@ public final class MethodCacher {
          */
         public boolean expired() {
             final boolean expired = this.lifetime < System.currentTimeMillis();
-            final boolean collected = this.executed && this.cached.get() == null;
+            final boolean collected = this.executed
+                    && this.hasresult
+                    && this.cached.get() == null;
             return this.executed && (expired || collected);
         }
 
