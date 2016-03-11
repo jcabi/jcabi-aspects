@@ -32,6 +32,7 @@ package com.jcabi.aspects.aj;
 import com.jcabi.aspects.Cacheable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.log.Logger;
+import java.lang.ref.SoftReference;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -260,7 +261,7 @@ public final class MethodCacher {
         /**
          * Cached value.
          */
-        private transient Object cached;
+        private transient SoftReference<Object> cached;
 
         /**
          * Public ctor.
@@ -277,7 +278,7 @@ public final class MethodCacher {
 
         @Override
         public String toString() {
-            return Mnemos.toText(this.cached, true, false);
+            return Mnemos.toText(this.cached.get(), true, false);
         }
 
         /**
@@ -299,7 +300,7 @@ public final class MethodCacher {
         public synchronized Object through() throws Throwable {
             if (!this.executed) {
                 final long start = System.currentTimeMillis();
-                this.cached = this.point.proceed();
+                this.cached = new SoftReference<Object>(this.point.proceed());
                 final Method method = MethodSignature.class
                     .cast(this.point.getSignature())
                     .getMethod();
@@ -327,21 +328,23 @@ public final class MethodCacher {
                         Mnemos.toText(
                             method, this.point.getArgs(), true, false
                         ),
-                        Mnemos.toText(this.cached, true, false),
+                        Mnemos.toText(this.cached.get(), true, false),
                         System.currentTimeMillis() - start,
                         suffix
                     );
                 }
                 this.executed = true;
             }
-            return this.key.through(this.cached);
+            return this.key.through(this.cached.get());
         }
         /**
          * Is it expired already?
          * @return TRUE if expired
          */
         public boolean expired() {
-            return this.executed && this.lifetime < System.currentTimeMillis();
+            final boolean expired = this.lifetime < System.currentTimeMillis();
+            final boolean collected = cached.get() == null;
+            return this.executed && (expired || collected);
         }
 
         /**
