@@ -1,0 +1,94 @@
+ ------
+ Weaving Java Binaries using Ant build strategy
+ ------
+ Mauricio Carvalho
+ ------
+ 2016-02-17
+ ------
+
+~~
+~~ Copyright (c) 2016, jcabi.com
+~~ All rights reserved.
+~~
+~~ Redistribution and use in source and binary forms, with or without
+~~ modification, are permitted provided that the following conditions
+~~ are met: 1) Redistributions of source code must retain the above
+~~ copyright notice, the list of conditions and the following
+~~ disclaimer. 2) Redistributions in binary form must reproduce the above
+~~ copyright notice, the list of conditions and the following
+~~ disclaimer in the documentation and/or other materials provided
+~~ with the distribution. 3) Neither the name of the jcabi.com, nor
+~~ the names of its contributors may be used to endorse or promote
+~~ products derived from this software without specific prior written
+~~ permission.
+~~
+~~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+~~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES INCLUDING, BUT
+~~ NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+~~ FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+~~ THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+~~ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, CONSEQUENTIAL DAMAGES
+~~ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+~~ SERVICES, LOSS OF USE, DATA, PROFITS, OR BUSINESS INTERRUPTION)
+~~ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+~~ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+~~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+~~ OF THE POSSIBILITY OF SUCH DAMAGE.
+~~
+
+Weaving Java Binaries using Ant build strategy
+
+  {{{http://en.wikipedia.org/wiki/Aspect_weaver}Aspect weaving}} is a process
+  of modifying binary <<<.class>>> files after compilation in order
+  to inject AOP advice at certain join points.
+
+  First of all, you annotate your classes and methods, and then compile. Then
+  you run AspectJ weaver which modifies <<<.class>>> files, producing
+  new "weaved" versions of them.
+
+  Sometimes when you're working on legacy system, Maven build is not available
+  and in a lot of them, the build system is provided by ant macros.
+  Luckily, we can provide a production working example.
+  All you need to do to start using our AOP aspects with an Ant build is to
+  include {{{https://eclipse.org/aspectj/doc/next/devguide/antTasks-iajc.html}aspectjrt}} 
+  into your lib path and add these macros to your <<<build.xml>>>:
+
++--
+<path id="classpath">
+    <pathelement location="${aspectjrt.jar}"/>
+</path>
+
+<!-- Define aspectj element path -->
+<path id="aspect.path">
+    <pathelement path="${aspectj.jar}"/>
+</path>
+
+<!--Responsible to weave/merge the javac binary code result with aj binaries -->
+<target name="weave-binary">
+    <iajc showWeaveInfo="true" inpath="${targetdir}" destDir="${targetdir}" fork="true">
+        <aspectpath refid="aspect.path"/>
+        <classpath refid="ajclasspath" />
+    </iajc>		
+</target>
++--
+
+  Then, include the weave-binary macro into your build 
+  target to weaver and modify your .class files. It is very important to call 
+  weave-binary after your javac macro. Check a basic example:
+
++--
+<!-- here comes your javac strategy -->
+<target name="compile">
+    <echo message="Compile using Java version ${ant.java.version}."/>
+    <javac includeantruntime="false" encoding="UTF-8" srcdir="${sourcedir}" destdir="${targetdir}" classpathref="classpath" />
+</target>
+
+<!-- This is the final target process that you do before deploy your app / prepare your project package. -->
+<target name="package" depends="clean, compile, weave-binary">
+    <!-- here comes your package project behavior -->
+</target>
++--
+
+  {{{https://eclipse.org/aspectj/doc/next/devguide/antTasks-iajc.html}Check for more iajc configuration options}}.
+
+  That's it.
