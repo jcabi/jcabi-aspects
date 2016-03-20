@@ -259,13 +259,13 @@ public final class MethodCacher {
          */
         private transient long lifetime;
         /**
-         * Cached value.
-         */
-        private transient SoftReference<Object> cached;
-        /**
          * Has non-null result?
          */
         private transient boolean hasresult;
+        /**
+         * Cached value.
+         */
+        private transient SoftReference<Object> cached;
 
         /**
          * Public ctor.
@@ -362,12 +362,22 @@ public final class MethodCacher {
         public boolean asyncUpdate() {
             return this.async;
         }
+
+        /**
+         * Soft reference to cached object.
+         * Visible only for testing. Don not use directly.
+         * @return Soft reference to cached object.
+         */
+        public SoftReference<Object> getCached() {
+            return this.cached;
+        }
     }
 
     /**
      * Key of a callable target.
+     * @checkstyle DesignForExtensionCheck (140 lines)
      */
-    protected static final class Key {
+    protected static class Key {
         /**
          * When instantiated.
          */
@@ -490,5 +500,4 @@ public final class MethodCacher {
         }
 
     }
-
 }
