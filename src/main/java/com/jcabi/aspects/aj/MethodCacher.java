@@ -365,17 +365,18 @@ public final class MethodCacher {
 
         /**
          * Soft reference to cached object.
-         * Visible only for testing. Don not use directly.
+         * Visible only for testing. Do not use directly.
          * @return Soft reference to cached object.
          */
-        public SoftReference<Object> getCached() {
+        @SuppressWarnings("PMD.DefaultPackage")
+        SoftReference<Object> getCached() {
             return this.cached;
         }
     }
 
     /**
      * Key of a callable target.
-     * @checkstyle DesignForExtensionCheck (140 lines)
+     * @checkstyle DesignForExtensionCheck (2 lines)
      */
     protected static class Key {
         /**
@@ -426,20 +427,20 @@ public final class MethodCacher {
          * Get log level.
          * @return Log level of current method.
          */
-        public int getLevel() {
+        public final int getLevel() {
             return this.level;
         }
 
         @Override
-        public String toString() {
+        public final String toString() {
             return Mnemos.toText(this.method, this.arguments, true, false);
         }
         @Override
-        public int hashCode() {
+        public final int hashCode() {
             return this.method.hashCode();
         }
         @Override
-        public boolean equals(final Object obj) {
+        public final boolean equals(final Object obj) {
             final boolean equals;
             if (this == obj) {
                 equals = true;
@@ -457,6 +458,7 @@ public final class MethodCacher {
          * Send a result through, with necessary logging.
          * @param result The result to send through
          * @return The same result/object
+         * @checkstyle DesignForExtensionCheck (2 lines)
          */
         public Object through(final Object result) {
             final int hit = this.accessed.getAndIncrement();
@@ -479,7 +481,7 @@ public final class MethodCacher {
          * @param point Proceeding point
          * @return True if the target is the same
          */
-        public boolean sameTarget(final JoinPoint point) {
+        public final boolean sameTarget(final JoinPoint point) {
             return MethodCacher.Key.targetize(point).equals(this.target);
         }
         /**

@@ -40,18 +40,18 @@ import org.mockito.Mockito;
 
 /**
  * Tests for {@link MethodCacher}.
- *
  * @author Nesterov Nikolay (nikolaynesterov@gmail.com)
  * @version $Id$
+ * @since 1.0
  */
 public final class MethodCacherTest {
     /**
-     * Cached result becomes expired when GC collect cached value.
+     * MethodCacher can support garbage collecting.
      * @throws Throwable If something goes wrong
-     * @checkstyle IllegalThrowsCheck (20 lines)
+     * @checkstyle IllegalThrowsCheck (3 lines)
      */
     @Test
-    public void becomesExpiredWhenCollected() throws Throwable {
+    public void supportsGarbageCollecting() throws Throwable {
         final ProceedingJoinPoint point = Mockito.mock(
                 ProceedingJoinPoint.class
         );
@@ -66,10 +66,8 @@ public final class MethodCacherTest {
                 MethodSignature.class
         );
         final Method method = Buzz.class.getMethod("get");
-        Mockito.when(methodSignature.getMethod())
-                .thenReturn(method);
-        Mockito.when(point.getSignature())
-                .thenReturn(methodSignature);
+        Mockito.when(methodSignature.getMethod()).thenReturn(method);
+        Mockito.when(point.getSignature()).thenReturn(methodSignature);
         tunnel.through();
         MatcherAssert.assertThat(tunnel.expired(), Matchers.equalTo(false));
         tunnel.getCached().clear();
@@ -79,13 +77,13 @@ public final class MethodCacherTest {
     /**
      * Test class for tests above.
      */
-    static class Buzz {
+    private static class Buzz {
         /**
          * Return some object.
          * @return Some object.
          */
         @Cacheable(forever = true)
-        public  Object get() {
+        public Object get() {
             return new Object();
         }
     }
