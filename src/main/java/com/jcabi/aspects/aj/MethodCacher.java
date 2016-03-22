@@ -265,6 +265,7 @@ public final class MethodCacher {
         /**
          * Cached value.
          */
+        @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
         private transient SoftReference<Object> cached;
 
         /**
@@ -369,7 +370,7 @@ public final class MethodCacher {
          * @return Soft reference to cached object.
          */
         @SuppressWarnings("PMD.DefaultPackage")
-        SoftReference<Object> getCached() {
+        SoftReference<Object> cached() {
             return this.cached;
         }
     }

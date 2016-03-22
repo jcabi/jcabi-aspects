@@ -70,7 +70,7 @@ public final class MethodCacherTest {
         Mockito.when(point.getSignature()).thenReturn(methodSignature);
         tunnel.through();
         MatcherAssert.assertThat(tunnel.expired(), Matchers.equalTo(false));
-        tunnel.getCached().clear();
+        tunnel.cached().clear();
         MatcherAssert.assertThat(tunnel.expired(), Matchers.equalTo(true));
     }
 
