@@ -86,7 +86,7 @@
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>      @Test
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> returnsFutureValue() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>          MatcherAssert.assertThat(
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>              <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/aspects/JSR303Test.html">Foo</a>().asyncMethodWithReturnValue()
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>              <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/aspects/LoggableTest.html">Foo</a>().asyncMethodWithReturnValue()
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>                  .get(Tv.FIVE, TimeUnit.MINUTES),
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>              Matchers.allOf(
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>                  Matchers.not(Thread.currentThread().getName()),
@@ -101,13 +101,13 @@
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>      @Test(expected = IllegalStateException.<strong class="jxr_keyword">class</strong>)
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> throwsWhenMethodDoesNotReturnVoidOrFuture() {
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>          <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/aspects/JSR303Test.html">Foo</a>().asyncMethodThatReturnsInt();
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>          <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/aspects/LoggableTest.html">Foo</a>().asyncMethodThatReturnsInt();
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>      }
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>  
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L100" href="#L100">100</a> <em class="jxr_javadoccomment">     * Dummy class for test purposes.</em>
 <a class="jxr_linenumber" name="L101" href="#L101">101</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../com/jcabi/aspects/JSR303Test.html">Foo</a> {
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../com/jcabi/aspects/LoggableTest.html">Foo</a> {
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>         <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L104" href="#L104">104</a> <em class="jxr_javadoccomment">         * Async method that returns a Future containing the thread name.</em>
 <a class="jxr_linenumber" name="L105" href="#L105">105</a> <em class="jxr_javadoccomment">         * @return The future.</em>
