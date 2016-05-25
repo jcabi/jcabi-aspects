@@ -176,6 +176,7 @@ public final class MethodLogger {
      * @param annotation The annotation
      * @return The result of call
      * @throws Throwable If something goes wrong inside
+     * @checkstyle ExecutableStatementCountCheck (100 lines)
      */
     private Object wrap(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation) throws Throwable {
@@ -226,12 +227,19 @@ public final class MethodLogger {
         } catch (final Throwable ex) {
             if (!MethodLogger.contains(annotation.ignore(), ex)
                 && !ex.getClass().isAnnotationPresent(Loggable.Quiet.class)) {
-                final StackTraceElement trace = ex.getStackTrace()[0];
+                final StackTraceElement[] traces = ex.getStackTrace();
+                final String origin;
+                if (traces.length > 0) {
+                    final StackTraceElement trace = traces[0];
+                    origin = MethodLogger.oneText(trace);
+                } else {
+                    origin = "somewhere";
+                }
                 LogHelper.log(
                     level,
                     method.getDeclaringClass(),
                     Logger.format(
-                        "%s: thrown %s out of %s#%s[%d] in %[nano]s",
+                        "%s: thrown %s out of %s in %[nano]s",
                         Mnemos.toText(
                             point,
                             annotation.trim(),
@@ -239,9 +247,7 @@ public final class MethodLogger {
                             annotation.logThis()
                         ),
                         Mnemos.toText(ex),
-                        trace.getClassName(),
-                        trace.getMethodName(),
-                        trace.getLineNumber(),
+                        origin,
                         System.nanoTime() - start
                     )
                 );
@@ -367,22 +373,29 @@ public final class MethodLogger {
      * @param trace Array of stacktrace elements
      * @return The text
      */
-    private static String textualize(final StackTraceElement... trace) {
+    private static String allText(final StackTraceElement... trace) {
         final StringBuilder text = new StringBuilder();
         for (int pos = 0; pos < trace.length; ++pos) {
             if (text.length() > 0) {
                 text.append(", ");
             }
-            text.append(
-                String.format(
-                    "%s#%s[%d]",
-                    trace[pos].getClassName(),
-                    trace[pos].getMethodName(),
-                    trace[pos].getLineNumber()
-                )
-            );
+            text.append(MethodLogger.oneText(trace[pos]));
         }
         return text.toString();
+    }
+
+    /**
+     * Textualize a stacktrace.
+     * @param trace One stacktrace element
+     * @return The text
+     */
+    private static String oneText(final StackTraceElement trace) {
+        return String.format(
+            "%s#%s[%d]",
+            trace.getClassName(),
+            trace.getMethodName(),
+            trace.getLineNumber()
+        );
     }
 
     /**
@@ -452,7 +465,7 @@ public final class MethodLogger {
                     Mnemos.toText(this.point, true, this.annotation.skipArgs()),
                     this.thread.getName(),
                     this.thread.getState(),
-                    MethodLogger.textualize(this.thread.getStackTrace())
+                    MethodLogger.allText(this.thread.getStackTrace())
                 );
                 this.logged.set(cycle);
             }
