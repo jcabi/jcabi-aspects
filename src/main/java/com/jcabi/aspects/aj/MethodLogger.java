@@ -194,7 +194,6 @@ public final class MethodLogger {
             new MethodLogger.Marker(point, annotation);
         this.running.add(marker);
         int level = annotation.value();
-        final int exceptionLevel = this.decideExceptionLevel(annotation);
         try {
             final Object logger = this.logger(method, annotation.name());
             if (annotation.prepend()) {
@@ -237,7 +236,7 @@ public final class MethodLogger {
                     origin = "somewhere";
                 }
                 LogHelper.log(
-                    exceptionLevel,
+                    this.decideExceptionLevel(annotation),
                     method.getDeclaringClass(),
                     Logger.format(
                         "%s: thrown %s out of %s in %[nano]s",
@@ -267,7 +266,7 @@ public final class MethodLogger {
     private int decideExceptionLevel(final Loggable annotation) {
         int returnValue = annotation.value();
         if (annotation.exceptionsAsError()) {
-            returnValue =  Loggable.ERROR;
+            returnValue = Loggable.ERROR;
         }
         return returnValue;
     }
