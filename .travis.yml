@@ -1,28 +1,25 @@
 language: java
 sudo: false
-jdk:
-  - oraclejdk7
-  - openjdk7
 cache:
   directories:
     - $HOME/.m2
-env:
-  global:
-    - MAVEN_OPTS="-XX:MaxPermSize=2g -Xmx4g"
-    - JAVA_OPTS="-XX:MaxPermSize=2g -Xmx4g"
-addons:
-  apt:
-    packages:
-    - libmagic1
-    - libmagic-dev
+script:
+  - set -e
+  - mvn clean install -Pqulice --errors --batch-mode
+  - mvn clean
+  - pdd --source=$(pwd) --file=/dev/null
+  - est --dir=est --file=/dev/null
 before_install:
   - rvm install 2.2.2
   - rvm use 2.2.2
 install:
   - gem install pdd
   - gem install est
-script:
-  - mvn clean install -Pqulice --errors --batch-mode
-  - mvn clean
-  - pdd --source=$(pwd) --file=/dev/null
-  - est --dir=est --file=/dev/null
+env:
+  global:
+    - MAVEN_OPTS="-Xmx256m"
+    - JAVA_OPTS="-Xmx256m"
+jdk:
+  - oraclejdk8
+  - oraclejdk7
+  - openjdk7
