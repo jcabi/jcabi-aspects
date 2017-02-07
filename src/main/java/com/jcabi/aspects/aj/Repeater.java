@@ -31,6 +31,7 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.RetryOnFailure;
+import com.jcabi.aspects.Tv;
 import com.jcabi.log.Logger;
 import java.lang.reflect.Method;
 import java.security.SecureRandom;
@@ -109,13 +110,14 @@ public final class Repeater {
                         "#%s(): attempt #%d/%d failed with %[type]s in %[nano]s (%[nano]s in total): %s",
                         method.getName(),
                         attempt, rof.attempts(), ex, System.nanoTime() - start,
-                        System.nanoTime() - begin, Repeater.message(ex)
+                        System.nanoTime() - begin,
+                        Repeater.message(ex)
                     );
                 }
                 if (attempt >= rof.attempts()) {
                     throw ex;
                 }
-                if (rof.delay() > 0) {
+                if (rof.delay() > 0L) {
                     this.delay(rof, attempt);
                 }
             }
@@ -151,7 +153,11 @@ public final class Repeater {
         if (exp.getCause() != null) {
             text.append("; ").append(Repeater.message(exp.getCause()));
         }
-        return text.toString();
+        String msg = text.toString();
+        if (msg.length() > Tv.HUNDRED) {
+            msg = String.format("%s...", msg.substring(0, Tv.HUNDRED));
+        }
+        return msg;
     }
 
     /**
