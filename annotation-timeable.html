@@ -38,7 +38,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-0.22.5/index.html" title="JavaDoc 0.22.5">JavaDoc 0.22.5</a>
+                            <span>                        <a href="apidocs-0.22.6/index.html" title="JavaDoc 0.22.6">JavaDoc 0.22.6</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -194,13 +194,13 @@
                             </div>
                             <ul class="badges">
                                 <li>
-                                    <strong itemprop="version">0.22.5</strong>
+                                    <strong itemprop="version">0.22.6</strong>
                                 </li>
                                 <li>
                                     
-                                    <time itemprop="datePublished" datetime="2016-05-25T07:38:32Z">
+                                    <time itemprop="datePublished" datetime="2017-02-07T04:16:17Z">
                                         
-                                        25-May-2016
+                                        07-Feb-2017
                                     </time>
                                 </li>
                                 <li class="menu-button">menu</li>
@@ -247,7 +247,7 @@
                                                 <article role="article" itemprop="articleBody">
                             <!--  --><!-- ~~ Copyright (c) 2011-2013, jcabi.com --><!-- All rights reserved. --><!--  --><!-- Redistribution and use in source and binary forms, with or without --><!-- modification, are permitted provided that the following conditions --><!-- are met: 1) Redistributions of source code must retain the above --><!-- copyright notice, the list of conditions and the following --><!-- disclaimer. 2) Redistributions in binary form must reproduce the above --><!-- copyright notice, the list of conditions and the following --><!-- disclaimer in the documentation and/or other materials provided --><!-- with the distribution. 3) Neither the name of the jcabi.com, nor --><!-- the names of its contributors may be used to endorse or promote --><!-- products derived from this software without specific prior written --><!-- permission. --><!--  --><!-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS --><!-- "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES INCLUDING, BUT --><!-- NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND --><!-- FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL --><!-- THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, --><!-- INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, CONSEQUENTIAL DAMAGES --><!-- (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR --><!-- SERVICES, LOSS OF USE, DATA, PROFITS, OR BUSINESS INTERRUPTION) --><!-- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, --><!-- STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) --><!-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED --><!-- OF THE POSSIBILITY OF SUCH DAMAGE. --><!--  --><div class="section">
 <h2><a name="Limit_Java_Method_Execution_Time"></a>Limit Java Method Execution Time</h2>
-<p>Annotate your methods with <a href="./apidocs-0.22.5/com/jcabi/aspects/Timeable.html"><tt>@Timeable</tt></a> annotation and every time their execution takes more than the allowed time, their thread will be interrupted:</p>
+<p>Annotate your methods with <a href="./apidocs-0.22.6/com/jcabi/aspects/Timeable.html"><tt>@Timeable</tt></a> annotation and every time their execution takes more than the allowed time, their thread will be interrupted:</p>
 <div class="source">
 <pre>public class Resource {
   @Timeable(limit = 5, unit = TimeUnit.SECONDS)
@@ -256,7 +256,7 @@
   }
 }</pre></div>
 <p>The thread running this method will be terminated if it takes more than five seconds.</p>
-<p>It is important to note that in Java 1.5+, it is impossible to force thread termination: <a class="externalLink" href="http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html">Why Are Thread.stop, Thread.suspend, Thread.resume, and Runtime.runFinalizersOnExit Deprecated?</a> We can't just call <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#stop()"><tt>Thread.stop()</tt></a> when a thread is over a specified time limit. The best thing we can do is to call <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#interrupt()"><tt>Thread#interrupt()</tt></a> and hope that the thread itself is checking its <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#isInterrupted()"><tt>Thread#isInterrupted()</tt></a> status. If you want to design your long-running methods in a way that <a href="./apidocs-0.22.5/com/jcabi/aspects/Timeable.html"><tt>@Timeable</tt></a> can terminate them, embed a checker into your most intessively used place. For example:</p>
+<p>It is important to note that in Java 1.5+, it is impossible to force thread termination: <a class="externalLink" href="http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html">Why Are Thread.stop, Thread.suspend, Thread.resume, and Runtime.runFinalizersOnExit Deprecated?</a> We can't just call <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#stop()"><tt>Thread.stop()</tt></a> when a thread is over a specified time limit. The best thing we can do is to call <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#interrupt()"><tt>Thread#interrupt()</tt></a> and hope that the thread itself is checking its <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#isInterrupted()"><tt>Thread#isInterrupted()</tt></a> status. If you want to design your long-running methods in a way that <a href="./apidocs-0.22.6/com/jcabi/aspects/Timeable.html"><tt>@Timeable</tt></a> can terminate them, embed a checker into your most intessively used place. For example:</p>
 <div class="source">
 <pre>public class Resource {
   @Timeable(limit = 1, unit = TimeUnit.SECONDS)
@@ -277,7 +277,7 @@
                 <footer class="legal-notes">
                     <div>
                         Copyright &#169;
-                                                                            2012-2016
+                                                                            2012-2017
                                             </div>
                     <div>jcabi.com, All Rights Reserved.</div>
                     <div><a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.</div>
