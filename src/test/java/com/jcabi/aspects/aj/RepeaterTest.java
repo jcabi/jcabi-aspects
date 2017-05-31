@@ -57,7 +57,7 @@ public final class RepeaterTest {
                 @Override
                 @RetryOnFailure(attempts = Tv.THREE, verbose = false)
                 public Boolean call() {
-                    if (calls.get() < Tv.THREE - 1) {
+                    if (calls.get() < Tv.TWO) {
                         calls.incrementAndGet();
                         throw new IllegalStateException();
                     }
@@ -66,7 +66,7 @@ public final class RepeaterTest {
             } .call(),
             Matchers.equalTo(true)
         );
-        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(Tv.THREE - 1));
+        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(Tv.TWO));
     }
 
     /**
@@ -83,6 +83,26 @@ public final class RepeaterTest {
                     calls.incrementAndGet();
                     throw new IllegalStateException();
                 }
+                return true;
+            }
+        } .call();
+    }
+    
+    /**
+     * Repeater should never stop retrying (50 used to simulate forever)
+     */
+    @Test
+    public void neverStopTrying() {
+        final AtomicInteger calls = new AtomicInteger(0);
+        new Callable<Boolean>() {
+            @Override
+            @RetryOnFailure(attempts = -1, verbose = false, delay = 0)
+            public Boolean call() {
+                if (calls.get() < 50) {
+                    calls.incrementAndGet();
+                    throw new IllegalStateException();
+                }
+                
                 return true;
             }
         } .call();
@@ -105,7 +125,7 @@ public final class RepeaterTest {
                         verbose = false
                     )
                 public Boolean call() {
-                    if (calls.get() < Tv.THREE - 1) {
+                    if (calls.get() < Tv.TWO) {
                         calls.incrementAndGet();
                         throw new ArrayIndexOutOfBoundsException();
                     }
@@ -114,7 +134,7 @@ public final class RepeaterTest {
             } .call(),
             Matchers.equalTo(true)
         );
-        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(Tv.THREE - 1));
+        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(Tv.TWO));
     }
 
     /**
@@ -134,7 +154,7 @@ public final class RepeaterTest {
                         verbose = false
                     )
                 public Boolean call() {
-                    if (calls.get() < Tv.THREE - 1) {
+                    if (calls.get() < Tv.TWO) {
                         calls.incrementAndGet();
                         throw new ArrayIndexOutOfBoundsException();
                     }
@@ -163,7 +183,7 @@ public final class RepeaterTest {
                         types = {IndexOutOfBoundsException.class }
                     )
                 public Boolean call() {
-                    if (calls.get() < Tv.THREE - 1) {
+                    if (calls.get() < Tv.TWO) {
                         calls.incrementAndGet();
                         throw new ArrayIndexOutOfBoundsException();
                     }
@@ -172,6 +192,6 @@ public final class RepeaterTest {
             } .call(),
             Matchers.equalTo(true)
         );
-        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(Tv.THREE - 1));
+        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(Tv.TWO));
     }
 }

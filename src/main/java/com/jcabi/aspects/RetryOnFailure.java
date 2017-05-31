@@ -58,7 +58,7 @@ import java.util.concurrent.TimeUnit;
 public @interface RetryOnFailure {
 
     /**
-     * How many times to retry.
+     * How many times to retry. -1 for infinite retries
      * @checkstyle MagicNumber (2 lines)
      */
     int attempts() default 3;

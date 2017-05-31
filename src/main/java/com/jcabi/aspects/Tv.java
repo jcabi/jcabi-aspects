@@ -48,6 +48,11 @@ package com.jcabi.aspects;
 public final class Tv {
 
     /**
+     * Two.
+     */
+    public static final int TWO = 2;
+
+    /**
      * Three.
      */
     public static final int THREE = 3;

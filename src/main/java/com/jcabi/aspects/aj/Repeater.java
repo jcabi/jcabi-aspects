@@ -114,8 +114,9 @@ public final class Repeater {
                         Repeater.message(ex)
                     );
                 }
-                if (attempt >= rof.attempts()) {
-                    throw ex;
+
+                if (rof.attempts() != -1 && attempt >= rof.attempts()) {
+                     throw ex;
                 }
                 if (rof.delay() > 0L) {
                     this.delay(rof, attempt);
