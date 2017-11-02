@@ -10,6 +10,7 @@
 [![Coverage Status](https://coveralls.io/repos/jcabi/jcabi-aspects/badge.svg?branch=master&service=github)](https://coveralls.io/github/jcabi/jcabi-aspects?branch=master)
 [![Javadoc](https://javadoc-emblem.rhcloud.com/doc/com.jcabi/jcabi-aspects/badge.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-aspects)
 
+[![jpeek report](http://i.jpeek.org/com.jcabi/jcabi-aspects/badge.svg)](http://i.jpeek.org/com.jcabi/jcabi-aspects/)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects)
 [![Dependencies](https://www.versioneye.com/user/projects/561ac498a193340f3200105a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/561ac498a193340f3200105a)
 
