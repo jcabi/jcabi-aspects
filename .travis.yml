@@ -21,4 +21,4 @@ env:
     - JAVA_OPTS="-Xmx256m"
 jdk:
   - openjdk8
-  - openjdk7
+
