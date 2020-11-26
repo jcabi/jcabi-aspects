@@ -6,3 +6,6 @@ local-repo/
 .settings/
 .classpath
 .project
+.github
+.metadata
+
