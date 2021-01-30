@@ -113,7 +113,7 @@ public final class LoggableTest {
         LoggableTest.Foo.logsDurationInSeconds();
         MatcherAssert.assertThat(
             writer.toString(),
-            RegexContainsMatcher.contains("in \\d.\\d{3}")
+            new RegexContainsMatcher("in \\d.\\d{3}")
         );
     }
 
@@ -130,7 +130,7 @@ public final class LoggableTest {
         new LoggableTest.Foo().last("TEST");
         MatcherAssert.assertThat(
             writer.toString(),
-            RegexContainsMatcher.contains(LoggableTest.RESULT)
+            new RegexContainsMatcher(LoggableTest.RESULT)
         );
     }
 
@@ -353,14 +353,6 @@ public final class LoggableTest {
         @Override
         public void describeTo(final Description description) {
             description.appendText("matches regex=");
-        }
-        /**
-         * Matcher for regex patterns.
-         * @param regex The regex pattern
-         * @return Matcher for containing regex pattern
-         */
-        public static RegexContainsMatcher contains(final String regex) {
-            return new RegexContainsMatcher(regex);
         }
     }
 }
