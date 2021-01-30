@@ -57,39 +57,46 @@ public @interface RetryOnFailure {
 
     /**
      * How many times to retry.
-     * @checkstyle MagicNumber (2 lines)
+     * @checkstyle MagicNumber (4 lines)
+     * @return Number of attempts
      */
     int attempts() default 3;
 
     /**
      * Delay between attempts, in time units.
-     * @checkstyle MagicNumber (2 lines)
+     * @checkstyle MagicNumber (4 lines)
+     * @return Delay
      */
     long delay() default 50;
 
     /**
-     * Time units.
+     * Time unit.
+     * @return Time unit.
      */
     TimeUnit unit() default TimeUnit.MILLISECONDS;
 
     /**
      * When to retry (in case of what exception types).
+     * @return Array of types.
      */
-    Class<? extends Throwable>[] types() default { Throwable.class };
+    Class<? extends Throwable>[] types() default {Throwable.class};
 
     /**
      * Exception types to ignore.
+     * @return Array of types
      */
-    Class<? extends Throwable>[] ignore() default { };
+    Class<? extends Throwable>[] ignore() default {};
 
     /**
      * Shall it be fully verbose (show full exception trace) or just
      * exception message?
+     * @return Verbosity flag
      */
     boolean verbose() default true;
 
     /**
      * Shall the time between retries by randomized.
+     * @return Random retry time flag
      */
     boolean randomize() default true;
 
