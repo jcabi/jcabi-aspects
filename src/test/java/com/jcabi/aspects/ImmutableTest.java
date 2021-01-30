@@ -52,12 +52,6 @@ import org.junit.jupiter.api.Assertions;
 public final class ImmutableTest {
 
     /**
-     * Ctor.
-     */
-    public ImmutableTest() {
-    }
-
-    /**
      * Immutable can catch mutable classes.
      */
     @Test(expected = IllegalStateException.class)
