@@ -39,7 +39,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * For updating cache and cleaning expired cache.
- * @version $Id$
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class UpdateMethodCacher {

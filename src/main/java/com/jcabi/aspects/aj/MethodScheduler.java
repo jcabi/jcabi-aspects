@@ -50,7 +50,6 @@ import org.aspectj.lang.annotation.Before;
 /**
  * Schedules methods.
  *
- * @version $Id$
  * @since 0.7.16
  */
 @Aspect

@@ -35,7 +35,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Mnemos}.
- * @version $Id$
  */
 public final class MnemosTest {
 

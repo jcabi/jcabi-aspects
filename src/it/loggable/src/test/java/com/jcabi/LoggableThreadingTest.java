@@ -40,7 +40,6 @@ import org.junit.Test;
 
 /**
  * Threading test for {@link com.jcabi.Loggable}.
- * @version $Id$
  */
 public final class LoggableThreadingTest {
 

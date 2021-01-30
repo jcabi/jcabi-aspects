@@ -44,7 +44,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Repeat execution in case of exception.
  *
- * @version $Id$
  * @since 0.1.10
  * @see com.jcabi.aspects.RetryOnFailure
  */

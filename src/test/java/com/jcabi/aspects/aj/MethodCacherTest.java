@@ -40,7 +40,6 @@ import org.mockito.Mockito;
 
 /**
  * Tests for {@link MethodCacher}.
- * @version $Id$
  * @since 1.0
  */
 public final class MethodCacherTest {

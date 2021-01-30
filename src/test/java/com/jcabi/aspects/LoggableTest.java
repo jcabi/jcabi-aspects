@@ -47,7 +47,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Loggable} annotation and its implementation.
- * @version $Id$
  */
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidUsingShortType" })
 public final class LoggableTest {

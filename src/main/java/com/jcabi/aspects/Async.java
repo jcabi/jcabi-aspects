@@ -52,7 +52,6 @@ import java.lang.annotation.Target;
  * methods keep a thread busy for a long time, others will wait. Try to
  * make all methods fast, when you annotate them with <code>@Async</code>.
  *
- * @version $Id$
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
  * @since 0.16
  */

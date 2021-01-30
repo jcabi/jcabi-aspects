@@ -37,7 +37,6 @@ import org.junit.Test;
 
 /**
  * Tests for {@link UnitedThrow}.
- * @version $Id$
  */
 public final class UnitedThrowTest {
 

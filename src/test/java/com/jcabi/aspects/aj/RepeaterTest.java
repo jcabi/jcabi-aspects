@@ -40,7 +40,6 @@ import org.junit.Test;
 /**
  * Tests for {@link Repeater}.
  *
- * @version $Id$
  * @since 0.1.10
  */
 public final class RepeaterTest {

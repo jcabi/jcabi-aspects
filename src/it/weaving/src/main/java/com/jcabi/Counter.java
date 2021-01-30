@@ -34,7 +34,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Counter.
- * @version $Id$
  */
 public final class Counter {
 

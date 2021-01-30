@@ -39,7 +39,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Utility class with text functions for making mnemos.
  *
- * @version $Id$
  */
 @Immutable
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidUsingShortType" })

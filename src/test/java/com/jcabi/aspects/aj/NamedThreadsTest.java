@@ -42,7 +42,6 @@ import org.junit.Test;
 /**
  * Tests for {@link NamedThreads}.
  *
- * @version $Id$
  * @since 0.22
  */
 public final class NamedThreadsTest {

@@ -44,7 +44,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Cacheable} annotation and its implementation.
- * @version $Id$
  * @checkstyle ClassDataAbstractionCoupling (500 lines)
  */
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.DoNotUseThreads" })

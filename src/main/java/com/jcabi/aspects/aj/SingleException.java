@@ -41,7 +41,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Throw single exception out of method.
  *
- * @version $Id$
  * @since 0.13
  */
 @Aspect

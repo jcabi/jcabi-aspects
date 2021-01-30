@@ -33,7 +33,6 @@ import com.jcabi.aspects.Quietly;
 
 /**
  * Quietly that should pass compilation checks.
- * @version $Id$
  */
 public final class QuietlyVoid {
 

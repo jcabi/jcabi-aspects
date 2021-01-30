@@ -35,7 +35,6 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Document.
- * @version $Id$
  */
 public final class Document {
 

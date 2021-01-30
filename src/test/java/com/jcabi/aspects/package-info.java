@@ -31,7 +31,6 @@
 /**
  * Annotations for aspects, tests.
  *
- * @version $Id$
  * @since 0.1.10
  */
 package com.jcabi.aspects;

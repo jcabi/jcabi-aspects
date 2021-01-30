@@ -37,7 +37,6 @@ import org.junit.Test;
 /**
  * Test case for {@link Immutable} annotation.
  * {@link RetryOnFailure} annotation works.
- * @version $Id$
  */
 public final class ImmutableAnnotationTest {
 

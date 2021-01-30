@@ -39,7 +39,6 @@ package com.jcabi.aspects;
  * String load(String resource) throws IOException {
  * }</pre>
  *
- * @version $Id$
  * @since 0.22.1
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
  */

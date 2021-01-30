@@ -48,7 +48,6 @@ import javax.tools.Diagnostic;
  * {@link com.jcabi.aspects.Async} have void or
  * {@link java.util.concurrent.Future} return types.
  *
- * @version $Id$
  */
 @SupportedAnnotationTypes("com.jcabi.aspects.Async")
 public final class AsyncReturnTypeProcessor extends AbstractProcessor {

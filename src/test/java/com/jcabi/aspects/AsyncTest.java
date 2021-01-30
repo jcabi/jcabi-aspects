@@ -40,7 +40,6 @@ import org.junit.Test;
 /**
  * Test case for {@link Async} annotation and its implementation.
  *
- * @version $Id$
  */
 public final class AsyncTest {
 

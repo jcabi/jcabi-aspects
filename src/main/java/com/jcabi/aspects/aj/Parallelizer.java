@@ -50,7 +50,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Execute method in multiple threads.
  *
- * @version $Id$
  * @since 0.10
  * @see com.jcabi.aspects.Parallel
  */

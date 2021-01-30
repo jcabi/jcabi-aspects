@@ -39,7 +39,6 @@ import org.aspectj.lang.reflect.SourceLocation;
 /**
  * This class implements the methods from JointPoint interface.
  *
- * @version $Id$
  * @since 1.0
  */
 final class ImprovedJoinPoint implements JoinPoint {

@@ -36,7 +36,6 @@ import org.junit.Test;
 /**
  * Test case for {@link StaticPage}, which is actually testing how
  * {@link Cacheable} annotation works with static methods.
- * @version $Id$
  */
 public final class StaticPageTest {
 

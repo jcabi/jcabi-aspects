@@ -39,7 +39,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Logs all exceptions thrown out of a method and swallow exception.
  *
- * @version $Id$
  * @since 0.1.10
  * @see com.jcabi.aspects.LogExceptions
  * @checkstyle IllegalThrows (500 lines)

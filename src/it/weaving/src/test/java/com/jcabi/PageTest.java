@@ -36,7 +36,6 @@ import org.junit.Test;
 /**
  * Test case for {@link Page}, which is actually testing how
  * {@link Cacheable} annotation works.
- * @version $Id$
  */
 public final class PageTest {
 

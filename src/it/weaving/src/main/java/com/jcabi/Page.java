@@ -36,7 +36,6 @@ import lombok.ToString;
 
 /**
  * Page with content.
- * @version $Id$
  */
 @ToString
 @EqualsAndHashCode(callSuper = false)

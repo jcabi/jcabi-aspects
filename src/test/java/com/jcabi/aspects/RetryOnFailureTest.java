@@ -37,7 +37,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link RetryOnFailure} annotation and its implementation.
- * @version $Id$
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class RetryOnFailureTest {

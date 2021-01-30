@@ -45,7 +45,6 @@ import org.aspectj.lang.annotation.Aspect;
  *
  * <p>The class is thread-safe.
  *
- * @version $Id$
  * @since 0.7.8
  */
 @Aspect

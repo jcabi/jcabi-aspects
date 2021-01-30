@@ -31,6 +31,5 @@
 /**
  * Classes for compile time annotation processing.
  *
- * @version $Id$
  */
 package com.jcabi.aspects.apt;

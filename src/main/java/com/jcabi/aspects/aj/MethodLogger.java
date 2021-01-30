@@ -52,7 +52,6 @@ import org.aspectj.lang.reflect.MethodSignature;
  * is instantiated by AspectJ runtime framework when your code is annotated
  * with {@link Loggable} annotation.
  *
- * @version $Id$
  * @since 0.7.2
  * @checkstyle IllegalThrows (500 lines)
  */

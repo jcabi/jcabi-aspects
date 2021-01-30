@@ -33,7 +33,6 @@ import com.jcabi.aspects.Loggable;
 
 /**
  * Loggable class for threading tests.
- * @version $Id$
  */
 public final class LoggableThreading {
 

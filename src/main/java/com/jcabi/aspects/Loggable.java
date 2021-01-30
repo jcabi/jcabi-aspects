@@ -87,7 +87,6 @@ import java.util.concurrent.TimeUnit;
  * <p>Since version 0.8 you can mark some exceptions as "always to be ignored",
  * using {@link Loggable.Quiet} annotation.
  *
- * @version $Id$
  * @since 0.7.2
  * @see com.jcabi.log.Logger
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>

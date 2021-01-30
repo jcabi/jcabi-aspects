@@ -37,7 +37,6 @@ import org.junit.Test;
 /**
  * Tests for {@link ImmutabilityChecker}.
  *
- * @version $Id$
  */
 public final class ImmutabilityCheckerTest {
     /**

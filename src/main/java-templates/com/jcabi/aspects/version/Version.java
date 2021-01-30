@@ -31,7 +31,6 @@ package com.jcabi.aspects.version;
 
 /**
  * Current version of the project. Generated from a template at build time.
- * @version $Id$
  * @since 0.23
  */
 public enum Version {

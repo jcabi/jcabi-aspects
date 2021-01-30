@@ -30,7 +30,6 @@
 
 /**
  * Project version and buildNumber generated at build time, tests.
- * @version $Id$
  * @since 0.23
  */
 package com.jcabi.aspects.version;

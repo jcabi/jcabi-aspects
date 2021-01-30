@@ -34,7 +34,6 @@ import org.junit.Test;
 /**
  * Test case for {@link Document}, which is actually testing how
  * {@link Loggable} annotation works.
- * @version $Id$
  */
 public final class DocumentTest {
 

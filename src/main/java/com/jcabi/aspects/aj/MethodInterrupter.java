@@ -52,7 +52,6 @@ import org.aspectj.lang.reflect.MethodSignature;
  *
  * <p>The class is thread-safe.
  *
- * @version $Id$
  * @since 0.7.16
  */
 @Aspect

@@ -74,7 +74,6 @@ import java.util.concurrent.TimeUnit;
  * without stopping it first, will result in an {@link IllegalStateException}
  * being thrown.
  *
- * @version $Id$
  * @since 0.7.16
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
  */

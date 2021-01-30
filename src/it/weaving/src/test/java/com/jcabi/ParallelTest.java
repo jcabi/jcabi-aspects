@@ -38,7 +38,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Parallel} annotation.
- * @version $Id$
  */
 public final class ParallelTest {
 

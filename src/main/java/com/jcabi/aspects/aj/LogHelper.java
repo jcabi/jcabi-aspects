@@ -34,7 +34,6 @@ import com.jcabi.log.Logger;
 
 /**
  * Helper methods for logging.
- * @version $Id$
  */
 final class LogHelper {
 

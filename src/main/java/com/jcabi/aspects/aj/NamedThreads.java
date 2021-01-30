@@ -40,7 +40,6 @@ import java.util.concurrent.ThreadFactory;
  * <p>This custom class is used instead of a default ThreadFactory in order
  * to name scheduled threads correctly on construction.
  *
- * @version $Id$
  * @since 0.7.17
  */
 @SuppressWarnings("PMD.DoNotUseThreads")

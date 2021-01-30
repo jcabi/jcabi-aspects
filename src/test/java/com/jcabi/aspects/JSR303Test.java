@@ -45,7 +45,6 @@ import org.junit.jupiter.api.Assertions;
 /**
  * Test case for {@link JSR-303} annotations and their implementations.
  *
- * @version $Id$
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class JSR303Test {
@@ -205,7 +204,6 @@ public final class JSR303Test {
     /**
      * Dummy class for testing constructor validation.
      *
-     * @version $Id$
      */
     @Loggable(Loggable.INFO)
     private static final class ConstructorValidation {

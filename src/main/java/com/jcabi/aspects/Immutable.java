@@ -48,7 +48,6 @@ import java.lang.annotation.Target;
  * <p>As soon as you try to instantiate this class a runtime exception
  * will be thrown, because this class is mutable.
  *
- * @version $Id$
  * @since 0.7.8
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
  * @see <a href="http://www.yegor256.com/2014/06/09/objects-should-be-immutable.html">Objects Should Be Immutable, by Yegor Bugayenko</a>

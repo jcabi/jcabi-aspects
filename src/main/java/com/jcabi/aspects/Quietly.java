@@ -41,7 +41,6 @@ import java.lang.annotation.Target;
  * <p>This annotation should be applied only to methods that return void, in
  * other cases the behavior might be unexpected.
  *
- * @version $Id$
  * @since 0.7.22
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
  */

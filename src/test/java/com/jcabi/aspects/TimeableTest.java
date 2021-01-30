@@ -34,7 +34,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Timeable} annotation.
- * @version $Id$
  */
 @SuppressWarnings("PMD.TestClassWithoutTestCases")
 public final class TimeableTest {

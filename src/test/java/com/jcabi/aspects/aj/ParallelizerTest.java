@@ -39,7 +39,6 @@ import org.junit.Test;
 /**
  * Tests for {@link Parallelizer}.
  *
- * @version $Id$
  * @since 0.10
  */
 @SuppressWarnings("PMD.DoNotUseThreads")

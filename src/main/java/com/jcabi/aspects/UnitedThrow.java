@@ -38,7 +38,6 @@ import java.lang.annotation.Target;
 /**
  * Throw only allowed exceptions, encapsulate others.
  *
- * @version $Id$
  * @since 0.13
  */
 @Documented

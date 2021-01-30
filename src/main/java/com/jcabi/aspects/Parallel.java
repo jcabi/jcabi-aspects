@@ -42,7 +42,6 @@ import java.lang.annotation.Target;
  * other cases the behavior might be unexpected (because {@code NULL} will
  * always be returned).
  *
- * @version $Id$
  * @since 0.10
  */
 @Documented

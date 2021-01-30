@@ -34,7 +34,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Page with content.
- * @version $Id$
  */
 public final class StaticPage {
 

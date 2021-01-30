@@ -37,7 +37,6 @@ import org.junit.Test;
 /**
  * Test case for {@link Counter}, which is actually testing how
  * {@link RetryOnFailure} annotation works.
- * @version $Id$
  */
 public final class CounterTest {
 

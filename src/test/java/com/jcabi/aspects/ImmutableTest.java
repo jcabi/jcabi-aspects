@@ -39,7 +39,6 @@ import org.junit.jupiter.api.Assertions;
 /**
  * Test case for {@link Immutable} annotation and its implementation.
  *
- * @version $Id$
  * @checkstyle ConstantUsageCheck (500 lines)
  */
 @SuppressWarnings

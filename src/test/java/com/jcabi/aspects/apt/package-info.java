@@ -31,6 +31,5 @@
 /**
  * Annotation processor tests.
  *
- * @version $Id$
  */
 package com.jcabi.aspects.apt;

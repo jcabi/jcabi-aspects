@@ -35,7 +35,6 @@ import org.junit.Test;
 
 /**
  * Unit tests for {@link Version}.
- * @version $Id$
  * @since 0.23
  */
 public final class VersionTest {

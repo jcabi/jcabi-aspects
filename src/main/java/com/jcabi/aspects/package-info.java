@@ -42,7 +42,6 @@
  * <p>Read how to use {@code jcabi-aspects}
  * <a href="http://aspects.jcabi.com">with Maven</a>.
  *
- * @version $Id$
  * @since 0.1.10
  * @see <a href="http://aspects.jcabi.com">project website</a>
  */
