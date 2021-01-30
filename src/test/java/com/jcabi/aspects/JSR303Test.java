@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
- *
+ * <p>
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met: 1) Redistributions of source code must retain the above
@@ -13,7 +13,7 @@
  * the names of its contributors may be used to endorse or promote
  * products derived from this software without specific prior written
  * permission.
- *
+ * <p>
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
  * NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
@@ -37,12 +37,14 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import org.junit.Rule;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Test case for {@link JSR-303} annotations and their implementations.
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
@@ -54,13 +56,8 @@ public final class JSR303Test {
     private static final String OVERRIDEN_MSG = "this is a message";
 
     /**
-     * Expected exception rule.
-     */
-    @Rule
-    public final transient ExpectedException thrown = ExpectedException.none();
-
-    /**
      * NotNull can throw when invalid method parameters.
+     *
      * @throws Exception If something goes wrong
      */
     @Test(expected = ConstraintViolationException.class)
@@ -70,6 +67,7 @@ public final class JSR303Test {
 
     /**
      * NotNull can throw when regex doesn't match.
+     *
      * @throws Exception If something goes wrong
      */
     @Test(expected = ConstraintViolationException.class)
@@ -79,6 +77,7 @@ public final class JSR303Test {
 
     /**
      * NotNull can pass for valid parameters.
+     *
      * @throws Exception If something goes wrong
      */
     @Test
@@ -88,6 +87,7 @@ public final class JSR303Test {
 
     /**
      * NotNull can validate method output.
+     *
      * @throws Exception If something goes wrong
      */
     @Test(expected = ConstraintViolationException.class)
@@ -97,6 +97,7 @@ public final class JSR303Test {
 
     /**
      * NotNull can ignore methods that return VOID.
+     *
      * @throws Exception If something goes wrong
      */
     @Test
@@ -125,9 +126,15 @@ public final class JSR303Test {
      */
     @Test
     public void overridesMessage() {
-        this.thrown.expect(ConstraintViolationException.class);
-        this.thrown.expectMessage(JSR303Test.OVERRIDEN_MSG);
-        new JSR303Test.Bar().test(null);
+        MatcherAssert.assertThat(
+            Assertions.assertThrows(
+                ConstraintViolationException.class,
+                () -> new JSR303Test.Bar().test(null)
+            ),
+            Matchers.hasProperty("message",
+                Matchers.containsString(JSR303Test.OVERRIDEN_MSG)
+            )
+        );
     }
 
     /**
@@ -147,23 +154,39 @@ public final class JSR303Test {
     }
 
     /**
+     * Dummy interface for testing messages overriding.
+     */
+    private interface Fum {
+        /**
+         * Test method.
+         *
+         * @param value Value
+         */
+        void test(@NotNull(message = JSR303Test.OVERRIDEN_MSG) String value);
+    }
+
+    /**
      * Dummy class, for tests above.
      */
     @Loggable(Loggable.INFO)
     private static final class Foo {
         /**
          * Do nothing.
+         *
          * @param text Some text
          * @return Some data
          */
         @NotNull
         public int foo(
             @NotNull @Pattern(regexp = "\\d+")
-            @JSR303Test.NoMeaning final String text) {
+            @JSR303Test.NoMeaning final String text
+        ) {
             return -1;
         }
+
         /**
          * Always return null.
+         *
          * @return Some data
          */
         @NotNull
@@ -171,6 +194,7 @@ public final class JSR303Test {
         public Integer nullValue() {
             return null;
         }
+
         /**
          * Ignores when void.
          */
@@ -189,33 +213,27 @@ public final class JSR303Test {
     private static final class ConstructorValidation {
         /**
          * Public ctor.
+         *
          * @param first First param
          * @param second Second param
          * @checkstyle UnusedFormalParameter (3 lines)
          */
         @SuppressWarnings("PMD.UnusedFormalParameter")
-        public ConstructorValidation(@NotNull final String first,
-            @NotNull final String second) {
+        public ConstructorValidation(
+            @NotNull final String first,
+            @NotNull final String second
+        ) {
             //Nothing to do.
         }
+
         /**
          * Public ctor.
+         *
          * @param param The param.
          */
         public ConstructorValidation(@NotNull final String param) {
             this(param, "foo");
         }
-    }
-
-    /**
-     * Dummy interface for testing messages overriding.
-     */
-    private interface Fum {
-        /**
-         * Test method.
-         * @param value Value
-         */
-        void test(@NotNull(message = JSR303Test.OVERRIDEN_MSG) String value);
     }
 
     /**

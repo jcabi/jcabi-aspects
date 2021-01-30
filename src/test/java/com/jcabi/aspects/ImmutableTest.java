@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
- *
+ * <p>
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met: 1) Redistributions of source code must retain the above
@@ -13,7 +13,7 @@
  * the names of its contributors may be used to endorse or promote
  * products derived from this software without specific prior written
  * permission.
- *
+ * <p>
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
  * NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
@@ -31,9 +31,10 @@ package com.jcabi.aspects;
 
 import com.jcabi.aspects.version.Version;
 import java.util.regex.Pattern;
-import org.junit.Rule;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Test case for {@link Immutable} annotation and its implementation.
@@ -53,17 +54,9 @@ import org.junit.rules.ExpectedException;
 public final class ImmutableTest {
 
     /**
-     * Exception rule.
-     */
-    @Rule
-    // @checkstyle VisibilityModifierCheck (1 line)
-    public final transient ExpectedException thrown;
-
-    /**
      * Ctor.
      */
     public ImmutableTest() {
-        this.thrown = ExpectedException.none();
     }
 
     /**
@@ -113,10 +106,32 @@ public final class ImmutableTest {
      */
     @Test
     public void informsVersionOnError() {
-        this.thrown.expect(IllegalStateException.class);
-        this.thrown.expectMessage(Version.CURRENT.projectVersion());
-        this.thrown.expectMessage(Version.CURRENT.buildNumber());
-        new Mutable();
+        MatcherAssert.assertThat(
+            Assertions.assertThrows(
+                IllegalStateException.class,
+                Mutable::new
+            ),
+            Matchers.hasProperty(
+                "message",
+                Matchers.allOf(
+                    Matchers.containsString(Version.CURRENT.projectVersion()),
+                    Matchers.containsString(Version.CURRENT.buildNumber())
+                )
+            )
+        );
+    }
+
+    /**
+     * Other vague interface.
+     */
+    @Immutable
+    private interface ImmutableInterface {
+        /**
+         * This function seems to be harmless.
+         *
+         * @param input An input
+         */
+        void willBreakImmutability(int input);
     }
 
     /**
@@ -143,18 +158,6 @@ public final class ImmutableTest {
     }
 
     /**
-     * Other vague interface.
-     */
-    @Immutable
-    private interface ImmutableInterface {
-        /**
-         * This function seems to be harmless.
-         * @param input An input
-         */
-        void willBreakImmutability(int input);
-    }
-
-    /**
      * Truely immutable class.
      */
     @Immutable
@@ -163,52 +166,63 @@ public final class ImmutableTest {
          * Something static final.
          */
         private static final Pattern PATTERN = Pattern.compile(".?");
+
         /**
          * Something just static.
          */
         private static Pattern ptrn = Pattern.compile("\\d+");
+
         /**
          * Immutable class member.
          */
         private final transient String data;
+
         /**
          * Another immutable class member.
          */
         private final transient int number;
+
         /**
          * Another immutable class member.
          */
         private final transient String text;
+
         /**
          * An immutable array member.
          */
         @Immutable.Array
         private final transient String[] texts;
+
         /**
          * Immutable iface.
          */
         private final transient ImmutableInterface iface;
+
         /**
          * Ctor.
          */
         public TruelyImmutable() {
             this("Hello, world!");
         }
+
         /**
          * Ctor.
+         *
          * @param ipt Input
          */
         public TruelyImmutable(final TruelyImmutableWithNonPrivateFields ipt) {
             this(ipt.text);
         }
+
         /**
          * Ctor.
+         *
          * @param ipt Input
          */
         @SuppressWarnings("PMD.NullAssignment")
         public TruelyImmutable(final String ipt) {
             this.text = ipt;
-            this.texts = new String[] {"foo"};
+            this.texts = new String[]{"foo"};
             this.iface = null;
             this.data = null;
             this.number = 2;
@@ -226,18 +240,22 @@ public final class ImmutableTest {
          * Something static final.
          */
         public static final Pattern PATTERN = Pattern.compile(".*");
+
         /**
          * Something just static.
          */
         public static final Pattern PTRN = Pattern.compile(".+");
+
         /**
          * Immutable class member.
          */
         public final String data = null;
+
         /**
          * Another immutable class member.
          */
         public final int number = 2;
+
         /**
          * Another immutable class member.
          */
@@ -260,6 +278,7 @@ public final class ImmutableTest {
          * Immutable class member.
          */
         private final transient String data = null;
+
         /**
          * Could be overloaded by a child of the class and then return
          * nonsensical value.
