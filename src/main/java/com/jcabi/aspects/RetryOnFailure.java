@@ -47,7 +47,6 @@ import java.util.concurrent.TimeUnit;
  *   return url.getContent().toString();
  * }</pre>
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1.10
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>

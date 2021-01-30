@@ -37,7 +37,6 @@ import org.junit.Test;
 
 /**
  * Tests for {@link UnitedThrow}.
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  */
 public final class UnitedThrowTest {

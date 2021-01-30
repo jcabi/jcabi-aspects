@@ -31,7 +31,6 @@
 /**
  * Contains a class generated from a template that is used to access project
  * version and build number.
- * @author Georgy Vlasov (wlasowegor@gmail.com)
  * @version $Id$
  * @since 0.23
  */

@@ -40,7 +40,6 @@ import org.junit.Test;
 /**
  * Tests for {@link Repeater}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @since 0.1.10
  */

@@ -34,7 +34,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Counter.
- * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
 public final class Counter {

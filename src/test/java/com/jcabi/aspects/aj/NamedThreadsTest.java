@@ -42,7 +42,6 @@ import org.junit.Test;
 /**
  * Tests for {@link NamedThreads}.
  *
- * @author Haris Peco (snpe60@gmail.com)
  * @version $Id$
  * @since 0.22
  */

@@ -45,7 +45,6 @@ import org.junit.jupiter.api.Assertions;
 /**
  * Test case for {@link JSR-303} annotations and their implementations.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
 @SuppressWarnings("PMD.TooManyMethods")
@@ -206,7 +205,6 @@ public final class JSR303Test {
     /**
      * Dummy class for testing constructor validation.
      *
-     * @author Carlos Miranda (miranda.cma@gmail.com)
      * @version $Id$
      */
     @Loggable(Loggable.INFO)

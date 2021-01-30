@@ -31,7 +31,6 @@ package com.jcabi.aspects.version;
 
 /**
  * Current version of the project. Generated from a template at build time.
- * @author Georgy Vlasov (wlasowegor@gmail.com)
  * @version $Id$
  * @since 0.23
  */

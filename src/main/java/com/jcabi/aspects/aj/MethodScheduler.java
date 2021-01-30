@@ -50,7 +50,6 @@ import org.aspectj.lang.annotation.Before;
 /**
  * Schedules methods.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.7.16
  */

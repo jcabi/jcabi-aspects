@@ -42,7 +42,6 @@
  * <p>Read how to use {@code jcabi-aspects}
  * <a href="http://aspects.jcabi.com">with Maven</a>.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1.10
  * @see <a href="http://aspects.jcabi.com">project website</a>

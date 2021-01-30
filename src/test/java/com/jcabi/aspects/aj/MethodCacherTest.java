@@ -40,7 +40,6 @@ import org.mockito.Mockito;
 
 /**
  * Tests for {@link MethodCacher}.
- * @author Nesterov Nikolay (nikolaynesterov@gmail.com)
  * @version $Id$
  * @since 1.0
  */

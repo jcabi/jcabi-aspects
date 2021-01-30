@@ -39,7 +39,6 @@ import org.junit.Test;
 /**
  * Tests for {@link Parallelizer}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @since 0.10
  */

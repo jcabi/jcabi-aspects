@@ -37,7 +37,6 @@ import org.mockito.Mockito;
 /**
  * Tests for {@see QuietExceptionsLogger}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @since 0.1.10
  * @checkstyle IllegalThrows (500 lines)

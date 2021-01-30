@@ -39,7 +39,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Logs all exceptions thrown out of a method and swallow exception.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @since 0.1.10
  * @see com.jcabi.aspects.LogExceptions

@@ -39,7 +39,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * For updating cache and cleaning expired cache.
- * @author Peng Chuanjiang (pengchuanjiang@souyidai.com)
  * @version $Id$
  */
 @SuppressWarnings("PMD.DoNotUseThreads")

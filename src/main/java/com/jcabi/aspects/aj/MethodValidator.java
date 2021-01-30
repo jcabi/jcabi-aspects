@@ -55,7 +55,6 @@ import org.aspectj.lang.reflect.MethodSignature;
  *
  * <p>The class is thread-safe.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1.10
  * @see <a href="http://beanvalidation.org/1.0/spec/#appendix-methodlevelvalidation">Appendix C</a>

@@ -36,7 +36,6 @@ import lombok.ToString;
 
 /**
  * Page with content.
- * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
 @ToString

@@ -30,7 +30,6 @@
 
 /**
  * Project version and buildNumber generated at build time, tests.
- * @author Georgy Vlasov (wlasowegor@gmail.com)
  * @version $Id$
  * @since 0.23
  */

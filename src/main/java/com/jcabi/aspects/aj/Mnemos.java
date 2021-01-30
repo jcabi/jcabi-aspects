@@ -39,7 +39,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Utility class with text functions for making mnemos.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
 @Immutable

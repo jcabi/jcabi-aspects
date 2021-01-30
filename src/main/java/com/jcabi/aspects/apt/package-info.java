@@ -31,7 +31,6 @@
 /**
  * Classes for compile time annotation processing.
  *
- * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
  */
 package com.jcabi.aspects.apt;

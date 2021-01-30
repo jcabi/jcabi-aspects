@@ -38,7 +38,6 @@ import org.aspectj.lang.annotation.Aspect;
 /**
  * Logs all exceptions thrown out of a method.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1.10
  * @see com.jcabi.aspects.LogExceptions

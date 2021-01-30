@@ -48,7 +48,6 @@ import javax.tools.Diagnostic;
  * {@link com.jcabi.aspects.Async} have void or
  * {@link java.util.concurrent.Future} return types.
  *
- * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
  */
 @SupportedAnnotationTypes("com.jcabi.aspects.Async")

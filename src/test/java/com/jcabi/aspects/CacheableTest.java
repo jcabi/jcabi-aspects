@@ -44,7 +44,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Cacheable} annotation and its implementation.
- * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @checkstyle ClassDataAbstractionCoupling (500 lines)
  */

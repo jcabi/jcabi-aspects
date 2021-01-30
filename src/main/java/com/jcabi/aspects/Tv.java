@@ -39,8 +39,6 @@ package com.jcabi.aspects;
  * String load(String resource) throws IOException {
  * }</pre>
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @author Simon Njenga (simtuje@gmail.com)
  * @version $Id$
  * @since 0.22.1
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>

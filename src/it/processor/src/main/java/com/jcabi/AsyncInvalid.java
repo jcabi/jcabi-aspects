@@ -33,7 +33,6 @@ import com.jcabi.aspects.Async;
 
 /**
  * Async that should fail to compile.
- * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
  */
 public final class AsyncInvalid {

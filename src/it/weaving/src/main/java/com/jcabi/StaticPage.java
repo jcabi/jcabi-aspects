@@ -34,7 +34,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Page with content.
- * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
 public final class StaticPage {

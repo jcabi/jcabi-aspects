@@ -45,7 +45,6 @@ import org.aspectj.lang.reflect.MethodSignature;
  * is instantiated by AspectJ runtime framework when your code is annotated
  * with {@link com.jcabi.aspects.Async} annotation.
  *
- * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
  * @since 0.16
  */

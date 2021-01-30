@@ -38,7 +38,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Parallel} annotation.
- * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
 public final class ParallelTest {

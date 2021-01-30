@@ -41,7 +41,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Throw single exception out of method.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @since 0.13
  */

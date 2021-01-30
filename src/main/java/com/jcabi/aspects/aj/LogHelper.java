@@ -34,7 +34,6 @@ import com.jcabi.log.Logger;
 
 /**
  * Helper methods for logging.
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  */
 final class LogHelper {

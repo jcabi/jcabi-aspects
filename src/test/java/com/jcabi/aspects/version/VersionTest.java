@@ -35,7 +35,6 @@ import org.junit.Test;
 
 /**
  * Unit tests for {@link Version}.
- * @author Georgy Vlasov (wlasowegor@gmail.com)
  * @version $Id$
  * @since 0.23
  */
