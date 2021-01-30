@@ -166,6 +166,7 @@ public final class Repeater {
      * @param types The exceptions to match
      * @return TRUE if matches
      */
+    @SafeVarargs
     private static boolean matches(
         final Class<? extends Throwable> thrown,
         final Class<? extends Throwable>... types
