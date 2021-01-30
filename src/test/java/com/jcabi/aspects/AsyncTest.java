@@ -33,6 +33,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -42,6 +43,14 @@ import org.junit.Test;
  *
  */
 public final class AsyncTest {
+
+    /**
+     * Thread name matcher.
+     */
+    private static final Matcher<String> THREAD_NAME = Matchers.allOf(
+        Matchers.not(Thread.currentThread().getName()),
+        Matchers.startsWith("jcabi-async")
+    );
 
     /**
      * Async annotation can execute asynchronously in a different thread.
@@ -62,10 +71,7 @@ public final class AsyncTest {
         // @checkstyle MultipleStringLiterals (5 lines)
         MatcherAssert.assertThat(
             queue.poll(Tv.THIRTY, TimeUnit.SECONDS),
-            Matchers.allOf(
-                Matchers.not(Thread.currentThread().getName()),
-                Matchers.startsWith("jcabi-async")
-            )
+            AsyncTest.THREAD_NAME
         );
     }
 
@@ -78,10 +84,7 @@ public final class AsyncTest {
         MatcherAssert.assertThat(
             new Foo().asyncMethodWithReturnValue()
                 .get(Tv.FIVE, TimeUnit.MINUTES),
-            Matchers.allOf(
-                Matchers.not(Thread.currentThread().getName()),
-                Matchers.startsWith("jcabi-async")
-            )
+            AsyncTest.THREAD_NAME
         );
     }
 
