@@ -44,13 +44,16 @@ import javax.tools.Diagnostic;
  * Annotation processor that checks whether methods annotated with
  * {@link com.jcabi.aspects.Quietly} have void return types.
  *
+ * @since 6/18/14
  */
 @SupportedAnnotationTypes("com.jcabi.aspects.Quietly")
 public final class QuietlyReturnTypeProcessor extends AbstractProcessor {
 
     @Override
-    public boolean process(final Set<? extends TypeElement> annotations,
-        final RoundEnvironment env) {
+    public boolean process(
+        final Set<? extends TypeElement> annotations,
+        final RoundEnvironment env
+    ) {
         for (final TypeElement type : annotations) {
             this.checkMethods(env, type);
         }
@@ -62,9 +65,11 @@ public final class QuietlyReturnTypeProcessor extends AbstractProcessor {
      * @param env The environment.
      * @param type The annotation type.
      */
-    private void checkMethods(final RoundEnvironment env,
-        final TypeElement type) {
-        for (final Element element: env.getElementsAnnotatedWith(type)) {
+    private void checkMethods(
+        final RoundEnvironment env,
+        final TypeElement type
+    ) {
+        for (final Element element : env.getElementsAnnotatedWith(type)) {
             if (element.getKind() == ElementKind.METHOD) {
                 final ExecutableElement method = (ExecutableElement) element;
                 if (!method.getReturnType().getKind().equals(TypeKind.VOID)) {
