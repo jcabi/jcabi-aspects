@@ -51,6 +51,8 @@ public @interface Parallel {
 
     /**
      * Number of threads to use for parallel execution.
+     *
+     * @return The number of threads
      */
     int threads() default 1;
 

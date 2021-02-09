@@ -85,6 +85,7 @@ public @interface Cacheable {
 
     /**
      * Lifetime of an object in cache, in time units.
+     * @return The time amount
      */
     int lifetime() default 1;
 
@@ -93,17 +94,20 @@ public @interface Cacheable {
      *
      * <p>The minimum unit you can use is a second. We simply can't cache for
      * less than a second, because cache is being cleaned every second.
+     * @return The time unit
      */
     TimeUnit unit() default TimeUnit.MINUTES;
 
     /**
      * Keep in cache forever.
+     * @return The flag
      */
     boolean forever() default false;
 
     /**
      * Returns the current store after the expiration, and
      * then asynchronously update the data.
+     * @return The flag
      */
     boolean asyncUpdate() default false;
 
@@ -126,6 +130,7 @@ public @interface Cacheable {
      * }</pre>
      *
      * @since 0.21
+     * @return The array of types
      */
     Class<?>[] before() default { };
 
@@ -148,6 +153,7 @@ public @interface Cacheable {
      * }</pre>
      *
      * @since 0.21
+     * @return The array of types
      */
     Class<?>[] after() default { };
 

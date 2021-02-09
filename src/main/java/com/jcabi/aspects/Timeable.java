@@ -78,16 +78,23 @@ import java.util.concurrent.TimeUnit;
 public @interface Timeable {
 
     /**
+     * The default maximum amount (of seconds).
+     */
+    int DEFAULT_LIMIT = 15;
+
+    /**
      * Maximum amount allowed for this method.
      * @checkstyle MagicNumber (2 lines)
+     * @return The limit
      */
-    int limit() default 15;
+    int limit() default DEFAULT_LIMIT;
 
     /**
      * Time unit for the limit.
      *
      * <p>The minimum unit you can use is a second. We simply can't monitor with
      * a frequency higher than a second.
+     * @return The time unit
      */
     TimeUnit unit() default TimeUnit.SECONDS;
 
