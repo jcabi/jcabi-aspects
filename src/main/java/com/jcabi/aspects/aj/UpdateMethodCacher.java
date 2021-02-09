@@ -39,6 +39,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * For updating cache and cleaning expired cache.
+ *
+ * @since 1.0
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class UpdateMethodCacher {
@@ -148,9 +150,9 @@ public final class UpdateMethodCacher {
                 final MethodCacher.Key key = this.updatekeys.take();
                 final MethodCacher.Tunnel tunnel = this.tunnels.get(key);
                 if (tunnel != null && tunnel.expired()) {
-                    final MethodCacher.Tunnel newTunnel = tunnel.copy();
-                    newTunnel.through();
-                    this.tunnels.put(key, newTunnel);
+                    final MethodCacher.Tunnel newtun = tunnel.copy();
+                    newtun.through();
+                    this.tunnels.put(key, newtun);
                 }
             } catch (final InterruptedException ex) {
                 LogHelper.log(
