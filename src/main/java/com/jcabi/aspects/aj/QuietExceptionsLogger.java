@@ -41,7 +41,8 @@ import org.aspectj.lang.reflect.MethodSignature;
  *
  * @since 0.1.10
  * @see com.jcabi.aspects.LogExceptions
- * @checkstyle IllegalThrows (500 lines)
+ * @checkstyle IllegalThrows (100 lines)
+ * @checkstyle NonStaticMethodCheck (100 lines)
  */
 @Aspect
 @Immutable
