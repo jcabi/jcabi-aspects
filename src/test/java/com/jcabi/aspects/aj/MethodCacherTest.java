@@ -51,21 +51,21 @@ public final class MethodCacherTest {
     @Test
     public void supportsGarbageCollecting() throws Throwable {
         final ProceedingJoinPoint point = Mockito.mock(
-                ProceedingJoinPoint.class
+            ProceedingJoinPoint.class
         );
         Mockito.when(point.proceed()).thenReturn(new Object());
         final MethodCacher.Key key = Mockito.mock(
-                MethodCacher.Key.class
+            MethodCacher.Key.class
         );
         final MethodCacher.Tunnel tunnel = new MethodCacher.Tunnel(
-                point, key, false
+            point, key, false
         );
-        final MethodSignature methodSignature = Mockito.mock(
-                MethodSignature.class
+        final MethodSignature signature = Mockito.mock(
+            MethodSignature.class
         );
         final Method method = Buzz.class.getMethod("get");
-        Mockito.when(methodSignature.getMethod()).thenReturn(method);
-        Mockito.when(point.getSignature()).thenReturn(methodSignature);
+        Mockito.when(signature.getMethod()).thenReturn(method);
+        Mockito.when(point.getSignature()).thenReturn(signature);
         tunnel.through();
         MatcherAssert.assertThat(tunnel.expired(), Matchers.equalTo(false));
         tunnel.cached().clear();
@@ -74,6 +74,8 @@ public final class MethodCacherTest {
 
     /**
      * Test class for tests above.
+     *
+     * @since 0.0.0
      */
     private static class Buzz {
         /**

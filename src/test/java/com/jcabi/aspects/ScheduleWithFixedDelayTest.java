@@ -40,6 +40,7 @@ import org.junit.Test;
 /**
  * Test case for {@link ScheduleWithFixedDelay} annotation
  * and its implementation.
+ * @since 0.0.0
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class ScheduleWithFixedDelayTest {
@@ -77,13 +78,16 @@ public final class ScheduleWithFixedDelayTest {
 
     /**
      * Sample annotated class.
+     * @since 0.0.0
      */
     @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.MILLISECONDS)
     private static final class Sample implements Runnable, Closeable {
+
         /**
          * Encapsulated counter.
          */
         private final transient AtomicLong counter;
+
         /**
          * Public ctor.
          * @param cnt Counter to encapsulate
@@ -91,10 +95,12 @@ public final class ScheduleWithFixedDelayTest {
         Sample(final AtomicLong cnt) {
             this.counter = cnt;
         }
+
         @Override
         public void run() {
             this.counter.addAndGet(1L);
         }
+
         @Override
         public void close() throws IOException {
             this.counter.set(-1L);
@@ -103,13 +109,16 @@ public final class ScheduleWithFixedDelayTest {
 
     /**
      * Sample class with long delay.
+     * @since 0.0.0
      */
     @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.MINUTES)
     private static final class LongDelaySample implements Runnable, Closeable {
+
         /**
          * Encapsulated counter.
          */
         private final transient AtomicLong counter;
+
         /**
          * Public ctor.
          * @param cnt Counter to encapsulate
@@ -117,10 +126,12 @@ public final class ScheduleWithFixedDelayTest {
         LongDelaySample(final AtomicLong cnt) {
             this.counter = cnt;
         }
+
         @Override
         public void run() {
             this.counter.addAndGet(1L);
         }
+
         @Override
         public void close() {
             // Nothing to do.

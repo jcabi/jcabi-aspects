@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
- * <p>
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met: 1) Redistributions of source code must retain the above
@@ -13,7 +13,7 @@
  * the names of its contributors may be used to endorse or promote
  * products derived from this software without specific prior written
  * permission.
- * <p>
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
  * NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
@@ -43,8 +43,11 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 /**
- * Test case for {@link JSR-303} annotations and their implementations.
+ * Test case for JSR-303 annotations and their implementations.
  *
+ * <a href="https://beanvalidation.org/1.0/spec/"></a>
+ * @since 0.0.0
+ * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class JSR303Test {
@@ -129,7 +132,8 @@ public final class JSR303Test {
                 ConstraintViolationException.class,
                 () -> new JSR303Test.Bar().test(null)
             ),
-            Matchers.hasProperty("message",
+            Matchers.hasProperty(
+                "message",
                 Matchers.containsString(JSR303Test.OVERRIDEN_MSG)
             )
         );
@@ -145,6 +149,7 @@ public final class JSR303Test {
 
     /**
      * Annotation.
+     * @since 0.0.0
      */
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.PARAMETER)
@@ -153,6 +158,7 @@ public final class JSR303Test {
 
     /**
      * Dummy interface for testing messages overriding.
+     * @since 0.0.0
      */
     private interface Fum {
         /**
@@ -165,6 +171,7 @@ public final class JSR303Test {
 
     /**
      * Dummy class, for tests above.
+     * @since 0.0.0
      */
     @Loggable(Loggable.INFO)
     private static final class Foo {
@@ -203,7 +210,7 @@ public final class JSR303Test {
 
     /**
      * Dummy class for testing constructor validation.
-     *
+     * @since 0.0.0
      */
     @Loggable(Loggable.INFO)
     private static final class ConstructorValidation {
@@ -215,7 +222,7 @@ public final class JSR303Test {
          * @checkstyle UnusedFormalParameter (3 lines)
          */
         @SuppressWarnings("PMD.UnusedFormalParameter")
-        public ConstructorValidation(
+        private ConstructorValidation(
             @NotNull final String first,
             @NotNull final String second
         ) {
@@ -227,13 +234,15 @@ public final class JSR303Test {
          *
          * @param param The param.
          */
-        public ConstructorValidation(@NotNull final String param) {
+        private ConstructorValidation(@NotNull final String param) {
             this(param, "foo");
         }
     }
 
     /**
      * Dummy class for testing messages overriding.
+     *
+     * @since 0.0.0
      */
     @Loggable(Loggable.INFO)
     private static class Bar implements JSR303Test.Fum {

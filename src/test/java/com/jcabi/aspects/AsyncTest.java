@@ -40,7 +40,7 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Async} annotation and its implementation.
- *
+ * @since 0.0.0
  */
 public final class AsyncTest {
 
@@ -59,7 +59,7 @@ public final class AsyncTest {
     @Test
     @SuppressWarnings("PMD.DoNotUseThreads")
     public void executesAsynchronously() throws Exception {
-        final BlockingQueue<String> queue = new LinkedBlockingQueue<String>();
+        final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
         final Runnable runnable = new Runnable() {
             @Async
             @Override
@@ -99,8 +99,10 @@ public final class AsyncTest {
 
     /**
      * Dummy class for test purposes.
+     * @since 0.0.0
      */
     private static final class Foo {
+
         /**
          * Async method that returns a Future containing the thread name.
          * @return The future.
@@ -109,28 +111,34 @@ public final class AsyncTest {
         public Future<String> asyncMethodWithReturnValue() {
             // @checkstyle AnonInnerLength (23 lines)
             return new Future<String>() {
+
                 @Override
                 public boolean cancel(final boolean interruptible) {
                     return false;
                 }
+
                 @Override
                 public boolean isCancelled() {
                     return false;
                 }
+
                 @Override
                 public boolean isDone() {
                     return true;
                 }
+
                 @Override
                 public String get() {
                     return Thread.currentThread().getName();
                 }
+
                 @Override
                 public String get(final long timeout, final TimeUnit unit) {
                     return Thread.currentThread().getName();
                 }
             };
         }
+
         /**
          * Async method that does not return void or Future. Should throw
          * exception.

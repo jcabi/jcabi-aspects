@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
- * <p>
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met: 1) Redistributions of source code must retain the above
@@ -13,7 +13,7 @@
  * the names of its contributors may be used to endorse or promote
  * products derived from this software without specific prior written
  * permission.
- * <p>
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
  * NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
@@ -40,6 +40,7 @@ import org.junit.jupiter.api.Assertions;
  * Test case for {@link Immutable} annotation and its implementation.
  *
  * @checkstyle ConstantUsageCheck (500 lines)
+ * @since 0.0.0
  */
 @SuppressWarnings
     (
@@ -115,6 +116,8 @@ public final class ImmutableTest {
 
     /**
      * Other vague interface.
+     *
+     * @since 0.0.0
      */
     @Immutable
     private interface ImmutableInterface {
@@ -128,6 +131,8 @@ public final class ImmutableTest {
 
     /**
      * Supposedly immutable class.
+     *
+     * @since 0.0.0
      */
     @Immutable
     private static final class Mutable {
@@ -140,6 +145,8 @@ public final class ImmutableTest {
 
     /**
      * Mutable class because of array.
+     *
+     * @since 0.0.0
      */
     @Immutable
     private static final class MutableWithArray {
@@ -151,6 +158,8 @@ public final class ImmutableTest {
 
     /**
      * Truely immutable class.
+     *
+     * @since 0.0.0
      */
     @Immutable
     private static final class TruelyImmutable {
@@ -193,7 +202,7 @@ public final class ImmutableTest {
         /**
          * Ctor.
          */
-        public TruelyImmutable() {
+        private TruelyImmutable() {
             this("Hello, world!");
         }
 
@@ -202,7 +211,7 @@ public final class ImmutableTest {
          *
          * @param ipt Input
          */
-        public TruelyImmutable(final TruelyImmutableWithNonPrivateFields ipt) {
+        private TruelyImmutable(final TruelyImmutableWithNonPrivateFields ipt) {
             this(ipt.text);
         }
 
@@ -212,7 +221,7 @@ public final class ImmutableTest {
          * @param ipt Input
          */
         @SuppressWarnings("PMD.NullAssignment")
-        public TruelyImmutable(final String ipt) {
+        private TruelyImmutable(final String ipt) {
             this.text = ipt;
             this.texts = new String[]{"foo"};
             this.iface = null;
@@ -224,6 +233,7 @@ public final class ImmutableTest {
     /**
      * Truely immutable class with non-private fields.
      *
+     * @since 0.0.0
      * @checkstyle VisibilityModifier (25 lines)
      */
     @Immutable
@@ -250,6 +260,7 @@ public final class ImmutableTest {
 
         /**
          * Another immutable class member.
+         * @checkstyle VisibilityModifierCheck (3 lines)
          */
         public final String text = "Hello!";
     }
@@ -263,6 +274,8 @@ public final class ImmutableTest {
      * "http://marxsoftware.blogspot.se/2009/09/
      * is-java-immutable-class-always-final.html">
      * Is java immutable class always final?</a>
+     *
+     * @since 0.0.0
      */
     @Immutable
     private static class MutableByInheritance {
@@ -275,7 +288,8 @@ public final class ImmutableTest {
          * Could be overloaded by a child of the class and then return
          * nonsensical value.
          *
-         * @return A value that could differ from what is expected if returned by an overriding method
+         * @return A value that could differ from what is expected if
+         *  returned by an overriding method
          */
         public String getData() {
             return this.data;

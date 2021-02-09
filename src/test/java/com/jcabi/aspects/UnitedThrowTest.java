@@ -37,6 +37,7 @@ import org.junit.Test;
 
 /**
  * Tests for {@link UnitedThrow}.
+ * @since 0.0.0
  */
 public final class UnitedThrowTest {
 
@@ -95,6 +96,7 @@ public final class UnitedThrowTest {
 
     /**
      * Class for testing UnitedThrow.
+     * @since 0.0.0
      */
     private static final class Thrower {
         /**

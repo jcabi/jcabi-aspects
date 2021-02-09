@@ -37,6 +37,7 @@ import org.junit.Test;
 /**
  * Tests for {@link ImmutabilityChecker}.
  *
+ * @since 0.7.8
  */
 public final class ImmutabilityCheckerTest {
     /**
@@ -59,25 +60,30 @@ public final class ImmutabilityCheckerTest {
 
     /**
      * Class with a field that is not final.
+     *
+     * @since 0.7.8
      */
     @Immutable
     @SuppressWarnings("PMD.ImmutableField")
     private static final class NonFinal {
+
         /**
          * Some private field.
          */
         private transient String field;
+
         /**
          * Constructor.
          * @param fld Field to store.
          */
-        public NonFinal(final String fld) {
+        private NonFinal(final String fld) {
             this.field = fld;
         }
     }
 
     /**
      * Class that references itself.
+     * @since 0.7.8
      */
     @Immutable
     private static final class Recursive {
@@ -85,13 +91,15 @@ public final class ImmutabilityCheckerTest {
          * Next object.
          */
         private final transient Recursive next;
+
         /**
          * Constructor.
          * @param nxt Next object.
          */
-        public Recursive(final Recursive nxt) {
+        private Recursive(final Recursive nxt) {
             this.next = nxt;
         }
+
         /**
          * Get the next object.
          * @return Object stored.

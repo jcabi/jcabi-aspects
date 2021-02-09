@@ -30,6 +30,5 @@
 
 /**
  * Annotation processor tests.
- *
  */
 package com.jcabi.aspects.apt;

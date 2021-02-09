@@ -70,9 +70,11 @@ public final class MethodSchedulerTest {
 
     /**
      * Short running task.
+     * @since 0.7.22
      */
     @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.NANOSECONDS)
     private static class ShortRun implements Runnable, Closeable {
+
         /**
          * Have we finished?
          */
@@ -96,6 +98,7 @@ public final class MethodSchedulerTest {
 
     /**
      * Long running task.
+     * @since 0.7.22
      */
     @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.NANOSECONDS,
         await = Tv.TEN, awaitUnit = TimeUnit.SECONDS)
