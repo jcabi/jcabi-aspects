@@ -46,6 +46,8 @@ import java.lang.annotation.Target;
 public @interface UnitedThrow {
     /**
      * Default empty exception.
+     *
+     * @since 0.13
      */
     class None extends Throwable {
         /**
@@ -53,8 +55,11 @@ public @interface UnitedThrow {
          */
         private static final long serialVersionUID = -2085901092419654865L;
     }
+
     /**
      * Exception that should be allowed.
+     *
+     * @return The type of exception.
      */
     Class<? extends Throwable> value() default None.class;
 }
