@@ -42,6 +42,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  * Throw single exception out of method.
  *
  * @since 0.13
+ * @checkstyle NonStaticMethodCheck (100 lines)
  */
 @Aspect
 @Immutable
@@ -69,14 +70,17 @@ public final class SingleException {
         final Method method =
             MethodSignature.class.cast(point.getSignature()).getMethod();
         final UnitedThrow annot = method.getAnnotation(UnitedThrow.class);
-        final Class<? extends Throwable> clz = this.clazz(method, annot);
+        final Class<? extends Throwable> clz = SingleException.clazz(
+            method,
+            annot
+        );
         try {
             return point.proceed();
             // @checkstyle IllegalCatch (1 line)
         } catch (final Throwable ex) {
             Throwable throwable = ex;
             if (!clz.isAssignableFrom(ex.getClass())) {
-                if (this.exists(clz)) {
+                if (SingleException.exists(clz)) {
                     throwable = clz.getConstructor(Throwable.class)
                         .newInstance(ex);
                 } else {
@@ -92,7 +96,7 @@ public final class SingleException {
      * @param clz Class to check.
      * @return Whether constructor exists.
      */
-    private boolean exists(final Class<? extends Throwable> clz) {
+    private static boolean exists(final Class<? extends Throwable> clz) {
         boolean found = false;
         for (final Constructor<?> ctr : clz.getConstructors()) {
             if ((ctr.getParameterTypes().length == 1)
@@ -111,7 +115,7 @@ public final class SingleException {
      * @return Class of exception.
      */
     @SuppressWarnings("unchecked")
-    private Class<? extends Throwable> clazz(final Method method,
+    private static Class<? extends Throwable> clazz(final Method method,
         final UnitedThrow annot) {
         Class<? extends Throwable> clz = annot.value();
         if (clz == UnitedThrow.None.class) {
