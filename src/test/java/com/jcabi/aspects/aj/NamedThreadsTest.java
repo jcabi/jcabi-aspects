@@ -59,9 +59,11 @@ public final class NamedThreadsTest {
             new WriterAppender(new SimpleLayout(), writer);
         root.addAppender(appender);
         try {
-            // @checkstyle MethodBodyCommentsCheck (2 lines)
+            // @checkstyle MethodBodyCommentsCheck (5 lines)
             new NamedThreads("test", "desc").newThread(
-                () -> {/* do nothing*/}
+                () -> {
+                    // do nothing
+                }
             );
             final String message = writer.toString();
             MatcherAssert.assertThat(

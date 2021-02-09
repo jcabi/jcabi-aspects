@@ -38,7 +38,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Utility class with text functions for making mnemos.
- *
+ * @since 0.0.0
  */
 @Immutable
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidUsingShortType" })
@@ -85,6 +85,7 @@ final class Mnemos {
             trim, skip
         );
     }
+
     /**
      * Make a string out of point.
      * @param point The point
@@ -286,7 +287,7 @@ final class Mnemos {
      * @return Text representation of it
      */
     private static String toText(final Object arg) {
-        String text;
+        final String text;
         if (arg.getClass().isArray()) {
             if (arg instanceof Object[]) {
                 text = Mnemos.objectArrays((Object[]) arg);

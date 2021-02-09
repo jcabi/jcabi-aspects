@@ -90,7 +90,7 @@ public final class MethodScheduler {
                 )
             );
         }
-        Runnable runnable;
+        final Runnable runnable;
         if (object instanceof Runnable) {
             runnable = new VerboseRunnable(Runnable.class.cast(object), true);
         } else if (object instanceof Callable) {
@@ -132,36 +132,45 @@ public final class MethodScheduler {
 
     /**
      * Running service.
+     * @since 0.0.0
      */
     private static final class Service implements Closeable {
+
         /**
          * Running scheduled service.
          */
         private final transient ScheduledExecutorService executor;
+
         /**
          * The object.
          */
         private final transient Object object;
+
         /**
          * Execution counter.
          */
         private final transient AtomicLong counter;
+
         /**
          * When started.
          */
         private final transient long start;
+
         /**
          * How long to wait for the task to finish.
          */
         private final transient long await;
+
         /**
          * Shutdown attempts count.
          */
         private final transient long attempts;
+
         /**
          * Should more information be logged?
          */
         private final transient boolean verbose;
+
         /**
          * Public ctor.
          * @param runnable The runnable to schedule
@@ -201,6 +210,7 @@ public final class MethodScheduler {
                 );
             }
         }
+
         @Override
         public void close() throws IOException {
             this.executor.shutdown();

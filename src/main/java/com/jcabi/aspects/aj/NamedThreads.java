@@ -65,7 +65,7 @@ final class NamedThreads implements ThreadFactory {
      * @param suffix Suffix of thread names
      * @param desc Description of purpose
      */
-    public NamedThreads(final String suffix, final String desc) {
+    NamedThreads(final String suffix, final String desc) {
         this.name = String.format("jcabi-%s", suffix);
         this.purpose = desc;
         this.group = new ThreadGroup("jcabi");

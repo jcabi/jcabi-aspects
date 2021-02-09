@@ -34,6 +34,8 @@ import com.jcabi.log.Logger;
 
 /**
  * Helper methods for logging.
+ *
+ * @since 0.17
  */
 final class LogHelper {
 
@@ -75,7 +77,7 @@ final class LogHelper {
      * @return TRUE if enabled
      */
     public static boolean enabled(final int level, final Object log) {
-        boolean enabled;
+        final boolean enabled;
         if (level == Loggable.TRACE) {
             enabled = Logger.isTraceEnabled(log);
         } else if (level == Loggable.DEBUG) {
