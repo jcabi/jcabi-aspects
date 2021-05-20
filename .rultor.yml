@@ -1,6 +1,7 @@
 architect:
 - yegor256
 - dmarkov
+- andreoss
 install: |-
   sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
   sudo gem install pdd -v 0.20.5h
@@ -18,7 +19,7 @@ merge:
   - carlosmiranda
   - darkled
   - dmzaytsev
-  - ggajos
+  - ggajos••••••••
   - hdouss
   - krzyk
   - longtimeago
