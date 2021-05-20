@@ -1,8 +1,9 @@
 architect:
 - yegor256
 - dmarkov
-install:
-- sudo gem install pdd -v 0.20.5
+install: |-
+  sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
+  sudo gem install pdd -v 0.20.5h
 assets:
   secring.gpg: yegor256/home#assets/secring.gpg
   settings.xml: yegor256/home#assets/jcabi/settings.xml
