@@ -28,51 +28,49 @@ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 OF THE POSSIBILITY OF SUCH DAMAGE.
  -->
-<project xmlns="http://maven.apache.org/DECORATION/1.3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd"
-    name="jcabi-aspects">
-    <skin>
-        <groupId>com.jcabi</groupId>
-        <artifactId>jcabi-maven-skin</artifactId>
-        <version>1.5.1</version>
-    </skin>
-    <bannerLeft>
-        <name>jcabi</name>
-        <src>http://img.jcabi.com/logo-square.svg</src>
-        <href>http://www.jcabi.com/</href>
-        <width>64</width>
-        <height>64</height>
-    </bannerLeft>
-    <googleAnalyticsAccountId>UA-1963507-23</googleAnalyticsAccountId>
-    <body>
-        <head>
-            <link href="http://img.jcabi.com/favicon.ico" rel="shortcut icon"/>
-            <link href="https://plus.google.com/u/0/114792568016408327418?rel=author" rel="author"/>
-        </head>
-        <menu name="Overview">
-            <item name="Introduction" href="./index.html"/>
-            <item name="JavaDoc ${project.version}" href="./apidocs-${project.version}/index.html"/>
-            <item name="Test coverage" href="./cobertura/index.html"/>
-            <item name="Release History" href="https://github.com/jcabi/jcabi-aspects/releases"/>
-        </menu>
-        <menu name="Examples">
-            <item name="Weaving binaries" href="./example-weaving.html"/>
-            <item name="JSR-303 validations" href="./jsr-303.html"/>
-            <item name="Weaving with AspectJ" href="./example-aspectj.html"/>
-            <item name="Weaving with Ant and AjcTask" href="./example-weaving-ant.html"/>
-        </menu>
-        <menu name="Annotations">
-            <item name="@Async" href="./annotation-async.html"/>
-            <item name="@Cacheable" href="./annotation-cacheable.html"/>
-            <item name="@Immutable" href="./annotation-immutable.html"/>
-            <item name="@LogExceptions" href="./annotation-logexceptions.html"/>
-            <item name="@Loggable" href="./annotation-loggable.html"/>
-            <item name="@Quietly" href="./annotation-quietly.html"/>
-            <item name="@Parallel" href="./annotation-parallel.html"/>
-            <item name="@RetryOnFailure" href="./annotation-retryonfailure.html"/>
-            <item name="@ScheduleWithFixedDelay" href="./annotation-schedulewithfixeddelay.html"/>
-            <item name="@Timeable" href="./annotation-timeable.html"/>
-            <item name="@UnitedThrow" href="./annotation-unitedthrow.html"/>
-        </menu>
-        <menu ref="reports"/>
-    </body>
+<project xmlns="http://maven.apache.org/DECORATION/1.3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd" name="jcabi-aspects">
+  <skin>
+    <groupId>com.jcabi</groupId>
+    <artifactId>jcabi-maven-skin</artifactId>
+    <version>1.5.1</version>
+  </skin>
+  <bannerLeft>
+    <name>jcabi</name>
+    <src>http://img.jcabi.com/logo-square.svg</src>
+    <href>http://www.jcabi.com/</href>
+    <width>64</width>
+    <height>64</height>
+  </bannerLeft>
+  <googleAnalyticsAccountId>UA-1963507-23</googleAnalyticsAccountId>
+  <body>
+    <head>
+      &lt;link href="http://img.jcabi.com/favicon.ico" rel="shortcut icon"/&gt;
+    </head>
+    <menu name="Overview">
+      <item name="Introduction" href="./index.html"/>
+      <item name="JavaDoc ${project.version}" href="./apidocs-${project.version}/index.html"/>
+      <item name="Test coverage" href="./cobertura/index.html"/>
+      <item name="Release History" href="https://github.com/jcabi/jcabi-aspects/releases"/>
+    </menu>
+    <menu name="Examples">
+      <item name="Weaving binaries" href="./example-weaving.html"/>
+      <item name="JSR-303 validations" href="./jsr-303.html"/>
+      <item name="Weaving with AspectJ" href="./example-aspectj.html"/>
+      <item name="Weaving with Ant and AjcTask" href="./example-weaving-ant.html"/>
+    </menu>
+    <menu name="Annotations">
+      <item name="@Async" href="./annotation-async.html"/>
+      <item name="@Cacheable" href="./annotation-cacheable.html"/>
+      <item name="@Immutable" href="./annotation-immutable.html"/>
+      <item name="@LogExceptions" href="./annotation-logexceptions.html"/>
+      <item name="@Loggable" href="./annotation-loggable.html"/>
+      <item name="@Quietly" href="./annotation-quietly.html"/>
+      <item name="@Parallel" href="./annotation-parallel.html"/>
+      <item name="@RetryOnFailure" href="./annotation-retryonfailure.html"/>
+      <item name="@ScheduleWithFixedDelay" href="./annotation-schedulewithfixeddelay.html"/>
+      <item name="@Timeable" href="./annotation-timeable.html"/>
+      <item name="@UnitedThrow" href="./annotation-unitedthrow.html"/>
+    </menu>
+    <menu ref="reports"/>
+  </body>
 </project>
