@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -40,8 +40,6 @@ import org.junit.Test;
 
 /**
  * Threading test for {@link com.jcabi.Loggable}.
- * @author Carlos Miranda (miranda.cma@gmail.com)
- * @version $Id$
  */
 public final class LoggableThreadingTest {
 

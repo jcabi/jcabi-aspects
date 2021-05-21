@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -48,8 +48,6 @@ import java.lang.annotation.Target;
  *
  * <p>This method will log its exception, if thrown.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.1.10
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
  */

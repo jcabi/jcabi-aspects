@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -87,8 +87,6 @@ import java.util.concurrent.TimeUnit;
  * <p>Since version 0.8 you can mark some exceptions as "always to be ignored",
  * using {@link Loggable.Quiet} annotation.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.7.2
  * @see com.jcabi.log.Logger
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
@@ -129,6 +127,8 @@ public @interface Loggable {
 
     /**
      * Level of logging.
+     *
+     * @return The log level
      */
     int value() default Loggable.INFO;
 
@@ -136,18 +136,21 @@ public @interface Loggable {
      * Maximum amount allowed for this method (a warning will be
      * issued if it takes longer).
      * @since 0.7.6
+     * @return The limit
      */
     int limit() default 1;
 
     /**
      * Time unit for the limit.
      * @since 0.7.14
+     * @return The time unit
      */
     TimeUnit unit() default TimeUnit.MINUTES;
 
     /**
      * Shall we trim long texts in order to make log lines more readable?
      * @since 0.7.13
+     * @return The flag
      */
     boolean trim() default true;
 
@@ -155,6 +158,7 @@ public @interface Loggable {
      * Method entry moment should be reported as well (by default only
      * an exit moment is reported).
      * @since 0.7.16
+     * @return The flag
      */
     boolean prepend() default false;
 
@@ -165,24 +169,28 @@ public @interface Loggable {
      * using {@link Loggable.Quiet} annotation.
      *
      * @since 0.7.17
+     * @return Array of types
      */
     Class<? extends Throwable>[] ignore() default { };
 
     /**
      * Skip logging of result, replacing it with dots?
      * @since 0.7.19
+     * @return The flag
      */
     boolean skipResult() default false;
 
     /**
      * Skip logging of arguments, replacing them all with dots?
      * @since 0.7.19
+     * @return The flag
      */
     boolean skipArgs() default false;
 
     /**
      * Add toString() result to log line.
      * @since 0.8.1
+     * @return The flag
      */
     boolean logThis() default false;
 
@@ -190,6 +198,7 @@ public @interface Loggable {
      * The precision (number of fractional digits) to be used when displaying
      * the measured execution time.
      * @since 0.18
+     * @return The precision
      */
     int precision() default 2;
 
@@ -197,6 +206,7 @@ public @interface Loggable {
      * The name of the logger to be used. If not specified, defaults to the
      * class name of the annotated class or method.
      * @since 0.18
+     * @return The logger's name
      */
     String name() default "";
 

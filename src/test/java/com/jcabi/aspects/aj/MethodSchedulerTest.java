@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -41,8 +41,6 @@ import org.junit.Test;
 /**
  * Tests for {@link MethodScheduler}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @version $Id$
  * @since 0.7.22
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
@@ -72,9 +70,11 @@ public final class MethodSchedulerTest {
 
     /**
      * Short running task.
+     * @since 0.7.22
      */
     @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.NANOSECONDS)
     private static class ShortRun implements Runnable, Closeable {
+
         /**
          * Have we finished?
          */
@@ -98,6 +98,7 @@ public final class MethodSchedulerTest {
 
     /**
      * Long running task.
+     * @since 0.7.22
      */
     @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.NANOSECONDS,
         await = Tv.TEN, awaitUnit = TimeUnit.SECONDS)

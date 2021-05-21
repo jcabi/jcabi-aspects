@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -35,8 +35,6 @@ import com.jcabi.aspects.Async;
 
 /**
  * Async that should compile.
- * @author Carlos Miranda (miranda.cma@gmail.com)
- * @version $Id$
  */
 public final class AsyncValid {
 

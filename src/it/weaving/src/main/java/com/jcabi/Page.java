@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -36,8 +36,6 @@ import lombok.ToString;
 
 /**
  * Page with content.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  */
 @ToString
 @EqualsAndHashCode(callSuper = false)

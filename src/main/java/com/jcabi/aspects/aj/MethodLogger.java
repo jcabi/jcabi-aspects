@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -52,8 +52,6 @@ import org.aspectj.lang.reflect.MethodSignature;
  * is instantiated by AspectJ runtime framework when your code is annotated
  * with {@link Loggable} annotation.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.7.2
  * @checkstyle IllegalThrows (500 lines)
  */
@@ -133,7 +131,7 @@ public final class MethodLogger {
     public Object wrapClass(final ProceedingJoinPoint point) throws Throwable {
         final Method method =
             MethodSignature.class.cast(point.getSignature()).getMethod();
-        Object output;
+        final Object output;
         if (method.isAnnotationPresent(Loggable.class)) {
             output = point.proceed();
         } else {
@@ -195,7 +193,7 @@ public final class MethodLogger {
         this.running.add(marker);
         int level = annotation.value();
         try {
-            final Object logger = this.logger(method, annotation.name());
+            final Object logger = MethodLogger.logger(method, annotation.name());
             if (annotation.prepend()) {
                 LogHelper.log(
                     level,
@@ -213,13 +211,13 @@ public final class MethodLogger {
             final Object result = point.proceed();
             final long nano = System.nanoTime() - start;
             if (LogHelper.enabled(level, logger)
-                || this.over(annotation, nano)) {
-                if (this.over(annotation, nano)) {
+                || MethodLogger.over(annotation, nano)) {
+                if (MethodLogger.over(annotation, nano)) {
                     level = Loggable.WARN;
                 }
                 LogHelper.log(
                     level, logger,
-                    this.message(point, method, annotation, result, nano)
+                    MethodLogger.message(point, method, annotation, result, nano)
                 );
             }
             return result;
@@ -264,7 +262,7 @@ public final class MethodLogger {
      * @param nano Execution time.
      * @return Is over time limit.
      */
-    private boolean over(final Loggable annotation, final long nano) {
+    private static boolean over(final Loggable annotation, final long nano) {
         return nano > annotation.unit().toNanos(annotation.limit());
     }
 
@@ -278,7 +276,7 @@ public final class MethodLogger {
      * @return Log message.
      * @checkstyle ParameterNumberCheck (3 lines)
      */
-    private String message(final ProceedingJoinPoint point, final Method method,
+    private static String message(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation, final Object result, final long nano) {
         final StringBuilder msg = new StringBuilder();
         msg.append(
@@ -306,7 +304,7 @@ public final class MethodLogger {
                 nano
             )
         );
-        if (this.over(annotation, nano)) {
+        if (MethodLogger.over(annotation, nano)) {
             msg.append(" (too slow!)");
         }
         return msg.toString();
@@ -318,7 +316,7 @@ public final class MethodLogger {
      * @param name The Loggable annotation
      * @return The logger that will be used
      */
-    private Object logger(final Method method, final String name) {
+    private static Object logger(final Method method, final String name) {
         final Object source;
         if (name.isEmpty()) {
             source = method.getDeclaringClass();
@@ -400,30 +398,37 @@ public final class MethodLogger {
 
     /**
      * Marker of a running method.
+     * @since 0.0.0
      */
     private static final class Marker
         implements Comparable<MethodLogger.Marker> {
+
         /**
          * When the method was started, in milliseconds.
          */
         private final transient long started;
+
         /**
          * Which monitoring cycle was logged recently.
          */
         private final transient AtomicInteger logged;
+
         /**
          * The thread it's running in.
          */
         @SuppressWarnings("PMD.DoNotUseThreads")
         private final transient Thread thread;
+
         /**
          * Joint point.
          */
         private final transient ProceedingJoinPoint point;
+
         /**
          * Annotation.
          */
         private final transient Loggable annotation;
+
         /**
          * Public ctor.
          * @param pnt Joint point
@@ -436,6 +441,7 @@ public final class MethodLogger {
             this.annotation = annt;
             this.thread = Thread.currentThread();
         }
+
         /**
          * Monitor it's status and log the problem, if any.
          */
@@ -470,15 +476,18 @@ public final class MethodLogger {
                 this.logged.set(cycle);
             }
         }
+
         @Override
         public int hashCode() {
             return this.point.hashCode();
         }
+
         @Override
         public boolean equals(final Object obj) {
             return obj == this || MethodLogger.Marker.class.cast(obj)
                 .point.equals(this.point);
         }
+
         @Override
         public int compareTo(final Marker marker) {
             int cmp = 0;

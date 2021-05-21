@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -50,10 +50,9 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Execute method in multiple threads.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @version $Id$
  * @since 0.10
  * @see com.jcabi.aspects.Parallel
+ * @checkstyle NonStaticMethodCheck (100 lines)
  */
 @Aspect
 @Immutable
@@ -78,26 +77,26 @@ public final class Parallelizer {
         final int total = ((MethodSignature) point.getSignature())
             .getMethod().getAnnotation(Parallel.class).threads();
         final Collection<Callable<Throwable>> callables =
-            new ArrayList<Callable<Throwable>>(total);
+            new ArrayList<>(total);
         final CountDownLatch start = new CountDownLatch(1);
         for (int thread = 0; thread < total; ++thread) {
-            callables.add(this.callable(point, start));
+            callables.add(Parallelizer.callable(point, start));
         }
         final ExecutorService executor = Executors
             .newFixedThreadPool(total, new VerboseThreads());
         final List<Future<Throwable>> futures =
-            new ArrayList<Future<Throwable>>(total);
+            new ArrayList<>(total);
         for (final Callable<Throwable> callable : callables) {
             futures.add(executor.submit(callable));
         }
         start.countDown();
-        final Collection<Throwable> failures = new LinkedList<Throwable>();
+        final Collection<Throwable> failures = new LinkedList<>();
         for (final Future<Throwable> future : futures) {
-            this.process(failures, future);
+            Parallelizer.process(failures, future);
         }
         executor.shutdown();
         if (!failures.isEmpty()) {
-            throw this.exceptions(failures);
+            throw Parallelizer.exceptions(failures);
         }
         return null;
     }
@@ -107,7 +106,7 @@ public final class Parallelizer {
      * @param failures Collection of failures.
      * @param future Future tu process.
      */
-    private void process(final Collection<Throwable> failures,
+    private static void process(final Collection<Throwable> failures,
         final Future<Throwable> future) {
         final Throwable exception;
         try {
@@ -128,7 +127,7 @@ public final class Parallelizer {
      * @return Aggregated exceptions.
      */
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    private ParallelException exceptions(
+    private static ParallelException exceptions(
         final Collection<Throwable> failures) {
         ParallelException current = null;
         for (final Throwable failure : failures) {
@@ -144,7 +143,7 @@ public final class Parallelizer {
      * @return Created callable.
      */
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    private Callable<Throwable> callable(final ProceedingJoinPoint point,
+    private static Callable<Throwable> callable(final ProceedingJoinPoint point,
         final CountDownLatch start) {
         return new Callable<Throwable>() {
             @Override
@@ -164,16 +163,20 @@ public final class Parallelizer {
 
     /**
      * Exception that encapsulates all exceptions thrown from threads.
+     * @since 0.0.0
      */
     private static final class ParallelException extends Exception {
+
         /**
          * Serialization marker.
          */
         private static final long serialVersionUID = 0x8743ef363febc422L;
+
         /**
          * Next parallel exception.
          */
         private final transient ParallelException next;
+
         /**
          * Constructor.
          * @param cause Cause of the current exception.
@@ -184,6 +187,7 @@ public final class Parallelizer {
             super(cause);
             this.next = nxt;
         }
+
         /**
          * Get next parallel exception.
          * @return Next exception.

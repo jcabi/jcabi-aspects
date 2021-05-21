@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -39,8 +39,6 @@ import org.junit.Test;
 /**
  * Tests for {@link Parallelizer}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @version $Id$
  * @since 0.10
  */
 @SuppressWarnings("PMD.DoNotUseThreads")

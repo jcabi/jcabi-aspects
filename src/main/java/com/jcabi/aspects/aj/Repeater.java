@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -44,8 +44,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Repeat execution in case of exception.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.1.10
  * @see com.jcabi.aspects.RetryOnFailure
  */
@@ -63,8 +61,9 @@ public final class Repeater {
      * @param point Joint point
      * @return The result of call
      * @throws Throwable If something goes wrong inside
-     * @checkstyle IllegalThrows (6 lines)
+     * @checkstyle IllegalThrows (7 lines)
      * @checkstyle LineLength (4 lines)
+     * @checkstyle NonStaticMethodCheck (100 lines)
      * @checkstyle ExecutableStatementCountCheck (100 lines)
      */
     @Around("execution(* * (..)) && @annotation(com.jcabi.aspects.RetryOnFailure)")
@@ -85,7 +84,7 @@ public final class Repeater {
             } catch (final InterruptedException ex) {
                 Thread.currentThread().interrupt();
                 throw ex;
-            // @checkstyle IllegalCatch (1 line)
+                // @checkstyle IllegalCatch (1 line)
             } catch (final Throwable ex) {
                 if (Repeater.matches(ex.getClass(), rof.ignore())) {
                     throw ex;
@@ -105,7 +104,7 @@ public final class Repeater {
                     );
                 } else {
                     Logger.warn(
-                           joinpoint.targetize(),
+                        joinpoint.targetize(),
                         // @checkstyle LineLength (1 line)
                         "#%s(): attempt #%d/%d failed with %[type]s in %[nano]s (%[nano]s in total): %s",
                         method.getName(),
@@ -166,6 +165,7 @@ public final class Repeater {
      * @param types The exceptions to match
      * @return TRUE if matches
      */
+    @SafeVarargs
     private static boolean matches(
         final Class<? extends Throwable> thrown,
         final Class<? extends Throwable>... types

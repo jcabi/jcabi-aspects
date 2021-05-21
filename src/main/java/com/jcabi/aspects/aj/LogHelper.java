@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -34,8 +34,8 @@ import com.jcabi.log.Logger;
 
 /**
  * Helper methods for logging.
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @version $Id$
+ *
+ * @since 0.17
  */
 final class LogHelper {
 
@@ -77,7 +77,7 @@ final class LogHelper {
      * @return TRUE if enabled
      */
     public static boolean enabled(final int level, final Object log) {
-        boolean enabled;
+        final boolean enabled;
         if (level == Loggable.TRACE) {
             enabled = Logger.isTraceEnabled(log);
         } else if (level == Loggable.DEBUG) {

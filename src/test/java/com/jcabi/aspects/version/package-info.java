@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -30,8 +30,6 @@
 
 /**
  * Project version and buildNumber generated at build time, tests.
- * @author Georgy Vlasov (wlasowegor@gmail.com)
- * @version $Id$
  * @since 0.23
  */
 package com.jcabi.aspects.version;

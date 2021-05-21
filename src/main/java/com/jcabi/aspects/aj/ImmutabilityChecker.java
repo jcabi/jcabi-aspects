@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -45,8 +45,6 @@ import org.aspectj.lang.annotation.Aspect;
  *
  * <p>The class is thread-safe.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.7.8
  */
 @Aspect
@@ -55,7 +53,7 @@ public final class ImmutabilityChecker {
     /**
      * Already checked immutable classes.
      */
-    private final transient Set<Class<?>> immutable = new HashSet<Class<?>>();
+    private final transient Set<Class<?>> immutable = new HashSet<>();
 
     /**
      * Catch instantiation and validate class.
@@ -146,13 +144,12 @@ public final class ImmutabilityChecker {
     private void fields(final Class<?> type)
         throws ImmutabilityChecker.Violation {
         final Field[] fields = type.getDeclaredFields();
-        for (int pos = 0; pos < fields.length; ++pos) {
-            final Field field = fields[pos];
+        for (final Field field : fields) {
             if (Modifier.isStatic(field.getModifiers())) {
                 continue;
             }
             if (!Modifier.isFinal(field.getModifiers())) {
-                throw new ImmutabilityChecker.Violation(
+                throw new Violation(
                     String.format(
                         "field '%s' is not final in %s",
                         field, type.getName()
@@ -163,8 +160,8 @@ public final class ImmutabilityChecker {
                 if (field.getType().isArray()) {
                     this.checkArray(field);
                 }
-            } catch (final ImmutabilityChecker.Violation ex) {
-                throw new ImmutabilityChecker.Violation(
+            } catch (final Violation ex) {
+                throw new Violation(
                     String.format(
                         "field '%s' is mutable",
                         field
@@ -207,25 +204,29 @@ public final class ImmutabilityChecker {
 
     /**
      * Immutability violation.
+     * @since 0.0.0
      */
     private static final class Violation extends Exception {
+
         /**
          * Serialization marker.
          */
         private static final long serialVersionUID = 1L;
+
         /**
          * Public ctor.
          * @param msg Message
          */
-        public Violation(final String msg) {
+        private Violation(final String msg) {
             super(msg);
         }
+
         /**
          * Public ctor.
          * @param msg Message
          * @param cause Cause of it
          */
-        public Violation(final String msg, final Exception cause) {
+        private Violation(final String msg, final Exception cause) {
             super(msg, cause);
         }
     }

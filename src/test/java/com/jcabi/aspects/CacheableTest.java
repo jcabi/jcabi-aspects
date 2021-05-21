@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -44,11 +44,17 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Cacheable} annotation and its implementation.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
+ * @since 0.0.0
  * @checkstyle ClassDataAbstractionCoupling (500 lines)
  */
-@SuppressWarnings({ "PMD.TooManyMethods", "PMD.DoNotUseThreads" })
+@SuppressWarnings
+    (
+        {
+            "PMD.TooManyMethods",
+            "PMD.DoNotUseThreads",
+            "PMD.ProhibitPublicStaticMethods"
+        }
+    )
 public final class CacheableTest {
 
     /**
@@ -132,32 +138,23 @@ public final class CacheableTest {
 
     /**
      * Cacheable can cache just once.
+     * @checkstyle ExecutableStatementCountCheck (30 lines)
      * @throws Exception If something goes wrong
      */
     @Test
     public void cachesJustOnceInParallelThreads() throws Exception {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
-        final Thread never = new Thread(
-            new Runnable() {
-                @Override
-                public void run() {
-                    foo.never();
-                }
-            }
-        );
+        final Thread never = new Thread(foo::never);
         never.start();
-        final Set<String> values = new ConcurrentSkipListSet<String>();
+        final Set<String> values = new ConcurrentSkipListSet<>();
         final int threads = Runtime.getRuntime().availableProcessors() << 1;
         final CountDownLatch start = new CountDownLatch(1);
         final CountDownLatch done = new CountDownLatch(threads);
-        final Callable<Boolean> task = new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                start.await(1L, TimeUnit.SECONDS);
-                values.add(foo.get().toString());
-                done.countDown();
-                return true;
-            }
+        final Callable<?> task = () -> {
+            start.await(1L, TimeUnit.SECONDS);
+            values.add(foo.get().toString());
+            done.countDown();
+            return null;
         };
         final ExecutorService executor = Executors.newFixedThreadPool(threads);
         try {
@@ -165,7 +162,7 @@ public final class CacheableTest {
                 executor.submit(task);
             }
             start.countDown();
-            done.await((long) Tv.THIRTY, TimeUnit.SECONDS);
+            done.await(Tv.THIRTY, TimeUnit.SECONDS);
             MatcherAssert.assertThat(values.size(), Matchers.equalTo(1));
             never.interrupt();
         } finally {
@@ -188,12 +185,15 @@ public final class CacheableTest {
 
     /**
      * Dummy class, for tests above.
+     * @since 0.0.0
      */
     private static final class Foo {
+
         /**
          * Encapsulated long.
          */
         private final transient long number;
+
         /**
          * Public ctor.
          * @param num Number to encapsulate
@@ -201,20 +201,24 @@ public final class CacheableTest {
         Foo(final long num) {
             this.number = num;
         }
+
         @Override
         public int hashCode() {
             return this.get().hashCode();
         }
+
         @Override
         public boolean equals(final Object obj) {
             return obj == this;
         }
+
         @Override
         @Cacheable(forever = true)
         @Loggable(Loggable.DEBUG)
         public String toString() {
             return Long.toString(this.number);
         }
+
         /**
          * Download some text.
          * @return Downloaded text
@@ -234,6 +238,7 @@ public final class CacheableTest {
         public CacheableTest.Foo asyncGet() {
             return new CacheableTest.Foo(CacheableTest.RANDOM.nextLong());
         }
+
         /**
          * Sleep forever, to abuse caching system.
          * @return The same object
@@ -248,6 +253,7 @@ public final class CacheableTest {
             }
             return this;
         }
+
         /**
          * Flush it.
          */
@@ -255,6 +261,7 @@ public final class CacheableTest {
         public void flush() {
             // nothing to do
         }
+
         /**
          * Download some text.
          * @return Downloaded text
@@ -263,6 +270,7 @@ public final class CacheableTest {
         public static String staticGet() {
             return Long.toString(CacheableTest.RANDOM.nextLong());
         }
+
         /**
          * Flush it.
          */
@@ -274,6 +282,7 @@ public final class CacheableTest {
 
     /**
      * Dummy class, for tests above.
+     * @since 0.0.0
      */
     public static final class Bar {
         /**
@@ -284,6 +293,7 @@ public final class CacheableTest {
         public long get() {
             return CacheableTest.RANDOM.nextLong();
         }
+
         /**
          * Flush before?
          * @return TRUE if flush is required

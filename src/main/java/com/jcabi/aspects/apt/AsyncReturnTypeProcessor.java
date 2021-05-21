@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -48,8 +48,7 @@ import javax.tools.Diagnostic;
  * {@link com.jcabi.aspects.Async} have void or
  * {@link java.util.concurrent.Future} return types.
  *
- * @author Carlos Miranda (miranda.cma@gmail.com)
- * @version $Id$
+ * @since 0.17
  */
 @SupportedAnnotationTypes("com.jcabi.aspects.Async")
 public final class AsyncReturnTypeProcessor extends AbstractProcessor {

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -39,16 +39,14 @@ import org.aspectj.lang.reflect.SourceLocation;
 /**
  * This class implements the methods from JointPoint interface.
  *
- * @author Shelan Perera (shelanrc@gmail.com)
- * @version $Id$
  * @since 1.0
  */
 final class ImprovedJoinPoint implements JoinPoint {
 
     /**
-     *
+     * The original joinpoint.
      */
-    private final transient JoinPoint joinpoint;
+    private final JoinPoint joinpoint;
 
     /**
      * Constructor.
@@ -63,14 +61,17 @@ final class ImprovedJoinPoint implements JoinPoint {
     public String toString() {
         return this.joinpoint.toString();
     }
+
     @Override
     public String toShortString() {
         return this.joinpoint.toShortString();
     }
+
     @Override
     public String toLongString() {
         return this.joinpoint.toLongString();
     }
+
     @Override
     public Object getThis() {
         return this.joinpoint.getThis();
@@ -114,7 +115,7 @@ final class ImprovedJoinPoint implements JoinPoint {
     public Object targetize() {
         final Object target;
         final Method method = MethodSignature.class
-                .cast(this.joinpoint.getSignature()).getMethod();
+            .cast(this.joinpoint.getSignature()).getMethod();
         if (Modifier.isStatic(method.getModifiers())) {
             target = method.getDeclaringClass();
         } else {

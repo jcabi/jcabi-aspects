@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -38,9 +38,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Utility class with text functions for making mnemos.
- *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
+ * @since 0.0.0
  */
 @Immutable
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidUsingShortType" })
@@ -87,6 +85,7 @@ final class Mnemos {
             trim, skip
         );
     }
+
     /**
      * Make a string out of point.
      * @param point The point
@@ -288,7 +287,7 @@ final class Mnemos {
      * @return Text representation of it
      */
     private static String toText(final Object arg) {
-        String text;
+        final String text;
         if (arg.getClass().isArray()) {
             if (arg instanceof Object[]) {
                 text = Mnemos.objectArrays((Object[]) arg);

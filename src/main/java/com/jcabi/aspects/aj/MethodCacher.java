@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -58,8 +58,6 @@ import org.aspectj.lang.reflect.MethodSignature;
  *
  * <p>The class is thread-safe.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.8
  */
 @Aspect
@@ -69,22 +67,19 @@ public final class MethodCacher {
     /**
      * Calling tunnels.
      */
-    private final transient
-        ConcurrentMap<MethodCacher.Key, MethodCacher.Tunnel> tunnels;
+    private final ConcurrentMap<MethodCacher.Key, MethodCacher.Tunnel> tunnels;
 
     /**
      * Save the keys of caches which need update.
      */
-    private final transient BlockingQueue<Key> updatekeys;
+    private final BlockingQueue<Key> updatekeys;
 
     /**
      * Public ctor.
      */
     public MethodCacher() {
-        this.tunnels =
-            new ConcurrentHashMap<MethodCacher.Key, MethodCacher.Tunnel>(0);
-        this.updatekeys =
-            new LinkedBlockingQueue<MethodCacher.Key>();
+        this.tunnels = new ConcurrentHashMap<>(0);
+        this.updatekeys = new LinkedBlockingQueue<>();
         new UpdateMethodCacher(this.tunnels, this.updatekeys).start();
     }
 
@@ -117,7 +112,7 @@ public final class MethodCacher {
                 }
             }
             tunnel = this.tunnels.get(key);
-            if (this.isCreateTunnel(tunnel)) {
+            if (MethodCacher.isCreateTunnel(tunnel)) {
                 tunnel = new MethodCacher.Tunnel(
                     point, key, annot.asyncUpdate()
                 );
@@ -230,38 +225,46 @@ public final class MethodCacher {
      * @param tunnel MethodCacher.Tunnel
      * @return Boolean
      */
-    private boolean isCreateTunnel(final MethodCacher.Tunnel tunnel) {
+    private static boolean isCreateTunnel(final MethodCacher.Tunnel tunnel) {
         return tunnel == null || (tunnel.expired() && !tunnel.asyncUpdate());
     }
 
     /**
      * Mutable caching/calling tunnel, it is thread-safe.
+     * @since 0.0
      */
     protected static final class Tunnel {
+
         /**
          * Proceeding join point.
          */
         private final transient ProceedingJoinPoint point;
+
         /**
          * Key related to this tunnel.
          */
         private final transient MethodCacher.Key key;
+
         /**
          * Whether asynchronous update.
          */
         private final transient boolean async;
+
         /**
          * Was it already executed?
          */
         private transient boolean executed;
+
         /**
          * When will it expire (moment in time).
          */
         private transient long lifetime;
+
         /**
          * Has non-null result?
          */
         private transient boolean hasresult;
+
         /**
          * Cached value.
          */
@@ -295,6 +298,7 @@ public final class MethodCacher {
                 this.point, this.key, this.async
             );
         }
+
         /**
          * Get a result through the tunnel.
          * @return The result
@@ -307,7 +311,7 @@ public final class MethodCacher {
                 final long start = System.currentTimeMillis();
                 final Object result = this.point.proceed();
                 this.hasresult = result != null;
-                this.cached = new SoftReference<Object>(result);
+                this.cached = new SoftReference<>(result);
                 final Method method = MethodSignature.class
                     .cast(this.point.getSignature())
                     .getMethod();
@@ -344,6 +348,7 @@ public final class MethodCacher {
             }
             return this.key.through(this.cached.get());
         }
+
         /**
          * Is it expired already?
          * @return TRUE if expired
@@ -351,8 +356,8 @@ public final class MethodCacher {
         public boolean expired() {
             final boolean expired = this.lifetime < System.currentTimeMillis();
             final boolean collected = this.executed
-                    && this.hasresult
-                    && this.cached.get() == null;
+                && this.hasresult
+                && this.cached.get() == null;
             return this.executed && (expired || collected);
         }
 
@@ -377,25 +382,31 @@ public final class MethodCacher {
 
     /**
      * Key of a callable target.
+     * @since 0.0.0
      * @checkstyle DesignForExtensionCheck (2 lines)
      */
     protected static class Key {
+
         /**
          * When instantiated.
          */
         private final transient long start;
+
         /**
          * How many times the key was already accessed.
          */
         private final transient AtomicInteger accessed;
+
         /**
          * Method.
          */
         private final transient Method method;
+
         /**
          * Object callable (or class, if static method).
          */
         private final transient Object target;
+
         /**
          * Arguments.
          */
@@ -436,10 +447,12 @@ public final class MethodCacher {
         public final String toString() {
             return Mnemos.toText(this.method, this.arguments, true, false);
         }
+
         @Override
         public final int hashCode() {
             return this.method.hashCode();
         }
+
         @Override
         public final boolean equals(final Object obj) {
             final boolean equals;
@@ -455,6 +468,7 @@ public final class MethodCacher {
             }
             return equals;
         }
+
         /**
          * Send a result through, with necessary logging.
          * @param result The result to send through
@@ -477,6 +491,7 @@ public final class MethodCacher {
             }
             return result;
         }
+
         /**
          * Is it related to the same target?
          * @param point Proceeding point
@@ -485,6 +500,7 @@ public final class MethodCacher {
         public final boolean sameTarget(final JoinPoint point) {
             return MethodCacher.Key.targetize(point).equals(this.target);
         }
+
         /**
          * Calculate its target.
          * @param point Proceeding point

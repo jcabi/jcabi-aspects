@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -36,8 +36,6 @@ import org.junit.Test;
 /**
  * Test case for {@link StaticPage}, which is actually testing how
  * {@link Cacheable} annotation works with static methods.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  */
 public final class StaticPageTest {
 

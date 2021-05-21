@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -67,8 +67,6 @@ import java.util.concurrent.TimeUnit;
  *   }
  * }</pre>
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.7.16
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
  * @see <a href="http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html">Why Are Thread.stop, Thread.suspend, Thread.resume and Runtime.runFinalizersOnExit Deprecated?</a>
@@ -80,16 +78,23 @@ import java.util.concurrent.TimeUnit;
 public @interface Timeable {
 
     /**
+     * The default maximum amount (of seconds).
+     */
+    int DEFAULT_LIMIT = 15;
+
+    /**
      * Maximum amount allowed for this method.
      * @checkstyle MagicNumber (2 lines)
+     * @return The limit
      */
-    int limit() default 15;
+    int limit() default DEFAULT_LIMIT;
 
     /**
      * Time unit for the limit.
      *
      * <p>The minimum unit you can use is a second. We simply can't monitor with
      * a frequency higher than a second.
+     * @return The time unit
      */
     TimeUnit unit() default TimeUnit.SECONDS;
 

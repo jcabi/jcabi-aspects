@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -52,8 +52,6 @@ import org.aspectj.lang.reflect.MethodSignature;
  *
  * <p>The class is thread-safe.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.7.16
  */
 @Aspect
@@ -110,7 +108,7 @@ public final class MethodInterrupter {
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         final MethodInterrupter.Call call = new MethodInterrupter.Call(point);
         this.calls.add(call);
-        Object output;
+        final Object output;
         try {
             output = point.proceed();
         } finally {
@@ -134,6 +132,8 @@ public final class MethodInterrupter {
 
     /**
      * A call being watched.
+     *
+     * @since 0.7.16
      */
     private static final class Call implements
         Comparable<MethodInterrupter.Call> {
@@ -141,23 +141,27 @@ public final class MethodInterrupter {
          * The thread called.
          */
         private final transient Thread thread;
+
         /**
          * When started.
          */
         private final transient long start;
+
         /**
          * When will expire.
          */
         private final transient long deadline;
+
         /**
          * Join point.
          */
         private final transient ProceedingJoinPoint point;
+
         /**
          * Public ctor.
          * @param pnt Joint point
          */
-        public Call(final ProceedingJoinPoint pnt) {
+        Call(final ProceedingJoinPoint pnt) {
             this.thread = Thread.currentThread();
             this.start = System.currentTimeMillis();
             this.point = pnt;
@@ -167,9 +171,10 @@ public final class MethodInterrupter {
             final Timeable annt = method.getAnnotation(Timeable.class);
             this.deadline = this.start + annt.unit().toMillis(annt.limit());
         }
+
         @Override
         public int compareTo(final Call obj) {
-            int compare;
+            final int compare;
             if (this.deadline > obj.deadline) {
                 compare = 1;
             } else if (this.deadline < obj.deadline) {
@@ -179,6 +184,7 @@ public final class MethodInterrupter {
             }
             return compare;
         }
+
         /**
          * Is it expired already?
          * @return TRUE if expired
@@ -186,12 +192,13 @@ public final class MethodInterrupter {
         public boolean expired() {
             return this.deadline < System.currentTimeMillis();
         }
+
         /**
          * This thread is stopped already (interrupt if not)?
          * @return TRUE if it's already dead
          */
         public boolean interrupted() {
-            boolean dead;
+            final boolean dead;
             if (this.thread.isAlive()) {
                 this.thread.interrupt();
                 final Method method = MethodSignature.class

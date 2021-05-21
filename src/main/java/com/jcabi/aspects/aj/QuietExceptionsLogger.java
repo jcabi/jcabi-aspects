@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -39,11 +39,10 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Logs all exceptions thrown out of a method and swallow exception.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @version $Id$
  * @since 0.1.10
  * @see com.jcabi.aspects.LogExceptions
- * @checkstyle IllegalThrows (500 lines)
+ * @checkstyle IllegalThrows (100 lines)
+ * @checkstyle NonStaticMethodCheck (100 lines)
  */
 @Aspect
 @Immutable

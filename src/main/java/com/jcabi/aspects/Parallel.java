@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -42,8 +42,6 @@ import java.lang.annotation.Target;
  * other cases the behavior might be unexpected (because {@code NULL} will
  * always be returned).
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @version $Id$
  * @since 0.10
  */
 @Documented
@@ -53,6 +51,8 @@ public @interface Parallel {
 
     /**
      * Number of threads to use for parallel execution.
+     *
+     * @return The number of threads
      */
     int threads() default 1;
 

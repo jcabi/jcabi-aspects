@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -41,8 +41,6 @@ import java.lang.annotation.Target;
  * <p>This annotation should be applied only to methods that return void, in
  * other cases the behavior might be unexpected.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @version $Id$
  * @since 0.7.22
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
  */

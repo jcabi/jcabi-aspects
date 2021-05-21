@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -34,8 +34,6 @@ import org.junit.Test;
 /**
  * Test case for {@link Document}, which is actually testing how
  * {@link Loggable} annotation works.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  */
 public final class DocumentTest {
 

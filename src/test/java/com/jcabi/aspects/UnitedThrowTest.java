@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -37,8 +37,7 @@ import org.junit.Test;
 
 /**
  * Tests for {@link UnitedThrow}.
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @version $Id$
+ * @since 0.0.0
  */
 public final class UnitedThrowTest {
 
@@ -97,6 +96,7 @@ public final class UnitedThrowTest {
 
     /**
      * Class for testing UnitedThrow.
+     * @since 0.0.0
      */
     private static final class Thrower {
         /**

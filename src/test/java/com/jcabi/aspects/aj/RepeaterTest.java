@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -40,8 +40,6 @@ import org.junit.Test;
 /**
  * Tests for {@link Repeater}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @version $Id$
  * @since 0.1.10
  */
 public final class RepeaterTest {

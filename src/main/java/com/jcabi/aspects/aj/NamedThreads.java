@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -40,8 +40,6 @@ import java.util.concurrent.ThreadFactory;
  * <p>This custom class is used instead of a default ThreadFactory in order
  * to name scheduled threads correctly on construction.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.7.17
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
@@ -67,7 +65,7 @@ final class NamedThreads implements ThreadFactory {
      * @param suffix Suffix of thread names
      * @param desc Description of purpose
      */
-    public NamedThreads(final String suffix, final String desc) {
+    NamedThreads(final String suffix, final String desc) {
         this.name = String.format("jcabi-%s", suffix);
         this.purpose = desc;
         this.group = new ThreadGroup("jcabi");

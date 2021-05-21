@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -74,8 +74,6 @@ import java.util.concurrent.TimeUnit;
  * without stopping it first, will result in an {@link IllegalStateException}
  * being thrown.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.7.16
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
  */
@@ -86,21 +84,26 @@ public @interface ScheduleWithFixedDelay {
 
     /**
      * Delay, in time units.
+     * @return The delay time amount
      */
     int delay() default 1;
 
     /**
      * Time units of delay.
+     * @return The time unit
      */
     TimeUnit unit() default TimeUnit.MINUTES;
 
     /**
      * How long to wait for the task to finish after shutdown in await units.
+     *
+     * @return The await time amount
      */
     int await() default 1;
 
     /**
      * Time units of await time.
+     * @return The await time unit
      */
     TimeUnit awaitUnit() default TimeUnit.MINUTES;
 
@@ -108,16 +111,19 @@ public @interface ScheduleWithFixedDelay {
      * How many times to do a forceful shutdown after await time.
      * Each forceful shutdown attempt will be followed by a 1 second wait to
      * allow the threads to finish.
+     * @return The number if times
      */
     int shutdownAttempts() default 1;
 
     /**
      * Total number of fixed threads.
+     * @return The number of threads
      */
     int threads() default 1;
 
     /**
      * Be less verbose.
+     * @return The flag
      */
     boolean verbose() default true;
 }

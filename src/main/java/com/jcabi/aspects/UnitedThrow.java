@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -38,8 +38,6 @@ import java.lang.annotation.Target;
 /**
  * Throw only allowed exceptions, encapsulate others.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @version $Id$
  * @since 0.13
  */
 @Documented
@@ -48,6 +46,8 @@ import java.lang.annotation.Target;
 public @interface UnitedThrow {
     /**
      * Default empty exception.
+     *
+     * @since 0.13
      */
     class None extends Throwable {
         /**
@@ -55,8 +55,11 @@ public @interface UnitedThrow {
          */
         private static final long serialVersionUID = -2085901092419654865L;
     }
+
     /**
      * Exception that should be allowed.
+     *
+     * @return The type of exception.
      */
     Class<? extends Throwable> value() default None.class;
 }

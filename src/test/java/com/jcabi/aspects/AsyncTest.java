@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -33,17 +33,24 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
  * Test case for {@link Async} annotation and its implementation.
- *
- * @author Carlos Miranda (miranda.cma@gmail.com)
- * @version $Id$
+ * @since 0.0.0
  */
 public final class AsyncTest {
+
+    /**
+     * Thread name matcher.
+     */
+    private static final Matcher<String> THREAD_NAME = Matchers.allOf(
+        Matchers.not(Thread.currentThread().getName()),
+        Matchers.startsWith("jcabi-async")
+    );
 
     /**
      * Async annotation can execute asynchronously in a different thread.
@@ -52,7 +59,7 @@ public final class AsyncTest {
     @Test
     @SuppressWarnings("PMD.DoNotUseThreads")
     public void executesAsynchronously() throws Exception {
-        final BlockingQueue<String> queue = new LinkedBlockingQueue<String>();
+        final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
         final Runnable runnable = new Runnable() {
             @Async
             @Override
@@ -64,10 +71,7 @@ public final class AsyncTest {
         // @checkstyle MultipleStringLiterals (5 lines)
         MatcherAssert.assertThat(
             queue.poll(Tv.THIRTY, TimeUnit.SECONDS),
-            Matchers.allOf(
-                Matchers.not(Thread.currentThread().getName()),
-                Matchers.startsWith("jcabi-async")
-            )
+            AsyncTest.THREAD_NAME
         );
     }
 
@@ -80,10 +84,7 @@ public final class AsyncTest {
         MatcherAssert.assertThat(
             new Foo().asyncMethodWithReturnValue()
                 .get(Tv.FIVE, TimeUnit.MINUTES),
-            Matchers.allOf(
-                Matchers.not(Thread.currentThread().getName()),
-                Matchers.startsWith("jcabi-async")
-            )
+            AsyncTest.THREAD_NAME
         );
     }
 
@@ -98,8 +99,10 @@ public final class AsyncTest {
 
     /**
      * Dummy class for test purposes.
+     * @since 0.0.0
      */
     private static final class Foo {
+
         /**
          * Async method that returns a Future containing the thread name.
          * @return The future.
@@ -108,28 +111,34 @@ public final class AsyncTest {
         public Future<String> asyncMethodWithReturnValue() {
             // @checkstyle AnonInnerLength (23 lines)
             return new Future<String>() {
+
                 @Override
                 public boolean cancel(final boolean interruptible) {
                     return false;
                 }
+
                 @Override
                 public boolean isCancelled() {
                     return false;
                 }
+
                 @Override
                 public boolean isDone() {
                     return true;
                 }
+
                 @Override
                 public String get() {
                     return Thread.currentThread().getName();
                 }
+
                 @Override
                 public String get(final long timeout, final TimeUnit unit) {
                     return Thread.currentThread().getName();
                 }
             };
         }
+
         /**
          * Async method that does not return void or Future. Should throw
          * exception.

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -47,8 +47,7 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Loggable} annotation and its implementation.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
+ * @since 0.0.0
  */
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidUsingShortType" })
 public final class LoggableTest {
@@ -115,7 +114,7 @@ public final class LoggableTest {
         LoggableTest.Foo.logsDurationInSeconds();
         MatcherAssert.assertThat(
             writer.toString(),
-            RegexContainsMatcher.contains("in \\d.\\d{3}")
+            new RegexContainsMatcher("in \\d.\\d{3}")
         );
     }
 
@@ -132,7 +131,7 @@ public final class LoggableTest {
         new LoggableTest.Foo().last("TEST");
         MatcherAssert.assertThat(
             writer.toString(),
-            RegexContainsMatcher.contains(LoggableTest.RESULT)
+            new RegexContainsMatcher(LoggableTest.RESULT)
         );
     }
 
@@ -154,7 +153,7 @@ public final class LoggableTest {
                 )
             )
         );
-        final Collection<String> bytes = new LinkedList<String>();
+        final Collection<String> bytes = new LinkedList<>();
         for (final byte part : result) {
             bytes.add(Byte.toString(part));
         }
@@ -182,7 +181,7 @@ public final class LoggableTest {
                 )
             )
         );
-        final Collection<String> shorts = new LinkedList<String>();
+        final Collection<String> shorts = new LinkedList<>();
         for (final short part : result) {
             shorts.add(Short.toString(part));
         }
@@ -212,6 +211,7 @@ public final class LoggableTest {
 
     /**
      * Parent class, without logging.
+     * @since 0.0.0
      */
     private static class Parent {
         /**
@@ -225,6 +225,7 @@ public final class LoggableTest {
 
     /**
      * Dummy class, for tests above.
+     * @since 0.0.0
      */
     @Loggable
         (
@@ -233,10 +234,12 @@ public final class LoggableTest {
             limit = 1, unit = TimeUnit.MILLISECONDS
         )
     private static final class Foo extends LoggableTest.Parent {
+
         @Override
         public String toString() {
             return LoggableTest.RESULT;
         }
+
         /**
          * Get self instance.
          * @return Self
@@ -245,6 +248,7 @@ public final class LoggableTest {
         public Foo self() {
             return this;
         }
+
         /**
          * Static method.
          * @return Some text
@@ -255,6 +259,7 @@ public final class LoggableTest {
             TimeUnit.SECONDS.sleep(2L);
             return LoggableTest.Foo.hiddenText();
         }
+
         /**
          * Method annotated with Loggable specifying explicit logger name.
          * @return A String
@@ -264,6 +269,7 @@ public final class LoggableTest {
         public static String explicitLoggerName() throws Exception {
             return LoggableTest.Foo.hiddenText();
         }
+
         /**
          * Revert string.
          * @param text Some text
@@ -274,6 +280,7 @@ public final class LoggableTest {
         public String revert(final String text) {
             return new StringBuffer(text).reverse().toString();
         }
+
         /**
          * Method with different time unit specification.
          * @return Some text
@@ -284,6 +291,7 @@ public final class LoggableTest {
             TimeUnit.SECONDS.sleep(2);
             return LoggableTest.Foo.hiddenText();
         }
+
         /**
          * Method returns byte array.
          * @return Byte array.
@@ -294,6 +302,7 @@ public final class LoggableTest {
             new Random().nextBytes(bytes);
             return bytes;
         }
+
         /**
          * Method returns short array.
          * @return Byte array.
@@ -307,6 +316,7 @@ public final class LoggableTest {
             }
             return shorts;
         }
+
         /**
          * Get last char.
          * @param text Text to get last char from.
@@ -316,6 +326,7 @@ public final class LoggableTest {
         public String last(final String text) {
             return text.substring(text.length() - 1);
         }
+
         /**
          * Private static method.
          * @return Some text
@@ -323,6 +334,7 @@ public final class LoggableTest {
         private static String hiddenText() {
             return "some static text";
         }
+
         /**
          * Always throw.
          */
@@ -334,35 +346,32 @@ public final class LoggableTest {
 
     /**
      * Matcher that checks if a string contains the given pattern.
+     * @since 0.0.0
      */
-    private static class RegexContainsMatcher extends TypeSafeMatcher<String> {
+    private static final class RegexContainsMatcher extends TypeSafeMatcher<String> {
+
         /**
          * Regex to match against.
          */
         private final transient Pattern pattern;
+
         /**
          * Ctor.
          * @param regex The regex pattern
          */
-        public RegexContainsMatcher(final String regex) {
+        private RegexContainsMatcher(final String regex) {
             super();
             this.pattern = Pattern.compile(regex);
         }
+
         @Override
         public boolean matchesSafely(final String str) {
             return this.pattern.matcher(str).find();
         }
+
         @Override
         public void describeTo(final Description description) {
             description.appendText("matches regex=");
-        }
-        /**
-         * Matcher for regex patterns.
-         * @param regex The regex pattern
-         * @return Matcher for containing regex pattern
-         */
-        public static RegexContainsMatcher contains(final String regex) {
-            return new RegexContainsMatcher(regex);
         }
     }
 }

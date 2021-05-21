@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -42,8 +42,6 @@ import org.junit.Test;
 /**
  * Tests for {@link NamedThreads}.
  *
- * @author Haris Peco (snpe60@gmail.com)
- * @version $Id$
  * @since 0.22
  */
 public final class NamedThreadsTest {
@@ -61,14 +59,12 @@ public final class NamedThreadsTest {
             new WriterAppender(new SimpleLayout(), writer);
         root.addAppender(appender);
         try {
+            // @checkstyle MethodBodyCommentsCheck (5 lines)
             new NamedThreads("test", "desc").newThread(
-                new Runnable() {
-                    @Override
-                    // @checkstyle MethodBodyCommentsCheck (2 lines)
-                    public void run() {
-                        // do nothing
-                    }
-                });
+                () -> {
+                    // do nothing
+                }
+            );
             final String message = writer.toString();
             MatcherAssert.assertThat(
                 message,

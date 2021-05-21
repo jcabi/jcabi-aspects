@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -31,16 +31,16 @@ package com.jcabi.aspects;
 
 import com.jcabi.aspects.version.Version;
 import java.util.regex.Pattern;
-import org.junit.Rule;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Test case for {@link Immutable} annotation and its implementation.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @checkstyle ConstantUsageCheck (500 lines)
+ * @since 0.0.0
  */
 @SuppressWarnings
     (
@@ -51,20 +51,6 @@ import org.junit.rules.ExpectedException;
         }
     )
 public final class ImmutableTest {
-
-    /**
-     * Exception rule.
-     */
-    @Rule
-    // @checkstyle VisibilityModifierCheck (1 line)
-    public final transient ExpectedException thrown;
-
-    /**
-     * Ctor.
-     */
-    public ImmutableTest() {
-        this.thrown = ExpectedException.none();
-    }
 
     /**
      * Immutable can catch mutable classes.
@@ -113,14 +99,40 @@ public final class ImmutableTest {
      */
     @Test
     public void informsVersionOnError() {
-        this.thrown.expect(IllegalStateException.class);
-        this.thrown.expectMessage(Version.CURRENT.projectVersion());
-        this.thrown.expectMessage(Version.CURRENT.buildNumber());
-        new Mutable();
+        MatcherAssert.assertThat(
+            Assertions.assertThrows(
+                IllegalStateException.class,
+                Mutable::new
+            ),
+            Matchers.hasProperty(
+                "message",
+                Matchers.allOf(
+                    Matchers.containsString(Version.CURRENT.projectVersion()),
+                    Matchers.containsString(Version.CURRENT.buildNumber())
+                )
+            )
+        );
+    }
+
+    /**
+     * Other vague interface.
+     *
+     * @since 0.0.0
+     */
+    @Immutable
+    private interface ImmutableInterface {
+        /**
+         * This function seems to be harmless.
+         *
+         * @param input An input
+         */
+        void willBreakImmutability(int input);
     }
 
     /**
      * Supposedly immutable class.
+     *
+     * @since 0.0.0
      */
     @Immutable
     private static final class Mutable {
@@ -133,6 +145,8 @@ public final class ImmutableTest {
 
     /**
      * Mutable class because of array.
+     *
+     * @since 0.0.0
      */
     @Immutable
     private static final class MutableWithArray {
@@ -143,19 +157,9 @@ public final class ImmutableTest {
     }
 
     /**
-     * Other vague interface.
-     */
-    @Immutable
-    private interface ImmutableInterface {
-        /**
-         * This function seems to be harmless.
-         * @param input An input
-         */
-        void willBreakImmutability(int input);
-    }
-
-    /**
      * Truely immutable class.
+     *
+     * @since 0.0.0
      */
     @Immutable
     private static final class TruelyImmutable {
@@ -163,52 +167,63 @@ public final class ImmutableTest {
          * Something static final.
          */
         private static final Pattern PATTERN = Pattern.compile(".?");
+
         /**
          * Something just static.
          */
         private static Pattern ptrn = Pattern.compile("\\d+");
+
         /**
          * Immutable class member.
          */
         private final transient String data;
+
         /**
          * Another immutable class member.
          */
         private final transient int number;
+
         /**
          * Another immutable class member.
          */
         private final transient String text;
+
         /**
          * An immutable array member.
          */
         @Immutable.Array
         private final transient String[] texts;
+
         /**
          * Immutable iface.
          */
         private final transient ImmutableInterface iface;
+
         /**
          * Ctor.
          */
-        public TruelyImmutable() {
+        private TruelyImmutable() {
             this("Hello, world!");
         }
+
         /**
          * Ctor.
+         *
          * @param ipt Input
          */
-        public TruelyImmutable(final TruelyImmutableWithNonPrivateFields ipt) {
+        private TruelyImmutable(final TruelyImmutableWithNonPrivateFields ipt) {
             this(ipt.text);
         }
+
         /**
          * Ctor.
+         *
          * @param ipt Input
          */
         @SuppressWarnings("PMD.NullAssignment")
-        public TruelyImmutable(final String ipt) {
+        private TruelyImmutable(final String ipt) {
             this.text = ipt;
-            this.texts = new String[] {"foo"};
+            this.texts = new String[]{"foo"};
             this.iface = null;
             this.data = null;
             this.number = 2;
@@ -218,6 +233,7 @@ public final class ImmutableTest {
     /**
      * Truely immutable class with non-private fields.
      *
+     * @since 0.0.0
      * @checkstyle VisibilityModifier (25 lines)
      */
     @Immutable
@@ -226,20 +242,25 @@ public final class ImmutableTest {
          * Something static final.
          */
         public static final Pattern PATTERN = Pattern.compile(".*");
+
         /**
          * Something just static.
          */
         public static final Pattern PTRN = Pattern.compile(".+");
+
         /**
          * Immutable class member.
          */
         public final String data = null;
+
         /**
          * Another immutable class member.
          */
         public final int number = 2;
+
         /**
          * Another immutable class member.
+         * @checkstyle VisibilityModifierCheck (3 lines)
          */
         public final String text = "Hello!";
     }
@@ -253,6 +274,8 @@ public final class ImmutableTest {
      * "http://marxsoftware.blogspot.se/2009/09/
      * is-java-immutable-class-always-final.html">
      * Is java immutable class always final?</a>
+     *
+     * @since 0.0.0
      */
     @Immutable
     private static class MutableByInheritance {
@@ -260,11 +283,13 @@ public final class ImmutableTest {
          * Immutable class member.
          */
         private final transient String data = null;
+
         /**
          * Could be overloaded by a child of the class and then return
          * nonsensical value.
          *
-         * @return A value that could differ from what is expected if returned by an overriding method
+         * @return A value that could differ from what is expected if
+         *  returned by an overriding method
          */
         public String getData() {
             return this.data;
