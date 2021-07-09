@@ -133,6 +133,11 @@ public @interface Loggable {
     int value() default Loggable.INFO;
 
     /**
+     * Should exceptions be logged as errors?
+     */
+    boolean exceptionsAsError() default false;
+
+    /**
      * Maximum amount allowed for this method (a warning will be
      * issued if it takes longer).
      * @since 0.7.6
