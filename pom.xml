@@ -189,7 +189,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>5.1.2</version>
         <extensions>true</extensions>
       </plugin>
     </plugins>
