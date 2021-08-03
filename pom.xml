@@ -140,11 +140,11 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>aspectj-maven-plugin</artifactId>
-        <version>1.8</version>
+        <version>1.14.0</version>
         <configuration>
-          <complianceLevel>1.8</complianceLevel>
-          <source>1.8</source>
-          <target>1.8</target>
+          <complianceLevel>1.14.0</complianceLevel>
+          <source>1.14.0</source>
+          <target>1.14.0</target>
           <deprecation>true</deprecation>
           <encoding>${project.build.sourceEncoding}</encoding>
           <showWeaveInfo>true</showWeaveInfo>
