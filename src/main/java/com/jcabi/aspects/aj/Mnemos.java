@@ -41,7 +41,14 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @since 0.0.0
  */
 @Immutable
-@SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidUsingShortType" })
+@SuppressWarnings
+    (
+        {
+            "PMD.AvoidUsingShortType",
+            "PMD.TooManyMethods",
+            "PMD.ProhibitPublicStaticMethods"
+        }
+    )
 final class Mnemos {
 
     /**
@@ -74,7 +81,7 @@ final class Mnemos {
     public static String toText(final ProceedingJoinPoint point,
         final boolean trim, final boolean skip, final boolean logthis) {
         final String additional;
-        if (logthis && (point.getThis() != null)) {
+        if (logthis && point.getThis() != null) {
             additional = point.getThis().toString();
         } else {
             additional = "";
