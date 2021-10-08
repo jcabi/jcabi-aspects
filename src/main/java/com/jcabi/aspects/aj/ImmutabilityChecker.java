@@ -86,6 +86,7 @@ public final class ImmutabilityChecker {
      * @param type The class to check
      * @throws ImmutabilityChecker.Violation If it is mutable
      */
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     private void check(final Class<?> type)
         throws ImmutabilityChecker.Violation {
         synchronized (this.immutable) {
@@ -175,7 +176,7 @@ public final class ImmutabilityChecker {
     /**
      * This array field immutable?
      * @param field The field to check
-     * @throws Violation If it is mutable.
+     * @throws ImmutabilityChecker.Violation If it is mutable.
      */
     private void checkArray(final Field field)
         throws ImmutabilityChecker.Violation {
@@ -206,7 +207,7 @@ public final class ImmutabilityChecker {
      * Immutability violation.
      * @since 0.0.0
      */
-    private static final class Violation extends Exception {
+    public static final class Violation extends Exception {
 
         /**
          * Serialization marker.
