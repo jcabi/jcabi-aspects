@@ -77,6 +77,7 @@ public final class MethodCacher {
     /**
      * Public ctor.
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public MethodCacher() {
         this.tunnels = new ConcurrentHashMap<>(0);
         this.updatekeys = new LinkedBlockingQueue<>();
@@ -226,7 +227,7 @@ public final class MethodCacher {
      * @return Boolean
      */
     private static boolean isCreateTunnel(final MethodCacher.Tunnel tunnel) {
-        return tunnel == null || (tunnel.expired() && !tunnel.asyncUpdate());
+        return tunnel == null || tunnel.expired() && !tunnel.asyncUpdate();
     }
 
     /**
@@ -421,6 +422,7 @@ public final class MethodCacher {
          * Public ctor.
          * @param point Joint point
          */
+        @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
         Key(final JoinPoint point) {
             this.start = System.currentTimeMillis();
             this.accessed = new AtomicInteger();
