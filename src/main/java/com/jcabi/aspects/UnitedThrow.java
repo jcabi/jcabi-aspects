@@ -49,7 +49,7 @@ public @interface UnitedThrow {
      *
      * @since 0.13
      */
-    class None extends Throwable {
+    class None extends Exception {
         /**
          * Serialization marker.
          */
