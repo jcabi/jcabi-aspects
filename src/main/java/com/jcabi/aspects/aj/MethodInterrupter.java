@@ -71,8 +71,9 @@ public final class MethodInterrupter {
     /**
      * Public ctor.
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public MethodInterrupter() {
-        this.calls = new ConcurrentSkipListSet<MethodInterrupter.Call>();
+        this.calls = new ConcurrentSkipListSet<>();
         this.interrupter = Executors.newSingleThreadScheduledExecutor(
             new NamedThreads(
                 "timeable",
@@ -81,12 +82,7 @@ public final class MethodInterrupter {
         );
         this.interrupter.scheduleWithFixedDelay(
             new VerboseRunnable(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        MethodInterrupter.this.interrupt();
-                    }
-                }
+                MethodInterrupter.this::interrupt
             ),
             1, 1, TimeUnit.SECONDS
         );
@@ -122,11 +118,7 @@ public final class MethodInterrupter {
      */
     private void interrupt() {
         synchronized (this.interrupter) {
-            for (final MethodInterrupter.Call call : this.calls) {
-                if (call.expired() && call.interrupted()) {
-                    this.calls.remove(call);
-                }
-            }
+            this.calls.removeIf(call -> call.expired() && call.interrupted());
         }
     }
 
@@ -161,6 +153,7 @@ public final class MethodInterrupter {
          * Public ctor.
          * @param pnt Joint point
          */
+        @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
         Call(final ProceedingJoinPoint pnt) {
             this.thread = Thread.currentThread();
             this.start = System.currentTimeMillis();
@@ -174,15 +167,7 @@ public final class MethodInterrupter {
 
         @Override
         public int compareTo(final Call obj) {
-            final int compare;
-            if (this.deadline > obj.deadline) {
-                compare = 1;
-            } else if (this.deadline < obj.deadline) {
-                compare = -1;
-            } else {
-                compare = 0;
-            }
-            return compare;
+            return Long.compare(this.deadline, obj.deadline);
         }
 
         /**
@@ -204,13 +189,15 @@ public final class MethodInterrupter {
                 final Method method = MethodSignature.class
                     .cast(this.point.getSignature())
                     .getMethod();
-                Logger.warn(
-                    method.getDeclaringClass(),
-                    "%s: interrupted on %[ms]s timeout (over %[ms]s)",
-                    Mnemos.toText(this.point, true, false),
-                    System.currentTimeMillis() - this.start,
-                    this.deadline - this.start
-                );
+                if (Logger.isWarnEnabled(this)) {
+                    Logger.warn(
+                        method.getDeclaringClass(),
+                        "%s: interrupted on %[ms]s timeout (over %[ms]s)",
+                        Mnemos.toText(this.point, true, false),
+                        System.currentTimeMillis() - this.start,
+                        this.deadline - this.start
+                    );
+                }
                 dead = false;
             } else {
                 dead = true;
