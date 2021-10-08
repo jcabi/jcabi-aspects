@@ -57,6 +57,7 @@ public final class SingleException {
      * @param point Joint point
      * @return The result of call
      * @throws Throwable If something goes wrong inside
+     * @checkstyle IllegalThrowsCheck (50 lines)
      */
     @Around
         (
@@ -64,8 +65,7 @@ public final class SingleException {
             "execution(* * (..))"
             + " && @annotation(com.jcabi.aspects.UnitedThrow)"
         )
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    // @checkstyle IllegalThrowsCheck (1 line)
+    @SuppressWarnings({"PMD.AvoidCatchingThrowable", "PMD.PreserveStackTrace"})
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         final Method method =
             MethodSignature.class.cast(point.getSignature()).getMethod();
@@ -99,8 +99,8 @@ public final class SingleException {
     private static boolean exists(final Class<? extends Throwable> clz) {
         boolean found = false;
         for (final Constructor<?> ctr : clz.getConstructors()) {
-            if ((ctr.getParameterTypes().length == 1)
-                && (ctr.getParameterTypes()[0] == Throwable.class)) {
+            if (ctr.getParameterTypes().length == 1
+                && ctr.getParameterTypes()[0] == Throwable.class) {
                 found = true;
                 break;
             }
