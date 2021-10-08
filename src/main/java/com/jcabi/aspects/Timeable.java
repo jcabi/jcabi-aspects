@@ -87,7 +87,7 @@ public @interface Timeable {
      * @checkstyle MagicNumber (2 lines)
      * @return The limit
      */
-    int limit() default DEFAULT_LIMIT;
+    int limit() default Timeable.DEFAULT_LIMIT;
 
     /**
      * Time unit for the limit.
