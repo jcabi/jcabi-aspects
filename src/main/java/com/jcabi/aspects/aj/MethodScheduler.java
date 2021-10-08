@@ -67,7 +67,7 @@ public final class MethodScheduler {
      */
     public MethodScheduler() {
         this.services =
-            new ConcurrentHashMap<Object, MethodScheduler.Service>(0);
+            new ConcurrentHashMap<>(0);
     }
 
     /**
@@ -177,6 +177,7 @@ public final class MethodScheduler {
          * @param obj Object
          * @param annt Annotation
          */
+        @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
         protected Service(final Runnable runnable, final Object obj,
             final ScheduleWithFixedDelay annt) {
             this.start = System.currentTimeMillis();
@@ -189,12 +190,9 @@ public final class MethodScheduler {
             this.verbose = annt.verbose();
             this.await = annt.awaitUnit().toMillis(annt.await());
             this.attempts = annt.shutdownAttempts();
-            final Runnable job = new Runnable() {
-                @Override
-                public void run() {
-                    runnable.run();
-                    MethodScheduler.Service.this.counter.incrementAndGet();
-                }
+            final Runnable job = () -> {
+                runnable.run();
+                this.counter.incrementAndGet();
             };
             for (int thread = 0; thread < annt.threads(); ++thread) {
                 this.executor.scheduleWithFixedDelay(
@@ -212,7 +210,8 @@ public final class MethodScheduler {
         }
 
         @Override
-        public void close() throws IOException {
+        @SuppressWarnings("PMD.CyclomaticComplexity")
+        public void close() {
             this.executor.shutdown();
             final long begin = System.currentTimeMillis();
             try {
@@ -248,10 +247,11 @@ public final class MethodScheduler {
                 throw new IllegalStateException(ex);
             }
             if (this.verbose) {
+                final long time = System.currentTimeMillis() - this.start;
                 Logger.info(
                     this.object,
                     "execution stopped after %[ms]s and %d tick(s)",
-                    System.currentTimeMillis() - this.start,
+                    time,
                     this.counter.get()
                 );
             }
