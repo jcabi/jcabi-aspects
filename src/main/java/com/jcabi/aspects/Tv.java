@@ -137,22 +137,21 @@ public final class Tv {
     /**
      * Thousand.
      */
-    public static final int THOUSAND = 1000;
+    public static final int THOUSAND = 1_000;
 
     /**
      * Million.
      */
-    public static final int MILLION = 1000000;
+    public static final int MILLION = 1_000_000;
 
     /**
      * Billion.
      */
-    public static final int BILLION = 1000000000;
+    public static final int BILLION = 1_000_000_000;
 
     /**
      * Private constructor.
      */
     private Tv() {
-        throw new IllegalStateException("Utility class - cannot instantiate!");
     }
 }
