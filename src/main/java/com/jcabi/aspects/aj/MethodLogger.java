@@ -74,9 +74,12 @@ public final class MethodLogger {
     /**
      * Public ctor.
      */
-    @SuppressWarnings("PMD.DoNotUseThreads")
+    @SuppressWarnings({
+        "PMD.DoNotUseThreads",
+        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
+    })
     public MethodLogger() {
-        this.running = new ConcurrentSkipListSet<Marker>();
+        this.running = new ConcurrentSkipListSet<>();
         final ScheduledExecutorService monitor =
             Executors.newSingleThreadScheduledExecutor(
                 new NamedThreads(
@@ -87,15 +90,7 @@ public final class MethodLogger {
         monitor.scheduleWithFixedDelay(
             new FutureTask<Void>(
                 new VerboseRunnable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            for (final MethodLogger.Marker marker
-                                : MethodLogger.this.running) {
-                                marker.monitor();
-                            }
-                        }
-                    }
+                    () -> this.running.forEach(Marker::monitor)
                 ), null
             ) {
                 @Override
@@ -176,6 +171,7 @@ public final class MethodLogger {
      * @throws Throwable If something goes wrong inside
      * @checkstyle ExecutableStatementCountCheck (100 lines)
      */
+    @SuppressWarnings("PMD.AvoidThreadGroup")
     private Object wrap(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation) throws Throwable {
         if (Thread.interrupted()) {
@@ -233,20 +229,23 @@ public final class MethodLogger {
                 } else {
                     origin = "somewhere";
                 }
+                final String text = Mnemos.toText(
+                    point,
+                    annotation.trim(),
+                    annotation.skipArgs(),
+                    annotation.logThis()
+                );
+                final long time = System.nanoTime() - start;
+                final String ext = Mnemos.toText(ex);
                 LogHelper.log(
                     level,
                     method.getDeclaringClass(),
                     Logger.format(
                         "%s: thrown %s out of %s in %[nano]s",
-                        Mnemos.toText(
-                            point,
-                            annotation.trim(),
-                            annotation.skipArgs(),
-                            annotation.logThis()
-                        ),
-                        Mnemos.toText(ex),
+                        text,
+                        ext,
                         origin,
-                        System.nanoTime() - start
+                        time
                     )
                 );
             }
@@ -353,8 +352,8 @@ public final class MethodLogger {
     private static boolean instanceOf(final Class<?> child,
         final Class<?> parent) {
         boolean instance = child.equals(parent)
-            || (child.getSuperclass() != null
-            && MethodLogger.instanceOf(child.getSuperclass(), parent));
+            || child.getSuperclass() != null
+            && MethodLogger.instanceOf(child.getSuperclass(), parent);
         if (!instance) {
             for (final Class<?> iface : child.getInterfaces()) {
                 instance = MethodLogger.instanceOf(iface, parent);
@@ -373,11 +372,11 @@ public final class MethodLogger {
      */
     private static String allText(final StackTraceElement... trace) {
         final StringBuilder text = new StringBuilder();
-        for (int pos = 0; pos < trace.length; ++pos) {
+        for (final StackTraceElement elem : trace) {
             if (text.length() > 0) {
                 text.append(", ");
             }
-            text.append(MethodLogger.oneText(trace[pos]));
+            text.append(MethodLogger.oneText(elem));
         }
         return text.toString();
     }
