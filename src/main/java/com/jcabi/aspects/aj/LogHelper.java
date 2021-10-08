@@ -31,12 +31,14 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Loggable;
 import com.jcabi.log.Logger;
+import java.util.logging.Level;
 
 /**
  * Helper methods for logging.
  *
  * @since 0.17
  */
+@SuppressWarnings("PMD.ProhibitPublicStaticMethods")
 final class LogHelper {
 
     /**
@@ -56,17 +58,19 @@ final class LogHelper {
      */
     public static void log(final int level, final Object log,
         final String message, final Object... params) {
+        final Level lvl;
         if (level == Loggable.TRACE) {
-            Logger.trace(log, message, params);
+            lvl = Level.FINEST;
         } else if (level == Loggable.DEBUG) {
-            Logger.debug(log, message, params);
+            lvl = Level.FINE;
         } else if (level == Loggable.INFO) {
-            Logger.info(log, message, params);
+            lvl = Level.INFO;
         } else if (level == Loggable.WARN) {
-            Logger.warn(log, message, params);
-        } else if (level == Loggable.ERROR) {
-            Logger.error(log, message, params);
+            lvl = Level.WARNING;
+        } else {
+            lvl = Level.OFF;
         }
+        Logger.log(lvl, log, message, params);
     }
 
     /**
@@ -77,19 +81,19 @@ final class LogHelper {
      * @return TRUE if enabled
      */
     public static boolean enabled(final int level, final Object log) {
-        final boolean enabled;
+        final Level lvl;
         if (level == Loggable.TRACE) {
-            enabled = Logger.isTraceEnabled(log);
+            lvl = Level.FINEST;
         } else if (level == Loggable.DEBUG) {
-            enabled = Logger.isDebugEnabled(log);
+            lvl = Level.FINE;
         } else if (level == Loggable.INFO) {
-            enabled = Logger.isInfoEnabled(log);
+            lvl = Level.INFO;
         } else if (level == Loggable.WARN) {
-            enabled = Logger.isWarnEnabled(log);
+            lvl = Level.WARNING;
         } else {
-            enabled = true;
+            lvl = Level.OFF;
         }
-        return enabled;
+        return Logger.isEnabled(lvl, log);
     }
 }
 
