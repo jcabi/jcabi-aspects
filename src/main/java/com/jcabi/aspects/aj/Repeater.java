@@ -65,9 +65,11 @@ public final class Repeater {
      * @checkstyle LineLength (4 lines)
      * @checkstyle NonStaticMethodCheck (100 lines)
      * @checkstyle ExecutableStatementCountCheck (100 lines)
+     * @checkstyle CyclomaticComplexityCheck (100 lines)
+     * @checkstyle IllegalThrowsCheck (100 lines)
      */
+    @SuppressWarnings({"PMD.AvoidCatchingThrowable", "PMD.CyclomaticComplexity"})
     @Around("execution(* * (..)) && @annotation(com.jcabi.aspects.RetryOnFailure)")
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         final Method method = MethodSignature.class
             .cast(point.getSignature())
@@ -94,24 +96,28 @@ public final class Repeater {
                 }
                 ++attempt;
                 if (rof.verbose()) {
-                    Logger.warn(
-                        joinpoint.targetize(),
-                        // @checkstyle LineLength (1 line)
-                        "#%s(): attempt #%d of %d failed in %[nano]s (%[nano]s waiting already) with %[exception]s",
-                        method.getName(),
-                        attempt, rof.attempts(), System.nanoTime() - start,
-                        System.nanoTime() - begin, ex
-                    );
+                    if (Logger.isWarnEnabled(this)) {
+                        Logger.warn(
+                            joinpoint.targetize(),
+                            // @checkstyle LineLength (1 line)
+                            "#%s(): attempt #%d of %d failed in %[nano]s (%[nano]s waiting already) with %[exception]s",
+                            method.getName(),
+                            attempt, rof.attempts(), System.nanoTime() - start,
+                            System.nanoTime() - begin, ex
+                        );
+                    }
                 } else {
-                    Logger.warn(
-                        joinpoint.targetize(),
-                        // @checkstyle LineLength (1 line)
-                        "#%s(): attempt #%d/%d failed with %[type]s in %[nano]s (%[nano]s in total): %s",
-                        method.getName(),
-                        attempt, rof.attempts(), ex, System.nanoTime() - start,
-                        System.nanoTime() - begin,
-                        Repeater.message(ex)
-                    );
+                    if (Logger.isWarnEnabled(this)) {
+                        Logger.warn(
+                            joinpoint.targetize(),
+                            // @checkstyle LineLength (1 line)
+                            "#%s(): attempt #%d/%d failed with %[type]s in %[nano]s (%[nano]s in total): %s",
+                            method.getName(),
+                            attempt, rof.attempts(), ex, System.nanoTime() - start,
+                            System.nanoTime() - begin,
+                            Repeater.message(ex)
+                        );
+                    }
                 }
                 if (attempt >= rof.attempts()) {
                     throw ex;
