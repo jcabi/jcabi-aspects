@@ -115,6 +115,7 @@ public final class Parallelizer {
                 failures.add(exception);
             }
         } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
             failures.add(ex);
         } catch (final ExecutionException ex) {
             failures.add(ex);
