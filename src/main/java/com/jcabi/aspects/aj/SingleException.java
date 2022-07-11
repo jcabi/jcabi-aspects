@@ -84,7 +84,7 @@ public final class SingleException {
                     throwable = clz.getConstructor(Throwable.class)
                         .newInstance(ex);
                 } else {
-                    throwable = clz.newInstance();
+                    throwable = clz.getConstructor().newInstance();
                 }
             }
             throw throwable;
