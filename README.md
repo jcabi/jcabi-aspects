@@ -4,11 +4,11 @@
 [![DevOps By Rultor.com](http://www.rultor.com/b/jcabi/jcabi-aspects)](http://www.rultor.com/p/jcabi/jcabi-aspects)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
+[![mvn](https://github.com/jcabi/jcabi-aspects/actions/workflows/mvn.yml/badge.svg)](https://github.com/jcabi/jcabi-aspects/actions/workflows/mvn.yml)
 [![PDD status](http://www.0pdd.com/svg?name=jcabi/jcabi-aspects)](http://www.0pdd.com/p?name=jcabi/jcabi-aspects)
 [![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-aspects.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-aspects)
-
-[![jpeek report](https://i.jpeek.org/com.jcabi/jcabi-aspects/badge.svg)](https://i.jpeek.org/com.jcabi/jcabi-aspects/)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects)
+[![JavaDoc](https://img.shields.io/badge/javadoc-html-blue.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-aspects)
 
 More details are here: [aspects.jcabi.com](http://aspects.jcabi.com/index.html).
 Also, read this blog post: [Java Method Logging with AOP and Annotations](http://www.yegor256.com/2014/06/01/aop-aspectj-java-method-logging.html).
