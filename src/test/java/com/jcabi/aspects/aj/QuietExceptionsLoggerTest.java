@@ -31,7 +31,8 @@ package com.jcabi.aspects.aj;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 
 /**
@@ -87,7 +88,7 @@ public final class QuietExceptionsLoggerTest {
      * Throws exception when used with method that does not return void.
      * @throws Throwable in case of error
      */
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void throwsWhenUsedWithNonVoidReturnValue() throws Throwable {
         final ProceedingJoinPoint point = Mockito
             .mock(ProceedingJoinPoint.class);
@@ -96,6 +97,9 @@ public final class QuietExceptionsLoggerTest {
         Mockito.when(signature.getMethod())
             .thenReturn(this.getClass().getMethods()[0]);
         Mockito.when(signature.getReturnType()).thenReturn(Object.class);
-        new QuietExceptionsLogger().wrap(point);
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            () -> new QuietExceptionsLogger().wrap(point)
+        );
     }
 }

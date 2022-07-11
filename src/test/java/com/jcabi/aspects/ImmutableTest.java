@@ -33,7 +33,7 @@ import com.jcabi.aspects.version.Version;
 import java.util.regex.Pattern;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 /**
@@ -55,17 +55,23 @@ public final class ImmutableTest {
     /**
      * Immutable can catch mutable classes.
      */
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void catchedMutableTypes() {
-        new Mutable();
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            () -> new Mutable()
+        );
     }
 
     /**
      * ImmutabilityChecker can catch mutable classes with arrays.
      */
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void catchedMutableTypesWithArrays() {
-        new MutableWithArray();
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            () -> new MutableWithArray()
+        );
     }
 
     /**
@@ -89,9 +95,12 @@ public final class ImmutableTest {
     /**
      * Immutable can catch mutable classes with interfaces.
      */
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void catchesTypesMutableByClassInheritance() {
-        new MutableByInheritance();
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            () -> new MutableByInheritance()
+        );
     }
 
     /**

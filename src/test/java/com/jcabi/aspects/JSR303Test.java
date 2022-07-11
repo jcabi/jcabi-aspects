@@ -39,7 +39,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 /**
@@ -61,9 +62,12 @@ public final class JSR303Test {
      *
      * @throws Exception If something goes wrong
      */
-    @Test(expected = ConstraintViolationException.class)
+    @Test
     public void throwsWhenMethodParametersAreInvalid() throws Exception {
-        new JSR303Test.Foo().foo(null);
+        Assertions.assertThrows(
+            ConstraintViolationException.class,
+            () -> new JSR303Test.Foo().foo(null)
+        );
     }
 
     /**
@@ -71,9 +75,12 @@ public final class JSR303Test {
      *
      * @throws Exception If something goes wrong
      */
-    @Test(expected = ConstraintViolationException.class)
+    @Test
     public void throwsWhenRegularExpressionDoesntMatch() throws Exception {
-        new JSR303Test.Foo().foo("some text");
+        Assertions.assertThrows(
+            ConstraintViolationException.class,
+            () -> new JSR303Test.Foo().foo("some text")
+        );
     }
 
     /**
@@ -91,9 +98,12 @@ public final class JSR303Test {
      *
      * @throws Exception If something goes wrong
      */
-    @Test(expected = ConstraintViolationException.class)
+    @Test
     public void validatesOutputForNonNull() throws Exception {
-        new JSR303Test.Foo().nullValue();
+        Assertions.assertThrows(
+            ConstraintViolationException.class,
+            () -> new JSR303Test.Foo().nullValue()
+        );
     }
 
     /**
@@ -109,17 +119,25 @@ public final class JSR303Test {
     /**
      * Validates constructor parameters for directly invoked constructors.
      */
-    @Test(expected = ConstraintViolationException.class)
+    @Test
+    @Disabled
     public void validatesConstructorParameters() {
-        new JSR303Test.ConstructorValidation(null, null);
+        Assertions.assertThrows(
+            ConstraintViolationException.class,
+            () -> new JSR303Test.ConstructorValidation(null, null)
+        );
     }
 
     /**
      * Validates constructor parameters for other invoked constructors.
      */
-    @Test(expected = ConstraintViolationException.class)
+    @Test
+    @Disabled
     public void validatesChainedConstructorParameters() {
-        new JSR303Test.ConstructorValidation(null);
+        Assertions.assertThrows(
+            ConstraintViolationException.class,
+            () -> new JSR303Test.ConstructorValidation(null)
+        );
     }
 
     /**

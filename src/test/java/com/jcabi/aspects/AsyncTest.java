@@ -36,7 +36,8 @@ import java.util.concurrent.TimeUnit;
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Test case for {@link Async} annotation and its implementation.
@@ -92,9 +93,12 @@ public final class AsyncTest {
      * Throws exception when method is annotated with Async but does not return
      * Future or void.
      */
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void throwsWhenMethodDoesNotReturnVoidOrFuture() {
-        new Foo().asyncMethodThatReturnsInt();
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            () -> new Foo().asyncMethodThatReturnsInt()
+        );
     }
 
     /**

@@ -33,7 +33,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Tests for {@link UnitedThrow}.
@@ -45,36 +46,48 @@ public final class UnitedThrowTest {
      * UnitedThrow can rethrow exception that is a subclass of declared one.
      * @throws Exception If something goes wrong
      */
-    @Test(expected = IOException.class)
+    @Test
     public void rethrowsDeclaredException() throws Exception {
-        new UnitedThrowTest.Thrower().file();
+        Assertions.assertThrows(
+            IOException.class,
+            () -> new UnitedThrowTest.Thrower().file()
+        );
     }
 
     /**
      * UnitedThrow can throw first declared exception.
      * @throws Exception If something goes wrong
      */
-    @Test(expected = IOException.class)
+    @Test
     public void throwsDeclaredException() throws Exception {
-        new UnitedThrowTest.Thrower().save();
+        Assertions.assertThrows(
+            IOException.class,
+            () -> new UnitedThrowTest.Thrower().save()
+        );
     }
 
     /**
      * UnitedThrow can throw configured exception.
      * @throws Exception If something goes wrong
      */
-    @Test(expected = IOException.class)
+    @Test
     public void throwsConfiguredException() throws Exception {
-        new UnitedThrowTest.Thrower().multiple();
+        Assertions.assertThrows(
+            IOException.class,
+            () -> new UnitedThrowTest.Thrower().multiple()
+        );
     }
 
     /**
      * UnitedThrow can throw IllegalStateException when no exception declared.
      * @throws Exception If something goes wrong
      */
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void throwsIllegalStateException() throws Exception {
-        new UnitedThrowTest.Thrower().def();
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            () -> new UnitedThrowTest.Thrower().def()
+        );
     }
 
     /**

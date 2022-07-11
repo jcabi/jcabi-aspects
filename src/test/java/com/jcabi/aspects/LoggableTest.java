@@ -43,7 +43,8 @@ import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Test case for {@link Loggable} annotation and its implementation.
@@ -96,9 +97,12 @@ public final class LoggableTest {
      * Loggable can ignore some exceptions.
      * @throws Exception If something goes wrong
      */
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void ignoresSomeExceptions() throws Exception {
-        new LoggableTest.Foo().doThrow();
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            () -> new LoggableTest.Foo().doThrow()
+        );
     }
 
     /**

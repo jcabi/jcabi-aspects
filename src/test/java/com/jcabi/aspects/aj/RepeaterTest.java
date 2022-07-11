@@ -36,6 +36,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Tests for {@link Repeater}.
@@ -70,20 +71,23 @@ public final class RepeaterTest {
     /**
      * Repeater should stop method retries if it exceeds a threshold.
      */
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void stopsRetryingAfterNumberOfAttempts() {
         final AtomicInteger calls = new AtomicInteger(0);
-        new Callable<Boolean>() {
-            @Override
-            @RetryOnFailure(attempts = Tv.THREE, verbose = false)
-            public Boolean call() {
-                if (calls.get() < Tv.THREE) {
-                    calls.incrementAndGet();
-                    throw new IllegalStateException();
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            () -> new Callable<Boolean>() {
+                @Override
+                @RetryOnFailure(attempts = Tv.THREE, verbose = false)
+                public Boolean call() {
+                    if (calls.get() < Tv.THREE) {
+                        calls.incrementAndGet();
+                        throw new IllegalStateException();
+                    }
+                    return true;
                 }
-                return true;
-            }
-        } .call();
+            } .call()
+        );
     }
 
     /**
@@ -119,26 +123,29 @@ public final class RepeaterTest {
      * Repeater should throw the exception if it is
      * not specified to be retried.
      */
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Test
     public void throwExceptionsWhichAreNotSpecifiedAsRetry() {
         final AtomicInteger calls = new AtomicInteger(0);
         try {
-            new Callable<Boolean>() {
-                @Override
-                @RetryOnFailure
-                    (
-                        attempts = Tv.THREE,
-                        types = {IllegalArgumentException.class },
-                        verbose = false
-                    )
-                public Boolean call() {
-                    if (calls.get() < Tv.THREE - 1) {
-                        calls.incrementAndGet();
-                        throw new ArrayIndexOutOfBoundsException();
+            Assertions.assertThrows(
+                ArrayIndexOutOfBoundsException.class,
+                () -> new Callable<Boolean>() {
+                    @Override
+                    @RetryOnFailure
+                        (
+                            attempts = Tv.THREE,
+                            types = {IllegalArgumentException.class },
+                            verbose = false
+                        )
+                    public Boolean call() {
+                        if (calls.get() < Tv.THREE - 1) {
+                            calls.incrementAndGet();
+                            throw new ArrayIndexOutOfBoundsException();
+                        }
+                        return true;
                     }
-                    return true;
-                }
-            } .call();
+                } .call()
+            );
         } finally {
             MatcherAssert.assertThat(calls.get(), Matchers.equalTo(1));
         }

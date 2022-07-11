@@ -34,7 +34,8 @@ import com.jcabi.aspects.Tv;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Tests for {@link Parallelizer}.
@@ -62,14 +63,17 @@ public final class ParallelizerTest {
     /**
      * Method should have exception propagated.
      */
-    @Test(expected = Exception.class)
+    @Test
     public void throwsCatchedException() {
-        new Runnable() {
-            @Override
-            @Parallel(threads = Tv.TEN)
-            public void run() {
-                throw new IllegalArgumentException();
-            }
-        } .run();
+        Assertions.assertThrows(
+            Exception.class,
+            () -> new Runnable() {
+                @Override
+                @Parallel(threads = Tv.TEN)
+                public void run() {
+                    throw new IllegalArgumentException();
+                }
+            }.run()
+        );
     }
 }

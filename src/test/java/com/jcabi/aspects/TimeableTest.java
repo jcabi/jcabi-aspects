@@ -30,7 +30,8 @@
 package com.jcabi.aspects;
 
 import java.util.concurrent.TimeUnit;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Test case for {@link Timeable} annotation.
@@ -43,9 +44,12 @@ public final class TimeableTest {
      * Timeable annotation can interrupt a long method.
      * @throws Exception If something goes wrong
      */
-    @Test(expected = InterruptedException.class)
+    @Test
     public void interruptsLongRunningMethod() throws Exception {
-        this.slow();
+        Assertions.assertThrows(
+            InterruptedException.class,
+            () -> this.slow()
+        );
     }
 
     /**

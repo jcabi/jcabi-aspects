@@ -32,7 +32,8 @@ package com.jcabi.aspects.aj;
 import com.jcabi.aspects.Immutable;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Tests for {@link ImmutabilityChecker}.
@@ -53,9 +54,12 @@ public final class ImmutabilityCheckerTest {
     /**
      * ImmutabilityChecker should fail on non final fields.
      */
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void failsOnNonFinalFields() {
-        new NonFinal("test");
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            () -> new NonFinal("test")
+        );
     }
 
     /**
