@@ -145,19 +145,16 @@ public final class Parallelizer {
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     private static Callable<Throwable> callable(final ProceedingJoinPoint point,
         final CountDownLatch start) {
-        return new Callable<Throwable>() {
-            @Override
-            public Throwable call() {
-                Throwable result = null;
-                try {
-                    start.await();
-                    point.proceed();
-                    // @checkstyle IllegalCatchCheck (1 line)
-                } catch (final Throwable ex) {
-                    result = ex;
-                }
-                return result;
+        return () -> {
+            Throwable result = null;
+            try {
+                start.await();
+                point.proceed();
+                // @checkstyle IllegalCatchCheck (1 line)
+            } catch (final Throwable ex) {
+                result = ex;
             }
+            return result;
         };
     }
 

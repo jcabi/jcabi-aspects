@@ -97,23 +97,13 @@ public final class UpdateMethodCacher {
     public void start() {
         this.cleaner.scheduleWithFixedDelay(
             new VerboseRunnable(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        UpdateMethodCacher.this.clean();
-                    }
-                }
+                () -> this.clean()
             ),
             1L, 1L, TimeUnit.SECONDS
         );
         this.updater.schedule(
             new VerboseRunnable(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        UpdateMethodCacher.this.update();
-                    }
-                }
+                () -> this.update()
             ),
             0L, TimeUnit.SECONDS
         );
