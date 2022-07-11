@@ -76,7 +76,7 @@ public final class MethodLogger {
      */
     @SuppressWarnings("PMD.DoNotUseThreads")
     public MethodLogger() {
-        this.running = new ConcurrentSkipListSet<Marker>();
+        this.running = new ConcurrentSkipListSet<>();
         final ScheduledExecutorService monitor =
             Executors.newSingleThreadScheduledExecutor(
                 new NamedThreads(

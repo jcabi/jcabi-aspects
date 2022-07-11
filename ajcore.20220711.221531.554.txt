@@ -1,0 +1,338 @@
+---- AspectJ Properties ---
+AspectJ Compiler 1.8.7 built on Wednesday Sep 9, 2015 at 21:19:30 GMT
+---- Dump Properties ---
+Dump file: ajcore.20220711.221531.554.txt
+Dump reason: abort
+Dump on exception: true
+Dump at exit condition: abort
+---- System Properties ---
+java.runtime.name=OpenJDK Runtime Environment
+sun.boot.library.path=/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib
+java.vm.version=25.332-b09
+gopherProxySet=false
+jdk.vendor.version=Zulu 8.62.0.19-CA-macosx
+maven.multiModuleProjectDirectory=/code/jcabi/jcabi-aspects
+java.vm.vendor=Azul Systems, Inc.
+java.vendor.url=http://www.azul.com/
+guice.disable.misplaced.annotation.check=true
+path.separator=:
+java.vm.name=OpenJDK 64-Bit Server VM
+file.encoding.pkg=sun.io
+user.country=US
+sun.java.launcher=SUN_STANDARD
+sun.os.patch.level=unknown
+java.vm.specification.name=Java Virtual Machine Specification
+user.dir=/Volumes/ssd2/code/jcabi/jcabi-aspects
+java.runtime.version=1.8.0_332-b09
+java.awt.graphicsenv=sun.awt.CGraphicsEnvironment
+java.endorsed.dirs=/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/endorsed
+os.arch=x86_64
+java.io.tmpdir=/var/folders/vl/633jwjvn2jvbj9zfg1sgglhw0000gp/T/
+line.separator=
+
+java.vm.specification.vendor=Oracle Corporation
+os.name=Mac OS X
+classworlds.conf=/usr/local/Cellar/maven/3.8.6/libexec/bin/m2.conf
+sun.jnu.encoding=UTF-8
+java.library.path=/Users/yegor/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.
+maven.conf=/usr/local/Cellar/maven/3.8.6/libexec/conf
+java.specification.name=Java Platform API Specification
+java.class.version=52.0
+sun.management.compiler=HotSpot 64-Bit Tiered Compilers
+os.version=10.16
+library.jansi.path=/usr/local/Cellar/maven/3.8.6/libexec/lib/jansi-native
+user.home=/Users/yegor
+user.timezone=Europe/Moscow
+java.awt.printerjob=sun.lwawt.macosx.CPrinterJob
+file.encoding=UTF-8
+java.specification.version=1.8
+java.class.path=/usr/local/Cellar/maven/3.8.6/libexec/boot/plexus-classworlds-2.6.0.jar
+user.name=yegor
+java.vm.specification.version=1.8
+sun.java.command=org.codehaus.plexus.classworlds.launcher.Launcher clean install -Pqulice --errors
+java.home=/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre
+sun.arch.data.model=64
+user.language=en
+java.specification.vendor=Oracle Corporation
+awt.toolkit=sun.lwawt.macosx.LWCToolkit
+java.vm.info=mixed mode
+java.version=1.8.0_332
+java.ext.dirs=/Users/yegor/Library/Java/Extensions:/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java
+sun.boot.class.path=/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/resources.jar:/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/rt.jar:/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/jsse.jar:/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/jce.jar:/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/charsets.jar:/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/jfr.jar:/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/cat.jar:/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/classes
+java.vendor=Azul Systems, Inc.
+maven.home=/usr/local/Cellar/maven/3.8.6/libexec
+file.separator=/
+java.vendor.url.bug=http://www.azul.com/support/
+sun.io.unicode.encoding=UnicodeBig
+sun.cpu.endian=little
+sun.cpu.isalist=
+---- Command Line ---
+-Xajruntimetarget:1.5
+-Xlint:warning
+-1.8
+-deprecation
+-encoding
+UTF-8
+-showWeaveInfo
+-source
+1.8
+-target
+1.8
+-classpath
+/Users/yegor/.m2/repository/com/jcabi/jcabi-log/0.17/jcabi-log-0.17.jar:/Users/yegor/.m2/repository/org/aspectj/aspectjrt/1.9.7/aspectjrt-1.9.7.jar:/Users/yegor/.m2/repository/javax/validation/validation-api/2.0.1.Final/validation-api-2.0.1.Final.jar:/Users/yegor/.m2/repository/org/hibernate/hibernate-validator/5.3.0.Alpha1/hibernate-validator-5.3.0.Alpha1.jar:/Users/yegor/.m2/repository/javax/el/javax.el-api/3.0.1-b04/javax.el-api-3.0.1-b04.jar:/Users/yegor/.m2/repository/org/glassfish/web/javax.el/2.2.6/javax.el-2.2.6.jar:/Users/yegor/.m2/repository/org/slf4j/slf4j-log4j12/1.8.0-alpha2/slf4j-log4j12-1.8.0-alpha2.jar:/Users/yegor/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar:/Users/yegor/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.6.2/junit-jupiter-api-5.6.2.jar:/Users/yegor/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.6.2/junit-jupiter-params-5.6.2.jar:/Users/yegor/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/Users/yegor/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.6.2/junit-jupiter-engine-5.6.2.jar:/Users/yegor/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/Users/yegor/.m2/repository/org/mockito/mockito-core/3.5.0/mockito-core-3.5.0.jar:/Users/yegor/.m2/repository/org/slf4j/slf4j-api/1.7.5/slf4j-api-1.7.5.jar:/Volumes/ssd2/code/jcabi/jcabi-aspects/target/classes
+-d
+/Volumes/ssd2/code/jcabi/jcabi-aspects/target/classes
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Parallel.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/ScheduleWithFixedDelay.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Loggable.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/Mnemos.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodValidator.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodScheduler.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodAsyncRunner.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/NamedThreads.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/Parallelizer.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodLogger.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/QuietExceptionsLogger.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/Repeater.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/ImmutabilityChecker.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodCacher.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/SingleException.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodInterrupter.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/LogHelper.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/UpdateMethodCacher.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/ImprovedJoinPoint.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/ExceptionsLogger.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Cacheable.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Async.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/RetryOnFailure.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Tv.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/LogExceptions.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Immutable.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/apt/AsyncReturnTypeProcessor.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/apt/QuietlyReturnTypeProcessor.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Timeable.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/UnitedThrow.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Quietly.java
+/Volumes/ssd2/code/jcabi/jcabi-aspects/target/generated-sources/java-templates/com/jcabi/aspects/version/Version.java
+---- Full Classpath ---
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/resources.jar(3532587 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/rt.jar(66522698 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/sunrsasign.jar(missing)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/jsse.jar(1931989 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/jce.jar(97861 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/charsets.jar(3135611 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/jfr.jar(891144 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/cat.jar(14794 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/classes(missing)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/ext/sunec.jar(38727 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/ext/nashorn.jar(2033830 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/ext/cldrdata.jar(3861289 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/ext/legacy8ujsse.jar(436486 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/ext/dnsns.jar(8288 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/ext/localedata.jar(1183181 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/ext/openjsse.jar(1344902 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/ext/sunjce_provider.jar(269449 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/ext/crs-agent.jar(209929 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/ext/sunpkcs11.jar(281645 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/ext/jaccess.jar(44518 bytes)
+/Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/ext/zipfs.jar(70414 bytes)
+/Users/yegor/.m2/repository/com/jcabi/jcabi-log/0.17/jcabi-log-0.17.jar(47994 bytes)
+/Users/yegor/.m2/repository/org/aspectj/aspectjrt/1.9.7/aspectjrt-1.9.7.jar(122874 bytes)
+/Users/yegor/.m2/repository/javax/validation/validation-api/2.0.1.Final/validation-api-2.0.1.Final.jar(93107 bytes)
+/Users/yegor/.m2/repository/org/hibernate/hibernate-validator/5.3.0.Alpha1/hibernate-validator-5.3.0.Alpha1.jar(703748 bytes)
+/Users/yegor/.m2/repository/javax/el/javax.el-api/3.0.1-b04/javax.el-api-3.0.1-b04.jar(73125 bytes)
+/Users/yegor/.m2/repository/org/glassfish/web/javax.el/2.2.6/javax.el-2.2.6.jar(117461 bytes)
+/Users/yegor/.m2/repository/org/slf4j/slf4j-log4j12/1.8.0-alpha2/slf4j-log4j12-1.8.0-alpha2.jar(14776 bytes)
+/Users/yegor/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar(489884 bytes)
+/Users/yegor/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.6.2/junit-jupiter-api-5.6.2.jar(154036 bytes)
+/Users/yegor/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.6.2/junit-jupiter-params-5.6.2.jar(562271 bytes)
+/Users/yegor/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar(384581 bytes)
+/Users/yegor/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.6.2/junit-jupiter-engine-5.6.2.jar(209317 bytes)
+/Users/yegor/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar(123360 bytes)
+/Users/yegor/.m2/repository/org/mockito/mockito-core/3.5.0/mockito-core-3.5.0.jar(667282 bytes)
+/Users/yegor/.m2/repository/org/slf4j/slf4j-api/1.7.5/slf4j-api-1.7.5.jar(26084 bytes)
+/Volumes/ssd2/code/jcabi/jcabi-aspects/target/classes(3 entries)
+---- Compiler Messages ---
+warning bad version number found in /Users/yegor/.m2/repository/org/aspectj/aspectjrt/1.9.7/aspectjrt-1.9.7.jar expected 1.8.7 found 1.9.7
+info directory classpath entry does not exist: /Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/lib/sunrsasign.jar
+info zipfile classpath entry does not exist: /Users/yegor/.sdkman/candidates/java/8.0.332-zulu/zulu-8.jdk/Contents/Home/jre/classes
+info Pipelining compilation
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodValidator.java
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodScheduler.java
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodAsyncRunner.java
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/Parallelizer.java
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodLogger.java
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/QuietExceptionsLogger.java
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/Repeater.java
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/ImmutabilityChecker.java
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodCacher.java
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/SingleException.java
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodInterrupter.java
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/ExceptionsLogger.java
+info weaver operating in reweavable mode.  Need to verify any required types exist.
+info woven aspect com.jcabi.aspects.aj.MethodValidator (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodValidator.java)
+info woven aspect com.jcabi.aspects.aj.MethodScheduler (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodScheduler.java)
+abort trouble in: 
+com.jcabi.aspects.aj.MethodAsyncRunner -- (IllegalStateException) there is no classname for invokedynamic
+there is no classname for invokedynamic
+java.lang.IllegalStateException: there is no classname for invokedynamic
+	at org.aspectj.apache.bcel.generic.InvokeDynamic.getClassName(InvokeDynamic.java:126)
+	at org.aspectj.weaver.bcel.BcelAccessForInlineMunger.openAroundAdvice(BcelAccessForInlineMunger.java:141)
+	at org.aspectj.weaver.bcel.BcelAccessForInlineMunger.munge(BcelAccessForInlineMunger.java:80)
+	at org.aspectj.weaver.bcel.BcelClassWeaver.weave(BcelClassWeaver.java:440)
+	at org.aspectj.weaver.bcel.BcelClassWeaver.weave(BcelClassWeaver.java:100)
+	at org.aspectj.weaver.bcel.BcelWeaver.weave(BcelWeaver.java:1689)
+	at org.aspectj.weaver.bcel.BcelWeaver.weaveWithoutDump(BcelWeaver.java:1633)
+	at org.aspectj.weaver.bcel.BcelWeaver.weaveAndNotify(BcelWeaver.java:1398)
+	at org.aspectj.weaver.bcel.BcelWeaver.weave(BcelWeaver.java:1155)
+	at org.aspectj.ajdt.internal.compiler.AjPipeliningCompilerAdapter.weaveQueuedEntries(AjPipeliningCompilerAdapter.java:514)
+	at org.aspectj.ajdt.internal.compiler.AjPipeliningCompilerAdapter.queueForWeaving(AjPipeliningCompilerAdapter.java:447)
+	at org.aspectj.ajdt.internal.compiler.AjPipeliningCompilerAdapter.afterProcessing(AjPipeliningCompilerAdapter.java:432)
+	at org.aspectj.ajdt.internal.compiler.CompilerAdapter.ajc$after$org_aspectj_ajdt_internal_compiler_CompilerAdapter$5$6b855184(CompilerAdapter.aj:103)
+	at org.aspectj.org.eclipse.jdt.internal.compiler.Compiler.process(Compiler.java:902)
+	at org.aspectj.org.eclipse.jdt.internal.compiler.Compiler.processCompiledUnits(Compiler.java:545)
+	at org.aspectj.org.eclipse.jdt.internal.compiler.Compiler.compile(Compiler.java:458)
+	at org.aspectj.ajdt.internal.core.builder.AjBuildManager.performCompilation(AjBuildManager.java:1036)
+	at org.aspectj.ajdt.internal.core.builder.AjBuildManager.performBuild(AjBuildManager.java:272)
+	at org.aspectj.ajdt.internal.core.builder.AjBuildManager.batchBuild(AjBuildManager.java:185)
+	at org.aspectj.ajdt.ajc.AjdtCommand.doCommand(AjdtCommand.java:114)
+	at org.aspectj.ajdt.ajc.AjdtCommand.runCommand(AjdtCommand.java:60)
+	at org.aspectj.tools.ajc.Main.run(Main.java:371)
+	at org.aspectj.tools.ajc.Main.runMain(Main.java:248)
+	at org.codehaus.mojo.aspectj.AbstractAjcCompiler.execute(AbstractAjcCompiler.java:537)
+	at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:137)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute2(MojoExecutor.java:370)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute(MojoExecutor.java:351)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:215)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:171)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:163)
+	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:117)
+	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:81)
+	at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build(SingleThreadedBuilder.java:56)
+	at org.apache.maven.lifecycle.internal.LifecycleStarter.execute(LifecycleStarter.java:128)
+	at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:294)
+	at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:192)
+	at org.apache.maven.DefaultMaven.execute(DefaultMaven.java:105)
+	at org.apache.maven.cli.MavenCli.execute(MavenCli.java:960)
+	at org.apache.maven.cli.MavenCli.doMain(MavenCli.java:293)
+	at org.apache.maven.cli.MavenCli.main(MavenCli.java:196)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:282)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:225)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:406)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:347)
+
+info woven aspect com.jcabi.aspects.aj.MethodAsyncRunner (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodAsyncRunner.java)
+weaveinfo Join point 'initialization(void com.jcabi.aspects.aj.Parallelizer.<init>())' in Type 'com.jcabi.aspects.aj.Parallelizer' (Parallelizer.java:59) advised by after advice from 'com.jcabi.aspects.aj.ImmutabilityChecker' (ImmutabilityChecker.java:66)
+info woven aspect com.jcabi.aspects.aj.Parallelizer (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/Parallelizer.java)
+info woven aspect com.jcabi.aspects.aj.MethodLogger (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodLogger.java)
+weaveinfo Join point 'initialization(void com.jcabi.aspects.aj.QuietExceptionsLogger.<init>())' in Type 'com.jcabi.aspects.aj.QuietExceptionsLogger' (QuietExceptionsLogger.java:49) advised by after advice from 'com.jcabi.aspects.aj.ImmutabilityChecker' (ImmutabilityChecker.java:66)
+info woven aspect com.jcabi.aspects.aj.QuietExceptionsLogger (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/QuietExceptionsLogger.java)
+weaveinfo Join point 'initialization(void com.jcabi.aspects.aj.Repeater.<init>())' in Type 'com.jcabi.aspects.aj.Repeater' (Repeater.java:52) advised by after advice from 'com.jcabi.aspects.aj.ImmutabilityChecker' (ImmutabilityChecker.java:66)
+info woven aspect com.jcabi.aspects.aj.Repeater (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/Repeater.java)
+info woven aspect com.jcabi.aspects.aj.ImmutabilityChecker (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/ImmutabilityChecker.java)
+info woven aspect com.jcabi.aspects.aj.MethodCacher (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodCacher.java)
+weaveinfo Join point 'initialization(void com.jcabi.aspects.aj.SingleException.<init>())' in Type 'com.jcabi.aspects.aj.SingleException' (SingleException.java:49) advised by after advice from 'com.jcabi.aspects.aj.ImmutabilityChecker' (ImmutabilityChecker.java:66)
+info woven aspect com.jcabi.aspects.aj.SingleException (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/SingleException.java)
+info woven aspect com.jcabi.aspects.aj.MethodInterrupter (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodInterrupter.java)
+weaveinfo Join point 'initialization(void com.jcabi.aspects.aj.ExceptionsLogger.<init>())' in Type 'com.jcabi.aspects.aj.ExceptionsLogger' (ExceptionsLogger.java:48) advised by after advice from 'com.jcabi.aspects.aj.ImmutabilityChecker' (ImmutabilityChecker.java:66)
+info woven aspect com.jcabi.aspects.aj.ExceptionsLogger (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/ExceptionsLogger.java)
+warning at public void beforeMethod(final JoinPoint point) {
+            
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodValidator.java:83:0::0 can not build thisJoinPoint lazily for this advice since it has no suitable guard [Xlint:noGuardForLazyTjp]
+warning at public void beforeCtor(final JoinPoint point) {
+            
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodValidator.java:103:0::0 can not build thisJoinPoint lazily for this advice since it has no suitable guard [Xlint:noGuardForLazyTjp]
+warning at public void after(final JoinPoint point, final Object result) {
+            
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodValidator.java:132:0::0 can not build thisJoinPoint lazily for this advice since it has no suitable guard [Xlint:noGuardForLazyTjp]
+info woven class com.jcabi.aspects.aj.MethodScheduler$Service (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodScheduler.java)
+warning at public void instantiate(final JoinPoint point) {
+            
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodScheduler.java:83:0::0 can not build thisJoinPoint lazily for this advice since it has no suitable guard [Xlint:noGuardForLazyTjp]
+warning at public void close(final JoinPoint point) throws IOException {
+            
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodScheduler.java:127:0::0 can not build thisJoinPoint lazily for this advice since it has no suitable guard [Xlint:noGuardForLazyTjp]
+info woven class com.jcabi.aspects.aj.Parallelizer$ParallelException (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/Parallelizer.java)
+info woven class com.jcabi.aspects.aj.MethodLogger$Marker (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodLogger.java)
+info woven class com.jcabi.aspects.aj.MethodLogger$1 (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodLogger.java)
+info woven class com.jcabi.aspects.aj.ImmutabilityChecker$Violation (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/ImmutabilityChecker.java)
+warning at public void after(final JoinPoint point) {
+            
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/ImmutabilityChecker.java:66:0::0 can not build thisJoinPoint lazily for this advice since it has no suitable guard [Xlint:noGuardForLazyTjp]
+info woven class com.jcabi.aspects.aj.MethodCacher$Tunnel (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodCacher.java)
+info woven class com.jcabi.aspects.aj.MethodCacher$Key (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodCacher.java)
+warning at public void preflush(final JoinPoint point) {
+            
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodCacher.java:167:0::0 can not build thisJoinPoint lazily for this advice since it has no suitable guard [Xlint:noGuardForLazyTjp]
+warning at public void postflush(final JoinPoint point) {
+            
+/Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodCacher.java:186:0::0 can not build thisJoinPoint lazily for this advice since it has no suitable guard [Xlint:noGuardForLazyTjp]
+info woven class com.jcabi.aspects.aj.MethodInterrupter$Call (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodInterrupter.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Parallel.java
+info woven class com.jcabi.aspects.Parallel (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Parallel.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/ScheduleWithFixedDelay.java
+info woven class com.jcabi.aspects.ScheduleWithFixedDelay (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/ScheduleWithFixedDelay.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Loggable.java
+info woven class com.jcabi.aspects.Loggable (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Loggable.java)
+info woven class com.jcabi.aspects.Loggable$Quiet (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Loggable.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/Mnemos.java
+weaveinfo Join point 'initialization(void com.jcabi.aspects.aj.Mnemos.<init>())' in Type 'com.jcabi.aspects.aj.Mnemos' (Mnemos.java:60) advised by after advice from 'com.jcabi.aspects.aj.ImmutabilityChecker' (ImmutabilityChecker.java:66)
+info woven class com.jcabi.aspects.aj.Mnemos (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/Mnemos.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/NamedThreads.java
+info woven class com.jcabi.aspects.aj.NamedThreads (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/NamedThreads.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/LogHelper.java
+info woven class com.jcabi.aspects.aj.LogHelper (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/LogHelper.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/UpdateMethodCacher.java
+info woven class com.jcabi.aspects.aj.UpdateMethodCacher (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/UpdateMethodCacher.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/ImprovedJoinPoint.java
+info woven class com.jcabi.aspects.aj.ImprovedJoinPoint (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/ImprovedJoinPoint.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Cacheable.java
+info woven class com.jcabi.aspects.Cacheable$FlushAfter (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Cacheable.java)
+info woven class com.jcabi.aspects.Cacheable$FlushBefore (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Cacheable.java)
+info woven class com.jcabi.aspects.Cacheable (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Cacheable.java)
+info woven class com.jcabi.aspects.Cacheable$Flush (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Cacheable.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Async.java
+info woven class com.jcabi.aspects.Async (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Async.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/RetryOnFailure.java
+info woven class com.jcabi.aspects.RetryOnFailure (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/RetryOnFailure.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Tv.java
+info woven class com.jcabi.aspects.Tv (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Tv.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/LogExceptions.java
+info woven class com.jcabi.aspects.LogExceptions (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/LogExceptions.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Immutable.java
+info woven class com.jcabi.aspects.Immutable (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Immutable.java)
+info woven class com.jcabi.aspects.Immutable$Array (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Immutable.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/apt/AsyncReturnTypeProcessor.java
+info woven class com.jcabi.aspects.apt.AsyncReturnTypeProcessor (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/apt/AsyncReturnTypeProcessor.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/apt/QuietlyReturnTypeProcessor.java
+info woven class com.jcabi.aspects.apt.QuietlyReturnTypeProcessor (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/apt/QuietlyReturnTypeProcessor.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Timeable.java
+info woven class com.jcabi.aspects.Timeable (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Timeable.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/UnitedThrow.java
+info woven class com.jcabi.aspects.UnitedThrow$None (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/UnitedThrow.java)
+info woven class com.jcabi.aspects.UnitedThrow (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/UnitedThrow.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Quietly.java
+info woven class com.jcabi.aspects.Quietly (from /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/Quietly.java)
+info compiling /Volumes/ssd2/code/jcabi/jcabi-aspects/target/generated-sources/java-templates/com/jcabi/aspects/version/Version.java
+info woven class com.jcabi.aspects.version.Version (from /Volumes/ssd2/code/jcabi/jcabi-aspects/target/generated-sources/java-templates/com/jcabi/aspects/version/Version.java)
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodCacher.java:186::0 advice defined in com.jcabi.aspects.aj.MethodCacher has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodCacher.java:167::0 advice defined in com.jcabi.aspects.aj.MethodCacher has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodLogger.java:161::0 advice defined in com.jcabi.aspects.aj.MethodLogger has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodValidator.java:132::0 advice defined in com.jcabi.aspects.aj.MethodValidator has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodLogger.java:128::0 advice defined in com.jcabi.aspects.aj.MethodLogger has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodScheduler.java:127::0 advice defined in com.jcabi.aspects.aj.MethodScheduler has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodValidator.java:103::0 advice defined in com.jcabi.aspects.aj.MethodValidator has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodInterrupter.java:103::0 advice defined in com.jcabi.aspects.aj.MethodInterrupter has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodCacher.java:98::0 advice defined in com.jcabi.aspects.aj.MethodCacher has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodValidator.java:83::0 advice defined in com.jcabi.aspects.aj.MethodValidator has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodAsyncRunner.java:79::0 advice defined in com.jcabi.aspects.aj.MethodAsyncRunner has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/MethodScheduler.java:83::0 advice defined in com.jcabi.aspects.aj.MethodScheduler has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/Parallelizer.java:75::0 advice defined in com.jcabi.aspects.aj.Parallelizer has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/Repeater.java:71::0 advice defined in com.jcabi.aspects.aj.Repeater has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/QuietExceptionsLogger.java:69::0 advice defined in com.jcabi.aspects.aj.QuietExceptionsLogger has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/SingleException.java:69::0 advice defined in com.jcabi.aspects.aj.SingleException has not been applied [Xlint:adviceDidNotMatch]
+warning at /Volumes/ssd2/code/jcabi/jcabi-aspects/src/main/java/com/jcabi/aspects/aj/ExceptionsLogger.java:67::0 advice defined in com.jcabi.aspects.aj.ExceptionsLogger has not been applied [Xlint:adviceDidNotMatch]

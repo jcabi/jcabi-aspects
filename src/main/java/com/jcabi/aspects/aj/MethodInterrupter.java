@@ -72,7 +72,7 @@ public final class MethodInterrupter {
      * Public ctor.
      */
     public MethodInterrupter() {
-        this.calls = new ConcurrentSkipListSet<MethodInterrupter.Call>();
+        this.calls = new ConcurrentSkipListSet<>();
         this.interrupter = Executors.newSingleThreadScheduledExecutor(
             new NamedThreads(
                 "timeable",

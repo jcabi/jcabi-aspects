@@ -67,7 +67,7 @@ public final class MethodScheduler {
      */
     public MethodScheduler() {
         this.services =
-            new ConcurrentHashMap<Object, MethodScheduler.Service>(0);
+            new ConcurrentHashMap<>(0);
     }
 
     /**
