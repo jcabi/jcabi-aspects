@@ -33,7 +33,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
   <parent>
     <groupId>com.jcabi</groupId>
     <artifactId>jcabi</artifactId>
-    <version>1.27.0</version>
+    <version>1.31.0</version>
   </parent>
   <artifactId>jcabi-aspects</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -141,25 +141,6 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     </dependency>
   </dependencies>
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <!--
-          disabling cobertura because of:
-          @see http://jira.codehaus.org/browse/MCOBERTURA-127
-          -->
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>cobertura-maven-plugin</artifactId>
-          <configuration>
-            <instrumentation>
-              <excludes>
-                <exclude>**/*.class</exclude>
-              </excludes>
-            </instrumentation>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -226,6 +207,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
+            <version>0.18.19</version>
             <configuration>
               <excludes combine.children="append">
                 <exclude>checkstyle:/src/it/.*</exclude>
