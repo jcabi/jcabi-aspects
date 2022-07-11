@@ -47,7 +47,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
   </issueManagement>
   <ciManagement>
     <system>rultor</system>
-    <url>http://www.rultor.com/s/jcabi</url>
+    <url>https://www.rultor.com/s/jcabi</url>
   </ciManagement>
   <scm>
     <connection>scm:git:github.com:jcabi/jcabi-aspects.git</connection>
@@ -83,6 +83,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     <dependency>
       <groupId>javax.validation</groupId>
       <artifactId>validation-api</artifactId>
+      <version>2.0.1.Final</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -101,6 +102,18 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
       <groupId>org.glassfish.web</groupId>
       <artifactId>javax.el</artifactId>
       <version>2.2.6</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.8.0-alpha2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
       <scope>test</scope>
     </dependency>
     <dependency>
