@@ -39,9 +39,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
 
 /**
  * Test case for JSR-303 annotations and their implementations.

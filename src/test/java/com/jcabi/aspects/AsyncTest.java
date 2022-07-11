@@ -36,8 +36,8 @@ import java.util.concurrent.TimeUnit;
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Async} annotation and its implementation.

@@ -30,8 +30,8 @@
 package com.jcabi.aspects;
 
 import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Timeable} annotation.

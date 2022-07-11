@@ -43,8 +43,8 @@ import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Loggable} annotation and its implementation.
