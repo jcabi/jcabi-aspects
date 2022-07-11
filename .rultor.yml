@@ -1,40 +1,17 @@
-architect:
-- yegor256
-- dmarkov
-- andreoss
+docker:
+  image: yegor256/rultor-image:1.9.0
 assets:
   secring.gpg: yegor256/home#assets/secring.gpg
   settings.xml: yegor256/home#assets/jcabi/settings.xml
   pubring.gpg: yegor256/home#assets/pubring.gpg
-  s3cfg: yegor256/home#assets/s3cfg
 merge:
   script: |-
-    mvn clean install -Pqulice --errors --settings ../settings.xml
-    mvn clean
     pdd --source=$(pwd) --verbose --file=/dev/null
-  commanders:
-  - carlosmiranda
-  - darkled
-  - dmzaytsev
-  - ggajos••••••••
-  - hdouss
-  - krzyk
-  - longtimeago
-  - mkordas
-  - pinaf
-deploy:
-  script: |-
-    mvn clean deploy -Pqulice --errors --settings ../settings.xml
-    mvn clean
-    pdd --source=$(pwd) --verbose --file=jcabi-aspects.xml
-    s3cmd --no-progress put jcabi-aspects.xml --config=../s3cfg s3://pdd.teamed.io/jcabi-aspects.xml
-env:
-  MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
+    mvn clean install -Pqulice --errors --settings ../settings.xml
 release:
   script: |-
+    [[ "${tag}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit -1
     mvn versions:set "-DnewVersion=${tag}" -e
     git commit -am "${tag}"
     mvn clean deploy -Pqulice -Psonatype -Pjcabi --errors --settings ../settings.xml
     mvn clean site-deploy -Psite --errors -Pjcabi --settings ../settings.xml || true
-  commanders:
-  - yegor256
