@@ -44,10 +44,9 @@ public final class UnitedThrowTest {
 
     /**
      * UnitedThrow can rethrow exception that is a subclass of declared one.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void rethrowsDeclaredException() throws Exception {
+    public void rethrowsDeclaredException() {
         Assertions.assertThrows(
             IOException.class,
             () -> new UnitedThrowTest.Thrower().file()
@@ -56,10 +55,9 @@ public final class UnitedThrowTest {
 
     /**
      * UnitedThrow can throw first declared exception.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void throwsDeclaredException() throws Exception {
+    public void throwsDeclaredException() {
         Assertions.assertThrows(
             IOException.class,
             () -> new UnitedThrowTest.Thrower().save()
@@ -68,10 +66,9 @@ public final class UnitedThrowTest {
 
     /**
      * UnitedThrow can throw configured exception.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void throwsConfiguredException() throws Exception {
+    public void throwsConfiguredException() {
         Assertions.assertThrows(
             IOException.class,
             () -> new UnitedThrowTest.Thrower().multiple()
@@ -80,10 +77,9 @@ public final class UnitedThrowTest {
 
     /**
      * UnitedThrow can throw IllegalStateException when no exception declared.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void throwsIllegalStateException() throws Exception {
+    public void throwsIllegalStateException() {
         Assertions.assertThrows(
             IllegalStateException.class,
             () -> new UnitedThrowTest.Thrower().def()
@@ -92,11 +88,9 @@ public final class UnitedThrowTest {
 
     /**
      * UnitedThrow can encapsulate thrown exception inside declared one.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void throwsOriginalExceptionEncapsulatedInsideDeclared()
-        throws Exception {
+    public void throwsOriginalExceptionEncapsulatedInsideDeclared() {
         try {
             new UnitedThrowTest.Thrower().encapsulate();
         } catch (final IOException ex) {
@@ -114,7 +108,6 @@ public final class UnitedThrowTest {
     private static final class Thrower {
         /**
          * Test method.
-         * @throws IOException In case of exception.
          */
         @UnitedThrow
         public void save() throws IOException {
@@ -132,8 +125,6 @@ public final class UnitedThrowTest {
 
         /**
          * Test method.
-         * @throws InterruptedException In case of exception.
-         * @throws IOException In case of exception.
          * @checkstyle ThrowsCountCheck (3 lines)
          */
         @UnitedThrow(IOException.class)
@@ -151,7 +142,6 @@ public final class UnitedThrowTest {
 
         /**
          * Test method.
-         * @throws IOException In case of exception.
          */
         @UnitedThrow(IOException.class)
         public void encapsulate() throws IOException {

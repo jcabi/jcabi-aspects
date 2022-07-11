@@ -212,7 +212,7 @@ public final class MethodScheduler {
         }
 
         @Override
-        public void close() throws IOException {
+        public void close() {
             this.executor.shutdown();
             final long begin = System.currentTimeMillis();
             try {

@@ -59,19 +59,17 @@ public final class LoggableTest {
 
     /**
      * Loggable can log simple calls.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void logsSimpleCall() throws Exception {
+    public void logsSimpleCall() {
         new LoggableTest.Foo().revert("hello");
     }
 
     /**
      * Loggable can ignore toString() methods.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void ignoresToStringMethods() throws Exception {
+    public void ignoresToStringMethods() {
         new LoggableTest.Foo().self();
     }
 
@@ -86,19 +84,17 @@ public final class LoggableTest {
 
     /**
      * Loggable can ignore inherited methods.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void doesntLogInheritedMethods() throws Exception {
+    public void doesntLogInheritedMethods() {
         new LoggableTest.Foo().parentText();
     }
 
     /**
      * Loggable can ignore some exceptions.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void ignoresSomeExceptions() throws Exception {
+    public void ignoresSomeExceptions() {
         Assertions.assertThrows(
             IllegalStateException.class,
             () -> new LoggableTest.Foo().doThrow()
@@ -124,10 +120,9 @@ public final class LoggableTest {
 
     /**
      * Loggable can log toString method.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void logsToStringResult() throws Exception {
+    public void logsToStringResult() {
         final StringWriter writer = new StringWriter();
         org.apache.log4j.Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
@@ -267,10 +262,9 @@ public final class LoggableTest {
         /**
          * Method annotated with Loggable specifying explicit logger name.
          * @return A String
-         * @throws Exception If terminated
          */
         @Loggable(value = Loggable.DEBUG, name = "test-logger", prepend = true)
-        public static String explicitLoggerName() throws Exception {
+        public static String explicitLoggerName() {
             return LoggableTest.Foo.hiddenText();
         }
 

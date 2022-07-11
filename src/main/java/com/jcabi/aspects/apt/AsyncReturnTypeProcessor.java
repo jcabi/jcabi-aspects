@@ -48,7 +48,7 @@ import javax.tools.Diagnostic;
 /**
  * Annotation processor that checks whether methods annotated with
  * {@link com.jcabi.aspects.Async} have void or
- * {@link java.util.concurrent.Future} return types.
+ * {@link Future} return types.
  *
  * @since 0.17
  */
@@ -93,9 +93,9 @@ public final class AsyncReturnTypeProcessor extends AbstractProcessor {
     }
 
     /**
-     * Is the given type assignable from {@link java.util.concurrent.Future}?
+     * Is the given type assignable from {@link Future}?
      * @param type The type to check.
-     * @return If it's assingable from Future.
+     * @return If it's assignable from Future.
      */
     private boolean assignableToFuture(final TypeMirror type) {
         final Types types = this.processingEnv.getTypeUtils();

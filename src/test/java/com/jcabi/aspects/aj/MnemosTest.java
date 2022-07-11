@@ -47,10 +47,9 @@ public final class MnemosTest {
 
     /**
      * Mnemos can build a string from an object.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void buildsTextFromObject() throws Exception {
+    public void buildsTextFromObject() {
         final Object[][] pairs = new Object[][] {
             new Object[] {1, "1"},
             new Object[] {1.43f, "1.43"},
@@ -66,10 +65,9 @@ public final class MnemosTest {
 
     /**
      * Mnemos can handle toxic objects gracefully.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void handlesToxicObjectsGracefully() throws Exception {
+    public void handlesToxicObjectsGracefully() {
         MatcherAssert.assertThat(
             Mnemos.toText(
                 new Object() {
@@ -88,10 +86,9 @@ public final class MnemosTest {
 
     /**
      * Mnemos can build a string from an int array.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void buildsTextFromIntArray() throws Exception {
+    public void buildsTextFromIntArray() {
         final Object[][] pairs = new Object[][] {
             new Object[] {new int[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new int[] {1}, "[1]"},
@@ -102,10 +99,9 @@ public final class MnemosTest {
 
     /**
      * Mnemos can build a string from an long array.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void buildsTextFromLongArray() throws Exception {
+    public void buildsTextFromLongArray() {
         final Object[][] pairs = new Object[][] {
             new Object[] {new long[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new long[] {2L}, "[2]"},
@@ -116,10 +112,9 @@ public final class MnemosTest {
 
     /**
      * Mnemos can build a string from an float array.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void buildsTextFromFloatArray() throws Exception {
+    public void buildsTextFromFloatArray() {
         final Object[][] pairs = new Object[][] {
             new Object[] {new float[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new float[] {1.01f}, "[1.01]"},
@@ -133,10 +128,9 @@ public final class MnemosTest {
 
     /**
      * Mnemos can build a string from an double array.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void buildsTextFromDoubleArray() throws Exception {
+    public void buildsTextFromDoubleArray() {
         final Object[][] pairs = new Object[][] {
             new Object[] {new double[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new double[] {2.01}, "[2.01]"},
@@ -150,10 +144,9 @@ public final class MnemosTest {
 
     /**
      * Mnemos can build a string from an char array.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void buildsTextFromCharArray() throws Exception {
+    public void buildsTextFromCharArray() {
         final Object[][] pairs = new Object[][] {
             new Object[] {new char[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new char[] {'a'}, "[a]"},
@@ -164,10 +157,9 @@ public final class MnemosTest {
 
     /**
      * Mnemos can build a string from an boolean array.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void buildsTextFromBooleanArray() throws Exception {
+    public void buildsTextFromBooleanArray() {
         final Object[][] pairs = new Object[][] {
             new Object[] {new boolean[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new boolean[] {true}, "[true]"},

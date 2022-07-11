@@ -65,10 +65,9 @@ public final class CacheableTest {
 
     /**
      * Cacheable can cache calls.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void cachesSimpleCall() throws Exception {
+    public void cachesSimpleCall() {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.get().toString();
         MatcherAssert.assertThat(first, Matchers.equalTo(foo.get().toString()));
@@ -105,10 +104,9 @@ public final class CacheableTest {
 
     /**
      * Cacheable can cache static calls.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void cachesSimpleStaticCall() throws Exception {
+    public void cachesSimpleStaticCall() {
         final String first = CacheableTest.Foo.staticGet();
         MatcherAssert.assertThat(
             first,
@@ -172,10 +170,9 @@ public final class CacheableTest {
 
     /**
      * Cacheable can flush with a static trigger.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void flushesWithStaticTrigger() throws Exception {
+    public void flushesWithStaticTrigger() {
         final CacheableTest.Bar bar = new CacheableTest.Bar();
         MatcherAssert.assertThat(
             bar.get(),

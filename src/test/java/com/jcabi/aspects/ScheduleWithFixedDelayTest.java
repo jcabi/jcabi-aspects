@@ -30,7 +30,6 @@
 package com.jcabi.aspects;
 
 import java.io.Closeable;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import org.hamcrest.MatcherAssert;
@@ -102,7 +101,7 @@ public final class ScheduleWithFixedDelayTest {
         }
 
         @Override
-        public void close() throws IOException {
+        public void close() {
             this.counter.set(-1L);
         }
     }

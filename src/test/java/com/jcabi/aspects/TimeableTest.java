@@ -42,10 +42,9 @@ public final class TimeableTest {
 
     /**
      * Timeable annotation can interrupt a long method.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void interruptsLongRunningMethod() throws Exception {
+    public void interruptsLongRunningMethod() {
         Assertions.assertThrows(
             InterruptedException.class,
             () -> this.slow()

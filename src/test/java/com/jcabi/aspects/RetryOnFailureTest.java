@@ -44,10 +44,9 @@ public final class RetryOnFailureTest {
 
     /**
      * RetryOnFailure can force duplicate execution of the same method.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void executesMethodManyTimes() throws Exception {
+    public void executesMethodManyTimes() {
         final AtomicInteger count = new AtomicInteger();
         new Runnable() {
             @Override
@@ -65,10 +64,9 @@ public final class RetryOnFailureTest {
 
     /**
      * RetryOnFailure can retry when Error types are thrown.
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void retriesOnError() throws Exception {
+    public void retriesOnError() {
         final AtomicInteger count = new AtomicInteger();
         new Runnable() {
             @Override

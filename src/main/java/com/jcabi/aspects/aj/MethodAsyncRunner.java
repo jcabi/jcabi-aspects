@@ -94,7 +94,7 @@ public final class MethodAsyncRunner {
             // @checkstyle AnonInnerLength (23 lines)
             new Callable<Object>() {
                 @Override
-                public Object call() throws Exception {
+                public Object call() {
                     Object returned = null;
                     try {
                         final Object result = point.proceed();

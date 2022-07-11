@@ -59,11 +59,9 @@ public final class JSR303Test {
 
     /**
      * NotNull can throw when invalid method parameters.
-     *
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void throwsWhenMethodParametersAreInvalid() throws Exception {
+    public void throwsWhenMethodParametersAreInvalid() {
         Assertions.assertThrows(
             ConstraintViolationException.class,
             () -> new JSR303Test.Foo().foo(null)
@@ -72,11 +70,9 @@ public final class JSR303Test {
 
     /**
      * NotNull can throw when regex doesn't match.
-     *
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void throwsWhenRegularExpressionDoesntMatch() throws Exception {
+    public void throwsWhenRegularExpressionDoesntMatch() {
         Assertions.assertThrows(
             ConstraintViolationException.class,
             () -> new JSR303Test.Foo().foo("some text")
@@ -85,21 +81,17 @@ public final class JSR303Test {
 
     /**
      * NotNull can pass for valid parameters.
-     *
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void passesWhenMethodParametersAreValid() throws Exception {
+    public void passesWhenMethodParametersAreValid() {
         new JSR303Test.Foo().foo("123");
     }
 
     /**
      * NotNull can validate method output.
-     *
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void validatesOutputForNonNull() throws Exception {
+    public void validatesOutputForNonNull() {
         Assertions.assertThrows(
             ConstraintViolationException.class,
             () -> new JSR303Test.Foo().nullValue()
@@ -108,11 +100,9 @@ public final class JSR303Test {
 
     /**
      * NotNull can ignore methods that return VOID.
-     *
-     * @throws Exception If something goes wrong
      */
     @Test
-    public void ignoresVoidResponses() throws Exception {
+    public void ignoresVoidResponses() {
         new JSR303Test.Foo().voidAlways();
     }
 

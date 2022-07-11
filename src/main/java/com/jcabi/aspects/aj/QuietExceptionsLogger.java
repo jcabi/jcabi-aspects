@@ -58,7 +58,6 @@ public final class QuietExceptionsLogger {
      *
      * @param point Joint point
      * @return The result of call
-     * @throws Throwable If something goes wrong inside
      */
     @Around
         (
@@ -67,7 +66,7 @@ public final class QuietExceptionsLogger {
             + " && @annotation(com.jcabi.aspects.Quietly)"
         )
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    public Object wrap(final ProceedingJoinPoint point) throws Throwable {
+    public Object wrap(final ProceedingJoinPoint point) {
         if (!MethodSignature.class.cast(point.getSignature()).getReturnType()
             .equals(Void.TYPE)) {
             throw new IllegalStateException(

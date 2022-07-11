@@ -32,7 +32,6 @@ package com.jcabi.aspects.aj;
 import com.jcabi.aspects.ScheduleWithFixedDelay;
 import com.jcabi.aspects.Tv;
 import java.io.Closeable;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -45,6 +44,7 @@ import org.junit.jupiter.api.Test;
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class MethodSchedulerTest {
+
     /**
      * MethodScheduler should wait for the task to finish.
      * @throws Exception When there is a problem.
@@ -91,7 +91,7 @@ public final class MethodSchedulerTest {
         }
 
         @Override
-        public void close() throws IOException {
+        public void close() {
             // do nothing
         }
     }
@@ -120,7 +120,7 @@ public final class MethodSchedulerTest {
         }
 
         @Override
-        public void close() throws IOException {
+        public void close() {
             // do nothing
         }
     }

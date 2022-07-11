@@ -86,10 +86,9 @@ public final class QuietExceptionsLoggerTest {
 
     /**
      * Throws exception when used with method that does not return void.
-     * @throws Throwable in case of error
      */
     @Test
-    public void throwsWhenUsedWithNonVoidReturnValue() throws Throwable {
+    public void throwsWhenUsedWithNonVoidReturnValue() {
         final ProceedingJoinPoint point = Mockito
             .mock(ProceedingJoinPoint.class);
         final MethodSignature signature = Mockito.mock(MethodSignature.class);
