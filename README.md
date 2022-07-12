@@ -22,6 +22,8 @@ resource downloading in case of failure. You can implement a full
 `@RetryOnFailure` and let one of our AOP aspects do the work for you:
 
 ```java
+import com.jcabi.aspects.RetryOnFailure;
+
 public class MyResource {
     @RetryOnFailure
     public String load(final URL url) {
