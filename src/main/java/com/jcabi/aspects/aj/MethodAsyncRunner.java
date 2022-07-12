@@ -92,27 +92,24 @@ public final class MethodAsyncRunner {
         }
         final Future<?> result = this.executor.submit(
             // @checkstyle AnonInnerLength (23 lines)
-            new Callable<Object>() {
-                @Override
-                public Object call() {
-                    Object returned = null;
-                    try {
-                        final Object result = point.proceed();
-                        if (result instanceof Future) {
-                            returned = ((Future<?>) result).get();
-                        }
-                    // @checkstyle IllegalCatch (1 line)
-                    } catch (final Throwable ex) {
-                        throw new IllegalStateException(
-                            String.format(
-                                "%s: Exception thrown",
-                                Mnemos.toText(point, true, true)
-                            ),
-                            ex
-                        );
+            () -> {
+                Object returned1 = null;
+                try {
+                    final Object result1 = point.proceed();
+                    if (result1 instanceof Future) {
+                        returned1 = ((Future<?>) result1).get();
                     }
-                    return returned;
+                // @checkstyle IllegalCatch (1 line)
+                } catch (final Throwable ex) {
+                    throw new IllegalStateException(
+                        String.format(
+                            "%s: Exception thrown",
+                            Mnemos.toText(point, true, true)
+                        ),
+                        ex
+                    );
                 }
+                return returned1;
             }
         );
         Object res = null;

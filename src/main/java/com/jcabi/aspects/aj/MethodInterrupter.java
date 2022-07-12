@@ -81,12 +81,7 @@ public final class MethodInterrupter {
         );
         this.interrupter.scheduleWithFixedDelay(
             new VerboseRunnable(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        MethodInterrupter.this.interrupt();
-                    }
-                }
+                this::interrupt
             ),
             1, 1, TimeUnit.SECONDS
         );

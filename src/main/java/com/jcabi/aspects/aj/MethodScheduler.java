@@ -189,12 +189,9 @@ public final class MethodScheduler {
             this.verbose = annt.verbose();
             this.await = annt.awaitUnit().toMillis(annt.await());
             this.attempts = annt.shutdownAttempts();
-            final Runnable job = new Runnable() {
-                @Override
-                public void run() {
-                    runnable.run();
-                    MethodScheduler.Service.this.counter.incrementAndGet();
-                }
+            final Runnable job = () -> {
+                runnable.run();
+                this.counter.incrementAndGet();
             };
             for (int thread = 0; thread < annt.threads(); ++thread) {
                 this.executor.scheduleWithFixedDelay(

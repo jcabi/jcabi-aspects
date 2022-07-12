@@ -110,23 +110,13 @@ public final class MethodCacher {
     public MethodCacher() {
         this.cleaner.scheduleWithFixedDelay(
             new VerboseRunnable(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        MethodCacher.this.clean();
-                    }
-                }
+                this::clean
             ),
             1L, 1L, TimeUnit.SECONDS
         );
         this.updater.schedule(
             new VerboseRunnable(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        MethodCacher.this.update();
-                    }
-                }
+                this::update
             ),
             0L, TimeUnit.SECONDS
         );

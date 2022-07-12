@@ -87,13 +87,10 @@ public final class MethodLogger {
         monitor.scheduleWithFixedDelay(
             new FutureTask<Void>(
                 new VerboseRunnable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            for (final MethodLogger.Marker marker
-                                : MethodLogger.this.running) {
-                                marker.monitor();
-                            }
+                    () -> {
+                        for (final Marker marker
+                            : this.running) {
+                            marker.monitor();
                         }
                     }
                 ), null

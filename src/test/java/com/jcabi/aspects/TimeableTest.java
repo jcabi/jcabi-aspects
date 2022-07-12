@@ -47,7 +47,7 @@ public final class TimeableTest {
     public void interruptsLongRunningMethod() {
         Assertions.assertThrows(
             InterruptedException.class,
-            () -> this.slow()
+            this::slow
         );
     }
 

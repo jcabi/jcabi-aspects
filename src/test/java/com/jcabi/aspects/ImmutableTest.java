@@ -59,7 +59,7 @@ public final class ImmutableTest {
     public void catchedMutableTypes() {
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new Mutable()
+            Mutable::new
         );
     }
 
@@ -70,7 +70,7 @@ public final class ImmutableTest {
     public void catchedMutableTypesWithArrays() {
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new MutableWithArray()
+            MutableWithArray::new
         );
     }
 
@@ -99,7 +99,7 @@ public final class ImmutableTest {
     public void catchesTypesMutableByClassInheritance() {
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new MutableByInheritance()
+            MutableByInheritance::new
         );
     }
 
