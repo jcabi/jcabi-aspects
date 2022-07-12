@@ -29,9 +29,6 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 OF THE POSSIBILITY OF SUCH DAMAGE.
  -->
 <validation-config xmlns="http://jboss.org/xml/ns/javax/validation/configuration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jboss.org/xml/ns/javax/validation/configuration validation-configuration-1.0.xsd">
-  <default-provider>org.hibernate.validator.HibernateValidator
-  </default-provider>
-  <property name="hibernate.validator.allow_parameter_constraint_override">
-    true
-  </property>
+  <default-provider>org.hibernate.validator.HibernateValidator</default-provider>
+  <property name="hibernate.validator.allow_parameter_constraint_override">true</property>
 </validation-config>
