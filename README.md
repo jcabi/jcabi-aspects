@@ -10,7 +10,8 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects)
 [![JavaDoc](https://img.shields.io/badge/javadoc-html-blue.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-aspects)
 
-More details are here: [aspects.jcabi.com](https://aspects.jcabi.com/index.html).
+More details are here: [aspects.jcabi.com](https://aspects.jcabi.com/index.html)
+
 Also, read this blog post: [Java Method Logging with AOP and Annotations](https://www.yegor256.com/2014/06/01/aop-aspectj-java-method-logging.html).
 
 This module contains a collection of useful AOP aspects, which
