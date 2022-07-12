@@ -214,50 +214,5 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
         </plugins>
       </build>
     </profile>
-    <profile>
-      <id>coveralls</id>
-      <!-- It doesn't work because cobertura is disabled, see above -->
-      <!--
-      <activation>
-          <file><exists>pom.xml</exists></file>
-      </activation>
-      -->
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>cobertura-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <phase>site</phase>
-                <goals>
-                  <goal>cobertura</goal>
-                </goals>
-                <configuration>
-                  <format>xml</format>
-                  <maxmem>256m</maxmem>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.eluder.coveralls</groupId>
-            <artifactId>coveralls-maven-plugin</artifactId>
-            <version>4.1.0</version>
-            <executions>
-              <execution>
-                <phase>site</phase>
-                <goals>
-                  <goal>report</goal>
-                </goals>
-                <configuration>
-                  <repoToken>${coveralls.token.aspects}</repoToken>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
   </profiles>
 </project>
