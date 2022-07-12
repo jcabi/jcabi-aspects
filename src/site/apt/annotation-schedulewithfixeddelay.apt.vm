@@ -79,7 +79,7 @@ public class Main {
 
   <<NOTE>>: You can only schedule one execution between all equal objects
   (i.e. instances that are equal according to 
-  {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#equals(java.lang.Object)}<<<equals()>>>}}
+  {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#equals%28java.lang.Object%29}<<<equals()>>>}}
   ). Invoking the same method multiple times and across equal objects, without
   stopping the scheduled execution beforehand, will result in an
   {{{http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalStateException.html}<<<IllegalStateException>>>}}
