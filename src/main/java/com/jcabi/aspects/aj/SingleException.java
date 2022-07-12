@@ -68,7 +68,7 @@ public final class SingleException {
     // @checkstyle IllegalThrowsCheck (1 line)
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         final Method method =
-            MethodSignature.class.cast(point.getSignature()).getMethod();
+            ((MethodSignature) point.getSignature()).getMethod();
         final UnitedThrow annot = method.getAnnotation(UnitedThrow.class);
         final Class<? extends Throwable> clz = SingleException.clazz(
             method,
@@ -99,8 +99,8 @@ public final class SingleException {
     private static boolean exists(final Class<? extends Throwable> clz) {
         boolean found = false;
         for (final Constructor<?> ctr : clz.getConstructors()) {
-            if ((ctr.getParameterTypes().length == 1)
-                && (ctr.getParameterTypes()[0] == Throwable.class)) {
+            if (ctr.getParameterTypes().length == 1
+                && ctr.getParameterTypes()[0] == Throwable.class) {
                 found = true;
                 break;
             }

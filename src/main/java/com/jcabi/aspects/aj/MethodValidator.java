@@ -84,7 +84,7 @@ public final class MethodValidator {
         if (this.validator != null) {
             this.validateMethod(
                 point.getThis(),
-                MethodSignature.class.cast(point.getSignature()).getMethod(),
+                ((MethodSignature) point.getSignature()).getMethod(),
                 point.getArgs()
             );
         }
@@ -104,7 +104,7 @@ public final class MethodValidator {
         if (this.validator != null) {
             @SuppressWarnings("unchecked")
             final Constructor<Object> constructor = (Constructor<Object>)
-                ConstructorSignature.class.cast(point.getSignature())
+                ((ConstructorSignature) point.getSignature())
                     .getConstructor();
             this.validateConstructor(
                 constructor,

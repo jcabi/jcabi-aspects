@@ -66,7 +66,7 @@ public final class MethodAsyncRunner {
      * Execute method asynchronously.
      *
      * <p>This aspect should be used only on {@code void} or
-     * {@link java.util.concurrent.Future} returning methods.
+     * {@link Future} returning methods.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
      * it backward compatible.
@@ -77,8 +77,8 @@ public final class MethodAsyncRunner {
     @Around("execution(@com.jcabi.aspects.Async * * (..))")
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrap(final ProceedingJoinPoint point) {
-        final Class<?> returned = MethodSignature.class
-            .cast(point.getSignature()).getMethod().getReturnType();
+        final Class<?> returned = ((MethodSignature) point.getSignature()).getMethod()
+            .getReturnType();
         if (!Future.class.isAssignableFrom(returned)
             && !returned.equals(Void.TYPE)) {
             // @checkstyle LineLength (3 lines)
@@ -93,11 +93,11 @@ public final class MethodAsyncRunner {
         final Future<?> result = this.executor.submit(
             // @checkstyle AnonInnerLength (23 lines)
             () -> {
-                Object returned1 = null;
+                Object ret = null;
                 try {
-                    final Object result1 = point.proceed();
-                    if (result1 instanceof Future) {
-                        returned1 = ((Future<?>) result1).get();
+                    final Object res = point.proceed();
+                    if (res instanceof Future) {
+                        ret = ((Future<?>) res).get();
                     }
                 // @checkstyle IllegalCatch (1 line)
                 } catch (final Throwable ex) {
@@ -109,7 +109,7 @@ public final class MethodAsyncRunner {
                         ex
                     );
                 }
-                return returned1;
+                return ret;
             }
         );
         Object res = null;

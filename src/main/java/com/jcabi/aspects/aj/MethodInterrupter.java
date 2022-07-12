@@ -83,7 +83,7 @@ public final class MethodInterrupter {
             new VerboseRunnable(
                 this::interrupt
             ),
-            1, 1, TimeUnit.SECONDS
+            1L, 1L, TimeUnit.SECONDS
         );
     }
 
@@ -160,15 +160,14 @@ public final class MethodInterrupter {
             this.thread = Thread.currentThread();
             this.start = System.currentTimeMillis();
             this.point = pnt;
-            final Method method = MethodSignature.class
-                .cast(pnt.getSignature())
+            final Method method = ((MethodSignature) pnt.getSignature())
                 .getMethod();
             final Timeable annt = method.getAnnotation(Timeable.class);
             this.deadline = this.start + annt.unit().toMillis(annt.limit());
         }
 
         @Override
-        public int compareTo(final Call obj) {
+        public int compareTo(final MethodInterrupter.Call obj) {
             final int compare;
             if (this.deadline > obj.deadline) {
                 compare = 1;
@@ -196,8 +195,7 @@ public final class MethodInterrupter {
             final boolean dead;
             if (this.thread.isAlive()) {
                 this.thread.interrupt();
-                final Method method = MethodSignature.class
-                    .cast(this.point.getSignature())
+                final Method method = ((MethodSignature) this.point.getSignature())
                     .getMethod();
                 Logger.warn(
                     method.getDeclaringClass(),

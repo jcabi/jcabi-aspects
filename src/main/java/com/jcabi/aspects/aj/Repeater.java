@@ -45,7 +45,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  * Repeat execution in case of exception.
  *
  * @since 0.1.10
- * @see com.jcabi.aspects.RetryOnFailure
+ * @see RetryOnFailure
  */
 @Aspect
 @Immutable
@@ -69,8 +69,7 @@ public final class Repeater {
     @Around("execution(* * (..)) && @annotation(com.jcabi.aspects.RetryOnFailure)")
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
-        final Method method = MethodSignature.class
-            .cast(point.getSignature())
+        final Method method = ((MethodSignature) point.getSignature())
             .getMethod();
         final RetryOnFailure rof = method.getAnnotation(RetryOnFailure.class);
         int attempt = 0;
@@ -133,9 +132,9 @@ public final class Repeater {
         InterruptedException {
         final long delay;
         if (rof.randomize()) {
-            delay = Repeater.RAND.nextInt(2 << attempt) * rof.delay();
+            delay = (long) Repeater.RAND.nextInt(2 << attempt) * rof.delay();
         } else {
-            delay = rof.delay() * attempt;
+            delay = rof.delay() * (long) attempt;
         }
         rof.unit().sleep(delay);
     }

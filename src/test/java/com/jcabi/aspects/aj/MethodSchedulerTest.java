@@ -51,8 +51,8 @@ public final class MethodSchedulerTest {
      */
     @Test
     public void shortRunningTaskShouldBeAllowedToFinish() throws Exception {
-        final ShortRun target = new ShortRun();
-        TimeUnit.SECONDS.sleep((long) Tv.FIVE);
+        final MethodSchedulerTest.ShortRun target = new MethodSchedulerTest.ShortRun();
+        TimeUnit.SECONDS.sleep(Tv.FIVE);
         target.close();
         MatcherAssert.assertThat(target.finished, Matchers.equalTo(true));
     }
@@ -63,7 +63,7 @@ public final class MethodSchedulerTest {
      */
     @Test
     public void interruptLongRunningTask() throws Exception {
-        final LongRun target = new LongRun();
+        final MethodSchedulerTest.LongRun target = new MethodSchedulerTest.LongRun();
         target.close();
         MatcherAssert.assertThat(target.finished, Matchers.equalTo(false));
     }
@@ -72,7 +72,7 @@ public final class MethodSchedulerTest {
      * Short running task.
      * @since 0.7.22
      */
-    @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.NANOSECONDS)
+    @ScheduleWithFixedDelay(unit = TimeUnit.NANOSECONDS)
     private static class ShortRun implements Runnable, Closeable {
 
         /**
@@ -83,7 +83,7 @@ public final class MethodSchedulerTest {
         @Override
         public void run() {
             try {
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.SECONDS.sleep(1L);
                 this.finished = true;
             } catch (final InterruptedException ex) {
                 Thread.currentThread().interrupt();
@@ -100,7 +100,7 @@ public final class MethodSchedulerTest {
      * Long running task.
      * @since 0.7.22
      */
-    @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.NANOSECONDS,
+    @ScheduleWithFixedDelay(unit = TimeUnit.NANOSECONDS,
         await = Tv.TEN, awaitUnit = TimeUnit.SECONDS)
     private static class LongRun implements Runnable, Closeable {
         /**
@@ -112,7 +112,7 @@ public final class MethodSchedulerTest {
         public void run() {
             try {
                 // @checkstyle MagicNumber (1 line)
-                TimeUnit.SECONDS.sleep(30);
+                TimeUnit.SECONDS.sleep(30L);
                 this.finished = true;
             } catch (final InterruptedException ex) {
                 Thread.currentThread().interrupt();

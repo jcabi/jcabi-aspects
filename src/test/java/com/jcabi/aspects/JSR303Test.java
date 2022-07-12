@@ -181,7 +181,7 @@ public final class JSR303Test {
      * Dummy class, for tests above.
      * @since 0.0.0
      */
-    @Loggable(Loggable.INFO)
+    @Loggable()
     private static final class Foo {
         /**
          * Do nothing.
@@ -220,7 +220,7 @@ public final class JSR303Test {
      * Dummy class for testing constructor validation.
      * @since 0.0.0
      */
-    @Loggable(Loggable.INFO)
+    @Loggable()
     private static final class ConstructorValidation {
         /**
          * Public ctor.
@@ -252,7 +252,7 @@ public final class JSR303Test {
      *
      * @since 0.0.0
      */
-    @Loggable(Loggable.INFO)
+    @Loggable()
     private static class Bar implements JSR303Test.Fum {
         @Override
         public void test(@NotNull final String value) {

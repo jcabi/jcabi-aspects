@@ -47,7 +47,7 @@ public final class ImmutabilityCheckerTest {
     @Test
     public void checksRecursiveClasses() {
         MatcherAssert.assertThat(
-            new Recursive(null).getNext(), Matchers.nullValue()
+            new ImmutabilityCheckerTest.Recursive(null).getNext(), Matchers.nullValue()
         );
     }
 
@@ -58,7 +58,7 @@ public final class ImmutabilityCheckerTest {
     public void failsOnNonFinalFields() {
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new NonFinal("test")
+            () -> new ImmutabilityCheckerTest.NonFinal("test")
         );
     }
 
@@ -94,13 +94,13 @@ public final class ImmutabilityCheckerTest {
         /**
          * Next object.
          */
-        private final transient Recursive next;
+        private final transient ImmutabilityCheckerTest.Recursive next;
 
         /**
          * Constructor.
          * @param nxt Next object.
          */
-        private Recursive(final Recursive nxt) {
+        private Recursive(final ImmutabilityCheckerTest.Recursive nxt) {
             this.next = nxt;
         }
 
@@ -108,7 +108,7 @@ public final class ImmutabilityCheckerTest {
          * Get the next object.
          * @return Object stored.
          */
-        public Recursive getNext() {
+        public ImmutabilityCheckerTest.Recursive getNext() {
             return this.next;
         }
     }

@@ -69,6 +69,6 @@ public @interface Immutable {
     @Documented
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.FIELD)
-    public @interface Array {
+    @interface Array {
     }
 }

@@ -69,7 +69,7 @@ public final class MethodLogger {
     /**
      * Currently running methods.
      */
-    private final transient Set<Marker> running;
+    private final transient Set<MethodLogger.Marker> running;
 
     /**
      * Public ctor.
@@ -88,7 +88,7 @@ public final class MethodLogger {
             new FutureTask<Void>(
                 new VerboseRunnable(
                     () -> {
-                        for (final Marker marker
+                        for (final MethodLogger.Marker marker
                             : this.running) {
                             marker.monitor();
                         }
@@ -101,7 +101,7 @@ public final class MethodLogger {
                     monitor.shutdown();
                 }
             },
-            1, 1, TimeUnit.SECONDS
+            1L, 1L, TimeUnit.SECONDS
         );
     }
 
@@ -127,7 +127,7 @@ public final class MethodLogger {
         )
     public Object wrapClass(final ProceedingJoinPoint point) throws Throwable {
         final Method method =
-            MethodSignature.class.cast(point.getSignature()).getMethod();
+            ((MethodSignature) point.getSignature()).getMethod();
         final Object output;
         if (method.isAnnotationPresent(Loggable.class)) {
             output = point.proceed();
@@ -160,7 +160,7 @@ public final class MethodLogger {
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrapMethod(final ProceedingJoinPoint point) throws Throwable {
         final Method method =
-            MethodSignature.class.cast(point.getSignature()).getMethod();
+            ((MethodSignature) point.getSignature()).getMethod();
         return this.wrap(point, method, method.getAnnotation(Loggable.class));
     }
 
@@ -350,8 +350,8 @@ public final class MethodLogger {
     private static boolean instanceOf(final Class<?> child,
         final Class<?> parent) {
         boolean instance = child.equals(parent)
-            || (child.getSuperclass() != null
-            && MethodLogger.instanceOf(child.getSuperclass(), parent));
+            || child.getSuperclass() != null
+            && MethodLogger.instanceOf(child.getSuperclass(), parent);
         if (!instance) {
             for (final Class<?> iface : child.getInterfaces()) {
                 instance = MethodLogger.instanceOf(iface, parent);
@@ -450,9 +450,7 @@ public final class MethodLogger {
             );
             final int cycle = (int) ((age - threshold) / threshold);
             if (cycle > this.logged.get()) {
-                final Method method = MethodSignature.class.cast(
-                    this.point.getSignature()
-                ).getMethod();
+                final Method method = ((MethodSignature) this.point.getSignature()).getMethod();
                 Logger.warn(
                     method.getDeclaringClass(),
                     "%s: takes more than %[ms]s, %[ms]s already, thread=%s/%s",
@@ -481,12 +479,12 @@ public final class MethodLogger {
 
         @Override
         public boolean equals(final Object obj) {
-            return obj == this || MethodLogger.Marker.class.cast(obj)
+            return obj == this || ((MethodLogger.Marker) obj)
                 .point.equals(this.point);
         }
 
         @Override
-        public int compareTo(final Marker marker) {
+        public int compareTo(final MethodLogger.Marker marker) {
             int cmp = 0;
             if (this.started < marker.started) {
                 cmp = 1;

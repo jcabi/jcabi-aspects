@@ -50,7 +50,7 @@ public final class MnemosTest {
      */
     @Test
     public void buildsTextFromObject() {
-        final Object[][] pairs = new Object[][] {
+        final Object[][] pairs = {
             new Object[] {1, "1"},
             new Object[] {1.43f, "1.43"},
             new Object[] {"\u20ac-plain", "'\u20ac-plain'"},
@@ -89,7 +89,7 @@ public final class MnemosTest {
      */
     @Test
     public void buildsTextFromIntArray() {
-        final Object[][] pairs = new Object[][] {
+        final Object[][] pairs = {
             new Object[] {new int[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new int[] {1}, "[1]"},
             new Object[] {new int[] {1, 2, 3}, "[1, 2, 3]"},
@@ -102,7 +102,7 @@ public final class MnemosTest {
      */
     @Test
     public void buildsTextFromLongArray() {
-        final Object[][] pairs = new Object[][] {
+        final Object[][] pairs = {
             new Object[] {new long[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new long[] {2L}, "[2]"},
             new Object[] {new long[] {2L, 3L, 4L}, "[2, 3, 4]"},
@@ -115,7 +115,7 @@ public final class MnemosTest {
      */
     @Test
     public void buildsTextFromFloatArray() {
-        final Object[][] pairs = new Object[][] {
+        final Object[][] pairs = {
             new Object[] {new float[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new float[] {1.01f}, "[1.01]"},
             new Object[] {
@@ -131,7 +131,7 @@ public final class MnemosTest {
      */
     @Test
     public void buildsTextFromDoubleArray() {
-        final Object[][] pairs = new Object[][] {
+        final Object[][] pairs = {
             new Object[] {new double[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new double[] {2.01}, "[2.01]"},
             new Object[] {
@@ -147,7 +147,7 @@ public final class MnemosTest {
      */
     @Test
     public void buildsTextFromCharArray() {
-        final Object[][] pairs = new Object[][] {
+        final Object[][] pairs = {
             new Object[] {new char[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new char[] {'a'}, "[a]"},
             new Object[] {new char[] {'a', 'b', 'c'}, "[a, b, c]"},
@@ -160,7 +160,7 @@ public final class MnemosTest {
      */
     @Test
     public void buildsTextFromBooleanArray() {
-        final Object[][] pairs = new Object[][] {
+        final Object[][] pairs = {
             new Object[] {new boolean[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new boolean[] {true}, "[true]"},
             new Object[] {

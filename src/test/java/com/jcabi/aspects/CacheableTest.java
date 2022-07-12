@@ -92,12 +92,12 @@ public final class CacheableTest {
             first,
             Matchers.equalTo(foo.asyncGet().toString())
         );
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(2L);
         MatcherAssert.assertThat(
             first,
             Matchers.equalTo(foo.asyncGet().toString())
         );
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(2L);
         MatcherAssert.assertThat(
             first,
             Matchers.not(Matchers.equalTo(foo.asyncGet().toString()))
@@ -129,7 +129,7 @@ public final class CacheableTest {
     public void cleansCacheWhenExpired() throws Exception {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.get().toString();
-        TimeUnit.SECONDS.sleep((long) Tv.FIVE);
+        TimeUnit.SECONDS.sleep(Tv.FIVE);
         MatcherAssert.assertThat(
             foo.get().toString(),
             Matchers.not(Matchers.equalTo(first))
@@ -222,7 +222,7 @@ public final class CacheableTest {
          * Download some text.
          * @return Downloaded text
          */
-        @Cacheable(lifetime = 1, unit = TimeUnit.SECONDS)
+        @Cacheable(unit = TimeUnit.SECONDS)
         @Loggable(Loggable.DEBUG)
         public CacheableTest.Foo get() {
             return new CacheableTest.Foo(CacheableTest.RANDOM.nextLong());
@@ -232,7 +232,7 @@ public final class CacheableTest {
          * Download some text.
          * @return Downloaded text
          */
-        @Cacheable(lifetime = 1, unit = TimeUnit.SECONDS, asyncUpdate = true)
+        @Cacheable(unit = TimeUnit.SECONDS, asyncUpdate = true)
         @Loggable(Loggable.DEBUG)
         public CacheableTest.Foo asyncGet() {
             return new CacheableTest.Foo(CacheableTest.RANDOM.nextLong());
@@ -242,7 +242,7 @@ public final class CacheableTest {
          * Sleep forever, to abuse caching system.
          * @return The same object
          */
-        @Cacheable(lifetime = 1, unit = TimeUnit.SECONDS)
+        @Cacheable(unit = TimeUnit.SECONDS)
         @Loggable(Loggable.DEBUG)
         public CacheableTest.Foo never() {
             try {
@@ -265,7 +265,7 @@ public final class CacheableTest {
          * Download some text.
          * @return Downloaded text
          */
-        @Cacheable(lifetime = 1, unit = TimeUnit.SECONDS)
+        @Cacheable(unit = TimeUnit.SECONDS)
         public static String staticGet() {
             return Long.toString(CacheableTest.RANDOM.nextLong());
         }
@@ -288,7 +288,7 @@ public final class CacheableTest {
          * Get some number.
          * @return The number
          */
-        @Cacheable(before = Bar.class)
+        @Cacheable(before = CacheableTest.Bar.class)
         public long get() {
             return CacheableTest.RANDOM.nextLong();
         }

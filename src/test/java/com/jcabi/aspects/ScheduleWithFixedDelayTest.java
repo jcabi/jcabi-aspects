@@ -79,7 +79,7 @@ public final class ScheduleWithFixedDelayTest {
      * Sample annotated class.
      * @since 0.0.0
      */
-    @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.MILLISECONDS)
+    @ScheduleWithFixedDelay(unit = TimeUnit.MILLISECONDS)
     private static final class Sample implements Runnable, Closeable {
 
         /**
@@ -110,7 +110,7 @@ public final class ScheduleWithFixedDelayTest {
      * Sample class with long delay.
      * @since 0.0.0
      */
-    @ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.MINUTES)
+    @ScheduleWithFixedDelay()
     private static final class LongDelaySample implements Runnable, Closeable {
 
         /**

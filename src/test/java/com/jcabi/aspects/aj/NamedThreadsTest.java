@@ -33,6 +33,7 @@ import com.jcabi.aspects.version.Version;
 import java.io.StringWriter;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
 import org.hamcrest.MatcherAssert;
@@ -51,7 +52,7 @@ public final class NamedThreadsTest {
     @Test
     @SuppressWarnings("PMD.DoNotUseThreads")
     public void testVersion() {
-        final org.apache.log4j.Logger root = LogManager.getRootLogger();
+        final Logger root = LogManager.getRootLogger();
         final Level level = root.getLevel();
         root.setLevel(Level.INFO);
         final StringWriter writer = new StringWriter();

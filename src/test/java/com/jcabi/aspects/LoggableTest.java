@@ -36,6 +36,7 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
+import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
@@ -108,13 +109,13 @@ public final class LoggableTest {
     @Test
     public void logsDurationWithSpecifiedTimeUnit() throws Exception {
         final StringWriter writer = new StringWriter();
-        org.apache.log4j.Logger.getRootLogger().addAppender(
+        Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
         );
         LoggableTest.Foo.logsDurationInSeconds();
         MatcherAssert.assertThat(
             writer.toString(),
-            new RegexContainsMatcher("in \\d.\\d{3}")
+            new LoggableTest.RegexContainsMatcher("in \\d.\\d{3}")
         );
     }
 
@@ -124,13 +125,13 @@ public final class LoggableTest {
     @Test
     public void logsToStringResult() {
         final StringWriter writer = new StringWriter();
-        org.apache.log4j.Logger.getRootLogger().addAppender(
+        Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
         );
         new LoggableTest.Foo().last("TEST");
         MatcherAssert.assertThat(
             writer.toString(),
-            new RegexContainsMatcher(LoggableTest.RESULT)
+            new LoggableTest.RegexContainsMatcher(LoggableTest.RESULT)
         );
     }
 
@@ -140,7 +141,7 @@ public final class LoggableTest {
     @Test
     public void logsByteArray() {
         final StringWriter writer = new StringWriter();
-        org.apache.log4j.Logger.getRootLogger().addAppender(
+        Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
         );
         final byte[] result = new LoggableTest.Foo().logsByteArray();
@@ -168,7 +169,7 @@ public final class LoggableTest {
     @Test
     public void logsShortArray() {
         final StringWriter writer = new StringWriter();
-        org.apache.log4j.Logger.getRootLogger().addAppender(
+        Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
         );
         final short[] result = new LoggableTest.Foo().logsShortArray();
@@ -197,7 +198,7 @@ public final class LoggableTest {
     @Test
     public void logsWithExplicitLoggerName() throws Exception {
         final StringWriter writer = new StringWriter();
-        org.apache.log4j.Logger.getRootLogger().addAppender(
+        Logger.getRootLogger().addAppender(
             new WriterAppender(new PatternLayout("%t %c: %m%n"), writer)
         );
         LoggableTest.Foo.explicitLoggerName();
@@ -230,7 +231,7 @@ public final class LoggableTest {
         (
             value = Loggable.DEBUG,
             prepend = true,
-            limit = 1, unit = TimeUnit.MILLISECONDS
+            unit = TimeUnit.MILLISECONDS
         )
     private static final class Foo extends LoggableTest.Parent {
 
@@ -243,8 +244,8 @@ public final class LoggableTest {
          * Get self instance.
          * @return Self
          */
-        @Loggable(Loggable.INFO)
-        public Foo self() {
+        @Loggable()
+        public LoggableTest.Foo self() {
             return this;
         }
 
@@ -274,7 +275,7 @@ public final class LoggableTest {
          * @return Reverted text
          */
         @Timeable
-        @Loggable(value = Loggable.INFO, trim = false)
+        @Loggable(trim = false)
         public String revert(final String text) {
             return new StringBuffer(text).reverse().toString();
         }
@@ -286,7 +287,7 @@ public final class LoggableTest {
          */
         @Loggable(precision = Tv.THREE)
         public static String logsDurationInSeconds() throws Exception {
-            TimeUnit.SECONDS.sleep(2);
+            TimeUnit.SECONDS.sleep(2L);
             return LoggableTest.Foo.hiddenText();
         }
 
@@ -320,7 +321,7 @@ public final class LoggableTest {
          * @param text Text to get last char from.
          * @return Last char.
          */
-        @Loggable(value = Loggable.INFO, logThis = true)
+        @Loggable(logThis = true)
         public String last(final String text) {
             return text.substring(text.length() - 1);
         }

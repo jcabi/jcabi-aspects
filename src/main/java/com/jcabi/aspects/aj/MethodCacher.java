@@ -137,15 +137,13 @@ public final class MethodCacher {
     public Object cache(final ProceedingJoinPoint point) throws Throwable {
         final MethodCacher.Key key = new MethodCacher.Key(point);
         MethodCacher.Tunnel tunnel;
-        final Method method = MethodSignature.class
-            .cast(point.getSignature())
+        final Method method = ((MethodSignature) point.getSignature())
             .getMethod();
         final Cacheable annot = method.getAnnotation(Cacheable.class);
         synchronized (this.tunnels) {
             for (final Class<?> before : annot.before()) {
-                final boolean flag = Boolean.class.cast(
-                    before.getMethod("flushBefore").invoke(method.getClass())
-                );
+                final boolean flag = (Boolean) before.getMethod("flushBefore")
+                    .invoke(method.getClass());
                 if (flag) {
                     this.preflush(point);
                 }
@@ -161,9 +159,8 @@ public final class MethodCacher {
                 this.updatekeys.offer(key);
             }
             for (final Class<?> after : annot.after()) {
-                final boolean flag = Boolean.class.cast(
-                    after.getMethod("flushAfter").invoke(method.getClass())
-                );
+                final boolean flag = (Boolean) after.getMethod("flushAfter")
+                    .invoke(method.getClass());
                 if (flag) {
                     this.postflush(point);
                 }
@@ -178,7 +175,7 @@ public final class MethodCacher {
      * @return Boolean
      */
     private static boolean isCreateTunnel(final MethodCacher.Tunnel tunnel) {
-        return tunnel == null || (tunnel.expired() && !tunnel.asyncUpdate());
+        return tunnel == null || tunnel.expired() && !tunnel.asyncUpdate();
     }
 
     /**
@@ -249,8 +246,7 @@ public final class MethodCacher {
                     continue;
                 }
                 final MethodCacher.Tunnel removed = this.tunnels.remove(key);
-                final Method method = MethodSignature.class
-                    .cast(point.getSignature())
+                final Method method = ((MethodSignature) point.getSignature())
                     .getMethod();
                 if (LogHelper.enabled(
                     key.getLevel(), method.getDeclaringClass()
@@ -383,8 +379,8 @@ public final class MethodCacher {
          * Public ctor.
          * @return MethodCacher.Tunnel
          */
-        public Tunnel copy() {
-            return new Tunnel(
+        public MethodCacher.Tunnel copy() {
+            return new MethodCacher.Tunnel(
                 this.point, this.key, this.asynchupdate
             );
         }
@@ -400,8 +396,7 @@ public final class MethodCacher {
             if (!this.executed) {
                 final long start = System.currentTimeMillis();
                 this.cached = this.point.proceed();
-                final Method method = MethodSignature.class
-                    .cast(this.point.getSignature())
+                final Method method = ((MethodSignature) this.point.getSignature())
                     .getMethod();
                 final Cacheable annot = method.getAnnotation(Cacheable.class);
                 final String suffix;
@@ -413,7 +408,7 @@ public final class MethodCacher {
                     suffix = "invalid immediately";
                 } else {
                     final long msec = annot.unit().toMillis(
-                        (long) annot.lifetime()
+                        annot.lifetime()
                     );
                     this.lifetime = start + msec;
                     suffix = Logger.format("valid for %[ms]s", msec);
@@ -495,8 +490,7 @@ public final class MethodCacher {
          * @param point Joint point
          */
         Key(final JoinPoint point) {
-            this.method = MethodSignature.class
-                .cast(point.getSignature()).getMethod();
+            this.method = ((MethodSignature) point.getSignature()).getMethod();
             this.target = MethodCacher.Key.targetize(point);
             this.arguments = point.getArgs();
             if (this.method.isAnnotationPresent(Loggable.class)) {
@@ -522,7 +516,7 @@ public final class MethodCacher {
             if (this == obj) {
                 equals = true;
             } else if (obj instanceof MethodCacher.Key) {
-                final MethodCacher.Key key = MethodCacher.Key.class.cast(obj);
+                final MethodCacher.Key key = (Key) obj;
                 equals = key.method.equals(this.method)
                     && this.target.equals(key.target)
                     && Arrays.deepEquals(key.arguments, this.arguments);
@@ -570,8 +564,7 @@ public final class MethodCacher {
          */
         private static Object targetize(final JoinPoint point) {
             final Object tgt;
-            final Method method = MethodSignature.class
-                .cast(point.getSignature()).getMethod();
+            final Method method = ((MethodSignature) point.getSignature()).getMethod();
             if (Modifier.isStatic(method.getModifiers())) {
                 tgt = method.getDeclaringClass();
             } else {

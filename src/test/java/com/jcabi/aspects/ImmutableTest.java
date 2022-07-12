@@ -59,7 +59,7 @@ public final class ImmutableTest {
     public void catchedMutableTypes() {
         Assertions.assertThrows(
             IllegalStateException.class,
-            Mutable::new
+            ImmutableTest.Mutable::new
         );
     }
 
@@ -70,7 +70,7 @@ public final class ImmutableTest {
     public void catchedMutableTypesWithArrays() {
         Assertions.assertThrows(
             IllegalStateException.class,
-            MutableWithArray::new
+            ImmutableTest.MutableWithArray::new
         );
     }
 
@@ -79,8 +79,8 @@ public final class ImmutableTest {
      */
     @Test
     public void passesImmutableObjects() {
-        final Object obj = new TruelyImmutable(
-            new TruelyImmutableWithNonPrivateFields()
+        final Object obj = new ImmutableTest.TruelyImmutable(
+            new ImmutableTest.TruelyImmutableWithNonPrivateFields()
         );
     }
 
@@ -89,7 +89,7 @@ public final class ImmutableTest {
      */
     @Test
     public void passesImmutableObjectsWithNonPrivateFields() {
-        new TruelyImmutableWithNonPrivateFields();
+        new ImmutableTest.TruelyImmutableWithNonPrivateFields();
     }
 
     /**
@@ -99,7 +99,7 @@ public final class ImmutableTest {
     public void catchesTypesMutableByClassInheritance() {
         Assertions.assertThrows(
             IllegalStateException.class,
-            MutableByInheritance::new
+            ImmutableTest.MutableByInheritance::new
         );
     }
 
@@ -111,7 +111,7 @@ public final class ImmutableTest {
         MatcherAssert.assertThat(
             Assertions.assertThrows(
                 IllegalStateException.class,
-                Mutable::new
+                ImmutableTest.Mutable::new
             ),
             Matchers.hasProperty(
                 "message",
@@ -206,7 +206,7 @@ public final class ImmutableTest {
         /**
          * Immutable iface.
          */
-        private final transient ImmutableInterface iface;
+        private final transient ImmutableTest.ImmutableInterface iface;
 
         /**
          * Ctor.
@@ -220,7 +220,7 @@ public final class ImmutableTest {
          *
          * @param ipt Input
          */
-        private TruelyImmutable(final TruelyImmutableWithNonPrivateFields ipt) {
+        private TruelyImmutable(final ImmutableTest.TruelyImmutableWithNonPrivateFields ipt) {
             this(ipt.text);
         }
 

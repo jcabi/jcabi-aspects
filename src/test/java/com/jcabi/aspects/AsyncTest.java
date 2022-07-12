@@ -83,7 +83,7 @@ public final class AsyncTest {
     @Test
     public void returnsFutureValue() throws Exception {
         MatcherAssert.assertThat(
-            new Foo().asyncMethodWithReturnValue()
+            new AsyncTest.Foo().asyncMethodWithReturnValue()
                 .get(Tv.FIVE, TimeUnit.MINUTES),
             AsyncTest.THREAD_NAME
         );
@@ -97,7 +97,7 @@ public final class AsyncTest {
     public void throwsWhenMethodDoesNotReturnVoidOrFuture() {
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new Foo().asyncMethodThatReturnsInt()
+            () -> new AsyncTest.Foo().asyncMethodThatReturnsInt()
         );
     }
 

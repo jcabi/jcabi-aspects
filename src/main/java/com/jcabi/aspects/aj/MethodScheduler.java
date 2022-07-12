@@ -92,9 +92,9 @@ public final class MethodScheduler {
         }
         final Runnable runnable;
         if (object instanceof Runnable) {
-            runnable = new VerboseRunnable(Runnable.class.cast(object), true);
+            runnable = new VerboseRunnable((Runnable) object, true);
         } else if (object instanceof Callable) {
-            runnable = new VerboseRunnable(Callable.class.cast(object), true);
+            runnable = new VerboseRunnable((Callable) object, true);
         } else {
             throw new IllegalStateException(
                 Logger.format(
@@ -214,7 +214,7 @@ public final class MethodScheduler {
             final long begin = System.currentTimeMillis();
             try {
                 while (true) {
-                    if (this.executor.awaitTermination(1, TimeUnit.SECONDS)) {
+                    if (this.executor.awaitTermination(1L, TimeUnit.SECONDS)) {
                         break;
                     }
                     final long age = System.currentTimeMillis() - begin;
@@ -227,9 +227,9 @@ public final class MethodScheduler {
                         );
                     }
                 }
-                for (int attempt = 0; attempt < this.attempts; ++attempt) {
+                for (int attempt = 0; (long) attempt < this.attempts; ++attempt) {
                     this.executor.shutdownNow();
-                    this.executor.awaitTermination(1, TimeUnit.SECONDS);
+                    this.executor.awaitTermination(1L, TimeUnit.SECONDS);
                 }
                 if (!this.executor.isTerminated()) {
                     throw new IllegalStateException(

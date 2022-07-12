@@ -22,10 +22,10 @@ resource downloading in case of failure. You can implement a full
 
 ```java
 public class MyResource {
-  @RetryOnFailure
-  public String load(URL url) {
-    return url.openConnection().getContent();
-  }
+    @RetryOnFailure
+    public String load(final URL url) {
+        return url.openConnection().getContent();
+    }
 }
 ```
 

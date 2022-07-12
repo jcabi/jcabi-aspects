@@ -101,7 +101,7 @@ public final class ImmutabilityChecker {
                 }
                 if (!type.isInterface()
                     && !Modifier.isFinal(type.getModifiers())) {
-                    throw new Violation(
+                    throw new ImmutabilityChecker.Violation(
                         String.format(
                             "Class '%s' is not final",
                             type.getName()
@@ -149,7 +149,7 @@ public final class ImmutabilityChecker {
                 continue;
             }
             if (!Modifier.isFinal(field.getModifiers())) {
-                throw new Violation(
+                throw new ImmutabilityChecker.Violation(
                     String.format(
                         "field '%s' is not final in %s",
                         field, type.getName()
@@ -160,8 +160,8 @@ public final class ImmutabilityChecker {
                 if (field.getType().isArray()) {
                     this.checkArray(field);
                 }
-            } catch (final Violation ex) {
-                throw new Violation(
+            } catch (final ImmutabilityChecker.Violation ex) {
+                throw new ImmutabilityChecker.Violation(
                     String.format(
                         "field '%s' is mutable",
                         field
@@ -175,7 +175,7 @@ public final class ImmutabilityChecker {
     /**
      * This array field immutable?
      * @param field The field to check
-     * @throws Violation If it is mutable.
+     * @throws ImmutabilityChecker.Violation If it is mutable.
      */
     private void checkArray(final Field field)
         throws ImmutabilityChecker.Violation {

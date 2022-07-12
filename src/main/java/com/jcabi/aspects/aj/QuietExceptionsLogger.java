@@ -67,7 +67,7 @@ public final class QuietExceptionsLogger {
         )
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrap(final ProceedingJoinPoint point) {
-        if (!MethodSignature.class.cast(point.getSignature()).getReturnType()
+        if (!((MethodSignature) point.getSignature()).getReturnType()
             .equals(Void.TYPE)) {
             throw new IllegalStateException(
                 String.format(

@@ -61,5 +61,5 @@ public @interface UnitedThrow {
      *
      * @return The type of exception.
      */
-    Class<? extends Throwable> value() default None.class;
+    Class<? extends Throwable> value() default UnitedThrow.None.class;
 }

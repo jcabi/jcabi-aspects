@@ -74,13 +74,13 @@ final class Mnemos {
     public static String toText(final ProceedingJoinPoint point,
         final boolean trim, final boolean skip, final boolean logthis) {
         final String additional;
-        if (logthis && (point.getThis() != null)) {
+        if (logthis && point.getThis() != null) {
             additional = point.getThis().toString();
         } else {
             additional = "";
         }
         return Mnemos.toText(
-            MethodSignature.class.cast(point.getSignature()).getMethod(),
+            ((MethodSignature) point.getSignature()).getMethod(),
             point.getArgs(), additional,
             trim, skip
         );
@@ -97,7 +97,7 @@ final class Mnemos {
     public static String toText(final ProceedingJoinPoint point,
         final boolean trim, final boolean skip) {
         return Mnemos.toText(
-            MethodSignature.class.cast(point.getSignature()).getMethod(),
+            ((MethodSignature) point.getSignature()).getMethod(),
             point.getArgs(),
             trim, skip
         );

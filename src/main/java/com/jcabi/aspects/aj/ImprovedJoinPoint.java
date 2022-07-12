@@ -114,8 +114,7 @@ final class ImprovedJoinPoint implements JoinPoint {
      */
     public Object targetize() {
         final Object target;
-        final Method method = MethodSignature.class
-            .cast(this.joinpoint.getSignature()).getMethod();
+        final Method method = ((MethodSignature) this.joinpoint.getSignature()).getMethod();
         if (Modifier.isStatic(method.getModifiers())) {
             target = method.getDeclaringClass();
         } else {

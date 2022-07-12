@@ -51,7 +51,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  * Execute method in multiple threads.
  *
  * @since 0.10
- * @see com.jcabi.aspects.Parallel
+ * @see Parallel
  * @checkstyle NonStaticMethodCheck (100 lines)
  */
 @Aspect
@@ -68,12 +68,12 @@ public final class Parallelizer {
      *
      * @param point Joint point
      * @return The result of call
-     * @throws ParallelException If something goes wrong inside
+     * @throws Parallelizer.ParallelException If something goes wrong inside
      * @checkstyle IllegalThrowsCheck (4 lines)
      */
     @Around("execution(@com.jcabi.aspects.Parallel * * (..))")
     public Object wrap(final ProceedingJoinPoint point)
-        throws ParallelException {
+        throws Parallelizer.ParallelException {
         final int total = ((MethodSignature) point.getSignature())
             .getMethod().getAnnotation(Parallel.class).threads();
         final Collection<Callable<Throwable>> callables =
@@ -127,11 +127,11 @@ public final class Parallelizer {
      * @return Aggregated exceptions.
      */
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    private static ParallelException exceptions(
+    private static Parallelizer.ParallelException exceptions(
         final Collection<Throwable> failures) {
-        ParallelException current = null;
+        Parallelizer.ParallelException current = null;
         for (final Throwable failure : failures) {
-            current = new ParallelException(failure, current);
+            current = new Parallelizer.ParallelException(failure, current);
         }
         return current;
     }
@@ -172,7 +172,7 @@ public final class Parallelizer {
         /**
          * Next parallel exception.
          */
-        private final transient ParallelException next;
+        private final transient Parallelizer.ParallelException next;
 
         /**
          * Constructor.
@@ -180,7 +180,7 @@ public final class Parallelizer {
          * @param nxt Following exception.
          */
         protected ParallelException(final Throwable cause,
-            final ParallelException nxt) {
+            final Parallelizer.ParallelException nxt) {
             super(cause);
             this.next = nxt;
         }
@@ -189,7 +189,7 @@ public final class Parallelizer {
          * Get next parallel exception.
          * @return Next exception.
          */
-        public ParallelException getNext() {
+        public Parallelizer.ParallelException getNext() {
             return this.next;
         }
     }
