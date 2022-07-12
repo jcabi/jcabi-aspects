@@ -40,6 +40,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -83,6 +84,7 @@ public final class CacheableTest {
      * @throws Exception If something goes wrong
      */
     @Test
+    @Disabled
     public void asyncUpdateCacheSimpleCall() throws Exception {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.asyncGet().toString();
