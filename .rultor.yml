@@ -14,4 +14,4 @@ release:
     mvn versions:set "-DnewVersion=${tag}" -e
     git commit -am "${tag}"
     mvn clean deploy -Pqulice -Psonatype -Pjcabi --errors --settings ../settings.xml
-    mvn clean site-deploy -Psite --errors -Pjcabi --settings ../settings.xml || true
+    mvn clean site-deploy -Psite --errors -Pjcabi --settings ../settings.xml

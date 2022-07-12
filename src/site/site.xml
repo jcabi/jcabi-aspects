@@ -32,19 +32,20 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
   <skin>
     <groupId>com.jcabi</groupId>
     <artifactId>jcabi-maven-skin</artifactId>
-    <version>1.5.1</version>
+    <version>1.7.1</version>
   </skin>
   <bannerLeft>
     <name>jcabi</name>
-    <src>http://img.jcabi.com/logo-square.svg</src>
-    <href>http://www.jcabi.com/</href>
+    <src>https://www.jcabi.com/logo-square.svg</src>
+    <href>https://aspects.jcabi.com/</href>
     <width>64</width>
     <height>64</height>
   </bannerLeft>
   <googleAnalyticsAccountId>UA-1963507-23</googleAnalyticsAccountId>
   <body>
     <head>
-      &lt;link href="http://img.jcabi.com/favicon.ico" rel="shortcut icon"/&gt;
+      &lt;link href="https://www.jcabi.com/favicon.ico" rel="shortcut icon"/&gt;
+      &lt;link href="https://plus.google.com/u/0/114792568016408327418?rel=author" rel="author"/&gt;
     </head>
     <menu name="Overview">
       <item name="Introduction" href="./index.html"/>
