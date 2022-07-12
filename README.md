@@ -14,7 +14,8 @@ More details are here: [aspects.jcabi.com](https://aspects.jcabi.com/index.html)
 
 Also, read this blog post: [Java Method Logging with AOP and Annotations](https://www.yegor256.com/2014/06/01/aop-aspectj-java-method-logging.html).
 
-This module contains a collection of useful AOP aspects, which
+This module contains a collection of useful [AOP](https://en.wikipedia.org/wiki/Aspect-oriented_programming)
+aspects, which
 allow you to modify the behavior of a Java application without
 writing a line of code. For example, you may want to retry HTTP
 resource downloading in case of failure. You can implement a full
