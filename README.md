@@ -8,7 +8,7 @@
 [![PDD status](http://www.0pdd.com/svg?name=jcabi/jcabi-aspects)](http://www.0pdd.com/p?name=jcabi/jcabi-aspects)
 [![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-aspects.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-aspects)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects)
-[![JavaDoc](https://img.shields.io/badge/javadoc-html-blue.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-aspects)
+[![codecov](https://codecov.io/gh/jcabi/jcabi-aspects/branch/master/graph/badge.svg)](https://codecov.io/gh/jcabi/jcabi-aspects)
 
 More details are here: [aspects.jcabi.com](https://aspects.jcabi.com/index.html)
 
