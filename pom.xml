@@ -86,21 +86,15 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.hibernate</groupId>
+      <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
-      <version>5.3.0.Alpha1</version>
+      <version>6.0.13.Final</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>javax.el</groupId>
-      <artifactId>javax.el-api</artifactId>
-      <version>3.0.1-b04</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.web</groupId>
+      <groupId>org.glassfish</groupId>
       <artifactId>javax.el</artifactId>
-      <version>2.2.6</version>
+      <version>3.0.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
