@@ -143,7 +143,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
           <showWeaveInfo>true</showWeaveInfo>
           <forceAjcCompile>true</forceAjcCompile>
           <verbose>false</verbose>
-          <Xlint>warning</Xlint>
+          <Xlint>warning,canNotImplementLazyTjp=ignore,adviceDidNotMatch=ignore</Xlint>
           <argumentFileName>builddef-${project.name}.lst</argumentFileName>
           <excludes>
             <exclude>**/package-info.java</exclude>
