@@ -146,7 +146,7 @@ public final class Repeater {
      * @return The message
      */
     private static String message(final Throwable exp) {
-        final StringBuilder text = new StringBuilder();
+        final StringBuilder text = new StringBuilder(0);
         text.append(exp.getMessage());
         if (exp.getCause() != null) {
             text.append("; ").append(Repeater.message(exp.getCause()));

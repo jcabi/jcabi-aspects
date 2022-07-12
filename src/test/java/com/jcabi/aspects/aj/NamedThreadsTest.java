@@ -31,6 +31,7 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.version.Version;
 import java.io.StringWriter;
+import org.apache.log4j.Appender;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -56,7 +57,7 @@ public final class NamedThreadsTest {
         final Level level = root.getLevel();
         root.setLevel(Level.INFO);
         final StringWriter writer = new StringWriter();
-        final WriterAppender appender =
+        final Appender appender =
             new WriterAppender(new SimpleLayout(), writer);
         root.addAppender(appender);
         try {

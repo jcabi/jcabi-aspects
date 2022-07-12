@@ -33,6 +33,7 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.UnitedThrow;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.util.Objects;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -100,7 +101,7 @@ public final class SingleException {
         boolean found = false;
         for (final Constructor<?> ctr : clz.getConstructors()) {
             if (ctr.getParameterTypes().length == 1
-                && ctr.getParameterTypes()[0] == Throwable.class) {
+                && Objects.equals(ctr.getParameterTypes()[0], Throwable.class)) {
                 found = true;
                 break;
             }
@@ -118,7 +119,7 @@ public final class SingleException {
     private static Class<? extends Throwable> clazz(final Method method,
         final UnitedThrow annot) {
         Class<? extends Throwable> clz = annot.value();
-        if (clz == UnitedThrow.None.class) {
+        if (Objects.equals(clz, UnitedThrow.None.class)) {
             if (method.getExceptionTypes().length == 0) {
                 clz = IllegalStateException.class;
             } else {

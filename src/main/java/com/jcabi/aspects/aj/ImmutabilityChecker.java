@@ -34,6 +34,7 @@ import com.jcabi.aspects.version.Version;
 import com.jcabi.log.Logger;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.aspectj.lang.JoinPoint;
@@ -53,7 +54,7 @@ public final class ImmutabilityChecker {
     /**
      * Already checked immutable classes.
      */
-    private final transient Set<Class<?>> immutable = new HashSet<>();
+    private final transient Collection<Class<?>> immutable = new HashSet<>();
 
     /**
      * Catch instantiation and validate class.

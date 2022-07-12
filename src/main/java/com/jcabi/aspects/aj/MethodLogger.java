@@ -260,7 +260,9 @@ public final class MethodLogger {
      * @return Is over time limit.
      */
     private static boolean over(final Loggable annotation, final long nano) {
-        return nano > annotation.unit().toNanos(annotation.limit());
+        return nano > annotation.unit().toNanos(
+            (long) annotation.limit()
+        );
     }
 
     /**
@@ -275,7 +277,7 @@ public final class MethodLogger {
      */
     private static String message(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation, final Object result, final long nano) {
-        final StringBuilder msg = new StringBuilder();
+        final StringBuilder msg = new StringBuilder(0);
         msg.append(
             Mnemos.toText(
                 point,
@@ -313,9 +315,9 @@ public final class MethodLogger {
      * @param name The Loggable annotation
      * @return The logger that will be used
      */
-    private static Object logger(final Method method, final String name) {
+    private static Object logger(final Method method, final CharSequence name) {
         final Object source;
-        if (name.isEmpty()) {
+        if (name.length() == 0) {
             source = method.getDeclaringClass();
         } else {
             source = name;
@@ -369,12 +371,12 @@ public final class MethodLogger {
      * @return The text
      */
     private static String allText(final StackTraceElement... trace) {
-        final StringBuilder text = new StringBuilder();
-        for (int pos = 0; pos < trace.length; ++pos) {
+        final StringBuilder text = new StringBuilder(0);
+        for (final StackTraceElement element : trace) {
             if (text.length() > 0) {
                 text.append(", ");
             }
-            text.append(MethodLogger.oneText(trace[pos]));
+            text.append(MethodLogger.oneText(element));
         }
         return text.toString();
     }

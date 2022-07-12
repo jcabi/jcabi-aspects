@@ -117,11 +117,9 @@ public final class MethodInterrupter {
      */
     private void interrupt() {
         synchronized (this.interrupter) {
-            for (final MethodInterrupter.Call call : this.calls) {
-                if (call.expired() && call.interrupted()) {
-                    this.calls.remove(call);
-                }
-            }
+            this.calls.removeIf(
+                call -> call.expired() && call.interrupted()
+            );
         }
     }
 
@@ -163,7 +161,9 @@ public final class MethodInterrupter {
             final Method method = ((MethodSignature) pnt.getSignature())
                 .getMethod();
             final Timeable annt = method.getAnnotation(Timeable.class);
-            this.deadline = this.start + annt.unit().toMillis(annt.limit());
+            this.deadline = this.start + annt.unit().toMillis(
+                (long) annt.limit()
+            );
         }
 
         @Override

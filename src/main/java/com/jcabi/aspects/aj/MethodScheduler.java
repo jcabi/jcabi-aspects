@@ -94,7 +94,7 @@ public final class MethodScheduler {
         if (object instanceof Runnable) {
             runnable = new VerboseRunnable((Runnable) object, true);
         } else if (object instanceof Callable) {
-            runnable = new VerboseRunnable((Callable) object, true);
+            runnable = new VerboseRunnable((Callable<?>) object, true);
         } else {
             throw new IllegalStateException(
                 Logger.format(
@@ -120,11 +120,10 @@ public final class MethodScheduler {
      * it backward compatible.
      *
      * @param point Joint point
-     * @throws IOException If can't close
      * @checkstyle LineLength (2 lines)
      */
     @Before("execution(* (@com.jcabi.aspects.ScheduleWithFixedDelay *).close())")
-    public void close(final JoinPoint point) throws IOException {
+    public void close(final JoinPoint point) {
         final Object object = point.getTarget();
         this.services.get(object).close();
         this.services.remove(object);
@@ -187,15 +186,18 @@ public final class MethodScheduler {
                 new VerboseThreads(this.object)
             );
             this.verbose = annt.verbose();
-            this.await = annt.awaitUnit().toMillis(annt.await());
-            this.attempts = annt.shutdownAttempts();
+            this.await = annt.awaitUnit().toMillis(
+                (long) annt.await()
+            );
+            this.attempts = (long) annt.shutdownAttempts();
             final Runnable job = () -> {
                 runnable.run();
                 this.counter.incrementAndGet();
             };
             for (int thread = 0; thread < annt.threads(); ++thread) {
                 this.executor.scheduleWithFixedDelay(
-                    job, annt.delay(), annt.delay(), annt.unit()
+                    job, (long) annt.delay(), (long) annt.delay(),
+                    annt.unit()
                 );
             }
             if (this.verbose) {

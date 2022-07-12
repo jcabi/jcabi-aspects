@@ -197,7 +197,7 @@ public final class MethodValidator {
      * @return The full text
      */
     private static String pack(
-        final Collection<ConstraintViolation<Object>> errs) {
+        final Iterable<ConstraintViolation<Object>> errs) {
         final StringBuilder text = new StringBuilder(0);
         for (final ConstraintViolation<?> violation : errs) {
             if (text.length() > 0) {

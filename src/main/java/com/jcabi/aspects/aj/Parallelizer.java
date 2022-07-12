@@ -84,7 +84,7 @@ public final class Parallelizer {
         }
         final ExecutorService executor = Executors
             .newFixedThreadPool(total, new VerboseThreads());
-        final List<Future<Throwable>> futures =
+        final Collection<Future<Throwable>> futures =
             new ArrayList<>(total);
         for (final Callable<Throwable> callable : callables) {
             futures.add(executor.submit(callable));
@@ -128,7 +128,7 @@ public final class Parallelizer {
      */
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     private static Parallelizer.ParallelException exceptions(
-        final Collection<Throwable> failures) {
+        final Iterable<Throwable> failures) {
         Parallelizer.ParallelException current = null;
         for (final Throwable failure : failures) {
             current = new Parallelizer.ParallelException(failure, current);

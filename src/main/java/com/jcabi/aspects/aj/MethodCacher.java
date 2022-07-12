@@ -36,6 +36,7 @@ import com.jcabi.log.VerboseRunnable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -270,9 +271,11 @@ public final class MethodCacher {
      */
     private void clean() {
         synchronized (this.tunnels) {
-            for (final MethodCacher.Key key : this.tunnels.keySet()) {
-                if (this.tunnels.get(key).expired()
-                    && !this.tunnels.get(key).asyncUpdate()) {
+            for (final Map.Entry<MethodCacher.Key, MethodCacher.Tunnel> entry
+                : this.tunnels.entrySet()) {
+                final MethodCacher.Key key = entry.getKey();
+                if (entry.getValue().expired()
+                    && !entry.getValue().asyncUpdate()) {
                     final MethodCacher.Tunnel tunnel = this.tunnels.remove(key);
                     LogHelper.log(
                         key.getLevel(),
@@ -408,7 +411,7 @@ public final class MethodCacher {
                     suffix = "invalid immediately";
                 } else {
                     final long msec = annot.unit().toMillis(
-                        annot.lifetime()
+                        (long) annot.lifetime()
                     );
                     this.lifetime = start + msec;
                     suffix = Logger.format("valid for %[ms]s", msec);
@@ -516,7 +519,7 @@ public final class MethodCacher {
             if (this == obj) {
                 equals = true;
             } else if (obj instanceof MethodCacher.Key) {
-                final MethodCacher.Key key = (Key) obj;
+                final MethodCacher.Key key = (MethodCacher.Key) obj;
                 equals = key.method.equals(this.method)
                     && this.target.equals(key.target)
                     && Arrays.deepEquals(key.arguments, this.arguments);
