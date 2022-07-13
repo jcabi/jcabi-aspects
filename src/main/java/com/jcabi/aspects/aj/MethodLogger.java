@@ -231,7 +231,7 @@ public final class MethodLogger {
                     origin = "somewhere";
                 }
                 LogHelper.log(
-                    level,
+                    this.decideExceptionLevel(annotation),
                     method.getDeclaringClass(),
                     Logger.format(
                         "%s: thrown %s out of %s in %[nano]s",
@@ -251,6 +251,19 @@ public final class MethodLogger {
         } finally {
             this.running.remove(marker);
         }
+    }
+
+    /**
+     * Decide exception level against base level.
+     * @param annotation The Loggable annotation
+     * @return The exception log level
+     */
+    private int decideExceptionLevel(final Loggable annotation) {
+        int returnValue = annotation.value();
+        if (annotation.exceptionsAsError()) {
+            returnValue = Loggable.ERROR;
+        }
+        return returnValue;
     }
 
     /**
