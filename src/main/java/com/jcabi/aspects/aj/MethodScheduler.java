@@ -34,7 +34,6 @@ import com.jcabi.log.Logger;
 import com.jcabi.log.VerboseRunnable;
 import com.jcabi.log.VerboseThreads;
 import java.io.Closeable;
-import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -176,7 +175,8 @@ public final class MethodScheduler {
          * @param obj Object
          * @param annt Annotation
          */
-        protected Service(final Runnable runnable, final Object obj,
+        @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
+        Service(final Runnable runnable, final Object obj,
             final ScheduleWithFixedDelay annt) {
             this.start = System.currentTimeMillis();
             this.counter = new AtomicLong();
@@ -246,7 +246,7 @@ public final class MethodScheduler {
                 Thread.currentThread().interrupt();
                 throw new IllegalStateException(ex);
             }
-            if (this.verbose) {
+            if (this.verbose && Logger.isInfoEnabled(this.object)) {
                 Logger.info(
                     this.object,
                     "execution stopped after %[ms]s and %d tick(s)",

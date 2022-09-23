@@ -65,7 +65,7 @@ public final class SingleException {
             "execution(* * (..))"
             + " && @annotation(com.jcabi.aspects.UnitedThrow)"
         )
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    @SuppressWarnings({"PMD.AvoidCatchingThrowable", "PMD.PreserveStackTrace"})
     // @checkstyle IllegalThrowsCheck (1 line)
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         final Method method =

@@ -30,7 +30,6 @@
 package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.RetryOnFailure;
-import com.jcabi.aspects.Tv;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
@@ -43,20 +42,17 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.1.10
  */
-public final class RepeaterTest {
+final class RepeaterTest {
 
-    /**
-     * Repeater should retry a method that fails.
-     */
     @Test
-    public void retriesAfterFailure() {
+    void retriesAfterFailure() {
         final AtomicInteger calls = new AtomicInteger(0);
         MatcherAssert.assertThat(
             new Callable<Boolean>() {
                 @Override
                 @RetryOnFailure(verbose = false)
                 public Boolean call() {
-                    if (calls.get() < Tv.THREE - 1) {
+                    if (calls.get() < 3 - 1) {
                         calls.incrementAndGet();
                         throw new IllegalStateException();
                     }
@@ -65,14 +61,11 @@ public final class RepeaterTest {
             } .call(),
             Matchers.equalTo(true)
         );
-        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(Tv.THREE - 1));
+        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(3 - 1));
     }
 
-    /**
-     * Repeater should stop method retries if it exceeds a threshold.
-     */
     @Test
-    public void stopsRetryingAfterNumberOfAttempts() {
+    void stopsRetryingAfterNumberOfAttempts() {
         final AtomicInteger calls = new AtomicInteger(0);
         Assertions.assertThrows(
             IllegalStateException.class,
@@ -80,7 +73,7 @@ public final class RepeaterTest {
                 @Override
                 @RetryOnFailure(verbose = false)
                 public Boolean call() {
-                    if (calls.get() < Tv.THREE) {
+                    if (calls.get() < 3) {
                         calls.incrementAndGet();
                         throw new IllegalStateException();
                     }
@@ -90,12 +83,8 @@ public final class RepeaterTest {
         );
     }
 
-    /**
-     * Repeater should retry if an exception specified to be
-     * retried is thrown from the method.
-     */
     @Test
-    public void onlyRetryExceptionsWhichAreSpecified() {
+    void onlyRetryExceptionsWhichAreSpecified() {
         final AtomicInteger calls = new AtomicInteger(0);
         MatcherAssert.assertThat(
             new Callable<Boolean>() {
@@ -105,7 +94,7 @@ public final class RepeaterTest {
                     verbose = false
                 )
                 public Boolean call() {
-                    if (calls.get() < Tv.THREE - 1) {
+                    if (calls.get() < 3 - 1) {
                         calls.incrementAndGet();
                         throw new ArrayIndexOutOfBoundsException();
                     }
@@ -114,15 +103,11 @@ public final class RepeaterTest {
             } .call(),
             Matchers.equalTo(true)
         );
-        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(Tv.THREE - 1));
+        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(3 - 1));
     }
 
-    /**
-     * Repeater should throw the exception if it is
-     * not specified to be retried.
-     */
     @Test
-    public void throwExceptionsWhichAreNotSpecifiedAsRetry() {
+    void throwExceptionsWhichAreNotSpecifiedAsRetry() {
         final AtomicInteger calls = new AtomicInteger(0);
         try {
             Assertions.assertThrows(
@@ -131,7 +116,7 @@ public final class RepeaterTest {
                     @Override
                     @RetryOnFailure(types = IllegalArgumentException.class, verbose = false)
                     public Boolean call() {
-                        if (calls.get() < Tv.THREE - 1) {
+                        if (calls.get() < 3 - 1) {
                             calls.incrementAndGet();
                             throw new ArrayIndexOutOfBoundsException();
                         }
@@ -144,19 +129,15 @@ public final class RepeaterTest {
         }
     }
 
-    /**
-     * Repeater should retry even if the exception is a
-     * subtype of the class specified to be retried.
-     */
     @Test
-    public void retryExceptionsWhichAreSubTypesOfTheExceptionsSpecified() {
+    void retryExceptionsWhichAreSubTypesOfTheExceptionsSpecified() {
         final AtomicInteger calls = new AtomicInteger(0);
         MatcherAssert.assertThat(
             new Callable<Boolean>() {
                 @Override
                 @RetryOnFailure(verbose = false, types = IndexOutOfBoundsException.class)
                 public Boolean call() {
-                    if (calls.get() < Tv.THREE - 1) {
+                    if (calls.get() < 3 - 1) {
                         calls.incrementAndGet();
                         throw new ArrayIndexOutOfBoundsException();
                     }
@@ -165,6 +146,6 @@ public final class RepeaterTest {
             } .call(),
             Matchers.equalTo(true)
         );
-        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(Tv.THREE - 1));
+        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(3 - 1));
     }
 }

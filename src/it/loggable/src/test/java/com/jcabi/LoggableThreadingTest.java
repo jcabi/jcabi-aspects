@@ -30,7 +30,6 @@
 package com.jcabi;
 
 import com.jcabi.aspects.Loggable;
-import com.jcabi.aspects.Tv;
 import java.lang.Thread.State;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -43,10 +42,6 @@ import org.junit.Test;
  */
 public final class LoggableThreadingTest {
 
-    /**
-     * Check if thread created by Loggable is terminated.
-     * @throws Exception if something goes wrong
-     */
     @Test
     public void loggableThreadTerminates() throws Exception {
         new LoggableThreading().foo();
@@ -61,7 +56,7 @@ public final class LoggableThreadingTest {
         }
         MatcherAssert.assertThat(thread, Matchers.notNullValue());
         thread.interrupt();
-        TimeUnit.SECONDS.sleep(Tv.TEN);
+        TimeUnit.SECONDS.sleep(10);
         MatcherAssert.assertThat(
             thread.getState(), Matchers.is(State.TERMINATED)
         );

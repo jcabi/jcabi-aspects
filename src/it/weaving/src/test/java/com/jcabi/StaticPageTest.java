@@ -37,12 +37,8 @@ import org.junit.Test;
  * Test case for {@link StaticPage}, which is actually testing how
  * {@link Cacheable} annotation works with static methods.
  */
-public final class StaticPageTest {
+final class StaticPageTest {
 
-    /**
-     * StaticPage can cache results.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void cachesResults() throws Exception {
         StaticPage.download();

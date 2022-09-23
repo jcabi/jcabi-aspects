@@ -50,64 +50,46 @@ import org.junit.jupiter.api.Test;
             "PMD.FinalFieldCouldBeStatic"
         }
     )
-public final class ImmutableTest {
+final class ImmutableTest {
 
-    /**
-     * Immutable can catch mutable classes.
-     */
     @Test
-    public void catchedMutableTypes() {
+    void catchedMutableTypes() {
         Assertions.assertThrows(
             IllegalStateException.class,
             ImmutableTest.Mutable::new
         );
     }
 
-    /**
-     * ImmutabilityChecker can catch mutable classes with arrays.
-     */
     @Test
-    public void catchedMutableTypesWithArrays() {
+    void catchedMutableTypesWithArrays() {
         Assertions.assertThrows(
             IllegalStateException.class,
             ImmutableTest.MutableWithArray::new
         );
     }
 
-    /**
-     * Immutable can pass immutable classes.
-     */
     @Test
-    public void passesImmutableObjects() {
+    void passesImmutableObjects() {
         final Object obj = new ImmutableTest.TruelyImmutable(
             new ImmutableTest.TruelyImmutableWithNonPrivateFields()
         );
     }
 
-    /**
-     * Immutable can pass immutable classes.
-     */
     @Test
-    public void passesImmutableObjectsWithNonPrivateFields() {
+    void passesImmutableObjectsWithNonPrivateFields() {
         new ImmutableTest.TruelyImmutableWithNonPrivateFields();
     }
 
-    /**
-     * Immutable can catch mutable classes with interfaces.
-     */
     @Test
-    public void catchesTypesMutableByClassInheritance() {
+    void catchesTypesMutableByClassInheritance() {
         Assertions.assertThrows(
             IllegalStateException.class,
             ImmutableTest.MutableByInheritance::new
         );
     }
 
-    /**
-     * Informs version on error.
-     */
     @Test
-    public void informsVersionOnError() {
+    void informsVersionOnError() {
         MatcherAssert.assertThat(
             Assertions.assertThrows(
                 IllegalStateException.class,

@@ -52,62 +52,42 @@ import org.junit.jupiter.api.Test;
  * @since 0.0.0
  */
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidUsingShortType" })
-public final class LoggableTest {
+final class LoggableTest {
     /**
      * Foo toString result.
      */
     private static final transient String RESULT = "some text";
 
-    /**
-     * Loggable can log simple calls.
-     */
     @Test
-    public void logsSimpleCall() {
+    void logsSimpleCall() {
         new LoggableTest.Foo().revert("hello");
     }
 
-    /**
-     * Loggable can ignore toString() methods.
-     */
     @Test
-    public void ignoresToStringMethods() {
+    void ignoresToStringMethods() {
         new LoggableTest.Foo().self();
     }
 
-    /**
-     * Loggable can log static methods.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void logsStaticMethods() throws Exception {
+    void logsStaticMethods() throws Exception {
         LoggableTest.Foo.text();
     }
 
-    /**
-     * Loggable can ignore inherited methods.
-     */
     @Test
-    public void doesntLogInheritedMethods() {
+    void doesntLogInheritedMethods() {
         new LoggableTest.Foo().parentText();
     }
 
-    /**
-     * Loggable can ignore some exceptions.
-     */
     @Test
-    public void ignoresSomeExceptions() {
+    void ignoresSomeExceptions() {
         Assertions.assertThrows(
             IllegalStateException.class,
             () -> new LoggableTest.Foo().doThrow()
         );
     }
 
-    /**
-     * Loggable can log duration with a specific time unit.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void logsDurationWithSpecifiedTimeUnit() throws Exception {
+    void logsDurationWithSpecifiedTimeUnit() throws Exception {
         final StringWriter writer = new StringWriter();
         Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
@@ -119,11 +99,8 @@ public final class LoggableTest {
         );
     }
 
-    /**
-     * Loggable can log toString method.
-     */
     @Test
-    public void logsToStringResult() {
+    void logsToStringResult() {
         final StringWriter writer = new StringWriter();
         Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
@@ -135,11 +112,8 @@ public final class LoggableTest {
         );
     }
 
-    /**
-     * Loggable can log byte array results.
-     */
     @Test
-    public void logsByteArray() {
+    void logsByteArray() {
         final StringWriter writer = new StringWriter();
         Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
@@ -163,11 +137,8 @@ public final class LoggableTest {
         );
     }
 
-    /**
-     * Loggable can log short array results.
-     */
     @Test
-    public void logsShortArray() {
+    void logsShortArray() {
         final StringWriter writer = new StringWriter();
         Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
@@ -191,12 +162,8 @@ public final class LoggableTest {
         );
     }
 
-    /**
-     * Loggable can log methods that specify their own logger name.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void logsWithExplicitLoggerName() throws Exception {
+    void logsWithExplicitLoggerName() throws Exception {
         final StringWriter writer = new StringWriter();
         Logger.getRootLogger().addAppender(
             new WriterAppender(new PatternLayout("%t %c: %m%n"), writer)
@@ -285,7 +252,7 @@ public final class LoggableTest {
          * @return Some text
          * @throws Exception If terminated
          */
-        @Loggable(precision = Tv.THREE)
+        @Loggable(precision = 3)
         public static String logsDurationInSeconds() throws Exception {
             TimeUnit.SECONDS.sleep(2L);
             return LoggableTest.Foo.hiddenText();
@@ -297,7 +264,7 @@ public final class LoggableTest {
          */
         @Loggable
         public byte[] logsByteArray() {
-            final byte[] bytes = new byte[Tv.TEN];
+            final byte[] bytes = new byte[10];
             new Random().nextBytes(bytes);
             return bytes;
         }
@@ -308,7 +275,7 @@ public final class LoggableTest {
          */
         @Loggable
         public short[] logsShortArray() {
-            final short[] shorts = new short[Tv.TEN];
+            final short[] shorts = new short[10];
             final Random random = new Random();
             for (int idx = 0; idx < shorts.length; ++idx) {
                 shorts[idx] = (short) random.nextInt();

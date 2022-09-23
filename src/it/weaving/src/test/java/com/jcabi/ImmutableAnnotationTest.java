@@ -40,19 +40,11 @@ import org.junit.Test;
  */
 public final class ImmutableAnnotationTest {
 
-    /**
-     * Immutable annotation validate class mutability.
-     * @throws Exception If something goes wrong
-     */
     @Test(expected = IllegalStateException.class)
     public void validatesClassImmutability() throws Exception {
         new Mutable();
     }
 
-    /**
-     * Immutable annotation validate class mutability.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void validatesClassWithTrueImmutability() throws Exception {
         new TruelyImmutable();

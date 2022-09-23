@@ -35,7 +35,6 @@ import com.jcabi.log.VerboseThreads;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -115,6 +114,7 @@ public final class Parallelizer {
                 failures.add(exception);
             }
         } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
             failures.add(ex);
         } catch (final ExecutionException ex) {
             failures.add(ex);

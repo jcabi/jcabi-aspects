@@ -41,7 +41,13 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @since 0.0.0
  */
 @Immutable
-@SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidUsingShortType" })
+@SuppressWarnings(
+    {
+        "PMD.TooManyMethods",
+        "PMD.AvoidUsingShortType",
+        "PMD.ProhibitPublicStaticMethods"
+    }
+)
 final class Mnemos {
 
     /**

@@ -39,12 +39,8 @@ import org.junit.Test;
 /**
  * Test case for {@link Parallel} annotation.
  */
-public final class ParallelTest {
+final class ParallelTest {
 
-    /**
-     * Parallel can run methods in parallel.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void runsMethodInParallelThreads() throws Exception {
         final AtomicInteger cnt = new AtomicInteger();

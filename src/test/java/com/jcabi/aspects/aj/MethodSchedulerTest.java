@@ -30,7 +30,6 @@
 package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.ScheduleWithFixedDelay;
-import com.jcabi.aspects.Tv;
 import java.io.Closeable;
 import java.util.concurrent.TimeUnit;
 import org.hamcrest.MatcherAssert;
@@ -43,26 +42,18 @@ import org.junit.jupiter.api.Test;
  * @since 0.7.22
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
-public final class MethodSchedulerTest {
+final class MethodSchedulerTest {
 
-    /**
-     * MethodScheduler should wait for the task to finish.
-     * @throws Exception When there is a problem.
-     */
     @Test
-    public void shortRunningTaskShouldBeAllowedToFinish() throws Exception {
+    void shortRunningTaskShouldBeAllowedToFinish() throws Exception {
         final MethodSchedulerTest.ShortRun target = new MethodSchedulerTest.ShortRun();
-        TimeUnit.SECONDS.sleep(Tv.FIVE);
+        TimeUnit.SECONDS.sleep(5);
         target.close();
         MatcherAssert.assertThat(target.finished, Matchers.equalTo(true));
     }
 
-    /**
-     * MethodScheduler should interrupt long running task.
-     * @throws Exception When there is a problem.
-     */
     @Test
-    public void interruptLongRunningTask() throws Exception {
+    void interruptLongRunningTask() throws Exception {
         final MethodSchedulerTest.LongRun target = new MethodSchedulerTest.LongRun();
         target.close();
         MatcherAssert.assertThat(target.finished, Matchers.equalTo(false));
@@ -101,7 +92,7 @@ public final class MethodSchedulerTest {
      * @since 0.7.22
      */
     @ScheduleWithFixedDelay(unit = TimeUnit.NANOSECONDS,
-        await = Tv.TEN, awaitUnit = TimeUnit.SECONDS)
+        await = 10, awaitUnit = TimeUnit.SECONDS)
     private static class LongRun implements Runnable, Closeable {
         /**
          * Have we finished?
@@ -111,7 +102,6 @@ public final class MethodSchedulerTest {
         @Override
         public void run() {
             try {
-                // @checkstyle MagicNumber (1 line)
                 TimeUnit.SECONDS.sleep(30L);
                 this.finished = true;
             } catch (final InterruptedException ex) {

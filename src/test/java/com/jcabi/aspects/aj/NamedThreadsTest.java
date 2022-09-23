@@ -46,13 +46,11 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.22
  */
-public final class NamedThreadsTest {
-    /**
-     * Version test.
-     */
+final class NamedThreadsTest {
+
     @Test
     @SuppressWarnings("PMD.DoNotUseThreads")
-    public void testVersion() {
+    void testVersion() {
         final Logger root = LogManager.getRootLogger();
         final Level level = root.getLevel();
         root.setLevel(Level.INFO);

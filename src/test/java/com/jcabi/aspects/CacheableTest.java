@@ -56,7 +56,7 @@ import org.junit.jupiter.api.Test;
             "PMD.ProhibitPublicStaticMethods"
         }
     )
-public final class CacheableTest {
+final class CacheableTest {
 
     /**
      * Random.
@@ -64,11 +64,8 @@ public final class CacheableTest {
      */
     private static final Random RANDOM = new SecureRandom();
 
-    /**
-     * Cacheable can cache calls.
-     */
     @Test
-    public void cachesSimpleCall() {
+    void cachesSimpleCall() {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.get().toString();
         MatcherAssert.assertThat(first, Matchers.equalTo(foo.get().toString()));
@@ -79,13 +76,9 @@ public final class CacheableTest {
         );
     }
 
-    /**
-     * Cacheable can Asynchronous update.
-     * @throws Exception If something goes wrong
-     */
     @Test
     @Disabled
-    public void asyncUpdateCacheSimpleCall() throws Exception {
+    void asyncUpdateCacheSimpleCall() throws Exception {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.asyncGet().toString();
         MatcherAssert.assertThat(
@@ -104,11 +97,8 @@ public final class CacheableTest {
         );
     }
 
-    /**
-     * Cacheable can cache static calls.
-     */
     @Test
-    public void cachesSimpleStaticCall() {
+    void cachesSimpleStaticCall() {
         final String first = CacheableTest.Foo.staticGet();
         MatcherAssert.assertThat(
             first,
@@ -121,28 +111,19 @@ public final class CacheableTest {
         );
     }
 
-    /**
-     * Cacheable can clean cache after timeout.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void cleansCacheWhenExpired() throws Exception {
+    void cleansCacheWhenExpired() throws Exception {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.get().toString();
-        TimeUnit.SECONDS.sleep(Tv.FIVE);
+        TimeUnit.SECONDS.sleep(5);
         MatcherAssert.assertThat(
             foo.get().toString(),
             Matchers.not(Matchers.equalTo(first))
         );
     }
 
-    /**
-     * Cacheable can cache just once.
-     * @checkstyle ExecutableStatementCountCheck (30 lines)
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void cachesJustOnceInParallelThreads() throws Exception {
+    void cachesJustOnceInParallelThreads() throws Exception {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final Thread never = new Thread(foo::never);
         never.start();
@@ -162,7 +143,7 @@ public final class CacheableTest {
                 executor.submit(task);
             }
             start.countDown();
-            done.await(Tv.THIRTY, TimeUnit.SECONDS);
+            done.await(30, TimeUnit.SECONDS);
             MatcherAssert.assertThat(values.size(), Matchers.equalTo(1));
             never.interrupt();
         } finally {
@@ -170,11 +151,8 @@ public final class CacheableTest {
         }
     }
 
-    /**
-     * Cacheable can flush with a static trigger.
-     */
     @Test
-    public void flushesWithStaticTrigger() {
+    void flushesWithStaticTrigger() {
         final CacheableTest.Bar bar = new CacheableTest.Bar();
         MatcherAssert.assertThat(
             bar.get(),

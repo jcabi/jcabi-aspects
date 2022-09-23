@@ -40,57 +40,42 @@ import org.junit.jupiter.api.Test;
  * Tests for {@link UnitedThrow}.
  * @since 0.0.0
  */
-public final class UnitedThrowTest {
+final class UnitedThrowTest {
 
-    /**
-     * UnitedThrow can rethrow exception that is a subclass of declared one.
-     */
     @Test
-    public void rethrowsDeclaredException() {
+    void rethrowsDeclaredException() {
         Assertions.assertThrows(
             IOException.class,
             () -> new UnitedThrowTest.Thrower().file()
         );
     }
 
-    /**
-     * UnitedThrow can throw first declared exception.
-     */
     @Test
-    public void throwsDeclaredException() {
+    void throwsDeclaredException() {
         Assertions.assertThrows(
             IOException.class,
             () -> new UnitedThrowTest.Thrower().save()
         );
     }
 
-    /**
-     * UnitedThrow can throw configured exception.
-     */
     @Test
-    public void throwsConfiguredException() {
+    void throwsConfiguredException() {
         Assertions.assertThrows(
             IOException.class,
             () -> new UnitedThrowTest.Thrower().multiple()
         );
     }
 
-    /**
-     * UnitedThrow can throw IllegalStateException when no exception declared.
-     */
     @Test
-    public void throwsIllegalStateException() {
+    void throwsIllegalStateException() {
         Assertions.assertThrows(
             IllegalStateException.class,
             () -> new UnitedThrowTest.Thrower().def()
         );
     }
 
-    /**
-     * UnitedThrow can encapsulate thrown exception inside declared one.
-     */
     @Test
-    public void throwsOriginalExceptionEncapsulatedInsideDeclared() {
+    void throwsOriginalExceptionEncapsulatedInsideDeclared() {
         try {
             new UnitedThrowTest.Thrower().encapsulate();
         } catch (final IOException ex) {

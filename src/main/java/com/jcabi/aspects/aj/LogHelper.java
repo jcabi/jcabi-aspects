@@ -37,6 +37,7 @@ import com.jcabi.log.Logger;
  *
  * @since 0.17
  */
+@SuppressWarnings("PMD.ProhibitPublicStaticMethods")
 final class LogHelper {
 
     /**

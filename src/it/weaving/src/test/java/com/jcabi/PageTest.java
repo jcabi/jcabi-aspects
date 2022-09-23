@@ -37,12 +37,8 @@ import org.junit.Test;
  * Test case for {@link Page}, which is actually testing how
  * {@link Cacheable} annotation works.
  */
-public final class PageTest {
+final class PageTest {
 
-    /**
-     * Page can cache results.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void cachesResults() throws Exception {
         final Page page = new Page();
@@ -53,10 +49,6 @@ public final class PageTest {
         MatcherAssert.assertThat(page.counted(), Matchers.equalTo(3));
     }
 
-    /**
-     * Page is equipped with three methods.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void equippedWithThreeMethods() throws Exception {
         final Page first = new Page();

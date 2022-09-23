@@ -37,14 +37,10 @@ import org.junit.jupiter.api.Test;
  * Unit tests for {@link Version}.
  * @since 0.23
  */
-public final class VersionTest {
+final class VersionTest {
 
-    /**
-     * Version.CURRENT can contain actual project version and not a
-     * "${project.version}" placeholder.
-     */
     @Test
-    public void containsCorrectVersionNumber() {
+    void containsCorrectVersionNumber() {
         MatcherAssert.assertThat(
             Version.CURRENT.projectVersion(),
             Matchers.not(
@@ -53,12 +49,8 @@ public final class VersionTest {
         );
     }
 
-    /**
-     * Version.CURRENT can contain actual build number and not a
-     * "${buildNumber}" placeholder.
-     */
     @Test
-    public void containsCorrectBuildNumber() {
+    void containsCorrectBuildNumber() {
         MatcherAssert.assertThat(
             Version.CURRENT.buildNumber(),
             Matchers.not(

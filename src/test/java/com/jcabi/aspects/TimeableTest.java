@@ -37,14 +37,10 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link Timeable} annotation.
  * @since 0.0.0
  */
-@SuppressWarnings("PMD.TestClassWithoutTestCases")
-public final class TimeableTest {
+final class TimeableTest {
 
-    /**
-     * Timeable annotation can interrupt a long method.
-     */
     @Test
-    public void interruptsLongRunningMethod() {
+    void interruptsLongRunningMethod() {
         Assertions.assertThrows(
             InterruptedException.class,
             this::slow
@@ -56,7 +52,7 @@ public final class TimeableTest {
      * @throws Exception If terminated
      */
     @Timeable(limit = 1, unit = TimeUnit.MILLISECONDS)
-    public void slow() throws Exception {
+    void slow() throws Exception {
         TimeUnit.MINUTES.sleep(1L);
     }
 

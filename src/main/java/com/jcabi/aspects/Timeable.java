@@ -84,7 +84,6 @@ public @interface Timeable {
 
     /**
      * Maximum amount allowed for this method.
-     * @checkstyle MagicNumber (2 lines)
      * @return The limit
      */
     int limit() default Timeable.DEFAULT_LIMIT;

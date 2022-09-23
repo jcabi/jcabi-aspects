@@ -51,90 +51,66 @@ import org.junit.jupiter.api.Test;
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class JSR303Test {
+final class JSR303Test {
     /**
      * The test message.
      */
     private static final String OVERRIDEN_MSG = "this is a message";
 
-    /**
-     * NotNull can throw when invalid method parameters.
-     */
     @Test
-    public void throwsWhenMethodParametersAreInvalid() {
+    void throwsWhenMethodParametersAreInvalid() {
         Assertions.assertThrows(
             ConstraintViolationException.class,
             () -> new JSR303Test.Foo().foo(null)
         );
     }
 
-    /**
-     * NotNull can throw when regex doesn't match.
-     */
     @Test
-    public void throwsWhenRegularExpressionDoesntMatch() {
+    void throwsWhenRegularExpressionDoesntMatch() {
         Assertions.assertThrows(
             ConstraintViolationException.class,
             () -> new JSR303Test.Foo().foo("some text")
         );
     }
 
-    /**
-     * NotNull can pass for valid parameters.
-     */
     @Test
-    public void passesWhenMethodParametersAreValid() {
+    void passesWhenMethodParametersAreValid() {
         new JSR303Test.Foo().foo("123");
     }
 
-    /**
-     * NotNull can validate method output.
-     */
     @Test
-    public void validatesOutputForNonNull() {
+    void validatesOutputForNonNull() {
         Assertions.assertThrows(
             ConstraintViolationException.class,
             () -> new JSR303Test.Foo().nullValue()
         );
     }
 
-    /**
-     * NotNull can ignore methods that return VOID.
-     */
     @Test
-    public void ignoresVoidResponses() {
+    void ignoresVoidResponses() {
         new JSR303Test.Foo().voidAlways();
     }
 
-    /**
-     * Validates constructor parameters for directly invoked constructors.
-     */
     @Test
     @Disabled
-    public void validatesConstructorParameters() {
+    void validatesConstructorParameters() {
         Assertions.assertThrows(
             ConstraintViolationException.class,
             () -> new JSR303Test.ConstructorValidation(null, null)
         );
     }
 
-    /**
-     * Validates constructor parameters for other invoked constructors.
-     */
     @Test
     @Disabled
-    public void validatesChainedConstructorParameters() {
+    void validatesChainedConstructorParameters() {
         Assertions.assertThrows(
             ConstraintViolationException.class,
             () -> new JSR303Test.ConstructorValidation(null)
         );
     }
 
-    /**
-     * NotNull can override the message.
-     */
     @Test
-    public void overridesMessage() {
+    void overridesMessage() {
         MatcherAssert.assertThat(
             Assertions.assertThrows(
                 ConstraintViolationException.class,
@@ -147,11 +123,8 @@ public final class JSR303Test {
         );
     }
 
-    /**
-     * Validator can skip a constraint rule.
-     */
     @Test
-    public void skipsConstraintRule() {
+    void skipsConstraintRule() {
         new JSR303Test.Bar().test("value");
     }
 

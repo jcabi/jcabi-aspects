@@ -38,18 +38,15 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.0.0
  */
-public final class MnemosTest {
+final class MnemosTest {
 
     /**
      * The representation of a empty array.
      */
     private static final transient String EMPTY_ARRAY = "[]";
 
-    /**
-     * Mnemos can build a string from an object.
-     */
     @Test
-    public void buildsTextFromObject() {
+    void buildsTextFromObject() {
         final Object[][] pairs = {
             new Object[] {1, "1"},
             new Object[] {1.43f, "1.43"},
@@ -63,11 +60,8 @@ public final class MnemosTest {
         this.validateText(pairs);
     }
 
-    /**
-     * Mnemos can handle toxic objects gracefully.
-     */
     @Test
-    public void handlesToxicObjectsGracefully() {
+    void handlesToxicObjectsGracefully() {
         MatcherAssert.assertThat(
             Mnemos.toText(
                 new Object() {
@@ -84,11 +78,8 @@ public final class MnemosTest {
         );
     }
 
-    /**
-     * Mnemos can build a string from an int array.
-     */
     @Test
-    public void buildsTextFromIntArray() {
+    void buildsTextFromIntArray() {
         final Object[][] pairs = {
             new Object[] {new int[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new int[] {1}, "[1]"},
@@ -97,11 +88,8 @@ public final class MnemosTest {
         this.validateText(pairs);
     }
 
-    /**
-     * Mnemos can build a string from an long array.
-     */
     @Test
-    public void buildsTextFromLongArray() {
+    void buildsTextFromLongArray() {
         final Object[][] pairs = {
             new Object[] {new long[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new long[] {2L}, "[2]"},
@@ -110,11 +98,8 @@ public final class MnemosTest {
         this.validateText(pairs);
     }
 
-    /**
-     * Mnemos can build a string from an float array.
-     */
     @Test
-    public void buildsTextFromFloatArray() {
+    void buildsTextFromFloatArray() {
         final Object[][] pairs = {
             new Object[] {new float[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new float[] {1.01f}, "[1.01]"},
@@ -126,11 +111,8 @@ public final class MnemosTest {
         this.validateText(pairs);
     }
 
-    /**
-     * Mnemos can build a string from an double array.
-     */
     @Test
-    public void buildsTextFromDoubleArray() {
+    void buildsTextFromDoubleArray() {
         final Object[][] pairs = {
             new Object[] {new double[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new double[] {2.01}, "[2.01]"},
@@ -142,11 +124,8 @@ public final class MnemosTest {
         this.validateText(pairs);
     }
 
-    /**
-     * Mnemos can build a string from an char array.
-     */
     @Test
-    public void buildsTextFromCharArray() {
+    void buildsTextFromCharArray() {
         final Object[][] pairs = {
             new Object[] {new char[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new char[] {'a'}, "[a]"},
@@ -155,11 +134,8 @@ public final class MnemosTest {
         this.validateText(pairs);
     }
 
-    /**
-     * Mnemos can build a string from an boolean array.
-     */
     @Test
-    public void buildsTextFromBooleanArray() {
+    void buildsTextFromBooleanArray() {
         final Object[][] pairs = {
             new Object[] {new boolean[0], MnemosTest.EMPTY_ARRAY},
             new Object[] {new boolean[] {true}, "[true]"},

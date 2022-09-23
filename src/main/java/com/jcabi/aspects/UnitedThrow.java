@@ -43,6 +43,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
+@SuppressWarnings("PMD.DoNotExtendJavaLangThrowable")
 public @interface UnitedThrow {
     /**
      * Default empty exception.

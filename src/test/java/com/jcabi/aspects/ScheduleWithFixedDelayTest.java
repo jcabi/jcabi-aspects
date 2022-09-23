@@ -42,36 +42,27 @@ import org.junit.jupiter.api.Test;
  * @since 0.0.0
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
-public final class ScheduleWithFixedDelayTest {
+final class ScheduleWithFixedDelayTest {
 
-    /**
-     * ScheduleWithFixedDelay can run routine operations.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void runsRoutineOperations() throws Exception {
+    void runsRoutineOperations() throws Exception {
         final AtomicLong counter = new AtomicLong();
         final ScheduleWithFixedDelayTest.Sample sample =
             new ScheduleWithFixedDelayTest.Sample(counter);
         TimeUnit.SECONDS.sleep(1L);
         MatcherAssert.assertThat(counter.get(), Matchers.greaterThan(0L));
         sample.close();
-        TimeUnit.MILLISECONDS.sleep(Tv.TEN);
+        TimeUnit.MILLISECONDS.sleep(10);
         MatcherAssert.assertThat(counter.get(), Matchers.lessThan(0L));
     }
 
-    /**
-     * ScheduleWithFixedDelay can stop a scheduled run before the first
-     * execution occurs.
-     * @throws Exception If something goes wrong.
-     */
     @Test
-    public void canStopBeforeFirstScheduledRun() throws Exception {
+    void canStopBeforeFirstScheduledRun() throws Exception {
         final AtomicLong counter = new AtomicLong();
         final ScheduleWithFixedDelayTest.LongDelaySample sample =
             new ScheduleWithFixedDelayTest.LongDelaySample(counter);
         sample.close();
-        TimeUnit.MILLISECONDS.sleep(Tv.HUNDRED);
+        TimeUnit.MILLISECONDS.sleep(100);
         MatcherAssert.assertThat(counter.get(), Matchers.is(0L));
     }
 

@@ -31,7 +31,6 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.RetryOnFailure;
-import com.jcabi.aspects.Tv;
 import com.jcabi.log.Logger;
 import java.lang.reflect.Method;
 import java.security.SecureRandom;
@@ -67,7 +66,7 @@ public final class Repeater {
      * @checkstyle ExecutableStatementCountCheck (100 lines)
      */
     @Around("execution(* * (..)) && @annotation(com.jcabi.aspects.RetryOnFailure)")
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    @SuppressWarnings({ "PMD.AvoidCatchingThrowable", "PMD.GuardLogStatement" })
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         final Method method = ((MethodSignature) point.getSignature())
             .getMethod();
@@ -92,25 +91,27 @@ public final class Repeater {
                     throw ex;
                 }
                 ++attempt;
-                if (rof.verbose()) {
-                    Logger.warn(
-                        joinpoint.targetize(),
-                        // @checkstyle LineLength (1 line)
-                        "#%s(): attempt #%d of %d failed in %[nano]s (%[nano]s waiting already) with %[exception]s",
-                        method.getName(),
-                        attempt, rof.attempts(), System.nanoTime() - start,
-                        System.nanoTime() - begin, ex
-                    );
-                } else {
-                    Logger.warn(
-                        joinpoint.targetize(),
-                        // @checkstyle LineLength (1 line)
-                        "#%s(): attempt #%d/%d failed with %[type]s in %[nano]s (%[nano]s in total): %s",
-                        method.getName(),
-                        attempt, rof.attempts(), ex, System.nanoTime() - start,
-                        System.nanoTime() - begin,
-                        Repeater.message(ex)
-                    );
+                if (Logger.isWarnEnabled(joinpoint.targetize())) {
+                    if (rof.verbose()) {
+                        Logger.warn(
+                            joinpoint.targetize(),
+                            // @checkstyle LineLength (1 line)
+                            "#%s(): attempt #%d of %d failed in %[nano]s (%[nano]s waiting already) with %[exception]s",
+                            method.getName(),
+                            attempt, rof.attempts(), System.nanoTime() - start,
+                            System.nanoTime() - begin, ex
+                        );
+                    } else {
+                        Logger.warn(
+                            joinpoint.targetize(),
+                            // @checkstyle LineLength (1 line)
+                            "#%s(): attempt #%d/%d failed with %[type]s in %[nano]s (%[nano]s in total): %s",
+                            method.getName(),
+                            attempt, rof.attempts(), ex, System.nanoTime() - start,
+                            System.nanoTime() - begin,
+                            Repeater.message(ex)
+                        );
+                    }
                 }
                 if (attempt >= rof.attempts()) {
                     throw ex;
@@ -152,8 +153,8 @@ public final class Repeater {
             text.append("; ").append(Repeater.message(exp.getCause()));
         }
         String msg = text.toString();
-        if (msg.length() > Tv.HUNDRED) {
-            msg = String.format("%s...", msg.substring(0, Tv.HUNDRED));
+        if (msg.length() > 100) {
+            msg = String.format("%s...", msg.substring(0, 100));
         }
         return msg;
     }

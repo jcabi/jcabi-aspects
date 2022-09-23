@@ -40,13 +40,10 @@ import org.junit.jupiter.api.Test;
  * @since 0.0.0
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
-public final class RetryOnFailureTest {
+final class RetryOnFailureTest {
 
-    /**
-     * RetryOnFailure can force duplicate execution of the same method.
-     */
     @Test
-    public void executesMethodManyTimes() {
+    void executesMethodManyTimes() {
         final AtomicInteger count = new AtomicInteger();
         new Runnable() {
             @Override
@@ -62,11 +59,8 @@ public final class RetryOnFailureTest {
         MatcherAssert.assertThat(count.get(), Matchers.greaterThan(0));
     }
 
-    /**
-     * RetryOnFailure can retry when Error types are thrown.
-     */
     @Test
-    public void retriesOnError() {
+    void retriesOnError() {
         final AtomicInteger count = new AtomicInteger();
         new Runnable() {
             @Override

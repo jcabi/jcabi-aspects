@@ -71,6 +71,7 @@ public final class MethodInterrupter {
     /**
      * Public ctor.
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public MethodInterrupter() {
         this.calls = new ConcurrentSkipListSet<>();
         this.interrupter = Executors.newSingleThreadScheduledExecutor(
@@ -154,6 +155,7 @@ public final class MethodInterrupter {
          * Public ctor.
          * @param pnt Joint point
          */
+        @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
         Call(final ProceedingJoinPoint pnt) {
             this.thread = Thread.currentThread();
             this.start = System.currentTimeMillis();
@@ -197,13 +199,15 @@ public final class MethodInterrupter {
                 this.thread.interrupt();
                 final Method method = ((MethodSignature) this.point.getSignature())
                     .getMethod();
-                Logger.warn(
-                    method.getDeclaringClass(),
-                    "%s: interrupted on %[ms]s timeout (over %[ms]s)",
-                    Mnemos.toText(this.point, true, false),
-                    System.currentTimeMillis() - this.start,
-                    this.deadline - this.start
-                );
+                if (Logger.isWarnEnabled(method.getDeclaringClass())) {
+                    Logger.warn(
+                        method.getDeclaringClass(),
+                        "%s: interrupted on %[ms]s timeout (over %[ms]s)",
+                        Mnemos.toText(this.point, true, false),
+                        System.currentTimeMillis() - this.start,
+                        this.deadline - this.start
+                    );
+                }
                 dead = false;
             } else {
                 dead = true;

@@ -45,13 +45,9 @@ import org.mockito.Mockito;
     (
         { "PMD.AvoidCatchingThrowable", "PMD.AvoidThrowingRawExceptionTypes" }
     )
-public final class QuietExceptionsLoggerTest {
-    /**
-     * Call method that doesn't throw exception.
-     * @throws Throwable In case of error.
-     */
+final class QuietExceptionsLoggerTest {
     @Test
-    public void withoutException() throws Throwable {
+    void withoutException() throws Throwable {
         final ProceedingJoinPoint point = Mockito
             .mock(ProceedingJoinPoint.class);
         final MethodSignature signature = Mockito.mock(MethodSignature.class);
@@ -64,12 +60,8 @@ public final class QuietExceptionsLoggerTest {
         Mockito.verify(point).proceed();
     }
 
-    /**
-     * Call method that throws exception.
-     * @throws Throwable In case of error.
-     */
     @Test
-    public void exception() throws Throwable {
+    void exception() throws Throwable {
         final ProceedingJoinPoint point = Mockito
             .mock(ProceedingJoinPoint.class);
         Mockito.when(point.proceed()).thenThrow(new Exception());
@@ -84,11 +76,8 @@ public final class QuietExceptionsLoggerTest {
         Mockito.verify(point).proceed();
     }
 
-    /**
-     * Throws exception when used with method that does not return void.
-     */
     @Test
-    public void throwsWhenUsedWithNonVoidReturnValue() {
+    void throwsWhenUsedWithNonVoidReturnValue() {
         final ProceedingJoinPoint point = Mockito
             .mock(ProceedingJoinPoint.class);
         final MethodSignature signature = Mockito.mock(MethodSignature.class);

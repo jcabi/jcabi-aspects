@@ -74,46 +74,49 @@ public final class MethodCacher {
      * Calling tunnels.
      * @checkstyle LineLength (2 lines)
      */
-    private final transient ConcurrentMap<MethodCacher.Key, MethodCacher.Tunnel> tunnels =
-        new ConcurrentHashMap<>(0);
+    private final transient ConcurrentMap<MethodCacher.Key, MethodCacher.Tunnel> tunnels;
 
     /**
      * Save the keys which need update.
      */
-    private final transient BlockingQueue<MethodCacher.Key> updatekeys =
-        new LinkedBlockingQueue<>();
+    private final transient BlockingQueue<MethodCacher.Key> updatekeys;
 
     /**
      * Service that cleans cache.
      */
-    private final transient ScheduledExecutorService cleaner =
-        Executors.newSingleThreadScheduledExecutor(
+    @SuppressWarnings("PMD.SingularField")
+    private final transient ScheduledExecutorService cleaner;
+
+    /**
+     * Service that update cache.
+     */
+    @SuppressWarnings("PMD.SingularField")
+    private final transient ScheduledExecutorService updater;
+
+    /**
+     * Public ctor.
+     */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
+    public MethodCacher() {
+        this.tunnels = new ConcurrentHashMap<>(0);
+        this.updatekeys = new LinkedBlockingQueue<>();
+        this.cleaner = Executors.newSingleThreadScheduledExecutor(
             new NamedThreads(
                 "cacheable-clean",
                 "automated cleaning of expired @Cacheable values"
             )
         );
-
-    /**
-     * Service that update cache.
-     */
-    private final transient ScheduledExecutorService updater =
-        Executors.newSingleThreadScheduledExecutor(
-            new NamedThreads(
-                "cacheable-update",
-                "async update of expired @Cacheable values"
-            )
-        );
-
-    /**
-     * Public ctor.
-     */
-    public MethodCacher() {
         this.cleaner.scheduleWithFixedDelay(
             new VerboseRunnable(
                 this::clean
             ),
             1L, 1L, TimeUnit.SECONDS
+        );
+        this.updater = Executors.newSingleThreadScheduledExecutor(
+            new NamedThreads(
+                "cacheable-update",
+                "async update of expired @Cacheable values"
+            )
         );
         this.updater.schedule(
             new VerboseRunnable(
@@ -461,12 +464,12 @@ public final class MethodCacher {
         /**
          * When instantiated.
          */
-        private final transient long start = System.currentTimeMillis();
+        private final transient long start;
 
         /**
          * How many times the key was already accessed.
          */
-        private final transient AtomicInteger accessed = new AtomicInteger();
+        private final transient AtomicInteger accessed;
 
         /**
          * Method.
@@ -492,7 +495,10 @@ public final class MethodCacher {
          * Public ctor.
          * @param point Joint point
          */
+        @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
         Key(final JoinPoint point) {
+            this.start = System.currentTimeMillis();
+            this.accessed = new AtomicInteger();
             this.method = ((MethodSignature) point.getSignature()).getMethod();
             this.target = MethodCacher.Key.targetize(point);
             this.arguments = point.getArgs();

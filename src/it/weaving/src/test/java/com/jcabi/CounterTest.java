@@ -40,10 +40,6 @@ import org.junit.Test;
  */
 public final class CounterTest {
 
-    /**
-     * Counter can retry on failure.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void retriesOnFailure() throws Exception {
         final Counter counter = new Counter();

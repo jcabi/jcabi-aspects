@@ -40,22 +40,16 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.7.8
  */
-public final class ImmutabilityCheckerTest {
-    /**
-     * ImmutabilityChecker should check recursive classes.
-     */
+final class ImmutabilityCheckerTest {
     @Test
-    public void checksRecursiveClasses() {
+    void checksRecursiveClasses() {
         MatcherAssert.assertThat(
             new ImmutabilityCheckerTest.Recursive(null).getNext(), Matchers.nullValue()
         );
     }
 
-    /**
-     * ImmutabilityChecker should fail on non final fields.
-     */
     @Test
-    public void failsOnNonFinalFields() {
+    void failsOnNonFinalFields() {
         Assertions.assertThrows(
             IllegalStateException.class,
             () -> new ImmutabilityCheckerTest.NonFinal("test")

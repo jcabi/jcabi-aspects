@@ -37,29 +37,17 @@ import org.junit.Test;
  */
 public final class DocumentTest {
 
-    /**
-     * Document can be instantiated.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void instantiates() throws Exception {
         final Document doc = new Document("test");
         doc.name();
     }
 
-    /**
-     * Document can throw and log.
-     * @throws Exception If something goes wrong
-     */
     @Test(expected = IllegalStateException.class)
     public void throwsAndLogs() throws Exception {
         new Document("foo").exception();
     }
 
-    /**
-     * Document can throw when NULL provided.
-     * @throws Exception If something goes wrong
-     */
     @Test(expected = javax.validation.ConstraintViolationException.class)
     public void throwsOnNullParameter() throws Exception {
         new Document(null);

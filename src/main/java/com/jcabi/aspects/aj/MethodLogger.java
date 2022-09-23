@@ -74,7 +74,12 @@ public final class MethodLogger {
     /**
      * Public ctor.
      */
-    @SuppressWarnings("PMD.DoNotUseThreads")
+    @SuppressWarnings(
+        {
+            "PMD.DoNotUseThreads",
+            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
+        }
+    )
     public MethodLogger() {
         this.running = new ConcurrentSkipListSet<>();
         final ScheduledExecutorService monitor =
@@ -172,7 +177,12 @@ public final class MethodLogger {
      * @return The result of call
      * @throws Throwable If something goes wrong inside
      * @checkstyle ExecutableStatementCountCheck (100 lines)
+     * @checkstyle CyclomaticComplexityCheck (100 lines)
      */
+    @SuppressWarnings({
+        "PMD.AvoidThreadGroup",
+        "PMD.GuardLogStatement"
+    })
     private Object wrap(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation) throws Throwable {
         if (Thread.interrupted()) {
@@ -230,22 +240,24 @@ public final class MethodLogger {
                 } else {
                     origin = "somewhere";
                 }
-                LogHelper.log(
-                    level,
-                    method.getDeclaringClass(),
-                    Logger.format(
-                        "%s: thrown %s out of %s in %[nano]s",
-                        Mnemos.toText(
-                            point,
-                            annotation.trim(),
-                            annotation.skipArgs(),
-                            annotation.logThis()
-                        ),
-                        Mnemos.toText(ex),
-                        origin,
-                        System.nanoTime() - start
-                    )
-                );
+                if (LogHelper.enabled(level, method.getDeclaringClass())) {
+                    LogHelper.log(
+                        level,
+                        method.getDeclaringClass(),
+                        Logger.format(
+                            "%s: thrown %s out of %s in %[nano]s",
+                            Mnemos.toText(
+                                point,
+                                annotation.trim(),
+                                annotation.skipArgs(),
+                                annotation.logThis()
+                            ),
+                            Mnemos.toText(ex),
+                            origin,
+                            System.nanoTime() - start
+                        )
+                    );
+                }
             }
             throw ex;
         } finally {

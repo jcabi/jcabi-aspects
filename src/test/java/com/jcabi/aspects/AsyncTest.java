@@ -43,7 +43,7 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link Async} annotation and its implementation.
  * @since 0.0.0
  */
-public final class AsyncTest {
+final class AsyncTest {
 
     /**
      * Thread name matcher.
@@ -53,13 +53,9 @@ public final class AsyncTest {
         Matchers.startsWith("jcabi-async")
     );
 
-    /**
-     * Async annotation can execute asynchronously in a different thread.
-     * @throws Exception If a problem occurs.
-     */
     @Test
     @SuppressWarnings("PMD.DoNotUseThreads")
-    public void executesAsynchronously() throws Exception {
+    void executesAsynchronously() throws Exception {
         final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
         final Runnable runnable = new Runnable() {
             @Async
@@ -71,30 +67,22 @@ public final class AsyncTest {
         runnable.run();
         // @checkstyle MultipleStringLiterals (5 lines)
         MatcherAssert.assertThat(
-            queue.poll(Tv.THIRTY, TimeUnit.SECONDS),
+            queue.poll(30, TimeUnit.SECONDS),
             AsyncTest.THREAD_NAME
         );
     }
 
-    /**
-     * Asynchronous execution can return a value within a Future object.
-     * @throws Exception If a problem occurs.
-     */
     @Test
-    public void returnsFutureValue() throws Exception {
+    void returnsFutureValue() throws Exception {
         MatcherAssert.assertThat(
             new AsyncTest.Foo().asyncMethodWithReturnValue()
-                .get(Tv.FIVE, TimeUnit.MINUTES),
+                .get(5, TimeUnit.MINUTES),
             AsyncTest.THREAD_NAME
         );
     }
 
-    /**
-     * Throws exception when method is annotated with Async but does not return
-     * Future or void.
-     */
     @Test
-    public void throwsWhenMethodDoesNotReturnVoidOrFuture() {
+    void throwsWhenMethodDoesNotReturnVoidOrFuture() {
         Assertions.assertThrows(
             IllegalStateException.class,
             () -> new AsyncTest.Foo().asyncMethodThatReturnsInt()

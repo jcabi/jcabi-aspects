@@ -30,7 +30,6 @@
 package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Parallel;
-import com.jcabi.aspects.Tv;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -43,16 +42,13 @@ import org.junit.jupiter.api.Test;
  * @since 0.10
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
-public final class ParallelizerTest {
-    /**
-     * Method should execute in multiple threads.
-     */
+final class ParallelizerTest {
     @Test
-    public void executesInParallel() {
-        final AtomicInteger count = new AtomicInteger(Tv.TEN);
+    void executesInParallel() {
+        final AtomicInteger count = new AtomicInteger(10);
         new Runnable() {
             @Override
-            @Parallel(threads = Tv.TEN)
+            @Parallel(threads = 10)
             public void run() {
                 count.decrementAndGet();
             }
@@ -60,16 +56,13 @@ public final class ParallelizerTest {
         MatcherAssert.assertThat(count.get(), Matchers.equalTo(0));
     }
 
-    /**
-     * Method should have exception propagated.
-     */
     @Test
-    public void throwsCatchedException() {
+    void throwsCatchedException() {
         Assertions.assertThrows(
             Exception.class,
             () -> new Runnable() {
                 @Override
-                @Parallel(threads = Tv.TEN)
+                @Parallel(threads = 10)
                 public void run() {
                     throw new IllegalArgumentException();
                 }

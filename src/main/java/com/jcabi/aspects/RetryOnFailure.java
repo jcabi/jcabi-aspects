@@ -57,14 +57,12 @@ public @interface RetryOnFailure {
 
     /**
      * How many times to retry.
-     * @checkstyle MagicNumber (4 lines)
      * @return Number of attempts
      */
     int attempts() default 3;
 
     /**
      * Delay between attempts, in time units.
-     * @checkstyle MagicNumber (4 lines)
      * @return Delay
      */
     long delay() default 50;
