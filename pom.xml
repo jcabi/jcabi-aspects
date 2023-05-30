@@ -50,8 +50,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
   </ciManagement>
   <scm>
     <connection>scm:git:github.com:jcabi/jcabi-aspects.git</connection>
-    <developerConnection>scm:git:github.com:jcabi/jcabi-aspects.git
-    </developerConnection>
+    <developerConnection>scm:git:github.com:jcabi/jcabi-aspects.git</developerConnection>
     <url>https://github.com/jcabi/jcabi-aspects</url>
   </scm>
   <distributionManagement>
@@ -122,6 +121,21 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <reporting>
+    <plugins>
+      <plugin>
+        <version>3.4.1</version>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <!-- There are errors related to the Version.java file, which is generated
+          during the "process-resources" phase by the templating-maven-plugin plugin.
+          Javadoc plugin, for some reason, doesn't see the generated file. -->
+          <failOnError>false</failOnError>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
   <build>
     <plugins>
       <plugin>
