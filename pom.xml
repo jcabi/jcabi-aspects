@@ -55,8 +55,8 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
   </scm>
   <distributionManagement>
     <site>
-      <id>aspects.jcabi.com</id>
-      <url>https://github.com/jcabi/jcabi-aspects</url>
+      <id>site</id>
+      <url>https://aspects.jcabi.com/</url>
     </site>
   </distributionManagement>
   <dependencies>
