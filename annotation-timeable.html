@@ -33,7 +33,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-0.24.1/index.html" title="JavaDoc 0.24.1">JavaDoc 0.24.1</a>
+                            <span>                        <a href="apidocs-0.25.1/index.html" title="JavaDoc 0.25.1">JavaDoc 0.25.1</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -158,7 +158,7 @@
                                                                                                     <li >
                             <span>                        <a href="project-info.html" title="Project Information">Project Information</a>
         </span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
                                                                                                                         <li >
                             <span>                        <a href="project-reports.html" title="Project Reports">Project Reports</a>
         </span>
@@ -184,13 +184,13 @@
                             </div>
                             <ul class="badges">
                                 <li>
-                                    <strong itemprop="version">0.24.1</strong>
+                                    <strong itemprop="version">0.25.1</strong>
                                 </li>
                                 <li>
                                     
-                                    <time itemprop="datePublished" datetime="2022-07-12T07:55:26Z">
+                                    <time itemprop="datePublished" datetime="2023-05-30T02:26:11Z">
                                         
-                                        12-Jul-2022
+                                        30-May-2023
                                     </time>
                                 </li>
                                 <li class="menu-button">menu</li>
@@ -203,7 +203,7 @@
                                                 <article itemprop="articleBody">
                             <section>
 <h2><a name="Limit_Java_Method_Execution_Time"></a>Limit Java Method Execution Time</h2>
-<p>Annotate your methods with <a href="./apidocs-0.24.1/com/jcabi/aspects/Timeable.html"><code>@Timeable</code></a> annotation and every time their execution takes more than the allowed time, their thread will be interrupted:</p>
+<p>Annotate your methods with <a href="./apidocs-0.25.1/com/jcabi/aspects/Timeable.html"><code>@Timeable</code></a> annotation and every time their execution takes more than the allowed time, their thread will be interrupted:</p>
 <div class="source">
 <pre>public class Resource {
   @Timeable(limit = 5, unit = TimeUnit.SECONDS)
@@ -212,7 +212,7 @@
   }
 }</pre></div>
 <p>The thread running this method will be terminated if it takes more than five seconds.</p>
-<p>It is important to note that in Java 1.5+, it is impossible to force thread termination: <a class="externalLink" href="http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html">Why Are Thread.stop, Thread.suspend, Thread.resume, and Runtime.runFinalizersOnExit Deprecated?</a> We can't just call <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#stop()"><code>Thread.stop()</code></a> when a thread is over a specified time limit. The best thing we can do is to call <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#interrupt()"><code>Thread#interrupt()</code></a> and hope that the thread itself is checking its <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#isInterrupted()"><code>Thread#isInterrupted()</code></a> status. If you want to design your long-running methods in a way that <a href="./apidocs-0.24.1/com/jcabi/aspects/Timeable.html"><code>@Timeable</code></a> can terminate them, embed a checker into your most intessively used place. For example:</p>
+<p>It is important to note that in Java 1.5+, it is impossible to force thread termination: <a class="externalLink" href="http://docs.oracle.com/javase/1.5.0/docs/guide/misc/threadPrimitiveDeprecation.html">Why Are Thread.stop, Thread.suspend, Thread.resume, and Runtime.runFinalizersOnExit Deprecated?</a> We can't just call <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#stop()"><code>Thread.stop()</code></a> when a thread is over a specified time limit. The best thing we can do is to call <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#interrupt()"><code>Thread#interrupt()</code></a> and hope that the thread itself is checking its <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#isInterrupted()"><code>Thread#isInterrupted()</code></a> status. If you want to design your long-running methods in a way that <a href="./apidocs-0.25.1/com/jcabi/aspects/Timeable.html"><code>@Timeable</code></a> can terminate them, embed a checker into your most intessively used place. For example:</p>
 <div class="source">
 <pre>public class Resource {
   @Timeable(limit = 1, unit = TimeUnit.SECONDS)
@@ -233,7 +233,7 @@
                 <footer class="legal-notes">
                     <div>
                         Copyright &#169;
-                                                                            2012-2022
+                                                                            2012-2023
                                             </div>
                     <div>jcabi.com, All Rights Reserved.</div>
                     <div><a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.</div>

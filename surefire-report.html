@@ -32,7 +32,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-0.24.1/index.html" title="JavaDoc 0.24.1">JavaDoc 0.24.1</a>
+                            <span>                        <a href="apidocs-0.25.1/index.html" title="JavaDoc 0.25.1">JavaDoc 0.25.1</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -157,19 +157,19 @@
                                                                                                     <li >
                             <span>                        <a href="project-info.html" title="Project Information">Project Information</a>
         </span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
                                                                                                                         <li >
                             <span>                        <a href="project-reports.html" title="Project Reports">Project Reports</a>
         </span>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <ul>
                                                                                                     <li >
-                            <span>                        <a href="xref-test/index.html" title="Test Source Xref">Test Source Xref</a>
+                            <span>                        <a href="xref/index.html" title="Source Xref">Source Xref</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="xref/index.html" title="Source Xref">Source Xref</a>
+                            <span>                        <a href="xref-test/index.html" title="Test Source Xref">Test Source Xref</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -193,7 +193,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-0.24.1/index.html" title="Javadoc">Javadoc</a>
+                            <span>                        <a href="apidocs-0.25.1/index.html" title="Javadoc">Javadoc</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -227,13 +227,13 @@
                             </div>
                             <ul class="badges">
                                 <li>
-                                    <strong itemprop="version">0.24.1</strong>
+                                    <strong itemprop="version">0.25.1</strong>
                                 </li>
                                 <li>
                                     
-                                    <time itemprop="datePublished" datetime="2022-07-12T07:55:29Z">
+                                    <time itemprop="datePublished" datetime="2023-05-30T02:26:22Z">
                                         
-                                        12-Jul-2022
+                                        30-May-2023
                                     </time>
                                 </li>
                                 <li class="menu-button">menu</li>
@@ -244,19 +244,22 @@
                                 <img src="https://www.jcabi.com/fork-me.svg" class="fork-me"/>
                             </a>
                                                 <article itemprop="articleBody">
-                            <script type="text/javascript">
+                            <script type="application/javascript">
 //<![CDATA[
 function toggleDisplay(elementId) {
- var elm = document.getElementById(elementId + 'error');
+ var elm = document.getElementById(elementId + '-error');
+ if (elm == null) {
+  elm = document.getElementById(elementId + '-failure');
+ }
  if (elm && typeof elm.style != "undefined") {
- if (elm.style.display == "none") {
- elm.style.display = "";
- document.getElementById(elementId + 'off').style.display = "none";
- document.getElementById(elementId + 'on').style.display = "inline";
- } else if (elm.style.display == "") { elm.style.display = "none";
- document.getElementById(elementId + 'off').style.display = "inline";
- document.getElementById(elementId + 'on').style.display = "none";
- } 
+  if (elm.style.display == "none") {
+   elm.style.display = "";
+   document.getElementById(elementId + '-off').style.display = "none";
+   document.getElementById(elementId + '-on').style.display = "inline";
+  } else if (elm.style.display == "") {   elm.style.display = "none";
+   document.getElementById(elementId + '-off').style.display = "inline";
+   document.getElementById(elementId + '-on').style.display = "none";
+  } 
  } 
  }
 //]]>
@@ -266,18 +269,18 @@ function toggleDisplay(elementId) {
 <table border="1" class="bodyTable">
 <tr class="a">
 <th>Tests</th>
-<th>Errors </th>
+<th>Errors</th>
 <th>Failures</th>
 <th>Skipped</th>
 <th>Success Rate</th>
 <th>Time</th></tr>
 <tr class="b">
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0%</td>
-<td>0</td></tr></table><br />
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0%</td>
+<td align="left">0</td></tr></table><br />
 <p>Note: failures are anticipated and checked for with assertions while errors are unanticipated.</p><br /></section>
                         </article>
                     </div>
@@ -285,7 +288,7 @@ function toggleDisplay(elementId) {
                 <footer class="legal-notes">
                     <div>
                         Copyright &#169;
-                                                                            2012-2022
+                                                                            2012-2023
                                             </div>
                     <div>jcabi.com, All Rights Reserved.</div>
                     <div><a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.</div>
