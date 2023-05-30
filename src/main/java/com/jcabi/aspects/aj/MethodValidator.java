@@ -148,13 +148,14 @@ public final class MethodValidator {
      */
     private void validateMethod(final Object object, final Method method,
         final Object... args) {
-        this.checkForViolations(this.validator
-            .forExecutables()
-            .validateParameters(
-                object,
-                method,
-                args
-            )
+        this.checkForViolations(
+            this.validator
+                .forExecutables()
+                .validateParameters(
+                    object,
+                    method,
+                    args
+                )
         );
     }
 
@@ -176,8 +177,9 @@ public final class MethodValidator {
     }
 
     /**
-     * Checks if violations set is empty and throws a
+     * Checks if violations set is empty and throws
      * {@link ConstraintViolationException} if it isn't.
+     *
      * @param violations JSR303 violations.
      */
     private void checkForViolations(

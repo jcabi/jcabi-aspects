@@ -1,9 +1,9 @@
  ------
- Repeating Java methods on exception
+ How to disable the entire JSR-303 validation mechanism
  ------
  Yegor Bugayenko
  ------
- 2013-01-06
+ 2023-05-30
  ------
 
 ~~
@@ -36,37 +36,12 @@
 ~~ OF THE POSSIBILITY OF SUCH DAMAGE.
 ~~
 
-Repeating Java methods on exception
+ How to disable the entire JSR-303 validation mechanism
 
-  Annotate your methods with
-  {{{./apidocs-${project.version}/com/jcabi/aspects/RetryOnFailure.html}<<<@RetryOnFailure>>>}}
-  annotation and, in case of exception in the method, its execution
-  will be repeated a few times:
+  A text resource <<<META-INF/services/javax.validation.spi.ValidationProvider>>>
+  must be created, with a single line inside:
+  <<<com.jcabi.aspects.FakeValidationProvider>>>. Once this file is found
+  in the classpath, JSR-303 engine will use this fake validator provider and no constraints
+  will be reported in runtime.
 
-+--
-public class Resource {
-  @RetryOnFailure(attempts = 2, delay = 10, verbose = false)
-  public String load(URL url) {
-    return url.openConnection().getContent();
-  }
-}
-+--
-
-  If an exception occurs, the method will retry two times, with a 10 msec
-  exponential back-off delay between attempts.
-
-  Since version 0.7.8, you can change time units
-  used for delays (milliseconds by default). For example, this method
-  will wait for two minutes between attempts:
-
-+--
-public class Resource {
-  @RetryOnFailure(delay = 2, unit = TimeUnit.MINUTES)
-  public String load(URL url) {
-    // loading of resource
-  }
-}
-+--
-
-  The mechanism is implemented with AOP/AspectJ. Read
-  {{{./example-weaving.html}how to integrate it into your <<<pom.xml>>>}}.
+  Of course, the presence of the <<<jcabi-aspects.jar>>> file in the classpath is required.
