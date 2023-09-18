@@ -57,6 +57,8 @@ final class LoggableTest {
      * Foo toString result.
      */
     private static final transient String RESULT = "some text";
+    private static final transient String DEBUG_LOG = "DEBUG";
+    private static final transient String ERROR_LOG = "ERROR";
 
     @Test
     void logsSimpleCall() {
@@ -161,7 +163,29 @@ final class LoggableTest {
             Matchers.stringContainsInOrder(shorts)
         );
     }
-
+    
+    @Test
+    void logsWithErrorExceptionLevel() throws Exception {
+        final StringWriter writer = new StringWriter();
+        Logger.getRootLogger().addAppender(
+            new WriterAppender(new SimpleLayout(), writer)
+        );
+        try {
+        	LoggableTest.Foo.errorExceptionLogging();
+        } catch(Exception e) {
+        	// Assert prepend DEBUG
+        	MatcherAssert.assertThat(
+    			writer.toString(),
+    			new LoggableTest.RegexContainsMatcher(DEBUG_LOG)
+			);
+        	// Assert exception ERROR
+        	MatcherAssert.assertThat(
+    			writer.toString(),
+    			new LoggableTest.RegexContainsMatcher(ERROR_LOG)
+			);        	
+        }
+    }
+    
     @Test
     void logsWithExplicitLoggerName() throws Exception {
         final StringWriter writer = new StringWriter();
@@ -234,6 +258,15 @@ final class LoggableTest {
         @Loggable(value = Loggable.DEBUG, name = "test-logger", prepend = true)
         public static String explicitLoggerName() {
             return LoggableTest.Foo.hiddenText();
+        }
+        
+        /**
+         * Method annotated with Loggable specifying exceptionLevel.
+         * @return A String
+         */
+        @Loggable(value = Loggable.DEBUG, exceptionLevel = Loggable.ERROR, prepend = true)
+        public static String errorExceptionLogging() {
+        	throw new RuntimeException();
         }
 
         /**

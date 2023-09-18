@@ -240,6 +240,7 @@ public final class MethodLogger {
                 } else {
                     origin = "somewhere";
                 }
+                level = annotation.exceptionLevel() == -1 ? level : annotation.exceptionLevel();
                 if (LogHelper.enabled(level, method.getDeclaringClass())) {
                     LogHelper.log(
                         level,
