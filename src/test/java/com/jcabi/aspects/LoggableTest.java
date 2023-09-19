@@ -57,7 +57,15 @@ final class LoggableTest {
      * Foo toString result.
      */
     private static final transient String RESULT = "some text";
+
+    /**
+     * Log prefix for DEBUG.
+     */
     private static final transient String DEBUG_LOG = "DEBUG";
+
+    /**
+     * Log prefix for ERROR.
+     */
     private static final transient String ERROR_LOG = "ERROR";
 
     @Test
@@ -163,7 +171,7 @@ final class LoggableTest {
             Matchers.stringContainsInOrder(shorts)
         );
     }
-    
+
     @Test
     void logsWithErrorExceptionLevel() throws Exception {
         final StringWriter writer = new StringWriter();
@@ -171,21 +179,19 @@ final class LoggableTest {
             new WriterAppender(new SimpleLayout(), writer)
         );
         try {
-        	LoggableTest.Foo.errorExceptionLogging();
-        } catch(Exception e) {
-        	// Assert prepend DEBUG
-        	MatcherAssert.assertThat(
-    			writer.toString(),
-    			new LoggableTest.RegexContainsMatcher(DEBUG_LOG)
+            LoggableTest.Foo.errorExceptionLogging();
+        } catch (final UnsupportedOperationException exception) {
+            MatcherAssert.assertThat(
+                writer.toString(),
+                new LoggableTest.RegexContainsMatcher(LoggableTest.DEBUG_LOG)
             );
-        	// Assert exception ERROR
-        	MatcherAssert.assertThat(
-    			writer.toString(),
-    			new LoggableTest.RegexContainsMatcher(ERROR_LOG)
-            );        	
+            MatcherAssert.assertThat(
+                writer.toString(),
+                new LoggableTest.RegexContainsMatcher(LoggableTest.ERROR_LOG)
+            );
         }
     }
-    
+
     @Test
     void logsWithExplicitLoggerName() throws Exception {
         final StringWriter writer = new StringWriter();
@@ -259,14 +265,14 @@ final class LoggableTest {
         public static String explicitLoggerName() {
             return LoggableTest.Foo.hiddenText();
         }
-        
+
         /**
          * Method annotated with Loggable specifying exceptionLevel.
          * @return A String
          */
         @Loggable(value = Loggable.DEBUG, exceptionLevel = Loggable.ERROR, prepend = true)
         public static String errorExceptionLogging() {
-        	throw new RuntimeException();
+            throw new UnsupportedOperationException();
         }
 
         /**

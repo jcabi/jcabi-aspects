@@ -67,9 +67,9 @@ import org.aspectj.lang.reflect.MethodSignature;
 public final class MethodLogger {
 
     /**
-     * constant used to disregard logging.
+     * Constant used to disregard logging.
      */
-    private static final int IGNORE_EXCEPTION_LEVEL = -1;
+    private static final int DEROGATION_OFF = -1;
 
     /**
      * Currently running methods.
@@ -245,7 +245,7 @@ public final class MethodLogger {
                 } else {
                     origin = "somewhere";
                 }
-                if (annotation.exceptionLevel() != IGNORE_EXCEPTION_LEVEL) {
+                if (annotation.exceptionLevel() != MethodLogger.DEROGATION_OFF) {
                     level = annotation.exceptionLevel();
                 }
                 if (LogHelper.enabled(level, method.getDeclaringClass())) {
