@@ -133,11 +133,12 @@ public @interface Loggable {
     int value() default Loggable.INFO;
 
     /**
-     * Log level for exceptions. If not defined then the log level of value is used.
+     * Log level for exceptions. If not defined then the log
+     * level of value is used.
      * @return The log level
      */
     int exceptionLevel() default -1;
-    
+
     /**
      * Maximum amount allowed for this method (a warning will be
      * issued if it takes longer).

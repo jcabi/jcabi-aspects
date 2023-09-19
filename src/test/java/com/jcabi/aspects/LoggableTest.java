@@ -177,12 +177,12 @@ final class LoggableTest {
         	MatcherAssert.assertThat(
     			writer.toString(),
     			new LoggableTest.RegexContainsMatcher(DEBUG_LOG)
-			);
+            );
         	// Assert exception ERROR
         	MatcherAssert.assertThat(
     			writer.toString(),
     			new LoggableTest.RegexContainsMatcher(ERROR_LOG)
-			);        	
+            );        	
         }
     }
     
