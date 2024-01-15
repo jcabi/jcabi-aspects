@@ -62,7 +62,7 @@ dependencies {
 
 +--
 plugins {
-  id("io.freefair.aspectj.post-compile-weaving") version latestVersion
+  id("io.freefair.aspectj.post-compile-weaving") version "${latestVersion}"
 }
 
 dependencies {
