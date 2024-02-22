@@ -44,7 +44,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-log</artifactId>
       <!-- version is set in order to avoid a cyclic reference -->
-      <version>0.23.0</version>
+      <version>0.24.1</version>
     </dependency>
     <dependency>
       <groupId>com.jcabi</groupId>
@@ -60,7 +60,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.28</version>
+      <version>1.18.30</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
