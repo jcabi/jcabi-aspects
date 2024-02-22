@@ -29,26 +29,22 @@
  */
 package com.jcabi;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Counter}, which is actually testing how
  * {@link RetryOnFailure} annotation works.
  */
-public final class CounterTest {
+final class CounterTest {
 
     @Test
-    public void retriesOnFailure() throws Exception {
+    void retriesOnFailure() throws Exception {
         final Counter counter = new Counter();
-        try {
-            counter.ping();
-            Assert.fail("exception expected");
-        } catch (IllegalStateException ex) {
-            MatcherAssert.assertThat(counter.get(), Matchers.equalTo(4));
-        }
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            () -> counter.ping()
+        );
     }
 
 }

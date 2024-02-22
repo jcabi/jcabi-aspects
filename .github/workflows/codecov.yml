@@ -13,14 +13,14 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 11
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/.m2/repository
           key: maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             maven-
       - run: mvn install -Pjacoco
-      - uses: codecov/codecov-action@v4.0.0-beta.3
+      - uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./target/site/jacoco/jacoco.xml

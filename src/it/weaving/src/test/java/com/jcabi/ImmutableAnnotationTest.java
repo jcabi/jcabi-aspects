@@ -32,7 +32,8 @@ package com.jcabi;
 import com.jcabi.aspects.Immutable;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Immutable} annotation.
@@ -40,9 +41,12 @@ import org.junit.Test;
  */
 public final class ImmutableAnnotationTest {
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void validatesClassImmutability() throws Exception {
-        new Mutable();
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            () -> new Mutable()
+        );
     }
 
     @Test

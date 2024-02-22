@@ -29,28 +29,35 @@
  */
 package com.jcabi;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Document}, which is actually testing how
  * {@link Loggable} annotation works.
  */
-public final class DocumentTest {
+final class DocumentTest {
 
     @Test
-    public void instantiates() throws Exception {
+    void instantiates() throws Exception {
         final Document doc = new Document("test");
         doc.name();
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void throwsAndLogs() throws Exception {
-        new Document("foo").exception();
+    @Test
+    void throwsAndLogs() throws Exception {
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            () -> new Document("foo").exception()
+        );
     }
 
-    @Test(expected = javax.validation.ConstraintViolationException.class)
-    public void throwsOnNullParameter() throws Exception {
-        new Document(null);
+    @Test
+    void throwsOnNullParameter() throws Exception {
+        Assertions.assertThrows(
+            javax.validation.ConstraintViolationException.class,
+            () -> new Document(null)
+        );
     }
 
 }
