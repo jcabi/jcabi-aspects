@@ -124,7 +124,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
   <reporting>
     <plugins>
       <plugin>
-        <version>3.5.0</version>
+        <version>3.6.3</version>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
