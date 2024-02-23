@@ -64,7 +64,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-log</artifactId>
       <!-- version is set in order to avoid a cyclic reference -->
-      <version>0.23.0</version>
+      <version>0.24.1</version>
       <exclusions>
         <exclusion>
           <groupId>com.jcabi</groupId>
