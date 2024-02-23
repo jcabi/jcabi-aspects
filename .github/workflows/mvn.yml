@@ -30,4 +30,6 @@ jobs:
       - run: java -version
       - run: mvn -version
       - run: mvn --errors --batch-mode clean install -Pqulice
-      - run: mvn --errors --batch-mode -DskipTests -Dinvoker.skip clean site -Psite
+      - name: Site
+        if: runner.os != 'Windows'
+        run: mvn --errors --batch-mode -DskipTests -Dinvoker.skip clean site -Psite
