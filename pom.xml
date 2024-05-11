@@ -76,7 +76,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjrt</artifactId>
       <scope>compile</scope>
-      <version>1.9.22</version>
+      <version>1.9.22.1</version>
     </dependency>
     <dependency>
       <groupId>javax.validation</groupId>
