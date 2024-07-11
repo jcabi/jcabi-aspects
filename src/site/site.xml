@@ -58,6 +58,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
       <item name="JSR-303 validations" href="./jsr-303.html"/>
       <item name="Weaving with AspectJ" href="./example-aspectj.html"/>
       <item name="Weaving with Ant and AjcTask" href="./example-weaving-ant.html"/>
+      <item name="Weaving with Gradle" href="./example-weaving-gradle.html"/>
     </menu>
     <menu name="Annotations">
       <item name="@Async" href="./annotation-async.html"/>
