@@ -9,6 +9,9 @@ install: |
 merge:
   script: |
     mvn clean install -Pqulice --errors --batch-mode
+deploy:
+  script: |
+    mvn clean site-deploy -Psite --errors --settings ../settings.xml --batch-mode
 release:
   pre: false
   script: |-
