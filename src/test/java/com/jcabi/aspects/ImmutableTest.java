@@ -44,11 +44,11 @@ import org.junit.jupiter.api.Test;
  */
 @SuppressWarnings
     (
-        {
-            "PMD.UnusedPrivateField",
-            "PMD.UnusedLocalVariable",
-            "PMD.FinalFieldCouldBeStatic"
-        }
+    {
+    "PMD.UnusedPrivateField",
+    "PMD.UnusedLocalVariable",
+    "PMD.FinalFieldCouldBeStatic"
+    }
     )
 final class ImmutableTest {
 
