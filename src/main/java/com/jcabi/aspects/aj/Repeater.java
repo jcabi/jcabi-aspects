@@ -43,8 +43,8 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Repeat execution in case of exception.
  *
- * @since 0.1.10
  * @see RetryOnFailure
+ * @since 0.1.10
  */
 @Aspect
 @Immutable
