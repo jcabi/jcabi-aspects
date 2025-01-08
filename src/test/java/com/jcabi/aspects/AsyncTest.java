@@ -67,6 +67,7 @@ final class AsyncTest {
         runnable.run();
         // @checkstyle MultipleStringLiterals (5 lines)
         MatcherAssert.assertThat(
+            "should have thread name started with 'jcabi-async'",
             queue.poll(30, TimeUnit.SECONDS),
             AsyncTest.THREAD_NAME
         );
@@ -75,6 +76,7 @@ final class AsyncTest {
     @Test
     void returnsFutureValue() throws Exception {
         MatcherAssert.assertThat(
+            "should have thread name started with 'jcabi-async'",
             new AsyncTest.Foo().asyncMethodWithReturnValue()
                 .get(5, TimeUnit.MINUTES),
             AsyncTest.THREAD_NAME
