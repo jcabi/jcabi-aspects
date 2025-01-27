@@ -30,4 +30,3 @@
 
 def log = new File(basedir, 'build.log')
 assert log.text.contains('Hello, world!')
-

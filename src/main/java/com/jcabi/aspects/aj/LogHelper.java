@@ -93,4 +93,3 @@ final class LogHelper {
         return enabled;
     }
 }
-
