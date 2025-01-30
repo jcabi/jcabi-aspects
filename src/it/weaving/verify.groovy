@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012-2024, jcabi.com
+ * Copyright (c) 2012-2025, jcabi.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,4 +32,3 @@ def log = new File(basedir, 'build.log')
 assert log.text.contains('#name(): \'test\'')
 assert log.text.contains('#exception(): thrown java.lang.IllegalStateException')
 assert log.text.contains('com.jcabi.Counter: #ping(): attempt #1/4 failed with java.lang.IllegalStateException in')
-

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024, jcabi.com
+ * Copyright (c) 2012-2025, jcabi.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -93,4 +93,3 @@ final class LogHelper {
         return enabled;
     }
 }
-
