@@ -68,9 +68,10 @@ final class CacheableTest {
     void cachesSimpleCall() {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.get().toString();
-        MatcherAssert.assertThat(first, Matchers.equalTo(foo.get().toString()));
+        MatcherAssert.assertThat("should be 1", first, Matchers.equalTo(foo.get().toString()));
         foo.flush();
         MatcherAssert.assertThat(
+            "should not be 1",
             foo.get().toString(),
             Matchers.not(Matchers.equalTo(first))
         );
