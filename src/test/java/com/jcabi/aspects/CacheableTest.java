@@ -105,11 +105,13 @@ final class CacheableTest {
     void cachesSimpleStaticCall() {
         final String first = CacheableTest.Foo.staticGet();
         MatcherAssert.assertThat(
+            "should equals to downloaded text",
             first,
             Matchers.equalTo(CacheableTest.Foo.staticGet())
         );
         CacheableTest.Foo.staticFlush();
         MatcherAssert.assertThat(
+            "should not equals to downloaded text",
             CacheableTest.Foo.staticGet(),
             Matchers.not(Matchers.equalTo(first))
         );
@@ -121,6 +123,7 @@ final class CacheableTest {
         final String first = foo.get().toString();
         TimeUnit.SECONDS.sleep(5);
         MatcherAssert.assertThat(
+            "should not equals to downloaded text",
             foo.get().toString(),
             Matchers.not(Matchers.equalTo(first))
         );
