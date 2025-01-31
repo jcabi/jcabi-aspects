@@ -83,16 +83,19 @@ final class CacheableTest {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.asyncGet().toString();
         MatcherAssert.assertThat(
+            "should equals to 1",
             first,
             Matchers.equalTo(foo.asyncGet().toString())
         );
         TimeUnit.SECONDS.sleep(2L);
         MatcherAssert.assertThat(
+            "should equals to 1",
             first,
             Matchers.equalTo(foo.asyncGet().toString())
         );
         TimeUnit.SECONDS.sleep(2L);
         MatcherAssert.assertThat(
+            "should equals to 1",
             first,
             Matchers.not(Matchers.equalTo(foo.asyncGet().toString()))
         );
