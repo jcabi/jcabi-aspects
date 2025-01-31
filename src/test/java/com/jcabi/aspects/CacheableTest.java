@@ -137,8 +137,7 @@ final class CacheableTest {
             done.countDown();
             return null;
         };
-        final ExecutorService executor = Executors.newFixedThreadPool(threads);
-        try {
+        try (ExecutorService executor = Executors.newFixedThreadPool(threads)) {
             for (int pos = 0; pos < threads; ++pos) {
                 executor.submit(task);
             }
@@ -146,8 +145,6 @@ final class CacheableTest {
             done.await(30, TimeUnit.SECONDS);
             MatcherAssert.assertThat(values.size(), Matchers.equalTo(1));
             never.interrupt();
-        } finally {
-            executor.shutdown();
         }
     }
 
