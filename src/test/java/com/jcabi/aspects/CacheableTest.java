@@ -150,7 +150,7 @@ final class CacheableTest {
             }
             start.countDown();
             done.await(30, TimeUnit.SECONDS);
-            MatcherAssert.assertThat(values.size(), Matchers.equalTo(1));
+            MatcherAssert.assertThat("should equals to 1", values.size(), Matchers.equalTo(1));
             never.interrupt();
         }
     }
@@ -159,6 +159,7 @@ final class CacheableTest {
     void flushesWithStaticTrigger() {
         final CacheableTest.Bar bar = new CacheableTest.Bar();
         MatcherAssert.assertThat(
+            "should not equals to some cached number",
             bar.get(),
             Matchers.not(Matchers.equalTo(bar.get()))
         );
