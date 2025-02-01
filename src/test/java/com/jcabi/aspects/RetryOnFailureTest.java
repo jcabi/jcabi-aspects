@@ -56,7 +56,7 @@ final class RetryOnFailureTest {
                 }
             }
         } .run();
-        MatcherAssert.assertThat(count.get(), Matchers.greaterThan(0));
+        MatcherAssert.assertThat("should greater than 0", count.get(), Matchers.greaterThan(0));
     }
 
     @Test
@@ -71,7 +71,7 @@ final class RetryOnFailureTest {
                 }
             }
         } .run();
-        MatcherAssert.assertThat(count.get(), Matchers.greaterThan(0));
+        MatcherAssert.assertThat("should greater than 0", count.get(), Matchers.greaterThan(0));
     }
 
 }
