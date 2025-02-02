@@ -44,6 +44,7 @@ final class ImmutabilityCheckerTest {
     @Test
     void checksRecursiveClasses() {
         MatcherAssert.assertThat(
+            "should be null",
             new ImmutabilityCheckerTest.Recursive(null).getNext(), Matchers.nullValue()
         );
     }
