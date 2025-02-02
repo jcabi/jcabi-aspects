@@ -98,7 +98,11 @@ public final class MethodValidator {
      * @param point Join point
      * @checkstyle LineLength (3 lines)
      */
-    @Before("preinitialization(*.new(.., @(javax.validation.* || javax.validation.constraints.*) (*), ..))")
+    @Before(
+        // @checkstyle StringLiteralsConcatenation (2 lines)
+        "preinitialization(*.new(.., @(javax.validation.* || javax.validation.constraints.*)"
+        + " (*), ..))"
+    )
     public void beforeCtor(final JoinPoint point) {
         if (this.validator != null) {
             @SuppressWarnings("unchecked")
