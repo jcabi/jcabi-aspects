@@ -53,7 +53,7 @@ final class ParallelizerTest {
                 count.decrementAndGet();
             }
         } .run();
-        MatcherAssert.assertThat(count.get(), Matchers.equalTo(0));
+        MatcherAssert.assertThat("should equals to 0", count.get(), Matchers.equalTo(0));
     }
 
     @Test
