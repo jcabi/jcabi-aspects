@@ -81,19 +81,21 @@ public final class Parallelizer {
         for (int thread = 0; thread < total; ++thread) {
             callables.add(Parallelizer.callable(point, start));
         }
-        final ExecutorService executor = Executors
-            .newFixedThreadPool(total, new VerboseThreads());
-        final Collection<Future<Throwable>> futures =
-            new ArrayList<>(total);
-        for (final Callable<Throwable> callable : callables) {
-            futures.add(executor.submit(callable));
+        final Collection<Throwable> failures;
+        try (ExecutorService executor = Executors
+            .newFixedThreadPool(total, new VerboseThreads())) {
+            final Collection<Future<Throwable>> futures =
+                new ArrayList<>(total);
+            for (final Callable<Throwable> callable : callables) {
+                futures.add(executor.submit(callable));
+            }
+            start.countDown();
+            failures = new LinkedList<>();
+            for (final Future<Throwable> future : futures) {
+                Parallelizer.process(failures, future);
+            }
+            executor.shutdown();
         }
-        start.countDown();
-        final Collection<Throwable> failures = new LinkedList<>();
-        for (final Future<Throwable> future : futures) {
-            Parallelizer.process(failures, future);
-        }
-        executor.shutdown();
         if (!failures.isEmpty()) {
             throw Parallelizer.exceptions(failures);
         }
