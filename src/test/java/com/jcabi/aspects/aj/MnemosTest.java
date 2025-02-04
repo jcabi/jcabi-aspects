@@ -63,6 +63,7 @@ final class MnemosTest {
     @Test
     void handlesToxicObjectsGracefully() {
         MatcherAssert.assertThat(
+            "should be equal to string with thrown exception",
             Mnemos.toText(
                 new Object() {
                     @Override
@@ -154,6 +155,7 @@ final class MnemosTest {
     private void validateText(final Object[]... pairs) {
         for (final Object[] pair : pairs) {
             MatcherAssert.assertThat(
+                "should be equal strings",
                 Mnemos.toText(pair[0], false, false),
                 Matchers.equalTo(pair[1].toString())
             );
