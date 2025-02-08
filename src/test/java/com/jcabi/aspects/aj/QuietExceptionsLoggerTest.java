@@ -43,7 +43,7 @@ import org.mockito.Mockito;
  */
 @SuppressWarnings
     (
-        { "PMD.AvoidCatchingThrowable", "PMD.AvoidThrowingRawExceptionTypes" }
+    { "PMD.AvoidCatchingThrowable", "PMD.AvoidThrowingRawExceptionTypes" }
     )
 final class QuietExceptionsLoggerTest {
     @Test
