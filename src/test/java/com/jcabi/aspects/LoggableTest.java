@@ -108,6 +108,7 @@ final class LoggableTest {
         );
         new LoggableTest.Foo().last("TEST");
         MatcherAssert.assertThat(
+            "should logs the result",
             writer.toString(),
             new LoggableTest.RegexContainsMatcher(LoggableTest.RESULT)
         );
