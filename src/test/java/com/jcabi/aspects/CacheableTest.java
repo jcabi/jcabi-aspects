@@ -50,11 +50,11 @@ import org.junit.jupiter.api.Test;
  */
 @SuppressWarnings
     (
-        {
-            "PMD.TooManyMethods",
-            "PMD.DoNotUseThreads",
-            "PMD.ProhibitPublicStaticMethods"
-        }
+    {
+    "PMD.TooManyMethods",
+    "PMD.DoNotUseThreads",
+    "PMD.ProhibitPublicStaticMethods"
+    }
     )
 final class CacheableTest {
 
