@@ -77,7 +77,8 @@ public final class MethodLogger {
     @SuppressWarnings(
         {
             "PMD.DoNotUseThreads",
-            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
+            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors",
+            "PMD.CloseResource"
         }
     )
     public MethodLogger() {
