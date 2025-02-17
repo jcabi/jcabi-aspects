@@ -269,6 +269,7 @@ final class ImmutableTest {
      *
      * @since 0.0.0
      */
+    // @checkstyle FinalClassCheck (17 lines)
     @Immutable
     private static class MutableByInheritance {
         /**
