@@ -68,58 +68,66 @@ public final class Repeater {
     @Around("execution(* * (..)) && @annotation(com.jcabi.aspects.RetryOnFailure)")
     @SuppressWarnings({ "PMD.AvoidCatchingThrowable", "PMD.GuardLogStatement" })
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
-        final Method method = ((MethodSignature) point.getSignature())
-            .getMethod();
+        final Method method = ((MethodSignature) point.getSignature()).getMethod();
         final RetryOnFailure rof = method.getAnnotation(RetryOnFailure.class);
+        final ImprovedJoinPoint jpoint = new ImprovedJoinPoint(point);
+        final Class<? extends Throwable>[] rtypes = rof.types();
+        final long start = System.nanoTime();
         int attempt = 0;
-        final long begin = System.nanoTime();
-        final Class<? extends Throwable>[] types = rof.types();
-        final ImprovedJoinPoint joinpoint = new ImprovedJoinPoint(point);
         while (true) {
-            final long start = System.nanoTime();
+            final long attstart = System.nanoTime();
             try {
                 return point.proceed();
             } catch (final InterruptedException ex) {
                 Thread.currentThread().interrupt();
                 throw ex;
-                // @checkstyle IllegalCatch (1 line)
             } catch (final Throwable ex) {
-                if (Repeater.matches(ex.getClass(), rof.ignore())) {
-                    throw ex;
-                }
-                if (!Repeater.matches(ex.getClass(), types)) {
-                    throw ex;
-                }
-                ++attempt;
-                if (Logger.isWarnEnabled(joinpoint.targetize())) {
-                    if (rof.verbose()) {
-                        Logger.warn(
-                            joinpoint.targetize(),
-                            // @checkstyle LineLength (1 line)
-                            "#%s(): attempt #%d of %d failed in %[nano]s (%[nano]s waiting already) with %[exception]s",
-                            method.getName(),
-                            attempt, rof.attempts(), System.nanoTime() - start,
-                            System.nanoTime() - begin, ex
-                        );
-                    } else {
-                        Logger.warn(
-                            joinpoint.targetize(),
-                            // @checkstyle LineLength (1 line)
-                            "#%s(): attempt #%d/%d failed with %[type]s in %[nano]s (%[nano]s in total): %s",
-                            method.getName(),
-                            attempt, rof.attempts(), ex, System.nanoTime() - start,
-                            System.nanoTime() - begin,
-                            Repeater.message(ex)
-                        );
-                    }
-                }
-                if (attempt >= rof.attempts()) {
+                this.handleException(ex, rof, rtypes, jpoint, method, attempt, start, attstart);
+                if (++attempt >= rof.attempts()) {
                     throw ex;
                 }
                 if (rof.delay() > 0L) {
                     this.delay(rof, attempt);
                 }
             }
+        }
+    }
+
+    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    private void handleException(
+        final Throwable exc, final RetryOnFailure rof,
+        final Class<? extends Throwable>[] retrytypes,
+        final ImprovedJoinPoint joinpoint, final Method method,
+        final int attempt, final long start, final long attemptstart
+    ) throws Throwable {
+        if (Repeater.matches(exc.getClass(), rof.ignore())) {
+            throw exc;
+        }
+        if (!Repeater.matches(exc.getClass(), retrytypes)) {
+            throw exc;
+        }
+        if (Logger.isWarnEnabled(joinpoint.targetize())) {
+            this.logFailure(rof, joinpoint, method, attempt, exc, start, attemptstart);
+        }
+    }
+
+    private void logFailure(final RetryOnFailure rof, final ImprovedJoinPoint joinpoint,
+        final Method method, final int atmp, final Throwable exc,
+        final long start, final long attemptstart) {
+        final long elps = System.nanoTime() - start;
+        final long atelps = System.nanoTime() - attemptstart;
+        if (rof.verbose()) {
+            Logger.warn(
+                joinpoint.targetize(),
+                "#%s(): attempt #%d of %d failed in %[nano]s (%[nano]s waiting already) with %[exception]s",
+                method.getName(), atmp, rof.attempts(), atelps, elps, exc
+            );
+        } else {
+            Logger.warn(
+                    joinpoint.targetize(),
+                    "#%s(): attempt #%d/%d failed with %[type]s in %[nano]s (%[nano]s in total): %s",
+                    method.getName(), atmp, rof.attempts(), exc, atelps, elps, Repeater.message(exc)
+            );
         }
     }
 
