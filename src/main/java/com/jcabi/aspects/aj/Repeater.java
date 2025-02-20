@@ -83,7 +83,8 @@ public final class Repeater {
                 throw ex;
             } catch (final Throwable ex) {
                 this.handleException(ex, rof, rtypes, jpoint, method, attempt, start, attstart);
-                if (++attempt >= rof.attempts()) {
+                ++attempt;
+                if (attempt >= rof.attempts()) {
                     throw ex;
                 }
                 if (rof.delay() > 0L) {
@@ -124,9 +125,9 @@ public final class Repeater {
             );
         } else {
             Logger.warn(
-                    joinpoint.targetize(),
-                    "#%s(): attempt #%d/%d failed with %[type]s in %[nano]s (%[nano]s in total): %s",
-                    method.getName(), atmp, rof.attempts(), exc, atelps, elps, Repeater.message(exc)
+                joinpoint.targetize(),
+                "#%s(): attempt #%d/%d failed with %[type]s in %[nano]s (%[nano]s in total): %s",
+                method.getName(), atmp, rof.attempts(), exc, atelps, elps, Repeater.message(exc)
             );
         }
     }
