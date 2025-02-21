@@ -200,7 +200,7 @@ public final class MethodLogger {
             logMethodExit(point, method, annotation, result, start);
             return result;
         } catch (final Throwable exc) {
-            this.handleException(exc, point, method, annotation, start);
+            handleException(exc, point, method, annotation, start);
             throw exc;
         } finally {
             this.running.remove(marker);
@@ -240,6 +240,7 @@ public final class MethodLogger {
         }
     }
 
+    // @checkstyle ParameterNumberCheck (7 lines)
     private static void logMethodExit(
         final ProceedingJoinPoint point,
         final Method method,
@@ -261,7 +262,8 @@ public final class MethodLogger {
         }
     }
 
-    private void handleException(
+    // @checkstyle ParameterNumberCheck (7 lines)
+    private static void handleException(
         final Throwable exc,
         final ProceedingJoinPoint point,
         final Method method,
