@@ -67,6 +67,7 @@ public final class Repeater {
      */
     @Around("execution(* * (..)) && @annotation(com.jcabi.aspects.RetryOnFailure)")
     @SuppressWarnings({ "PMD.AvoidCatchingThrowable", "PMD.GuardLogStatement" })
+    // @checkstyle IllegalThrowsCheck (1 line)
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         final Method method = ((MethodSignature) point.getSignature()).getMethod();
         final RetryOnFailure rof = method.getAnnotation(RetryOnFailure.class);
@@ -95,6 +96,8 @@ public final class Repeater {
     }
 
     @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    // @checkstyle IllegalThrowsCheck (7 lines)
+    // @checkstyle ParameterNumberCheck (5 lines)
     private void handleException(
         final Throwable exc, final RetryOnFailure rof,
         final Class<? extends Throwable>[] retrytypes,
@@ -112,6 +115,7 @@ public final class Repeater {
         }
     }
 
+    // @checkstyle ParameterNumberCheck (3 lines)
     private void logFailure(final RetryOnFailure rof, final ImprovedJoinPoint joinpoint,
         final Method method, final int atmp, final Throwable exc,
         final long start, final long attemptstart) {
