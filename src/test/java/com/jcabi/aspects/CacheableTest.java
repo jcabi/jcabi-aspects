@@ -130,6 +130,7 @@ final class CacheableTest {
     }
 
     @Test
+    @SuppressWarnings("PMD.CloseResource")
     void cachesJustOnceInParallelThreads() throws Exception {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final Thread never = new Thread(foo::never);
@@ -144,7 +145,8 @@ final class CacheableTest {
             done.countDown();
             return null;
         };
-        try (ExecutorService executor = Executors.newFixedThreadPool(threads)) {
+        final ExecutorService executor = Executors.newFixedThreadPool(threads);
+        try {
             for (int pos = 0; pos < threads; ++pos) {
                 executor.submit(task);
             }
@@ -152,6 +154,8 @@ final class CacheableTest {
             done.await(30, TimeUnit.SECONDS);
             MatcherAssert.assertThat("should equals to 1", values.size(), Matchers.equalTo(1));
             never.interrupt();
+        } finally {
+            executor.shutdown();
         }
     }
 
