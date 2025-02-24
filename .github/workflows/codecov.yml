@@ -1,4 +1,7 @@
+# SPDX-FileCopyrightText: Copyright (c) 2012-2025 Yegor Bugayenko
+# SPDX-License-Identifier: MIT
 ---
+# yamllint disable rule:line-length
 name: codecov
 'on':
   push:
@@ -6,6 +9,7 @@ name: codecov
       - master
 jobs:
   codecov:
+    timeout-minutes: 15
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
