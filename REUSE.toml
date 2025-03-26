@@ -4,6 +4,7 @@
 version = 1
 [[annotations]]
 path = [
+    "src/it/fake-validation/src/main/resources/META-INF/services/javax.validation.spi.ValidationProvider",
     "**.json",
     "**.md",
     "**.txt",
