@@ -28,6 +28,7 @@ path = [
     "CNAME",
     "README.md",
     "renovate.json",
+    "src/it/fake-validation/src/main/resources/META-INF/services/javax.validation.spi.ValidationProvider",
 ]
 precedence = "override"
 SPDX-FileCopyrightText = "Copyright (c) 2025 Yegor Bugayenko"

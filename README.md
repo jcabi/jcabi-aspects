@@ -1,12 +1,12 @@
 <img src="https://www.jcabi.com/logo-square.svg" width="64px" height="64px" />
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
-[![DevOps By Rultor.com](http://www.rultor.com/b/jcabi/jcabi-aspects)](http://www.rultor.com/p/jcabi/jcabi-aspects)
+[![DevOps By Rultor.com](https://www.rultor.com/b/jcabi/jcabi-aspects)](https://www.rultor.com/p/jcabi/jcabi-aspects)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![mvn](https://github.com/jcabi/jcabi-aspects/actions/workflows/mvn.yml/badge.svg)](https://github.com/jcabi/jcabi-aspects/actions/workflows/mvn.yml)
-[![PDD status](http://www.0pdd.com/svg?name=jcabi/jcabi-aspects)](http://www.0pdd.com/p?name=jcabi/jcabi-aspects)
-[![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-aspects.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-aspects)
+[![PDD status](https://www.0pdd.com/svg?name=jcabi/jcabi-aspects)](https://www.0pdd.com/p?name=jcabi/jcabi-aspects)
+[![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-aspects.svg)](https://www.javadoc.io/doc/com.jcabi/jcabi-aspects)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-aspects)
 [![codecov](https://codecov.io/gh/jcabi/jcabi-aspects/branch/master/graph/badge.svg)](https://codecov.io/gh/jcabi/jcabi-aspects)
 
