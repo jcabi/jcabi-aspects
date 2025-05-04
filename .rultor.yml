@@ -19,5 +19,6 @@ release:
     [[ "${tag}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit -1
     mvn versions:set "-DnewVersion=${tag}" --batch-mode
     git commit -am "${tag}"
+    export MAVEN_OPTS="--add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED"
     mvn clean deploy -Pqulice -Psonatype -Pjcabi --batch-mode --errors --settings ../settings.xml
     mvn clean site-deploy -Psite --errors --settings ../settings.xml --batch-mode
