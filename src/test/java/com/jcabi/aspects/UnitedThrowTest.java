@@ -55,6 +55,7 @@ final class UnitedThrowTest {
             new UnitedThrowTest.Thrower().encapsulate();
         } catch (final IOException ex) {
             MatcherAssert.assertThat(
+                "should throw IllegalStateException",
                 ex.getCause(),
                 Matchers.instanceOf(IllegalStateException.class)
             );
