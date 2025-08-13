@@ -69,6 +69,7 @@ final class LoggableTest {
         );
         LoggableTest.Foo.logsDurationInSeconds();
         MatcherAssert.assertThat(
+            "should match regexp 'in \\d.\\d{3}'",
             writer.toString(),
             new LoggableTest.RegexContainsMatcher("in \\d.\\d{3}")
         );
@@ -82,6 +83,7 @@ final class LoggableTest {
         );
         new LoggableTest.Foo().last("TEST");
         MatcherAssert.assertThat(
+            "should logs the result",
             writer.toString(),
             new LoggableTest.RegexContainsMatcher(LoggableTest.RESULT)
         );
@@ -95,6 +97,7 @@ final class LoggableTest {
         );
         final byte[] result = new LoggableTest.Foo().logsByteArray();
         MatcherAssert.assertThat(
+            "should not contains ClassCastException",
             writer.toString(),
             Matchers.not(
                 Matchers.containsString(
@@ -107,6 +110,7 @@ final class LoggableTest {
             bytes.add(Byte.toString(part));
         }
         MatcherAssert.assertThat(
+            "should contains bytes in order",
             writer.toString(),
             Matchers.stringContainsInOrder(bytes)
         );
@@ -120,6 +124,7 @@ final class LoggableTest {
         );
         final short[] result = new LoggableTest.Foo().logsShortArray();
         MatcherAssert.assertThat(
+            "should not contains ClassCastException",
             writer.toString(),
             Matchers.not(
                 Matchers.containsString(
@@ -132,6 +137,7 @@ final class LoggableTest {
             shorts.add(Short.toString(part));
         }
         MatcherAssert.assertThat(
+            "should contains short logs",
             writer.toString(),
             Matchers.stringContainsInOrder(shorts)
         );
@@ -145,6 +151,7 @@ final class LoggableTest {
         );
         LoggableTest.Foo.explicitLoggerName();
         MatcherAssert.assertThat(
+            "should contains 'test-logger",
             // @checkstyle MultipleStringLiterals (2 lines)
             writer.toString(),
             Matchers.containsString("test-logger")

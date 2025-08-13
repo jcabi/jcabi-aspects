@@ -29,9 +29,9 @@ import org.aspectj.lang.reflect.MethodSignature;
  *
  * <p>The class is thread-safe.
  *
- * @since 0.1.10
  * @see <a href="http://beanvalidation.org/1.0/spec/#appendix-methodlevelvalidation">Appendix C</a>
  * @see <a href="http://aspects.jcabi.com/jsr-303.html">How it works</a>
+ * @since 0.1.10
  */
 @Aspect
 @SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.TooManyMethods" })
@@ -73,7 +73,11 @@ public final class MethodValidator {
      * @param point Join point
      * @checkstyle LineLength (3 lines)
      */
-    @Before("preinitialization(*.new(.., @(javax.validation.* || javax.validation.constraints.*) (*), ..))")
+    @Before(
+        // @checkstyle StringLiteralsConcatenation (2 lines)
+        "preinitialization(*.new(.., @(javax.validation.* || javax.validation.constraints.*)"
+        + " (*), ..))"
+    )
     public void beforeCtor(final JoinPoint point) {
         if (this.validator != null) {
             @SuppressWarnings("unchecked")
