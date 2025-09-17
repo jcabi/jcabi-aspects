@@ -33,7 +33,7 @@ public class MyResource {
 }
 ```
 
-Full list of AOP annotations is [here](https://aspects.jcabi.com/).
+[Full list of AOP annotations is here](https://aspects.jcabi.com/).
 
 ## How to contribute?
 
