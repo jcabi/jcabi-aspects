@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 final class ImmutableTest {
 
     @Test
-    void catchedMutableTypes() {
+    void caughtMutableTypes() {
         Assertions.assertThrows(
             IllegalStateException.class,
             ImmutableTest.Mutable::new
@@ -36,7 +36,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void catchedMutableTypesWithArrays() {
+    void caughtMutableTypesWithArrays() {
         Assertions.assertThrows(
             IllegalStateException.class,
             ImmutableTest.MutableWithArray::new
@@ -45,14 +45,14 @@ final class ImmutableTest {
 
     @Test
     void passesImmutableObjects() {
-        final Object obj = new ImmutableTest.TruelyImmutable(
-            new ImmutableTest.TruelyImmutableWithNonPrivateFields()
+        final Object obj = new TrulyImmutable(
+            new TrulyImmutableWithNonPrivateFields()
         );
     }
 
     @Test
     void passesImmutableObjectsWithNonPrivateFields() {
-        new ImmutableTest.TruelyImmutableWithNonPrivateFields();
+        new TrulyImmutableWithNonPrivateFields();
     }
 
     @Test
@@ -123,12 +123,12 @@ final class ImmutableTest {
     }
 
     /**
-     * Truely immutable class.
+     * Truly immutable class.
      *
      * @since 0.0.0
      */
     @Immutable
-    private static final class TruelyImmutable {
+    private static final class TrulyImmutable {
         /**
          * Something static final.
          */
@@ -168,7 +168,7 @@ final class ImmutableTest {
         /**
          * Ctor.
          */
-        private TruelyImmutable() {
+        private TrulyImmutable() {
             this("Hello, world!");
         }
 
@@ -177,7 +177,7 @@ final class ImmutableTest {
          *
          * @param ipt Input
          */
-        private TruelyImmutable(final ImmutableTest.TruelyImmutableWithNonPrivateFields ipt) {
+        private TrulyImmutable(final TrulyImmutableWithNonPrivateFields ipt) {
             this(ipt.text);
         }
 
@@ -187,7 +187,7 @@ final class ImmutableTest {
          * @param ipt Input
          */
         @SuppressWarnings("PMD.NullAssignment")
-        private TruelyImmutable(final String ipt) {
+        private TrulyImmutable(final String ipt) {
             this.text = ipt;
             this.texts = new String[]{"foo"};
             this.iface = null;
@@ -197,13 +197,13 @@ final class ImmutableTest {
     }
 
     /**
-     * Truely immutable class with non-private fields.
+     * Truly immutable class with non-private fields.
      *
      * @since 0.0.0
      * @checkstyle VisibilityModifier (25 lines)
      */
     @Immutable
-    private static final class TruelyImmutableWithNonPrivateFields {
+    private static final class TrulyImmutableWithNonPrivateFields {
         /**
          * Something static final.
          */
