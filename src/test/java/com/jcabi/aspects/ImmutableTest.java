@@ -14,16 +14,16 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for {@link Immutable} annotation and its implementation.
  *
- * @checkstyle ConstantUsageCheck (500 lines)
  * @since 0.0.0
+ * @checkstyle ConstantUsageCheck (500 lines)
  */
 @SuppressWarnings
     (
-        {
-            "PMD.UnusedPrivateField",
-            "PMD.UnusedLocalVariable",
-            "PMD.FinalFieldCouldBeStatic"
-        }
+    {
+        "PMD.UnusedPrivateField",
+        "PMD.UnusedLocalVariable",
+        "PMD.FinalFieldCouldBeStatic"
+    }
     )
 final class ImmutableTest {
 
