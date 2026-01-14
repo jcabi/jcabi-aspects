@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: Copyright (c) 2012-2025 Yegor Bugayenko
+# SPDX-FileCopyrightText: Copyright (c) 2012-2026 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 ---
 # yamllint disable rule:line-length
@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: 11
+          java-version: 21
       - uses: actions/cache@v4
         with:
           path: ~/.m2/repository
