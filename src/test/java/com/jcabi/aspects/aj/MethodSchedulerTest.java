@@ -39,7 +39,7 @@ final class MethodSchedulerTest {
      * @since 0.7.22
      */
     @ScheduleWithFixedDelay(unit = TimeUnit.NANOSECONDS)
-    private static class ShortRun implements Runnable, Closeable {
+    final private static class ShortRun implements Runnable, Closeable {
 
         /**
          * Have we finished?
@@ -68,7 +68,7 @@ final class MethodSchedulerTest {
      */
     @ScheduleWithFixedDelay(unit = TimeUnit.NANOSECONDS,
         await = 10, awaitUnit = TimeUnit.SECONDS)
-    private static class LongRun implements Runnable, Closeable {
+    final private static class LongRun implements Runnable, Closeable {
         /**
          * Have we finished?
          */

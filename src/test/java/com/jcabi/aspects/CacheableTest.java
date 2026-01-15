@@ -23,14 +23,11 @@ import org.junit.jupiter.api.Test;
  * @since 0.0.0
  * @checkstyle ClassDataAbstractionCoupling (500 lines)
  */
-@SuppressWarnings
-    (
-        {
-            "PMD.TooManyMethods",
-            "PMD.DoNotUseThreads",
-            "PMD.ProhibitPublicStaticMethods"
-        }
-    )
+@SuppressWarnings({
+    "PMD.TooManyMethods",
+    "PMD.DoNotUseThreads",
+    "PMD.ProhibitPublicStaticMethods"
+})
 final class CacheableTest {
 
     /**
