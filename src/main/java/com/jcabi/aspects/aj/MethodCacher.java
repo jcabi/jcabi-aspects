@@ -161,9 +161,9 @@ public final class MethodCacher {
      * Flush cache.
      * @param point Join point
      * @return Value of the method
+     * @throws Throwable If something goes wrong inside
      * @since 0.7.14
      * @deprecated Since 0.7.17, and preflush() should be used
-     * @throws Throwable If something goes wrong inside
      * @checkstyle IllegalThrows (4 lines)
      * @checkstyle MethodsOrderCheck (3 lines)
      */
