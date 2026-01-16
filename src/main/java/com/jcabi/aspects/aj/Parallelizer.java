@@ -24,8 +24,8 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Execute method in multiple threads.
  *
- * @since 0.10
  * @see Parallel
+ * @since 0.10
  * @checkstyle NonStaticMethodCheck (100 lines)
  */
 @Aspect
