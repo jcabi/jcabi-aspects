@@ -42,6 +42,7 @@ final class AsyncTest {
         runnable.run();
         // @checkstyle MultipleStringLiterals (5 lines)
         MatcherAssert.assertThat(
+            "should be equal",
             queue.poll(30, TimeUnit.SECONDS),
             AsyncTest.THREAD_NAME
         );
