@@ -40,9 +40,10 @@ final class CacheableTest {
     void cachesSimpleCall() {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.get().toString();
-        MatcherAssert.assertThat(first, Matchers.equalTo(foo.get().toString()));
+        MatcherAssert.assertThat("should be equal", first, Matchers.equalTo(foo.get().toString()));
         foo.flush();
         MatcherAssert.assertThat(
+            "should not be equal",
             foo.get().toString(),
             Matchers.not(Matchers.equalTo(first))
         );
@@ -54,16 +55,19 @@ final class CacheableTest {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.asyncGet().toString();
         MatcherAssert.assertThat(
+            "should be equal",
             first,
             Matchers.equalTo(foo.asyncGet().toString())
         );
         TimeUnit.SECONDS.sleep(2L);
         MatcherAssert.assertThat(
+            "should be equal",
             first,
             Matchers.equalTo(foo.asyncGet().toString())
         );
         TimeUnit.SECONDS.sleep(2L);
         MatcherAssert.assertThat(
+            "should not be equal",
             first,
             Matchers.not(Matchers.equalTo(foo.asyncGet().toString()))
         );
@@ -78,6 +82,7 @@ final class CacheableTest {
         );
         CacheableTest.Foo.staticFlush();
         MatcherAssert.assertThat(
+            "should not be equal",
             CacheableTest.Foo.staticGet(),
             Matchers.not(Matchers.equalTo(first))
         );
@@ -89,6 +94,7 @@ final class CacheableTest {
         final String first = foo.get().toString();
         TimeUnit.SECONDS.sleep(5);
         MatcherAssert.assertThat(
+            "should not be equal 1",
             foo.get().toString(),
             Matchers.not(Matchers.equalTo(first))
         );
@@ -116,7 +122,7 @@ final class CacheableTest {
             }
             start.countDown();
             done.await(30, TimeUnit.SECONDS);
-            MatcherAssert.assertThat(values.size(), Matchers.equalTo(1));
+            MatcherAssert.assertThat("should be equal 1", values.size(), Matchers.equalTo(1));
             never.interrupt();
         } finally {
             executor.shutdown();
