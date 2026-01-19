@@ -69,6 +69,7 @@ final class LoggableTest {
         );
         LoggableTest.Foo.logsDurationInSeconds();
         MatcherAssert.assertThat(
+            "should match with specified time unit",
             writer.toString(),
             new LoggableTest.RegexContainsMatcher("in \\d.\\d{3}")
         );
@@ -82,6 +83,7 @@ final class LoggableTest {
         );
         new LoggableTest.Foo().last("TEST");
         MatcherAssert.assertThat(
+            "should match with 'some text'",
             writer.toString(),
             new LoggableTest.RegexContainsMatcher(LoggableTest.RESULT)
         );
