@@ -17,6 +17,7 @@ final class VersionTest {
     @Test
     void containsCorrectVersionNumber() {
         MatcherAssert.assertThat(
+            "should not equals to current project version",
             Version.CURRENT.projectVersion(),
             Matchers.not(
                 Matchers.equalTo("${projectVersion}")
@@ -27,6 +28,7 @@ final class VersionTest {
     @Test
     void containsCorrectBuildNumber() {
         MatcherAssert.assertThat(
+            "should not equals to current build number",
             Version.CURRENT.buildNumber(),
             Matchers.not(
                 Matchers.equalTo("${buildNumber}")
