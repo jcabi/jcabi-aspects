@@ -33,7 +33,7 @@
   <parent>
     <groupId>com.jcabi</groupId>
     <artifactId>parent</artifactId>
-    <version>0.68.0</version>
+    <version>0.72.0</version>
   </parent>
   <artifactId>loggable</artifactId>
   <name>loggable</name>
