@@ -51,6 +51,7 @@ final class AsyncTest {
     @Test
     void returnsFutureValue() throws Exception {
         MatcherAssert.assertThat(
+            "should returns future value",
             new AsyncTest.Foo().asyncMethodWithReturnValue()
                 .get(5, TimeUnit.MINUTES),
             AsyncTest.THREAD_NAME

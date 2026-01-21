@@ -87,6 +87,7 @@ final class JSR303Test {
     @Test
     void overridesMessage() {
         MatcherAssert.assertThat(
+            "should has property 'message' with value",
             Assertions.assertThrows(
                 ConstraintViolationException.class,
                 () -> new JSR303Test.Bar().test(null)
