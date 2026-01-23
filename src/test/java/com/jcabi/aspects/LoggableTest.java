@@ -97,6 +97,7 @@ final class LoggableTest {
         );
         final byte[] result = new LoggableTest.Foo().logsByteArray();
         MatcherAssert.assertThat(
+            "should not contains simple name",
             writer.toString(),
             Matchers.not(
                 Matchers.containsString(
@@ -109,6 +110,7 @@ final class LoggableTest {
             bytes.add(Byte.toString(part));
         }
         MatcherAssert.assertThat(
+            "should contains string in order",
             writer.toString(),
             Matchers.stringContainsInOrder(bytes)
         );
@@ -122,6 +124,7 @@ final class LoggableTest {
         );
         final short[] result = new LoggableTest.Foo().logsShortArray();
         MatcherAssert.assertThat(
+            "should not contains simple name",
             writer.toString(),
             Matchers.not(
                 Matchers.containsString(
@@ -134,6 +137,7 @@ final class LoggableTest {
             shorts.add(Short.toString(part));
         }
         MatcherAssert.assertThat(
+            "should contains string in order",
             writer.toString(),
             Matchers.stringContainsInOrder(shorts)
         );
@@ -147,6 +151,7 @@ final class LoggableTest {
         );
         LoggableTest.Foo.explicitLoggerName();
         MatcherAssert.assertThat(
+            "should contains string 'test-logger'",
             // @checkstyle MultipleStringLiterals (2 lines)
             writer.toString(),
             Matchers.containsString("test-logger")

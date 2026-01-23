@@ -66,6 +66,7 @@ final class ImmutableTest {
     @Test
     void informsVersionOnError() {
         MatcherAssert.assertThat(
+            "should informs version on error",
             Assertions.assertThrows(
                 IllegalStateException.class,
                 ImmutableTest.Mutable::new
