@@ -29,9 +29,9 @@ import org.aspectj.lang.reflect.MethodSignature;
  *
  * <p>The class is thread-safe.
  *
- * @since 0.1.10
  * @see <a href="http://beanvalidation.org/1.0/spec/#appendix-methodlevelvalidation">Appendix C</a>
  * @see <a href="http://aspects.jcabi.com/jsr-303.html">How it works</a>
+ * @since 0.1.10
  */
 @Aspect
 @SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.TooManyMethods" })
