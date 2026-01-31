@@ -202,7 +202,7 @@ final class JSR303Test {
      * @since 0.0.0
      */
     @Loggable()
-    final private static class Bar implements JSR303Test.Fum {
+    private static final class Bar implements JSR303Test.Fum {
         @Override
         public void test(@NotNull final String value) {
             //Nothing to do.
