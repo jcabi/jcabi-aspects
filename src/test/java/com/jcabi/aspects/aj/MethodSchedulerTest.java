@@ -18,6 +18,21 @@ import org.junit.jupiter.api.Test;
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
 final class MethodSchedulerTest {
+    @Test
+    void shortRunningTaskShouldBeAllowedToFinish() throws Exception {
+        final MethodSchedulerTest.ShortRun target = new MethodSchedulerTest.ShortRun();
+        TimeUnit.SECONDS.sleep(5);
+        target.close();
+        MatcherAssert.assertThat("should be true", target.finished, Matchers.equalTo(true));
+    }
+
+    @Test
+    void interruptLongRunningTask() throws Exception {
+        final MethodSchedulerTest.LongRun target = new MethodSchedulerTest.LongRun();
+        target.close();
+        MatcherAssert.assertThat("should be false", target.finished, Matchers.equalTo(false));
+    }
+
     /**
      * Short running task.
      * @since 0.7.22
@@ -44,21 +59,6 @@ final class MethodSchedulerTest {
         public void close() {
             // do nothing
         }
-    }
-
-    @Test
-    void shortRunningTaskShouldBeAllowedToFinish() throws Exception {
-        final MethodSchedulerTest.ShortRun target = new MethodSchedulerTest.ShortRun();
-        TimeUnit.SECONDS.sleep(5);
-        target.close();
-        MatcherAssert.assertThat("should be true", target.finished, Matchers.equalTo(true));
-    }
-
-    @Test
-    void interruptLongRunningTask() throws Exception {
-        final MethodSchedulerTest.LongRun target = new MethodSchedulerTest.LongRun();
-        target.close();
-        MatcherAssert.assertThat("should be false", target.finished, Matchers.equalTo(false));
     }
 
     /**
