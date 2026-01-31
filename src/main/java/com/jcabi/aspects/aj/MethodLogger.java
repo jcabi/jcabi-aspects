@@ -31,14 +31,11 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @checkstyle IllegalThrows (500 lines)
  */
 @Aspect
-@SuppressWarnings
-    (
-        {
-            "PMD.AvoidCatchingThrowable",
-            "PMD.TooManyMethods",
-            "PMD.CyclomaticComplexity"
-        }
-    )
+@SuppressWarnings({
+    "PMD.AvoidCatchingThrowable",
+    "PMD.TooManyMethods",
+    "PMD.CyclomaticComplexity"
+})
 public final class MethodLogger {
 
     /**

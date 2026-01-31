@@ -30,7 +30,7 @@ final class JSR303Test {
     /**
      * The test message.
      */
-    private static final String OVERRIDEN_MSG = "this is a message";
+    private static final String OVERRIDDEN_MSG = "this is a message";
 
     @Test
     void throwsWhenMethodParametersAreInvalid() {
@@ -87,13 +87,14 @@ final class JSR303Test {
     @Test
     void overridesMessage() {
         MatcherAssert.assertThat(
+            "should has property 'message' with value",
             Assertions.assertThrows(
                 ConstraintViolationException.class,
                 () -> new JSR303Test.Bar().test(null)
             ),
             Matchers.hasProperty(
                 "message",
-                Matchers.containsString(JSR303Test.OVERRIDEN_MSG)
+                Matchers.containsString(JSR303Test.OVERRIDDEN_MSG)
             )
         );
     }
@@ -122,7 +123,7 @@ final class JSR303Test {
          *
          * @param value Value
          */
-        void test(@NotNull(message = JSR303Test.OVERRIDEN_MSG) String value);
+        void test(@NotNull(message = JSR303Test.OVERRIDDEN_MSG) String value);
     }
 
     /**
@@ -201,7 +202,7 @@ final class JSR303Test {
      * @since 0.0.0
      */
     @Loggable()
-    private static class Bar implements JSR303Test.Fum {
+    private static final class Bar implements JSR303Test.Fum {
         @Override
         public void test(@NotNull final String value) {
             //Nothing to do.
