@@ -25,11 +25,11 @@ import org.junit.jupiter.api.Test;
  */
 @SuppressWarnings
     (
-        {
-            "PMD.TooManyMethods",
-            "PMD.DoNotUseThreads",
-            "PMD.ProhibitPublicStaticMethods"
-        }
+    {
+    "PMD.TooManyMethods",
+    "PMD.DoNotUseThreads",
+    "PMD.ProhibitPublicStaticMethods"
+    }
     )
 final class CacheableTest {
 
@@ -43,9 +43,10 @@ final class CacheableTest {
     void cachesSimpleCall() {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.get().toString();
-        MatcherAssert.assertThat(first, Matchers.equalTo(foo.get().toString()));
+        MatcherAssert.assertThat("should be 1", first, Matchers.equalTo(foo.get().toString()));
         foo.flush();
         MatcherAssert.assertThat(
+            "should not be 1",
             foo.get().toString(),
             Matchers.not(Matchers.equalTo(first))
         );
@@ -57,16 +58,19 @@ final class CacheableTest {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final String first = foo.asyncGet().toString();
         MatcherAssert.assertThat(
+            "should equals to 1",
             first,
             Matchers.equalTo(foo.asyncGet().toString())
         );
         TimeUnit.SECONDS.sleep(2L);
         MatcherAssert.assertThat(
+            "should equals to 1",
             first,
             Matchers.equalTo(foo.asyncGet().toString())
         );
         TimeUnit.SECONDS.sleep(2L);
         MatcherAssert.assertThat(
+            "should equals to 1",
             first,
             Matchers.not(Matchers.equalTo(foo.asyncGet().toString()))
         );
@@ -76,11 +80,13 @@ final class CacheableTest {
     void cachesSimpleStaticCall() {
         final String first = CacheableTest.Foo.staticGet();
         MatcherAssert.assertThat(
+            "should equals to downloaded text",
             first,
             Matchers.equalTo(CacheableTest.Foo.staticGet())
         );
         CacheableTest.Foo.staticFlush();
         MatcherAssert.assertThat(
+            "should not equals to downloaded text",
             CacheableTest.Foo.staticGet(),
             Matchers.not(Matchers.equalTo(first))
         );
@@ -92,12 +98,14 @@ final class CacheableTest {
         final String first = foo.get().toString();
         TimeUnit.SECONDS.sleep(5);
         MatcherAssert.assertThat(
+            "should not equals to downloaded text",
             foo.get().toString(),
             Matchers.not(Matchers.equalTo(first))
         );
     }
 
     @Test
+    @SuppressWarnings("PMD.CloseResource")
     void cachesJustOnceInParallelThreads() throws Exception {
         final CacheableTest.Foo foo = new CacheableTest.Foo(1L);
         final Thread never = new Thread(foo::never);
@@ -119,7 +127,7 @@ final class CacheableTest {
             }
             start.countDown();
             done.await(30, TimeUnit.SECONDS);
-            MatcherAssert.assertThat(values.size(), Matchers.equalTo(1));
+            MatcherAssert.assertThat("should equals to 1", values.size(), Matchers.equalTo(1));
             never.interrupt();
         } finally {
             executor.shutdown();
@@ -130,6 +138,7 @@ final class CacheableTest {
     void flushesWithStaticTrigger() {
         final CacheableTest.Bar bar = new CacheableTest.Bar();
         MatcherAssert.assertThat(
+            "should not equals to some cached number",
             bar.get(),
             Matchers.not(Matchers.equalTo(bar.get()))
         );

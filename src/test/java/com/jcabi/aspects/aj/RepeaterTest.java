@@ -23,6 +23,7 @@ final class RepeaterTest {
     void retriesAfterFailure() {
         final AtomicInteger calls = new AtomicInteger(0);
         MatcherAssert.assertThat(
+            "should be true",
             new Callable<Boolean>() {
                 @Override
                 @RetryOnFailure(verbose = false)
@@ -36,7 +37,7 @@ final class RepeaterTest {
             } .call(),
             Matchers.equalTo(true)
         );
-        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(3 - 1));
+        MatcherAssert.assertThat("should be 3 - 1", calls.get(), Matchers.equalTo(3 - 1));
     }
 
     @Test
@@ -62,6 +63,7 @@ final class RepeaterTest {
     void onlyRetryExceptionsWhichAreSpecified() {
         final AtomicInteger calls = new AtomicInteger(0);
         MatcherAssert.assertThat(
+            "should be true",
             new Callable<Boolean>() {
                 @Override
                 @RetryOnFailure(
@@ -78,7 +80,7 @@ final class RepeaterTest {
             } .call(),
             Matchers.equalTo(true)
         );
-        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(3 - 1));
+        MatcherAssert.assertThat("should be 3 - 1", calls.get(), Matchers.equalTo(3 - 1));
     }
 
     @Test
@@ -100,7 +102,7 @@ final class RepeaterTest {
                 } .call()
             );
         } finally {
-            MatcherAssert.assertThat(calls.get(), Matchers.equalTo(1));
+            MatcherAssert.assertThat("should be 1", calls.get(), Matchers.equalTo(1));
         }
     }
 
@@ -108,6 +110,7 @@ final class RepeaterTest {
     void retryExceptionsWhichAreSubTypesOfTheExceptionsSpecified() {
         final AtomicInteger calls = new AtomicInteger(0);
         MatcherAssert.assertThat(
+            "should be true",
             new Callable<Boolean>() {
                 @Override
                 @RetryOnFailure(verbose = false, types = IndexOutOfBoundsException.class)
@@ -121,6 +124,6 @@ final class RepeaterTest {
             } .call(),
             Matchers.equalTo(true)
         );
-        MatcherAssert.assertThat(calls.get(), Matchers.equalTo(3 - 1));
+        MatcherAssert.assertThat("should be 3 - 1", calls.get(), Matchers.equalTo(3 - 1));
     }
 }

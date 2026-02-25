@@ -33,11 +33,11 @@ import org.aspectj.lang.reflect.MethodSignature;
 @Aspect
 @SuppressWarnings
     (
-        {
-            "PMD.AvoidCatchingThrowable",
-            "PMD.TooManyMethods",
-            "PMD.CyclomaticComplexity"
-        }
+    {
+    "PMD.AvoidCatchingThrowable",
+    "PMD.TooManyMethods",
+    "PMD.CyclomaticComplexity"
+    }
     )
 public final class MethodLogger {
 
@@ -52,7 +52,8 @@ public final class MethodLogger {
     @SuppressWarnings(
         {
             "PMD.DoNotUseThreads",
-            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
+            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors",
+            "PMD.CloseResource"
         }
     )
     public MethodLogger() {
@@ -158,86 +159,123 @@ public final class MethodLogger {
         "PMD.AvoidThreadGroup",
         "PMD.GuardLogStatement"
     })
-    private Object wrap(final ProceedingJoinPoint point, final Method method,
-        final Loggable annotation) throws Throwable {
+    // @checkstyle IllegalCatchCheck (15 lines)
+    private Object wrap(
+        final ProceedingJoinPoint point,
+        final Method method,
+        final Loggable annotation
+    ) throws Throwable {
+        this.checkThreadInterruption();
+        final long start = System.nanoTime();
+        final MethodLogger.Marker marker = new MethodLogger.Marker(point, annotation);
+        this.running.add(marker);
+        try {
+            logMethodEntry(point, method, annotation);
+            final Object result = point.proceed();
+            logMethodExit(point, method, annotation, result, start);
+            return result;
+        } catch (final Throwable exc) {
+            handleException(exc, point, method, annotation, start);
+            throw exc;
+        } finally {
+            this.running.remove(marker);
+        }
+    }
+
+    private void checkThreadInterruption() {
         if (Thread.interrupted()) {
             throw new IllegalStateException(
                 String.format(
-                    "thread '%s' in group '%s' interrupted",
-                    Thread.currentThread().getName(),
-                    Thread.currentThread().getThreadGroup().getName()
+                    "thread '%s' was interrupted",
+                    Thread.currentThread().getName()
                 )
             );
         }
-        final long start = System.nanoTime();
-        final MethodLogger.Marker marker =
-            new MethodLogger.Marker(point, annotation);
-        this.running.add(marker);
-        int level = annotation.value();
-        try {
+    }
+
+    private static void logMethodEntry(
+        final ProceedingJoinPoint point,
+        final Method method,
+        final Loggable annotation
+    ) {
+        if (annotation.prepend()) {
             final Object logger = MethodLogger.logger(method, annotation.name());
-            if (annotation.prepend()) {
+            LogHelper.log(
+                annotation.value(),
+                logger,
+                new StringBuilder(
+                    Mnemos.toText(
+                        point,
+                        annotation.trim(),
+                        annotation.skipArgs(),
+                        annotation.logThis()
+                    )
+                ).append(": entered").toString()
+            );
+        }
+    }
+
+    // @checkstyle ParameterNumberCheck (7 lines)
+    private static void logMethodExit(
+        final ProceedingJoinPoint point,
+        final Method method,
+        final Loggable annotation,
+        final Object result,
+        final long start
+    ) {
+        final long nano = System.nanoTime() - start;
+        final Object logger = MethodLogger.logger(method, annotation.name());
+        int level = annotation.value();
+        if (LogHelper.enabled(level, logger) || MethodLogger.over(annotation, nano)) {
+            if (MethodLogger.over(annotation, nano)) {
+                level = Loggable.WARN;
+            }
+            LogHelper.log(
+                level, logger,
+                MethodLogger.message(point, method, annotation, result, nano)
+            );
+        }
+    }
+
+    // @checkstyle ParameterNumberCheck (7 lines)
+    private static void handleException(
+        final Throwable exc,
+        final ProceedingJoinPoint point,
+        final Method method,
+        final Loggable annotation,
+        final long start
+    ) {
+        if (!MethodLogger.contains(annotation.ignore(), exc)
+            && !exc.getClass().isAnnotationPresent(Loggable.Quiet.class)) {
+            final String origin = getExceptionOrigin(exc);
+            if (LogHelper.enabled(annotation.value(), method.getDeclaringClass())) {
                 LogHelper.log(
-                    level,
-                    logger,
-                    new StringBuilder(
+                    annotation.value(),
+                    method.getDeclaringClass(),
+                    Logger.format(
+                        "%s: thrown %s out of %s in %[nano]s",
                         Mnemos.toText(
                             point,
                             annotation.trim(),
                             annotation.skipArgs(),
                             annotation.logThis()
-                        )
-                    ).append(": entered").toString()
+                        ),
+                        Mnemos.toText(exc),
+                        origin,
+                        System.nanoTime() - start
+                    )
                 );
             }
-            final Object result = point.proceed();
-            final long nano = System.nanoTime() - start;
-            if (LogHelper.enabled(level, logger)
-                || MethodLogger.over(annotation, nano)) {
-                if (MethodLogger.over(annotation, nano)) {
-                    level = Loggable.WARN;
-                }
-                LogHelper.log(
-                    level, logger,
-                    MethodLogger.message(point, method, annotation, result, nano)
-                );
-            }
-            return result;
-        // @checkstyle IllegalCatch (1 line)
-        } catch (final Throwable ex) {
-            if (!MethodLogger.contains(annotation.ignore(), ex)
-                && !ex.getClass().isAnnotationPresent(Loggable.Quiet.class)) {
-                final StackTraceElement[] traces = ex.getStackTrace();
-                final String origin;
-                if (traces.length > 0) {
-                    final StackTraceElement trace = traces[0];
-                    origin = MethodLogger.oneText(trace);
-                } else {
-                    origin = "somewhere";
-                }
-                if (LogHelper.enabled(level, method.getDeclaringClass())) {
-                    LogHelper.log(
-                        level,
-                        method.getDeclaringClass(),
-                        Logger.format(
-                            "%s: thrown %s out of %s in %[nano]s",
-                            Mnemos.toText(
-                                point,
-                                annotation.trim(),
-                                annotation.skipArgs(),
-                                annotation.logThis()
-                            ),
-                            Mnemos.toText(ex),
-                            origin,
-                            System.nanoTime() - start
-                        )
-                    );
-                }
-            }
-            throw ex;
-        } finally {
-            this.running.remove(marker);
         }
+    }
+
+    private static String getExceptionOrigin(final Throwable exc) {
+        final StackTraceElement[] traces = exc.getStackTrace();
+        String res = "somewhere";
+        if (traces.length > 0) {
+            res = MethodLogger.oneText(traces[0]);
+        }
+        return res;
     }
 
     /**

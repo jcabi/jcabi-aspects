@@ -42,12 +42,14 @@ final class NamedThreadsTest {
             );
             final String message = writer.toString();
             MatcherAssert.assertThat(
+                "should contins the project version",
                 message,
                 Matchers.containsString(
                     Version.CURRENT.projectVersion()
                 )
             );
             MatcherAssert.assertThat(
+                "should contains the build number",
                 message,
                 Matchers.containsString(
                     Version.CURRENT.buildNumber()
