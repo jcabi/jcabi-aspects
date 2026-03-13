@@ -64,7 +64,6 @@
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-log</artifactId>
       <!-- version is set in order to avoid a cyclic reference -->
-      <version>0.24.3</version>
       <exclusions>
         <exclusion>
           <groupId>com.jcabi</groupId>
@@ -209,7 +208,7 @@
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.22.0</version>
+            <version>0.25.1</version>
             <configuration>
               <excludes combine.children="append">
                 <exclude>checkstyle:/src/it.*</exclude>
