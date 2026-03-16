@@ -64,7 +64,6 @@
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-log</artifactId>
       <!-- version is set in order to avoid a cyclic reference -->
-      <version>0.24.3</version>
       <exclusions>
         <exclusion>
           <groupId>com.jcabi</groupId>
