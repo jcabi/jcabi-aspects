@@ -21,4 +21,4 @@ release:
     git commit -am "${tag}"
     export MAVEN_OPTS="--add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED"
     mvn clean deploy -ntp -Pqulice -Psonatype -Pjcabi --batch-mode --errors --settings ../settings.xml
-    mvn clean site-deploy -Psite --errors --settings ../settings.xml --batch-mode
+    mvn -ntp clean site-deploy -Psite --errors --settings ../settings.xml --batch-mode
