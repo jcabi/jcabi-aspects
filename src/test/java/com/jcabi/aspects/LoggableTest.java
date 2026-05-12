@@ -138,6 +138,22 @@ final class LoggableTest {
     }
 
     @Test
+    void logsExceptionAtConfiguredLevel() {
+        final StringWriter writer = new StringWriter();
+        Logger.getRootLogger().addAppender(
+            new WriterAppender(new SimpleLayout(), writer)
+        );
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            () -> new LoggableTest.Bar().throwAtConfiguredLevel()
+        );
+        MatcherAssert.assertThat(
+            writer.toString(),
+            Matchers.containsString("ERROR")
+        );
+    }
+
+    @Test
     void logsWithExplicitLoggerName() throws Exception {
         final StringWriter writer = new StringWriter();
         Logger.getRootLogger().addAppender(
@@ -282,6 +298,20 @@ final class LoggableTest {
         @Loggable(ignore = { IOException.class, RuntimeException.class })
         private void doThrow() {
             throw new IllegalStateException();
+        }
+    }
+
+    /**
+     * Class with a method that uses logException to control exception log level.
+     * @since 0.0.0
+     */
+    private static final class Bar {
+        /**
+         * Throws with exception logged at ERROR even though method is DEBUG.
+         */
+        @Loggable(value = Loggable.DEBUG, logException = Loggable.ERROR)
+        public void throwAtConfiguredLevel() {
+            throw new IllegalStateException("test");
         }
     }
 
