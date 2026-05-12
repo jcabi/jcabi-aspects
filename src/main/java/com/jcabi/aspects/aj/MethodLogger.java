@@ -42,6 +42,11 @@ import org.aspectj.lang.reflect.MethodSignature;
 public final class MethodLogger {
 
     /**
+     * Constant used to disregard logging.
+     */
+    private static final int DEROGATION_OFF = -1;
+
+    /**
      * Currently running methods.
      */
     private final transient Set<MethodLogger.Marker> running;
@@ -214,6 +219,9 @@ public final class MethodLogger {
                     origin = MethodLogger.oneText(trace);
                 } else {
                     origin = "somewhere";
+                }
+                if (annotation.exceptionLevel() != MethodLogger.DEROGATION_OFF) {
+                    level = annotation.exceptionLevel();
                 }
                 if (LogHelper.enabled(level, method.getDeclaringClass())) {
                     LogHelper.log(
