@@ -25,10 +25,10 @@ final class ScheduleWithFixedDelayTest {
         final ScheduleWithFixedDelayTest.Sample sample =
             new ScheduleWithFixedDelayTest.Sample(counter);
         TimeUnit.SECONDS.sleep(1L);
-        MatcherAssert.assertThat(counter.get(), Matchers.greaterThan(0L));
+        MatcherAssert.assertThat("should be > 0", counter.get(), Matchers.greaterThan(0L));
         sample.close();
         TimeUnit.MILLISECONDS.sleep(10);
-        MatcherAssert.assertThat(counter.get(), Matchers.lessThan(0L));
+        MatcherAssert.assertThat("should be < 0", counter.get(), Matchers.lessThan(0L));
     }
 
     @Test
@@ -38,7 +38,7 @@ final class ScheduleWithFixedDelayTest {
             new ScheduleWithFixedDelayTest.LongDelaySample(counter);
         sample.close();
         TimeUnit.MILLISECONDS.sleep(100);
-        MatcherAssert.assertThat(counter.get(), Matchers.is(0L));
+        MatcherAssert.assertThat("should be 0", counter.get(), Matchers.is(0L));
     }
 
     /**

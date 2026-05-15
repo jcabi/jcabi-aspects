@@ -18,20 +18,19 @@ import org.junit.jupiter.api.Test;
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
 final class MethodSchedulerTest {
-
     @Test
     void shortRunningTaskShouldBeAllowedToFinish() throws Exception {
         final MethodSchedulerTest.ShortRun target = new MethodSchedulerTest.ShortRun();
         TimeUnit.SECONDS.sleep(5);
         target.close();
-        MatcherAssert.assertThat(target.finished, Matchers.equalTo(true));
+        MatcherAssert.assertThat("should be true", target.finished, Matchers.equalTo(true));
     }
 
     @Test
     void interruptLongRunningTask() throws Exception {
         final MethodSchedulerTest.LongRun target = new MethodSchedulerTest.LongRun();
         target.close();
-        MatcherAssert.assertThat(target.finished, Matchers.equalTo(false));
+        MatcherAssert.assertThat("should be false", target.finished, Matchers.equalTo(false));
     }
 
     /**
@@ -39,7 +38,7 @@ final class MethodSchedulerTest {
      * @since 0.7.22
      */
     @ScheduleWithFixedDelay(unit = TimeUnit.NANOSECONDS)
-    private static class ShortRun implements Runnable, Closeable {
+    private static final class ShortRun implements Runnable, Closeable {
 
         /**
          * Have we finished?
@@ -63,12 +62,11 @@ final class MethodSchedulerTest {
     }
 
     /**
-     * Long running task.
+     * Long-running task.
      * @since 0.7.22
      */
-    @ScheduleWithFixedDelay(unit = TimeUnit.NANOSECONDS,
-        await = 10, awaitUnit = TimeUnit.SECONDS)
-    private static class LongRun implements Runnable, Closeable {
+    @ScheduleWithFixedDelay(unit = TimeUnit.NANOSECONDS, await = 10, awaitUnit = TimeUnit.SECONDS)
+    private static final class LongRun implements Runnable, Closeable {
         /**
          * Have we finished?
          */
@@ -89,4 +87,5 @@ final class MethodSchedulerTest {
             // do nothing
         }
     }
+
 }

@@ -49,7 +49,7 @@ public class Foo {
 }
 +--
 
-  During instantion of this class, a runtime exception will be thrown
+  During instantiation of this class, a runtime exception will be thrown
   because it is mutable.
 
   Keep in mind that, although JDK requires some classes to be immutable,
@@ -68,7 +68,7 @@ public class Foo {
 @Immutable
 public class Foo {
   // This class is NOT immutable because we can't guarantee
-  // that an immutable implemenation of DateFormat will be
+  // that an immutable implementation of DateFormat will be
   // used in all its implementations.
   private final DateFormat format;
 }
