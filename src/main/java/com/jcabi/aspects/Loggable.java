@@ -186,6 +186,25 @@ public @interface Loggable {
     String name() default "";
 
     /**
+     * Log level to use when an exception is thrown. When set to a value
+     * other than {@code -1}, exceptions are logged at this level instead
+     * of the level defined by {@link #value()}. This is useful in
+     * production environments where the default log level is set to WARN
+     * or above: you can keep the method itself logging at INFO or DEBUG
+     * while still making exceptions visible at ERROR.
+     *
+     * <pre> &#64;Loggable(value = Loggable.DEBUG, logException = Loggable.ERROR)
+     * void process() {
+     *   // exceptions logged at ERROR even though the method logs at DEBUG
+     * }</pre>
+     *
+     * @since 0.30
+     * @return The log level for exceptions, or {@code -1} to use the
+     *  same level as the method
+     */
+    int logException() default -1;
+
+    /**
      * Identifies an exception that is never logged by {@link Loggable} if/when
      * being thrown out of an annotated method.
      *

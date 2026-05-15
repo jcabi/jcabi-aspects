@@ -215,9 +215,11 @@ public final class MethodLogger {
                 } else {
                     origin = "somewhere";
                 }
-                if (LogHelper.enabled(level, method.getDeclaringClass())) {
+                final int exlevel = annotation.logException() >= 0
+                    ? annotation.logException() : level;
+                if (LogHelper.enabled(exlevel, method.getDeclaringClass())) {
                     LogHelper.log(
-                        level,
+                        exlevel,
                         method.getDeclaringClass(),
                         Logger.format(
                             "%s: thrown %s out of %s in %[nano]s",
