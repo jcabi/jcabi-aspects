@@ -7,7 +7,7 @@
   <skin>
     <groupId>com.jcabi</groupId>
     <artifactId>jcabi-maven-skin</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
   </skin>
   <bannerLeft name="jcabi" href="https://www.jcabi.com/">
     <image src="https://jcabi.com/logo-square.svg" alt="jcabi" width="64" height="64"/>
