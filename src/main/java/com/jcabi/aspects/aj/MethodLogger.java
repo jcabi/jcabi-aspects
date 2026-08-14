@@ -33,10 +33,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @checkstyle IllegalThrows (500 lines)
  */
 @Aspect
-@SuppressWarnings({
-    "PMD.AvoidCatchingGenericException",
-    "PMD.TooManyMethods"
-})
+@SuppressWarnings("PMD.AvoidCatchingGenericException")
 public final class MethodLogger {
 
     /**
@@ -49,9 +46,11 @@ public final class MethodLogger {
      */
     @SuppressWarnings({
         "PMD.CloseResource",
-        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
+        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors",
+        "FutureReturnValueIgnored"
     })
     public MethodLogger() {
+        // @checkstyle ConstructorsCodeFreeCheck (30 lines)
         this.running = new ConcurrentSkipListSet<>();
         final ScheduledExecutorService monitor =
             Executors.newSingleThreadScheduledExecutor(
@@ -146,8 +145,6 @@ public final class MethodLogger {
      * @param annotation The annotation
      * @return The result of call
      * @throws Throwable If something goes wrong inside
-     * @checkstyle ExecutableStatementCountCheck (100 lines)
-     * @checkstyle CyclomaticComplexityCheck (100 lines)
      */
     @SuppressWarnings("PMD.AvoidThreadGroup")
     private Object wrap(final ProceedingJoinPoint point, final Method method,
@@ -172,14 +169,13 @@ public final class MethodLogger {
                 LogHelper.log(
                     level,
                     logger,
-                    new StringBuilder(
-                        Mnemos.toText(
-                            point,
-                            annotation.trim(),
-                            annotation.skipArgs(),
-                            annotation.logThis()
-                        )
-                    ).append(": entered").toString()
+                    "%s: entered",
+                    Mnemos.toText(
+                        point,
+                        annotation.trim(),
+                        annotation.skipArgs(),
+                        annotation.logThis()
+                    )
                 );
             }
             final Object result = point.proceed();
@@ -212,7 +208,6 @@ public final class MethodLogger {
      * @param level Logging level of the method itself
      * @param exp The exception thrown
      * @param start When the method started, in nanoseconds
-     * @checkstyle ParameterNumberCheck (3 lines)
      */
     private static void report(final ProceedingJoinPoint point,
         final Method method, final Loggable annotation, final int level,
@@ -264,9 +259,9 @@ public final class MethodLogger {
 
     /**
      * Has time for method execution passed.
-     * @param annotation Loggable annotation.
-     * @param nano Execution time.
-     * @return Is over time limit.
+     * @param annotation Loggable annotation
+     * @param nano Execution time
+     * @return Is over time limit
      */
     private static boolean over(final Loggable annotation, final long nano) {
         return nano > annotation.unit().toNanos(
@@ -276,13 +271,12 @@ public final class MethodLogger {
 
     /**
      * Prepared message for log.
-     * @param point JointPoint to use.
-     * @param method Method for which to log.
-     * @param annotation Loggable annotation.
-     * @param result Method result.
-     * @param nano Method execution time.
-     * @return Log message.
-     * @checkstyle ParameterNumberCheck (3 lines)
+     * @param point JointPoint to use
+     * @param method Method for which to log
+     * @param annotation Loggable annotation
+     * @param result Method result
+     * @param nano Method execution time
+     * @return Log message
      */
     private static String message(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation, final Object result, final long nano) {
@@ -435,18 +429,54 @@ public final class MethodLogger {
          * @param pnt Joint point
          * @param annt Annotation
          */
-        protected Marker(final ProceedingJoinPoint pnt, final Loggable annt) {
-            this.started = System.currentTimeMillis();
-            this.logged = new AtomicInteger();
+        Marker(final ProceedingJoinPoint pnt, final Loggable annt) {
+            this(
+                pnt, annt, System.currentTimeMillis(), Thread.currentThread()
+            );
+        }
+
+        /**
+         * Ctor.
+         * @param pnt Joint point
+         * @param annt Annotation
+         * @param begin When the method was started, in milliseconds
+         * @param thrd The thread it's running in
+         */
+        private Marker(final ProceedingJoinPoint pnt, final Loggable annt,
+            final long begin, final Thread thrd) {
             this.point = pnt;
             this.annotation = annt;
-            this.thread = Thread.currentThread();
+            this.started = begin;
+            this.thread = thrd;
+            this.logged = new AtomicInteger();
+        }
+
+        @Override
+        public int hashCode() {
+            return this.point.hashCode();
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            return obj == this || ((MethodLogger.Marker) obj)
+                .point.equals(this.point);
+        }
+
+        @Override
+        public int compareTo(final MethodLogger.Marker marker) {
+            int cmp = 0;
+            if (this.started < marker.started) {
+                cmp = 1;
+            } else if (this.started > marker.started) {
+                cmp = -1;
+            }
+            return cmp;
         }
 
         /**
          * Monitor it's status and log the problem, if any.
          */
-        public void monitor() {
+        void monitor() {
             final TimeUnit unit = this.annotation.unit();
             final long threshold = this.annotation.limit();
             final long age = unit.convert(
@@ -475,28 +505,5 @@ public final class MethodLogger {
                 this.logged.set(cycle);
             }
         }
-
-        @Override
-        public int hashCode() {
-            return this.point.hashCode();
-        }
-
-        @Override
-        public boolean equals(final Object obj) {
-            return obj == this || ((MethodLogger.Marker) obj)
-                .point.equals(this.point);
-        }
-
-        @Override
-        public int compareTo(final MethodLogger.Marker marker) {
-            int cmp = 0;
-            if (this.started < marker.started) {
-                cmp = 1;
-            } else if (this.started > marker.started) {
-                cmp = -1;
-            }
-            return cmp;
-        }
     }
-
 }

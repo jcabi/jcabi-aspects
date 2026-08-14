@@ -18,14 +18,12 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link NamedThreads}.
- *
  * @since 0.22
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class NamedThreadsTest {
 
     @Test
-    void testVersion() {
+    void logsVersion() {
         final Logger root = LogManager.getRootLogger();
         final Level level = root.getLevel();
         root.setLevel(Level.INFO);
@@ -34,7 +32,6 @@ final class NamedThreadsTest {
             new WriterAppender(new SimpleLayout(), writer);
         root.addAppender(appender);
         try {
-            // @checkstyle MethodBodyCommentsCheck (5 lines)
             new NamedThreads("test", "desc").newThread(
                 () -> {
                     // do nothing
@@ -57,5 +54,4 @@ final class NamedThreadsTest {
             root.setLevel(level);
         }
     }
-
 }

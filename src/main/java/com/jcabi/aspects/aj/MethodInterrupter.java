@@ -52,8 +52,14 @@ public final class MethodInterrupter {
     /**
      * Public ctor.
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
+    @SuppressWarnings(
+        {
+            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors",
+            "FutureReturnValueIgnored"
+        }
+    )
     public MethodInterrupter() {
+        // @checkstyle ConstructorsCodeFreeCheck (15 lines)
         this.calls = new ConcurrentSkipListSet<>();
         this.lock = new ReentrantLock();
         this.interrupter = Executors.newSingleThreadScheduledExecutor(
@@ -110,11 +116,11 @@ public final class MethodInterrupter {
 
     /**
      * A call being watched.
-     *
      * @since 0.7.16
      */
     private static final class Call implements
         Comparable<MethodInterrupter.Call> {
+
         /**
          * The thread called.
          */
@@ -139,17 +145,28 @@ public final class MethodInterrupter {
          * Public ctor.
          * @param pnt Joint point
          */
-        @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
         Call(final ProceedingJoinPoint pnt) {
-            this.thread = Thread.currentThread();
-            this.start = System.currentTimeMillis();
-            this.point = pnt;
-            final Method method = ((MethodSignature) pnt.getSignature())
-                .getMethod();
-            final Timeable annt = method.getAnnotation(Timeable.class);
-            this.deadline = this.start + annt.unit().toMillis(
-                (long) annt.limit()
+            this(
+                pnt,
+                Thread.currentThread(),
+                System.currentTimeMillis(),
+                MethodInterrupter.Call.limit(pnt)
             );
+        }
+
+        /**
+         * Ctor.
+         * @param pnt Joint point
+         * @param thrd The thread that called
+         * @param begin When it started
+         * @param span How long the call may take, in milliseconds
+         */
+        private Call(final ProceedingJoinPoint pnt, final Thread thrd,
+            final long begin, final long span) {
+            this.point = pnt;
+            this.thread = thrd;
+            this.start = begin;
+            this.deadline = begin + span;
         }
 
         @Override
@@ -180,7 +197,7 @@ public final class MethodInterrupter {
          * Is it expired already?
          * @return TRUE if expired
          */
-        public boolean expired() {
+        boolean expired() {
             return this.deadline < System.currentTimeMillis();
         }
 
@@ -188,7 +205,7 @@ public final class MethodInterrupter {
          * This thread is stopped already (interrupt if not)?
          * @return TRUE if it's already dead
          */
-        public boolean interrupted() {
+        boolean interrupted() {
             final boolean dead;
             if (this.thread.isAlive()) {
                 this.thread.interrupt();
@@ -209,6 +226,16 @@ public final class MethodInterrupter {
             }
             return dead;
         }
-    }
 
+        /**
+         * How long the call is allowed to take.
+         * @param pnt Joint point
+         * @return Milliseconds
+         */
+        private static long limit(final ProceedingJoinPoint pnt) {
+            final Timeable annt = ((MethodSignature) pnt.getSignature())
+                .getMethod().getAnnotation(Timeable.class);
+            return annt.unit().toMillis((long) annt.limit());
+        }
+    }
 }

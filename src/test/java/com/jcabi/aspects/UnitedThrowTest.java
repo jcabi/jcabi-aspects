@@ -65,12 +65,14 @@ final class UnitedThrowTest {
      * Class for testing UnitedThrow.
      * @since 0.0.0
      */
+    @SuppressWarnings("DoNotCallSuggester")
     private static final class Thrower {
+
         /**
          * Test method.
          */
         @UnitedThrow
-        public void save() throws IOException {
+        void save() throws IOException {
             throw new IllegalStateException();
         }
 
@@ -79,16 +81,15 @@ final class UnitedThrowTest {
          * @throws IOException In case of exception.
          */
         @UnitedThrow
-        public void file() throws IOException {
+        void file() throws IOException {
             throw new FileNotFoundException();
         }
 
         /**
          * Test method.
-         * @checkstyle ThrowsCountCheck (3 lines)
          */
         @UnitedThrow(IOException.class)
-        public void multiple() throws InterruptedException, IOException {
+        void multiple() throws InterruptedException, IOException {
             throw new IllegalStateException();
         }
 
@@ -96,7 +97,7 @@ final class UnitedThrowTest {
          * Test method.
          */
         @UnitedThrow
-        public void def() {
+        void def() {
             throw new IllegalArgumentException();
         }
 
@@ -104,7 +105,7 @@ final class UnitedThrowTest {
          * Test method.
          */
         @UnitedThrow(IOException.class)
-        public void encapsulate() throws IOException {
+        void encapsulate() throws IOException {
             throw new IllegalStateException();
         }
     }

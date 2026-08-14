@@ -12,7 +12,6 @@ import org.aspectj.lang.annotation.Aspect;
 
 /**
  * Logs all exceptions thrown out of a method.
- *
  * @see com.jcabi.aspects.LogExceptions
  * @since 0.1.10
  * @checkstyle IllegalThrows (100 lines)

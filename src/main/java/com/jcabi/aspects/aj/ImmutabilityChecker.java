@@ -42,6 +42,7 @@ public final class ImmutabilityChecker {
      *
      * <p>Try NOT to change the signature of this method, in order to keep
      * it backward compatible.
+     *
      * @param point Joint point
      */
     @After("initialization((@com.jcabi.aspects.Immutable *).new(..))")
@@ -52,7 +53,6 @@ public final class ImmutabilityChecker {
         } catch (final ImmutabilityChecker.Violation ex) {
             throw new IllegalStateException(
                 String.format(
-                    // @checkstyle LineLength (1 line)
                     "%s is not immutable, can't use it (jcabi-aspects %s/%s)",
                     type,
                     Version.CURRENT.projectVersion(),
@@ -167,7 +167,6 @@ public final class ImmutabilityChecker {
         if (!field.isAnnotationPresent(Immutable.Array.class)) {
             throw new ImmutabilityChecker.Violation(
                 String.format(
-                    // @checkstyle LineLength (1 line)
                     "Field '%s' is an array and is not annotated with @Immutable.Array",
                     field.getName()
                 )
@@ -210,10 +209,10 @@ public final class ImmutabilityChecker {
          * Public ctor.
          * @param msg Message
          * @param cause Cause of it
+         * @checkstyle ConstructorsOrderCheck (3 lines)
          */
         private Violation(final String msg, final Exception cause) {
             super(msg, cause);
         }
     }
-
 }

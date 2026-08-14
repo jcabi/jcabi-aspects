@@ -71,7 +71,6 @@ public @interface ScheduleWithFixedDelay {
 
     /**
      * How long to wait for the task to finish after shutdown in await units.
-     *
      * @return The await time amount
      */
     int await() default 1;

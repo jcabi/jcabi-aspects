@@ -69,6 +69,7 @@ public @interface Cacheable {
      *
      * <p>The minimum unit you can use is a second. We simply can't cache for
      * less than a second, because cache is being cleaned every second.
+     *
      * @return The time unit
      */
     TimeUnit unit() default TimeUnit.MINUTES;
@@ -166,5 +167,4 @@ public @interface Cacheable {
     @Target(ElementType.METHOD)
     @interface FlushAfter {
     }
-
 }

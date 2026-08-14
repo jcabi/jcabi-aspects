@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Mnemos}.
- *
  * @since 0.0.0
  */
 final class MnemosTest {
@@ -25,7 +24,7 @@ final class MnemosTest {
         this.assertText(
             new Object[] {1, "1"},
             new Object[] {1.43f, "1.43"},
-            new Object[] {"\u20ac-plain", "'\u20ac-plain'"},
+            new Object[] {"€-plain", "'€-plain'"},
             new Object[] {"test ", "'test '"},
             new Object[] {null, "NULL"},
             new Object[] {new String[0], MnemosTest.EMPTY_ARRAY},
@@ -46,7 +45,6 @@ final class MnemosTest {
                 }, true, false
             ),
             Matchers.equalTo(
-                // @checkstyle LineLength (1 line)
                 "[com.jcabi.aspects.aj.MnemosTest$1 thrown java.lang.IllegalArgumentException(boom)]"
             )
         );

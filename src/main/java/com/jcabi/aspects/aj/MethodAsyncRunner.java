@@ -55,7 +55,6 @@ public final class MethodAsyncRunner {
             .getReturnType();
         if (!Future.class.isAssignableFrom(returned)
             && !returned.equals(Void.TYPE)) {
-            // @checkstyle LineLength (3 lines)
             throw new IllegalStateException(
                 String.format(
                     "%s: Return type is %s, not void or Future, cannot use @Async",
@@ -65,7 +64,6 @@ public final class MethodAsyncRunner {
             );
         }
         final Future<?> result = this.executor.submit(
-            // @checkstyle AnonInnerLength (23 lines)
             () -> {
                 Object ret = null;
                 try {
@@ -92,5 +90,4 @@ public final class MethodAsyncRunner {
         }
         return res;
     }
-
 }

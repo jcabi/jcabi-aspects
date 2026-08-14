@@ -97,7 +97,7 @@ final class ScheduleWithFixedDelayTest {
      * Sample class with long delay.
      * @since 0.0.0
      */
-    @ScheduleWithFixedDelay()
+    @ScheduleWithFixedDelay
     private static final class LongDelaySample implements Runnable, Closeable {
 
         /**
@@ -123,5 +123,4 @@ final class ScheduleWithFixedDelayTest {
             // Nothing to do.
         }
     }
-
 }

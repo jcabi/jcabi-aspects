@@ -68,8 +68,8 @@ public @interface Timeable {
      *
      * <p>The minimum unit you can use is a second. We simply can't monitor with
      * a frequency higher than a second.
+     *
      * @return The time unit
      */
     TimeUnit unit() default TimeUnit.SECONDS;
-
 }

@@ -41,9 +41,22 @@ final class NamedThreads implements ThreadFactory {
      */
     @SuppressWarnings("PMD.AvoidThreadGroup")
     NamedThreads(final String suffix, final String desc) {
-        this.name = String.format("jcabi-%s", suffix);
+        this(
+            String.format("jcabi-%s", suffix), desc, new ThreadGroup("jcabi")
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param label Name of the threads
+     * @param desc Description of purpose
+     * @param grp Thread group to use
+     */
+    private NamedThreads(final String label, final String desc,
+        final ThreadGroup grp) {
+        this.name = label;
         this.purpose = desc;
-        this.group = new ThreadGroup("jcabi");
+        this.group = grp;
     }
 
     @Override
@@ -53,7 +66,6 @@ final class NamedThreads implements ThreadFactory {
         thread.setDaemon(true);
         Logger.info(
             this,
-            // @checkstyle LineLength (1 line)
             "jcabi-aspects %s/%s started new daemon thread %s for %s",
             Version.CURRENT.projectVersion(),
             Version.CURRENT.buildNumber(),
@@ -62,5 +74,4 @@ final class NamedThreads implements ThreadFactory {
         );
         return thread;
     }
-
 }

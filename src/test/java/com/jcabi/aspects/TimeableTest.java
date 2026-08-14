@@ -30,5 +30,4 @@ final class TimeableTest {
     void slow() throws Exception {
         TimeUnit.MINUTES.sleep(1L);
     }
-
 }

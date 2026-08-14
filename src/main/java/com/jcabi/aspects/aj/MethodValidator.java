@@ -52,7 +52,6 @@ public final class MethodValidator {
      * it backward compatible.
      *
      * @param point Join point
-     * @checkstyle LineLength (3 lines)
      */
     @Before("execution(* *(.., @(javax.validation.* || javax.validation.constraints.*) (*), ..))")
     public void beforeMethod(final JoinPoint point) {
@@ -101,15 +100,13 @@ public final class MethodValidator {
      */
     @AfterReturning
         (
-            // @checkstyle LineLength (1 line)
             pointcut = "execution(@(javax.validation.* || javax.validation.constraints.*) * *(..))",
             returning = "result"
         )
     public void after(final JoinPoint point, final Object result) {
         this.checkForViolations(
             this.validator
-                .forExecutables()
-                .validateReturnValue(
+                .forExecutables().validateReturnValue(
                     point.getThis(),
                     new ImprovedJoinPoint(point).currentMethod(),
                     result
@@ -128,11 +125,7 @@ public final class MethodValidator {
         this.checkForViolations(
             this.validator
                 .forExecutables()
-                .validateParameters(
-                    object,
-                    method,
-                    args
-                )
+                .validateParameters(object, method, args)
         );
     }
 
@@ -146,18 +139,14 @@ public final class MethodValidator {
         this.checkForViolations(
             this.validator
                 .forExecutables()
-                .validateConstructorParameters(
-                    ctr,
-                    args
-                )
+                .validateConstructorParameters(ctr, args)
         );
     }
 
     /**
      * Checks if violations set is empty and throws
      * {@link ConstraintViolationException} if it isn't.
-     *
-     * @param violations JSR303 violations.
+     * @param violations JSR303 violations
      */
     private void checkForViolations(
         final Set<ConstraintViolation<Object>> violations) {

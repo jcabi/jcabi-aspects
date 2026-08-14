@@ -40,11 +40,11 @@ import javax.validation.valueextraction.ValueExtractor;
 /**
  * Fake validation provider for JSR-303.
  *
- * This class can help when it's necessary to disable the entire JSR-303 validation
+ * <p>This class can help when it's necessary to disable the entire JSR-303 validation
  * mechanism, but it's impossible to take certain classes from the classpath, which
  * are using JSR-303 and demand the presence of a validator.
  *
- * A text resource <tt>META-INF/services/javax.validation.spi.ValidationProvider</tt>
+ * <p>A text resource <tt>META-INF/services/javax.validation.spi.ValidationProvider</tt>
  * must be created, with a single line inside:
  * <tt>com.jcabi.aspects.FakeValidationProvider</tt>. Once this file is found
  * in the classpath, JSR-303 engine will use this fake validator provider and no constraints
@@ -52,7 +52,6 @@ import javax.validation.valueextraction.ValueExtractor;
  *
  * @since 0.25.0
  */
-@SuppressWarnings("PMD.CouplingBetweenObjects")
 public final class FakeValidationProvider implements
     ValidationProvider<FakeValidationProvider.FakeConfiguration> {
 
@@ -73,10 +72,10 @@ public final class FakeValidationProvider implements
 
     /**
      * Fake class.
-     *
      * @since 0.25.0
      */
     static class FakeValidatorFactory implements ValidatorFactory {
+
         @Override
         public Validator getValidator() {
             return new FakeValidationProvider.FakeValidator();
@@ -84,32 +83,32 @@ public final class FakeValidationProvider implements
 
         @Override
         public ValidatorContext usingContext() {
-            return new FakeValidatorContext();
+            return new FakeValidationProvider.FakeValidatorContext();
         }
 
         @Override
         public MessageInterpolator getMessageInterpolator() {
-            return new FakeMessageInterpolator();
+            return new FakeValidationProvider.FakeMessageInterpolator();
         }
 
         @Override
         public TraversableResolver getTraversableResolver() {
-            return new FakeTraversableResolver();
+            return new FakeValidationProvider.FakeTraversableResolver();
         }
 
         @Override
         public ConstraintValidatorFactory getConstraintValidatorFactory() {
-            return new FakeConstraintValidatorFactory();
+            return new FakeValidationProvider.FakeConstraintValidatorFactory();
         }
 
         @Override
         public ParameterNameProvider getParameterNameProvider() {
-            return new FakeParameterNameProvider();
+            return new FakeValidationProvider.FakeParameterNameProvider();
         }
 
         @Override
         public ClockProvider getClockProvider() {
-            return new FakeClockProvider();
+            return new FakeValidationProvider.FakeClockProvider();
         }
 
         @Override
@@ -130,10 +129,10 @@ public final class FakeValidationProvider implements
 
     /**
      * Fake class.
-     *
      * @since 0.25.0
      */
     static final class FakeClockProvider implements ClockProvider {
+
         @Override
         public Clock getClock() {
             return Clock.systemUTC();
@@ -142,10 +141,10 @@ public final class FakeValidationProvider implements
 
     /**
      * Fake class.
-     *
      * @since 0.25.0
      */
     static final class FakeParameterNameProvider implements ParameterNameProvider {
+
         @Override
         public List<String> getParameterNames(final Constructor<?> ctor) {
             return Collections.emptyList();
@@ -159,15 +158,15 @@ public final class FakeValidationProvider implements
 
     /**
      * Fake class.
-     *
      * @since 0.25.0
      */
     static final class FakeConstraintValidatorFactory
         implements ConstraintValidatorFactory {
+
         @Override
         @SuppressWarnings("PMD.SingletonClassReturningNewInstance")
         public <T extends ConstraintValidator<?, ?>> T getInstance(final Class<T> clazz) {
-            return clazz.cast(new FakeConstraintValidator<Annotation, String>());
+            return clazz.cast(new FakeValidationProvider.FakeConstraintValidator<>());
         }
 
         @Override
@@ -178,13 +177,13 @@ public final class FakeValidationProvider implements
 
     /**
      * Fake class.
-     *
      * @param <T> Type
      * @param <X> Another type
      * @since 0.25.0
      */
     static final class FakeConstraintValidator<T extends Annotation,
         X> implements ConstraintValidator<T, X> {
+
         @Override
         public boolean isValid(final Object obj,
             final ConstraintValidatorContext context) {
@@ -194,10 +193,10 @@ public final class FakeValidationProvider implements
 
     /**
      * Fake class.
-     *
      * @since 0.25.0
      */
     static final class FakeMessageInterpolator implements MessageInterpolator {
+
         @Override
         public String interpolate(final String str, final Context context) {
             return "empty";
@@ -212,10 +211,10 @@ public final class FakeValidationProvider implements
 
     /**
      * Fake class.
-     *
      * @since 0.25.0
      */
     static final class FakeTraversableResolver implements TraversableResolver {
+
         @Override
         public boolean isReachable(final Object obj, final Path.Node node,
             final Class<?> clazz, final Path path, final ElementType type) {
@@ -231,10 +230,10 @@ public final class FakeValidationProvider implements
 
     /**
      * Fake class.
-     *
      * @since 0.25.0
      */
     static final class FakeValidatorContext implements ValidatorContext {
+
         @Override
         public ValidatorContext messageInterpolator(final MessageInterpolator inter) {
             return this;
@@ -269,16 +268,16 @@ public final class FakeValidationProvider implements
 
         @Override
         public Validator getValidator() {
-            return new FakeValidator();
+            return new FakeValidationProvider.FakeValidator();
         }
     }
 
     /**
      * Fake class.
-     *
      * @since 0.25.0
      */
     static final class FakeValidator implements Validator {
+
         @Override
         public <T> Set<ConstraintViolation<T>> validate(final T type,
             final Class<?>... classes) {
@@ -314,16 +313,16 @@ public final class FakeValidationProvider implements
 
         @Override
         public ExecutableValidator forExecutables() {
-            return new FakeExecutableValidator();
+            return new FakeValidationProvider.FakeExecutableValidator();
         }
     }
 
     /**
      * Fake class.
-     *
      * @since 0.25.0
      */
     static final class FakeExecutableValidator implements ExecutableValidator {
+
         @Override
         public <T> Set<ConstraintViolation<T>> validateParameters(final T type,
             final Method method, final Object[] objects, final Class<?>... classes) {
@@ -353,10 +352,10 @@ public final class FakeValidationProvider implements
 
     /**
      * Fake class.
-     *
      * @since 0.25.0
      */
     static final class FakeConfiguration implements Configuration<FakeConfiguration> {
+
         @Override
         public FakeConfiguration ignoreXmlConfiguration() {
             return this;
@@ -435,7 +434,7 @@ public final class FakeValidationProvider implements
 
         @Override
         public ValidatorFactory buildValidatorFactory() {
-            return new FakeValidatorFactory();
+            return new FakeValidationProvider.FakeValidatorFactory();
         }
     }
 }

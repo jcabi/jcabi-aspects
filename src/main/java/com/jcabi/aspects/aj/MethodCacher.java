@@ -8,6 +8,7 @@ import com.jcabi.aspects.Cacheable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.log.Logger;
 import com.jcabi.log.VerboseRunnable;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -46,7 +47,6 @@ public final class MethodCacher {
 
     /**
      * Calling tunnels.
-     * @checkstyle LineLength (2 lines)
      */
     private final transient ConcurrentMap<MethodCacher.Key, MethodCacher.Tunnel> tunnels;
 
@@ -73,8 +73,14 @@ public final class MethodCacher {
     /**
      * Public ctor.
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
+    @SuppressWarnings(
+        {
+            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors",
+            "FutureReturnValueIgnored"
+        }
+    )
     public MethodCacher() {
+        // @checkstyle ConstructorsCodeFreeCheck (30 lines)
         this.tunnels = new ConcurrentHashMap<>(0);
         this.updatekeys = new LinkedBlockingQueue<>();
         this.lock = new ReentrantLock();
@@ -125,9 +131,7 @@ public final class MethodCacher {
         this.lock.lock();
         try {
             for (final Class<?> before : annot.before()) {
-                final boolean flag = (Boolean) before.getMethod("flushBefore")
-                    .invoke(method.getClass());
-                if (flag) {
+                if (MethodCacher.triggered(before, "flushBefore")) {
                     this.preflush(point);
                 }
             }
@@ -142,9 +146,7 @@ public final class MethodCacher {
                 this.updatekeys.offer(key);
             }
             for (final Class<?> after : annot.after()) {
-                final boolean flag = (Boolean) after.getMethod("flushAfter")
-                    .invoke(method.getClass());
-                if (flag) {
+                if (MethodCacher.triggered(after, "flushAfter")) {
                     this.postflush(point);
                 }
             }
@@ -161,6 +163,21 @@ public final class MethodCacher {
      */
     private static boolean isCreateTunnel(final MethodCacher.Tunnel tunnel) {
         return tunnel == null || tunnel.expired() && !tunnel.asyncUpdate();
+    }
+
+    /**
+     * Does this trigger class demand a flush?
+     * @param trigger The class with the static trigger method
+     * @param name The name of the trigger method
+     * @return TRUE if flushing is required
+     * @throws NoSuchMethodException If the trigger method is absent
+     * @throws IllegalAccessException If the trigger method is not visible
+     * @throws InvocationTargetException If the trigger method fails
+     */
+    private static boolean triggered(final Class<?> trigger, final String name)
+        throws NoSuchMethodException, IllegalAccessException,
+        InvocationTargetException {
+        return Boolean.TRUE.equals(trigger.getMethod(name).invoke(trigger));
     }
 
     /**
@@ -245,7 +262,6 @@ public final class MethodCacher {
      * @param tunnel The tunnel that was removed
      * @param point Joint point
      * @param when When it happens
-     * @checkstyle ParameterNumberCheck (3 lines)
      */
     private static void removal(final MethodCacher.Key key,
         final MethodCacher.Tunnel tunnel, final JoinPoint point,
@@ -327,10 +343,10 @@ public final class MethodCacher {
 
     /**
      * Mutable caching/calling tunnel, it is thread-safe.
-     *
      * @since 0.8
      */
     private static final class Tunnel {
+
         /**
          * Proceeding join point.
          */
@@ -383,7 +399,7 @@ public final class MethodCacher {
          * Public ctor.
          * @return MethodCacher.Tunnel
          */
-        public MethodCacher.Tunnel copy() {
+        MethodCacher.Tunnel copy() {
             return new MethodCacher.Tunnel(
                 this.point, this.key, this.asynchupdate
             );
@@ -396,7 +412,7 @@ public final class MethodCacher {
          * @checkstyle IllegalThrows (5 lines)
          */
         @SuppressWarnings("PMD.AvoidSynchronizedAtMethodLevel")
-        public synchronized Object through() throws Throwable {
+        synchronized Object through() throws Throwable {
             if (!this.executed) {
                 final long start = System.currentTimeMillis();
                 this.cached = this.point.proceed();
@@ -440,7 +456,7 @@ public final class MethodCacher {
          * Is it expired already?
          * @return TRUE if expired
          */
-        public boolean expired() {
+        boolean expired() {
             return this.executed && this.lifetime < System.currentTimeMillis();
         }
 
@@ -448,17 +464,17 @@ public final class MethodCacher {
          * Whether asynchronous update.
          * @return TRUE if asynchronous update
          */
-        public boolean asyncUpdate() {
+        boolean asyncUpdate() {
             return this.asynchupdate;
         }
     }
 
     /**
      * Key of a callable target.
-     *
      * @since 0.8
      */
     private static final class Key {
+
         /**
          * When instantiated.
          */
@@ -494,16 +510,40 @@ public final class MethodCacher {
          * @param point Joint point
          */
         Key(final JoinPoint point) {
-            this.start = System.currentTimeMillis();
+            this(point, ((MethodSignature) point.getSignature()).getMethod());
+        }
+
+        /**
+         * Ctor.
+         * @param point Joint point
+         * @param mtd The method being called
+         */
+        private Key(final JoinPoint point, final Method mtd) {
+            this(
+                mtd,
+                MethodCacher.Key.targetize(point),
+                point.getArgs(),
+                System.currentTimeMillis(),
+                MethodCacher.Key.severity(mtd)
+            );
+        }
+
+        /**
+         * Ctor.
+         * @param mtd The method being called
+         * @param tgt The object being called
+         * @param args The arguments of the call
+         * @param begin When it was instantiated
+         * @param lvl Log level
+         */
+        private Key(final Method mtd, final Object tgt, final Object[] args,
+            final long begin, final int lvl) {
+            this.method = mtd;
+            this.target = tgt;
+            this.arguments = args.clone();
+            this.start = begin;
+            this.level = lvl;
             this.accessed = new AtomicInteger();
-            this.method = ((MethodSignature) point.getSignature()).getMethod();
-            this.target = MethodCacher.Key.targetize(point);
-            this.arguments = point.getArgs();
-            if (this.method.isAnnotationPresent(Loggable.class)) {
-                this.level = this.method.getAnnotation(Loggable.class).value();
-            } else {
-                this.level = Loggable.DEBUG;
-            }
         }
 
         @Override
@@ -537,7 +577,7 @@ public final class MethodCacher {
          * @param result The result to send through
          * @return The same result/object
          */
-        public Object through(final Object result) {
+        Object through(final Object result) {
             final int hit = this.accessed.getAndIncrement();
             final Class<?> type = this.method.getDeclaringClass();
             if (hit > 0 && LogHelper.enabled(this.level, type)) {
@@ -559,7 +599,7 @@ public final class MethodCacher {
          * @param point Proceeding point
          * @return True if the target is the same
          */
-        public boolean sameTarget(final JoinPoint point) {
+        boolean sameTarget(final JoinPoint point) {
             return MethodCacher.Key.targetize(point).equals(this.target);
         }
 
@@ -580,12 +620,26 @@ public final class MethodCacher {
         }
 
         /**
+         * Log level of the method.
+         * @param method The method being called
+         * @return Log level
+         */
+        private static int severity(final Method method) {
+            final int lvl;
+            if (method.isAnnotationPresent(Loggable.class)) {
+                lvl = method.getAnnotation(Loggable.class).value();
+            } else {
+                lvl = Loggable.DEBUG;
+            }
+            return lvl;
+        }
+
+        /**
          * Get log level.
-         * @return Log level of current method.
+         * @return Log level of current method
          */
         private int getLevel() {
             return this.level;
         }
     }
-
 }

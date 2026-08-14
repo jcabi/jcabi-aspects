@@ -31,6 +31,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Immutable {
+
     /**
      * Identifies that an array-type field should be considered immutable. Note
      * that for an array to be considered immutable, its component type must

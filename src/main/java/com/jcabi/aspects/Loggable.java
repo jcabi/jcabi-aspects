@@ -99,7 +99,6 @@ public @interface Loggable {
 
     /**
      * Level of logging.
-     *
      * @return The log level
      */
     int value() default Loggable.INFO;
@@ -220,5 +219,4 @@ public @interface Loggable {
     @Target(ElementType.TYPE)
     @interface Quiet {
     }
-
 }

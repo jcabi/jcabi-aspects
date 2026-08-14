@@ -6,8 +6,8 @@ package com.jcabi.aspects;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -26,11 +26,8 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link Loggable} annotation and its implementation.
  * @since 0.0.0
  */
-@SuppressWarnings({
-    "PMD.TooManyMethods",
-    "PMD.UnitTestContainsTooManyAsserts"
-})
 final class LoggableTest {
+
     /**
      * Foo toString result.
      */
@@ -112,7 +109,7 @@ final class LoggableTest {
         Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
         );
-        final Collection<String> bytes = new LinkedList<>();
+        final Collection<String> bytes = new ArrayList<>(0);
         for (final byte part : new LoggableTest.Foo().logsByteArray()) {
             bytes.add(Byte.toString(part));
         }
@@ -136,7 +133,7 @@ final class LoggableTest {
         Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
         );
-        final Collection<String> shorts = new LinkedList<>();
+        final Collection<String> shorts = new ArrayList<>(0);
         for (final short part : new LoggableTest.Foo().logsShortArray()) {
             shorts.add(Short.toString(part));
         }
@@ -178,7 +175,6 @@ final class LoggableTest {
         );
         LoggableTest.Foo.explicitLoggerName();
         MatcherAssert.assertThat(
-            // @checkstyle MultipleStringLiterals (2 lines)
             writer.toString(),
             Matchers.containsString("test-logger")
         );
@@ -190,11 +186,12 @@ final class LoggableTest {
      */
     @SuppressWarnings("PMD.JUnitTestClassShouldBeFinal")
     private static class Parent {
+
         /**
          * Get some text.
          * @return The text
          */
-        public String parentText() {
+        String parentText() {
             return "some parent text";
         }
     }
@@ -220,8 +217,8 @@ final class LoggableTest {
          * Get self instance.
          * @return Self
          */
-        @Loggable()
-        public LoggableTest.Foo self() {
+        @Loggable
+        LoggableTest.Foo self() {
             return this;
         }
 
@@ -232,16 +229,16 @@ final class LoggableTest {
          */
         @Timeable
         @Loggable(trim = false)
-        public String revert(final String text) {
-            return new StringBuffer(text).reverse().toString();
+        String revert(final String text) {
+            return new StringBuilder(text).reverse().toString();
         }
 
         /**
          * Method returns byte array.
-         * @return Byte array.
+         * @return Byte array
          */
         @Loggable
-        public byte[] logsByteArray() {
+        byte[] logsByteArray() {
             final byte[] bytes = new byte[10];
             new Random().nextBytes(bytes);
             return bytes;
@@ -249,10 +246,10 @@ final class LoggableTest {
 
         /**
          * Method returns short array.
-         * @return Byte array.
+         * @return Byte array
          */
         @Loggable
-        public short[] logsShortArray() {
+        short[] logsShortArray() {
             final short[] shorts = new short[10];
             final Random random = new Random();
             for (int idx = 0; idx < shorts.length; ++idx) {
@@ -263,11 +260,11 @@ final class LoggableTest {
 
         /**
          * Get last char.
-         * @param text Text to get last char from.
-         * @return Last char.
+         * @param text Text to get last char from
+         * @return Last char
          */
         @Loggable(logThis = true)
-        public String last(final String text) {
+        String last(final String text) {
             return text.substring(text.length() - 1);
         }
 
@@ -324,11 +321,12 @@ final class LoggableTest {
      * @since 0.0.0
      */
     private static final class Bar {
+
         /**
          * Throws with exception logged at ERROR even though method is DEBUG.
          */
         @Loggable(value = Loggable.DEBUG, logException = Loggable.ERROR)
-        public void throwAtConfiguredLevel() {
+        void throwAtConfiguredLevel() {
             throw new IllegalStateException("test");
         }
     }
@@ -349,8 +347,16 @@ final class LoggableTest {
          * @param regex The regex pattern
          */
         private RegexContainsMatcher(final String regex) {
+            this(Pattern.compile(regex));
+        }
+
+        /**
+         * Ctor.
+         * @param ptrn The regex to match against
+         */
+        private RegexContainsMatcher(final Pattern ptrn) {
             super();
-            this.pattern = Pattern.compile(regex);
+            this.pattern = ptrn;
         }
 
         @Override

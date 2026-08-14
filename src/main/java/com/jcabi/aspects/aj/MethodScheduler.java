@@ -23,7 +23,6 @@ import org.aspectj.lang.annotation.Before;
 
 /**
  * Schedules methods.
- *
  * @since 0.7.16
  */
 @Aspect
@@ -50,7 +49,6 @@ public final class MethodScheduler {
      * it backward compatible.
      *
      * @param point Joint point
-     * @checkstyle LineLength (2 lines)
      */
     @After("initialization((@com.jcabi.aspects.ScheduleWithFixedDelay *).new(..))")
     public void instantiate(final JoinPoint point) {
@@ -93,7 +91,6 @@ public final class MethodScheduler {
      * it backward compatible.
      *
      * @param point Joint point
-     * @checkstyle LineLength (2 lines)
      */
     @Before("execution(* (@com.jcabi.aspects.ScheduleWithFixedDelay *).close())")
     public void close(final JoinPoint point) {
@@ -149,8 +146,10 @@ public final class MethodScheduler {
          * @param obj Object
          * @param annt Annotation
          */
+        @SuppressWarnings("FutureReturnValueIgnored")
         Service(final Runnable runnable, final Object obj,
             final ScheduleWithFixedDelay annt) {
+            // @checkstyle ConstructorsCodeFreeCheck (30 lines)
             this.start = System.currentTimeMillis();
             this.counter = new AtomicLong();
             this.object = obj;
@@ -229,5 +228,4 @@ public final class MethodScheduler {
             }
         }
     }
-
 }

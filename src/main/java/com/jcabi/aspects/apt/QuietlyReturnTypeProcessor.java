@@ -20,7 +20,6 @@ import javax.tools.Diagnostic;
 /**
  * Annotation processor that checks whether methods annotated with
  * {@link com.jcabi.aspects.Quietly} have void return types.
- *
  * @since 0.16
  */
 @SupportedAnnotationTypes("com.jcabi.aspects.Quietly")
@@ -35,13 +34,13 @@ public final class QuietlyReturnTypeProcessor extends AbstractProcessor {
         for (final TypeElement type : annotations) {
             this.checkMethods(env, type);
         }
-        return true;
+        return false;
     }
 
     /**
      * Check methods annotated with {@link com.jcabi.aspects.Quietly}.
-     * @param env The environment.
-     * @param type The annotation type.
+     * @param env The environment
+     * @param type The annotation type
      */
     private void checkMethods(
         final RoundEnvironment env,
@@ -54,7 +53,6 @@ public final class QuietlyReturnTypeProcessor extends AbstractProcessor {
                     this.processingEnv.getMessager().printMessage(
                         Diagnostic.Kind.ERROR,
                         String.format(
-                            // @checkstyle LineLength (1 line)
                             "Method '%s.%s' annotated with @Quietly does not return void",
                             method.getEnclosingElement().getSimpleName(),
                             method.getSimpleName()
@@ -64,5 +62,4 @@ public final class QuietlyReturnTypeProcessor extends AbstractProcessor {
             }
         }
     }
-
 }

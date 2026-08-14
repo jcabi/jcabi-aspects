@@ -13,11 +13,10 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Immutable} annotation and its implementation.
- *
  * @since 0.0.0
  * @checkstyle ConstantUsageCheck (500 lines)
  */
-@SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
+@SuppressWarnings({"UnusedVariable", "UnusedMethod"})
 final class ImmutableTest {
 
     @Test
@@ -81,15 +80,14 @@ final class ImmutableTest {
 
     /**
      * Other vague interface.
-     *
      * @since 0.0.0
      */
     @Immutable
     @FunctionalInterface
     private interface ImmutableInterface {
+
         /**
          * This function seems to be harmless.
-         *
          * @param input An input
          */
         void willBreakImmutability(int input);
@@ -97,11 +95,11 @@ final class ImmutableTest {
 
     /**
      * Supposedly immutable class.
-     *
      * @since 0.0.0
      */
     @Immutable
     private static final class Mutable {
+
         /**
          * Mutable class member.
          */
@@ -111,11 +109,11 @@ final class ImmutableTest {
 
     /**
      * Mutable class because of array.
-     *
      * @since 0.0.0
      */
     @Immutable
     private static final class MutableWithArray {
+
         /**
          * Mutable class member.
          */
@@ -124,11 +122,11 @@ final class ImmutableTest {
 
     /**
      * Truely immutable class.
-     *
      * @since 0.0.0
      */
     @Immutable
     private static final class TruelyImmutable {
+
         /**
          * Something static final.
          */
@@ -174,7 +172,6 @@ final class ImmutableTest {
 
         /**
          * Ctor.
-         *
          * @param ipt Input
          */
         private TruelyImmutable(final ImmutableTest.TruelyImmutableWithNonPrivateFields ipt) {
@@ -183,7 +180,6 @@ final class ImmutableTest {
 
         /**
          * Ctor.
-         *
          * @param ipt Input
          */
         private TruelyImmutable(final String ipt) {
@@ -197,38 +193,37 @@ final class ImmutableTest {
 
     /**
      * Truely immutable class with non-private fields.
-     *
      * @since 0.0.0
      * @checkstyle VisibilityModifier (25 lines)
      */
     @Immutable
-    @SuppressWarnings("PMD.DataClass")
     private static final class TruelyImmutableWithNonPrivateFields {
+
         /**
          * Something static final.
          */
-        public static final Pattern PATTERN = Pattern.compile(".*");
+        static final Pattern PATTERN = Pattern.compile(".*");
 
         /**
          * Something just static.
          */
-        public static final Pattern PTRN = Pattern.compile(".+");
+        static final Pattern PTRN = Pattern.compile(".+");
 
         /**
          * Immutable class member.
          */
-        public final String data = null;
+        final String data = null;
 
         /**
          * Another immutable class member.
          */
-        public final int number = 2;
+        final int number = 2;
 
         /**
          * Another immutable class member.
          * @checkstyle VisibilityModifierCheck (3 lines)
          */
-        public final String text = "Hello!";
+        final String text = "Hello!";
     }
 
     /**
@@ -240,7 +235,6 @@ final class ImmutableTest {
      * "http://marxsoftware.blogspot.se/2009/09/
      * is-java-immutable-class-always-final.html">
      * Is java immutable class always final?</a>
-     *
      * @since 0.0.0
      * @checkstyle FinalClassCheck (5 lines)
      */
@@ -250,6 +244,7 @@ final class ImmutableTest {
         "PMD.ClassWithOnlyPrivateConstructorsShouldBeFinal"
     })
     private static class MutableByInheritance {
+
         /**
          * Immutable class member.
          */
@@ -258,13 +253,11 @@ final class ImmutableTest {
         /**
          * Could be overloaded by a child of the class and then return
          * nonsensical value.
-         *
          * @return A value that could differ from what is expected if
          *  returned by an overriding method
          */
-        public String getData() {
+        String getData() {
             return this.data;
         }
     }
-
 }

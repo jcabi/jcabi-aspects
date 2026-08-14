@@ -5,7 +5,6 @@
 
 /**
  * Aspects, implementation for AspectJ, tests.
- *
  * @since 0.1.10
  */
 package com.jcabi.aspects.aj;

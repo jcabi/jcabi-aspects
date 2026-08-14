@@ -11,12 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 /**
- * Tests for {@see QuietExceptionsLogger}.
- *
+ * Tests for {@link QuietExceptionsLogger}.
  * @since 0.1.10
  * @checkstyle IllegalThrows (500 lines)
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class QuietExceptionsLoggerTest {
 
     @Test

@@ -17,7 +17,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Repeat execution in case of exception.
- *
  * @see RetryOnFailure
  * @since 0.1.10
  */
@@ -36,15 +35,10 @@ public final class Repeater {
      * @return The result of call
      * @throws Throwable If something goes wrong inside
      * @checkstyle IllegalThrows (11 lines)
-     * @checkstyle LineLength (4 lines)
      * @checkstyle NonStaticMethodCheck (100 lines)
-     * @checkstyle ExecutableStatementCountCheck (100 lines)
      */
     @Around("execution(* * (..)) && @annotation(com.jcabi.aspects.RetryOnFailure)")
-    @SuppressWarnings({
-        "PMD.AvoidCatchingGenericException",
-        "PMD.UnnecessaryLocalRule"
-    })
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         final Method method = ((MethodSignature) point.getSignature())
             .getMethod();
@@ -100,7 +94,6 @@ public final class Repeater {
      * @param spent How long this attempt took, in nanoseconds
      * @param total How long all attempts took, in nanoseconds
      * @param exp The exception thrown
-     * @checkstyle ParameterNumberCheck (3 lines)
      */
     private static void report(final Object target, final Method method,
         final RetryOnFailure rof, final int attempt, final long spent,
@@ -109,7 +102,6 @@ public final class Repeater {
             if (rof.verbose()) {
                 Logger.warn(
                     target,
-                    // @checkstyle LineLength (1 line)
                     "#%s(): attempt #%d of %d failed in %[nano]s (%[nano]s waiting already) with %[exception]s",
                     method.getName(),
                     attempt, rof.attempts(), spent, total, exp
@@ -117,7 +109,6 @@ public final class Repeater {
             } else {
                 Logger.warn(
                     target,
-                    // @checkstyle LineLength (1 line)
                     "#%s(): attempt #%d/%d failed with %[type]s in %[nano]s (%[nano]s in total): %s",
                     method.getName(),
                     attempt, rof.attempts(), exp, spent, total,
@@ -129,8 +120,8 @@ public final class Repeater {
 
     /**
      * Waits certain time before returning.
-     * @param rof RetryOnFailure parameters.
-     * @param attempt Attempt number.
+     * @param rof RetryOnFailure parameters
+     * @param attempt Attempt number
      * @throws InterruptedException If wait has been interrupted.
      */
     private void delay(final RetryOnFailure rof, final int attempt) throws
@@ -184,5 +175,4 @@ public final class Repeater {
         }
         return matches;
     }
-
 }

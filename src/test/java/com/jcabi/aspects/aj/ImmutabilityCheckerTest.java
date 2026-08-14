@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link ImmutabilityChecker}.
- *
  * @since 0.7.8
  */
 final class ImmutabilityCheckerTest {
+
     @Test
     void checksRecursiveClasses() {
         MatcherAssert.assertThat(
@@ -33,11 +33,10 @@ final class ImmutabilityCheckerTest {
 
     /**
      * Class with a field that is not final.
-     *
      * @since 0.7.8
      */
     @Immutable
-    @SuppressWarnings("PMD.ImmutableField")
+    @SuppressWarnings({"PMD.ImmutableField", "UnusedVariable"})
     private static final class NonFinal {
 
         /**
@@ -47,7 +46,7 @@ final class ImmutabilityCheckerTest {
 
         /**
          * Constructor.
-         * @param fld Field to store.
+         * @param fld Field to store
          */
         private NonFinal(final String fld) {
             this.field = fld;
@@ -60,6 +59,7 @@ final class ImmutabilityCheckerTest {
      */
     @Immutable
     private static final class Recursive {
+
         /**
          * Next object.
          */
@@ -67,7 +67,7 @@ final class ImmutabilityCheckerTest {
 
         /**
          * Constructor.
-         * @param nxt Next object.
+         * @param nxt Next object
          */
         private Recursive(final ImmutabilityCheckerTest.Recursive nxt) {
             this.next = nxt;
@@ -75,9 +75,9 @@ final class ImmutabilityCheckerTest {
 
         /**
          * Get the next object.
-         * @return Object stored.
+         * @return Object stored
          */
-        public ImmutabilityCheckerTest.Recursive getNext() {
+        ImmutabilityCheckerTest.Recursive getNext() {
             return this.next;
         }
     }

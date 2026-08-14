@@ -9,10 +9,8 @@ import com.jcabi.log.Logger;
 
 /**
  * Helper methods for logging.
- *
  * @since 0.17
  */
-@SuppressWarnings("PMD.ProhibitPublicStaticMethods")
 final class LogHelper {
 
     /**
@@ -30,7 +28,7 @@ final class LogHelper {
      * @param params Message parameters
      * @checkstyle ParameterNumberCheck (3 lines)
      */
-    public static void log(final int level, final Object log,
+    static void log(final int level, final Object log,
         final String message, final Object... params) {
         if (level == Loggable.TRACE) {
             Logger.trace(log, message, params);
@@ -47,12 +45,11 @@ final class LogHelper {
 
     /**
      * Log level is enabled?
-     *
      * @param level Level of logging
      * @param log Destination log
      * @return TRUE if enabled
      */
-    public static boolean enabled(final int level, final Object log) {
+    static boolean enabled(final int level, final Object log) {
         final boolean enabled;
         if (level == Loggable.TRACE) {
             enabled = Logger.isTraceEnabled(log);

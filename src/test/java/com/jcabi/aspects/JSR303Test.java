@@ -22,11 +22,13 @@ import org.junit.jupiter.api.Test;
  * Test case for JSR-303 annotations and their implementations.
  *
  * <a href="https://beanvalidation.org/1.0/spec/"></a>
+ *
  * @since 0.0.0
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  */
-@SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
+@SuppressWarnings({"UnusedMethod", "UnusedVariable"})
 final class JSR303Test {
+
     /**
      * The test message.
      */
@@ -128,9 +130,9 @@ final class JSR303Test {
      */
     @FunctionalInterface
     private interface Fum {
+
         /**
          * Test method.
-         *
          * @param value Value
          */
         void test(@NotNull(message = JSR303Test.OVERRIDEN_MSG) String value);
@@ -140,16 +142,15 @@ final class JSR303Test {
      * Dummy class, for tests above.
      * @since 0.0.0
      */
-    @Loggable()
+    @Loggable
     private static final class Foo {
+
         /**
          * Do nothing.
-         *
          * @param text Some text
          * @return Some data
          */
-        @NotNull
-        public int foo(
+        int foo(
             @NotNull @Pattern(regexp = "\\d+")
             @JSR303Test.NoMeaning final String text
         ) {
@@ -158,19 +159,18 @@ final class JSR303Test {
 
         /**
          * Always return null.
-         *
          * @return Some data
          */
         @NotNull
         @Valid
-        public Integer nullValue() {
+        Integer nullValue() {
             return null;
         }
 
         /**
          * Ignores when void.
          */
-        public void voidAlways() {
+        void voidAlways() {
             // nothing to do
         }
     }
@@ -179,14 +179,21 @@ final class JSR303Test {
      * Dummy class for testing constructor validation.
      * @since 0.0.0
      */
-    @Loggable()
+    @Loggable
     private static final class ConstructorValidation {
+
         /**
          * Public ctor.
-         *
+         * @param param The param
+         */
+        private ConstructorValidation(@NotNull final String param) {
+            this(param, "foo");
+        }
+
+        /**
+         * Public ctor.
          * @param first First param
          * @param second Second param
-         * @checkstyle UnusedFormalParameter (3 lines)
          */
         @SuppressWarnings("PMD.UnusedFormalParameter")
         private ConstructorValidation(
@@ -195,28 +202,18 @@ final class JSR303Test {
         ) {
             //Nothing to do.
         }
-
-        /**
-         * Public ctor.
-         *
-         * @param param The param.
-         */
-        private ConstructorValidation(@NotNull final String param) {
-            this(param, "foo");
-        }
     }
 
     /**
      * Dummy class for testing messages overriding.
-     *
      * @since 0.0.0
      */
-    @Loggable()
+    @Loggable
     private static final class Bar implements JSR303Test.Fum {
+
         @Override
         public void test(@NotNull final String value) {
             //Nothing to do.
         }
     }
-
 }

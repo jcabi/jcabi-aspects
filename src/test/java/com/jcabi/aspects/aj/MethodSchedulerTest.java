@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link MethodScheduler}.
- *
  * @since 0.7.22
  */
 @SuppressWarnings("PMD.CloseResource")
@@ -87,9 +86,12 @@ final class MethodSchedulerTest {
      * Long running task.
      * @since 0.7.22
      */
-    @ScheduleWithFixedDelay(unit = TimeUnit.NANOSECONDS,
-        await = 10, awaitUnit = TimeUnit.SECONDS)
+    @ScheduleWithFixedDelay(
+        unit = TimeUnit.NANOSECONDS,
+        await = 10, awaitUnit = TimeUnit.SECONDS
+    )
     private static final class LongRun implements Runnable, Closeable {
+
         /**
          * Have we finished?
          */

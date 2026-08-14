@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link RetryOnFailure} annotation and its implementation.
  * @since 0.0.0
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class RetryOnFailureTest {
 
     @Test
@@ -48,5 +47,4 @@ final class RetryOnFailureTest {
         } .run();
         MatcherAssert.assertThat(count.get(), Matchers.greaterThan(0));
     }
-
 }

@@ -16,7 +16,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Throw single exception out of method.
- *
  * @since 0.13
  * @checkstyle NonStaticMethodCheck (100 lines)
  */
@@ -68,8 +67,8 @@ public final class SingleException {
 
     /**
      * Check if there is a constructor with single Throwable argument.
-     * @param clz Class to check.
-     * @return Whether constructor exists.
+     * @param clz Class to check
+     * @return Whether constructor exists
      */
     private static boolean exists(final Class<? extends Throwable> clz) {
         boolean found = false;
@@ -85,9 +84,9 @@ public final class SingleException {
 
     /**
      * Get required exception class.
-     * @param method Method declaring exception.
-     * @param annot UnitedThrow annotation.
-     * @return Class of exception.
+     * @param method Method declaring exception
+     * @param annot UnitedThrow annotation
+     * @return Class of exception
      */
     @SuppressWarnings("unchecked")
     private static Class<? extends Throwable> clazz(final Method method,

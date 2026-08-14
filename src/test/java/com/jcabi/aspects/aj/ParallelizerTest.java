@@ -13,10 +13,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Parallelizer}.
- *
  * @since 0.10
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class ParallelizerTest {
 
     @Test

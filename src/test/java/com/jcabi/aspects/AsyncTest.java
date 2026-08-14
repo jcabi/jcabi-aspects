@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link Async} annotation and its implementation.
  * @since 0.0.0
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class AsyncTest {
 
     /**
@@ -40,7 +39,6 @@ final class AsyncTest {
             }
         };
         runnable.run();
-        // @checkstyle MultipleStringLiterals (5 lines)
         MatcherAssert.assertThat(
             queue.poll(30, TimeUnit.SECONDS),
             AsyncTest.THREAD_NAME
@@ -72,10 +70,10 @@ final class AsyncTest {
 
         /**
          * Async method that returns a Future containing the thread name.
-         * @return The future.
+         * @return The future
          */
         @Async
-        public Future<String> asyncMethodWithReturnValue() {
+        Future<String> asyncMethodWithReturnValue() {
             // @checkstyle AnonInnerLength (23 lines)
             return new Future<String>() {
 
@@ -112,9 +110,8 @@ final class AsyncTest {
          * @return An int value
          */
         @Async
-        public int asyncMethodThatReturnsInt() {
+        int asyncMethodThatReturnsInt() {
             return 0;
         }
     }
-
 }

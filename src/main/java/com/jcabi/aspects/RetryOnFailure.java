@@ -72,5 +72,4 @@ public @interface RetryOnFailure {
      * @return Random retry time flag
      */
     boolean randomize() default true;
-
 }

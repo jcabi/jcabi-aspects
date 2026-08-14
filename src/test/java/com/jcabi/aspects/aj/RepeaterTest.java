@@ -14,13 +14,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Repeater}.
- *
  * @since 0.1.10
  */
-@SuppressWarnings({
-    "PMD.UnnecessaryLocalRule",
-    "PMD.UnitTestContainsTooManyAsserts"
-})
+@SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
 final class RepeaterTest {
 
     @Test

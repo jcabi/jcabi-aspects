@@ -5,6 +5,8 @@
 package com.jcabi.aspects;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -12,6 +14,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -21,18 +24,16 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for {@link Cacheable} annotation and its implementation.
  * @since 0.0.0
- * @checkstyle ClassDataAbstractionCoupling (500 lines)
  */
 @SuppressWarnings({
     "PMD.ProhibitPublicStaticMethods",
-    "PMD.UnitTestContainsTooManyAsserts",
-    "PMD.UnnecessaryLocalRule"
+    "PMD.PublicMemberInNonPublicType",
+    "PMD.UnitTestContainsTooManyAsserts"
 })
 final class CacheableTest {
 
     /**
      * Random.
-     * @checkstyle ConstantUsageCheck (3 lines)
      */
     private static final Random RANDOM = new SecureRandom();
 
@@ -110,11 +111,15 @@ final class CacheableTest {
             return null;
         };
         try (ExecutorService executor = Executors.newFixedThreadPool(threads)) {
+            final Collection<Future<?>> futures = new ArrayList<>(threads);
             for (int pos = 0; pos < threads; ++pos) {
-                executor.submit(task);
+                futures.add(executor.submit(task));
             }
             start.countDown();
             done.await(30L, TimeUnit.SECONDS);
+            for (final Future<?> future : futures) {
+                future.get();
+            }
             MatcherAssert.assertThat(values.size(), Matchers.equalTo(1));
             never.interrupt();
         }
@@ -150,7 +155,7 @@ final class CacheableTest {
 
         @Override
         public int hashCode() {
-            return this.get().hashCode();
+            return Long.hashCode(this.number);
         }
 
         @Override
@@ -171,7 +176,7 @@ final class CacheableTest {
          */
         @Cacheable(unit = TimeUnit.SECONDS)
         @Loggable(Loggable.DEBUG)
-        public CacheableTest.Foo get() {
+        CacheableTest.Foo get() {
             return new CacheableTest.Foo(CacheableTest.RANDOM.nextLong());
         }
 
@@ -181,7 +186,7 @@ final class CacheableTest {
          */
         @Cacheable(unit = TimeUnit.SECONDS, asyncUpdate = true)
         @Loggable(Loggable.DEBUG)
-        public CacheableTest.Foo asyncGet() {
+        CacheableTest.Foo asyncGet() {
             return new CacheableTest.Foo(CacheableTest.RANDOM.nextLong());
         }
 
@@ -191,7 +196,7 @@ final class CacheableTest {
          */
         @Cacheable(unit = TimeUnit.SECONDS)
         @Loggable(Loggable.DEBUG)
-        public CacheableTest.Foo never() {
+        CacheableTest.Foo never() {
             try {
                 TimeUnit.HOURS.sleep(1L);
             } catch (final InterruptedException ex) {
@@ -204,7 +209,7 @@ final class CacheableTest {
          * Flush it.
          */
         @Cacheable.FlushBefore
-        public void flush() {
+        void flush() {
             // nothing to do
         }
 
@@ -213,7 +218,7 @@ final class CacheableTest {
          * @return Downloaded text
          */
         @Cacheable(unit = TimeUnit.SECONDS)
-        public static String staticGet() {
+        static String staticGet() {
             return Long.toString(CacheableTest.RANDOM.nextLong());
         }
 
@@ -221,7 +226,7 @@ final class CacheableTest {
          * Flush it.
          */
         @Cacheable.FlushBefore
-        public static void staticFlush() {
+        static void staticFlush() {
             // nothing to do
         }
     }
@@ -231,14 +236,6 @@ final class CacheableTest {
      * @since 0.0.0
      */
     public static final class Bar {
-        /**
-         * Get some number.
-         * @return The number
-         */
-        @Cacheable(before = CacheableTest.Bar.class)
-        public long get() {
-            return CacheableTest.RANDOM.nextLong();
-        }
 
         /**
          * Flush before?
@@ -247,6 +244,14 @@ final class CacheableTest {
         public static boolean flushBefore() {
             return true;
         }
-    }
 
+        /**
+         * Get some number.
+         * @return The number
+         */
+        @Cacheable(before = CacheableTest.Bar.class)
+        long get() {
+            return CacheableTest.RANDOM.nextLong();
+        }
+    }
 }

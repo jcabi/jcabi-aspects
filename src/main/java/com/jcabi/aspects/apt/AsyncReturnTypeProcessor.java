@@ -24,7 +24,6 @@ import javax.tools.Diagnostic;
  * Annotation processor that checks whether methods annotated with
  * {@link com.jcabi.aspects.Async} have void or
  * {@link Future} return types.
- *
  * @since 0.17
  */
 @SupportedAnnotationTypes("com.jcabi.aspects.Async")
@@ -37,17 +36,17 @@ public final class AsyncReturnTypeProcessor extends AbstractProcessor {
         for (final TypeElement type : annotations) {
             this.checkMethods(env, type);
         }
-        return true;
+        return false;
     }
 
     /**
      * Check methods annotated with {@link com.jcabi.aspects.Quietly}.
-     * @param env The environment.
-     * @param type The annotation type.
+     * @param env The environment
+     * @param type The annotation type
      */
     private void checkMethods(final RoundEnvironment env,
         final TypeElement type) {
-        for (final Element element: env.getElementsAnnotatedWith(type)) {
+        for (final Element element : env.getElementsAnnotatedWith(type)) {
             if (element.getKind() == ElementKind.METHOD) {
                 final ExecutableElement method = (ExecutableElement) element;
                 final TypeMirror returned = method.getReturnType();
@@ -56,7 +55,6 @@ public final class AsyncReturnTypeProcessor extends AbstractProcessor {
                     this.processingEnv.getMessager().printMessage(
                         Diagnostic.Kind.ERROR,
                         String.format(
-                            // @checkstyle LineLength (1 line)
                             "Method '%s.%s' annotated with @Async does not return void or Future",
                             method.getEnclosingElement().getSimpleName(),
                             method.getSimpleName()
@@ -69,8 +67,8 @@ public final class AsyncReturnTypeProcessor extends AbstractProcessor {
 
     /**
      * Is the given type assignable from {@link Future}?
-     * @param type The type to check.
-     * @return If it's assignable from Future.
+     * @param type The type to check
+     * @return If it's assignable from Future
      */
     private boolean assignableToFuture(final TypeMirror type) {
         final Types types = this.processingEnv.getTypeUtils();
@@ -82,5 +80,4 @@ public final class AsyncReturnTypeProcessor extends AbstractProcessor {
             )
         );
     }
-
 }

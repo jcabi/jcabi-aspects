@@ -16,10 +16,6 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @since 0.0.0
  */
 @Immutable
-@SuppressWarnings({
-    "PMD.TooManyMethods",
-    "PMD.ProhibitPublicStaticMethods"
-})
 final class Mnemos {
 
     /**
@@ -49,7 +45,7 @@ final class Mnemos {
      * @since 0.8.1
      * @checkstyle ParameterNumber (3 lines)
      */
-    public static String toText(final ProceedingJoinPoint point,
+    static String toText(final ProceedingJoinPoint point,
         final boolean trim, final boolean skip, final boolean logthis) {
         final String additional;
         if (logthis && point.getThis() != null) {
@@ -72,39 +68,13 @@ final class Mnemos {
      * @return Text representation of it
      * @since 0.7.19
      */
-    public static String toText(final ProceedingJoinPoint point,
+    static String toText(final ProceedingJoinPoint point,
         final boolean trim, final boolean skip) {
         return Mnemos.toText(
             ((MethodSignature) point.getSignature()).getMethod(),
             point.getArgs(),
             trim, skip
         );
-    }
-
-    /**
-     * Make a string out of point.
-     * @param point The point
-     * @param trim Shall we trim long texts?
-     * @return Text representation of it
-     * @deprecated Use toText(Method,Object,boolean,boolean) instead
-     */
-    @Deprecated
-    public static String toText(final ProceedingJoinPoint point,
-        final boolean trim) {
-        return Mnemos.toText(point, trim, false);
-    }
-
-    /**
-     * Make a string out of point.
-     * @param point The point
-     * @param trim Shall we trim long texts?
-     * @return Text representation of it
-     * @deprecated Use toText() instead
-     */
-    @Deprecated
-    public static String toString(final ProceedingJoinPoint point,
-        final boolean trim) {
-        return Mnemos.toText(point, trim, false);
     }
 
     /**
@@ -118,7 +88,7 @@ final class Mnemos {
      * @since 0.8.1
      * @checkstyle ParameterNumber (4 lines)
      */
-    public static String toText(final Method method, final Object[] args,
+    static String toText(final Method method, final Object[] args,
         final String additional, final boolean trim, final boolean skip) {
         final StringBuilder log = new StringBuilder();
         if (additional != null) {
@@ -149,37 +119,9 @@ final class Mnemos {
      * @since 0.7.19
      * @checkstyle ParameterNumber (4 lines)
      */
-    public static String toText(final Method method, final Object[] args,
+    static String toText(final Method method, final Object[] args,
         final boolean trim, final boolean skip) {
         return Mnemos.toText(method, args, "", trim, skip);
-    }
-
-    /**
-     * Make a string out of method.
-     * @param method The method
-     * @param args Actual arguments of the method
-     * @param trim Shall we trim long texts?
-     * @return Text representation of it
-     * @deprecated Use toText(Method,Object,boolean,boolean) instead
-     */
-    @Deprecated
-    public static String toText(final Method method, final Object[] args,
-        final boolean trim) {
-        return Mnemos.toText(method, args, trim, false);
-    }
-
-    /**
-     * Make a string out of method.
-     * @param method The method
-     * @param args Actual arguments of the method
-     * @param trim Shall we trim long texts?
-     * @return Text representation of it
-     * @deprecated Use toText() instead
-     */
-    @Deprecated
-    public static String toString(final Method method, final Object[] args,
-        final boolean trim) {
-        return Mnemos.toText(method, args, trim, false);
     }
 
     /**
@@ -187,7 +129,7 @@ final class Mnemos {
      * @param exp The exception
      * @return Text representation of it
      */
-    public static String toText(final Throwable exp) {
+    static String toText(final Throwable exp) {
         final StringBuilder text = new StringBuilder();
         text.append(exp.getClass().getName());
         final String msg = exp.getMessage();
@@ -206,7 +148,7 @@ final class Mnemos {
      * @since 0.7.19
      */
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public static String toText(final Object arg, final boolean trim,
+    static String toText(final Object arg, final boolean trim,
         final boolean skip) {
         final StringBuilder text = new StringBuilder();
         if (arg == null) {
@@ -238,30 +180,6 @@ final class Mnemos {
     /**
      * Make a string out of an object.
      * @param arg The argument
-     * @param trim Shall we trim long texts?
-     * @return Text representation of it
-     * @deprecated Use toText(Object,boolean,boolean) instead
-     */
-    @Deprecated
-    public static String toText(final Object arg, final boolean trim) {
-        return Mnemos.toText(arg, trim, false);
-    }
-
-    /**
-     * Make a string out of an object.
-     * @param arg The argument
-     * @param trim Shall we trim long texts?
-     * @return Text representation of it
-     * @deprecated Use toText() instead
-     */
-    @Deprecated
-    public static String toString(final Object arg, final boolean trim) {
-        return Mnemos.toText(arg, trim, false);
-    }
-
-    /**
-     * Make a string out of an object.
-     * @param arg The argument
      * @return Text representation of it
      */
     private static String toText(final Object arg) {
@@ -286,8 +204,8 @@ final class Mnemos {
 
     /**
      * Text representation of object arrays.
-     * @param arg Array to change into String.
-     * @return Array in String.
+     * @param arg Array to change into String
+     * @return Array in String
      */
     private static String objectArrays(final Object... arg) {
         final StringBuilder bldr = new StringBuilder();
@@ -303,8 +221,8 @@ final class Mnemos {
 
     /**
      * Text representation of primitive arrays.
-     * @param arg Array to change into String.
-     * @return Array in String.
+     * @param arg Array to change into String
+     * @return Array in String
      */
     private static String primitiveArrays(final Object arg) {
         final String text;

@@ -9,7 +9,7 @@ import com.jcabi.aspects.Parallel;
 import com.jcabi.log.VerboseThreads;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
+import java.util.Iterator;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -23,7 +23,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Execute method in multiple threads.
- *
  * @see Parallel
  * @since 0.10
  * @checkstyle NonStaticMethodCheck (100 lines)
@@ -43,7 +42,6 @@ public final class Parallelizer {
      * @param point Joint point
      * @return The result of call
      * @throws Parallelizer.ParallelException If something goes wrong inside
-     * @checkstyle IllegalThrowsCheck (4 lines)
      */
     @Around("execution(@com.jcabi.aspects.Parallel * * (..))")
     public Object wrap(final ProceedingJoinPoint point)
@@ -56,9 +54,12 @@ public final class Parallelizer {
         for (int thread = 0; thread < total; ++thread) {
             callables.add(Parallelizer.callable(point, start));
         }
-        final Collection<Throwable> failures = new LinkedList<>();
-        try (ExecutorService executor = Executors
-            .newFixedThreadPool(total, new VerboseThreads())) {
+        final Collection<Throwable> failures = new ArrayList<>(0);
+        try (
+            ExecutorService executor = Executors.newFixedThreadPool(
+                total, new VerboseThreads()
+            )
+        ) {
             final Collection<Future<Throwable>> futures =
                 new ArrayList<>(total);
             for (final Callable<Throwable> callable : callables) {
@@ -78,8 +79,8 @@ public final class Parallelizer {
 
     /**
      * Process futures.
-     * @param failures Collection of failures.
-     * @param future Future tu process.
+     * @param failures Collection of failures
+     * @param future Future tu process
      */
     private static void process(final Collection<Throwable> failures,
         final Future<Throwable> future) {
@@ -99,23 +100,25 @@ public final class Parallelizer {
 
     /**
      * Create parallel exception.
-     * @param failures List of exceptions from threads.
-     * @return Aggregated exceptions.
+     * @param failures List of exceptions from threads
+     * @return Aggregated exceptions
      */
     private static Parallelizer.ParallelException exceptions(
-        final Iterable<Throwable> failures) {
-        Parallelizer.ParallelException current = null;
-        for (final Throwable failure : failures) {
-            current = new Parallelizer.ParallelException(failure, current);
+        final Collection<Throwable> failures) {
+        final Iterator<Throwable> iter = failures.iterator();
+        final Parallelizer.ParallelException exception =
+            new Parallelizer.ParallelException(iter.next());
+        while (iter.hasNext()) {
+            exception.addSuppressed(iter.next());
         }
-        return current;
+        return exception;
     }
 
     /**
      * Create callable that executes join point.
-     * @param point Join point to use.
-     * @param start Latch to use.
-     * @return Created callable.
+     * @param point Join point to use
+     * @param start Latch to use
+     * @return Created callable
      */
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     private static Callable<Throwable> callable(final ProceedingJoinPoint point,
@@ -142,31 +145,14 @@ public final class Parallelizer {
         /**
          * Serialization marker.
          */
-        private static final long serialVersionUID = 0x8743ef363febc422L;
-
-        /**
-         * Next parallel exception.
-         */
-        private final transient Parallelizer.ParallelException next;
+        private static final long serialVersionUID = 0x8743EF363FEBC422L;
 
         /**
          * Constructor.
-         * @param cause Cause of the current exception.
-         * @param nxt Following exception.
+         * @param cause Cause of the current exception
          */
-        protected ParallelException(final Throwable cause,
-            final Parallelizer.ParallelException nxt) {
+        ParallelException(final Throwable cause) {
             super(cause);
-            this.next = nxt;
-        }
-
-        /**
-         * Get next parallel exception.
-         * @return Next exception.
-         */
-        public Parallelizer.ParallelException getNext() {
-            return this.next;
         }
     }
-
 }

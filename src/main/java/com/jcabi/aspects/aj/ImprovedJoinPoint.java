@@ -13,7 +13,6 @@ import org.aspectj.lang.reflect.SourceLocation;
 
 /**
  * This class implements the methods from JointPoint interface.
- *
  * @since 1.0
  */
 final class ImprovedJoinPoint implements JoinPoint {
@@ -25,7 +24,6 @@ final class ImprovedJoinPoint implements JoinPoint {
 
     /**
      * Constructor.
-     *
      * @param jpt Origin instance
      */
     ImprovedJoinPoint(final JoinPoint jpt) {
@@ -84,10 +82,9 @@ final class ImprovedJoinPoint implements JoinPoint {
 
     /**
      * Calculate log target.
-     *
      * @return The target
      */
-    public Object targetize() {
+    Object targetize() {
         final Object target;
         final Method method = ((MethodSignature) this.joinpoint.getSignature()).getMethod();
         if (Modifier.isStatic(method.getModifiers())) {
@@ -100,10 +97,9 @@ final class ImprovedJoinPoint implements JoinPoint {
 
     /**
      * Get current method.
-     *
      * @return Current method in join point
      */
-    public Method currentMethod() {
+    Method currentMethod() {
         return ((MethodSignature) this.joinpoint.getSignature()).getMethod();
     }
 }
