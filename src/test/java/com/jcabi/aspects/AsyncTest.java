@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link Async} annotation and its implementation.
  * @since 0.0.0
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class AsyncTest {
 
     /**
@@ -29,7 +30,6 @@ final class AsyncTest {
     );
 
     @Test
-    @SuppressWarnings("PMD.DoNotUseThreads")
     void executesAsynchronously() throws Exception {
         final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
         final Runnable runnable = new Runnable() {

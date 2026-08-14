@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
  * @since 0.0.0
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
 final class JSR303Test {
     /**
      * The test message.
@@ -50,7 +50,11 @@ final class JSR303Test {
 
     @Test
     void passesWhenMethodParametersAreValid() {
-        new JSR303Test.Foo().foo("123");
+        MatcherAssert.assertThat(
+            "valid parameters cannot be rejected",
+            new JSR303Test.Foo().foo("123"),
+            Matchers.equalTo(-1)
+        );
     }
 
     @Test
@@ -63,7 +67,10 @@ final class JSR303Test {
 
     @Test
     void ignoresVoidResponses() {
-        new JSR303Test.Foo().voidAlways();
+        Assertions.assertDoesNotThrow(
+            () -> new JSR303Test.Foo().voidAlways(),
+            "void response cannot be validated"
+        );
     }
 
     @Test
@@ -100,7 +107,10 @@ final class JSR303Test {
 
     @Test
     void skipsConstraintRule() {
-        new JSR303Test.Bar().test("value");
+        Assertions.assertDoesNotThrow(
+            () -> new JSR303Test.Bar().test("value"),
+            "satisfied constraint cannot be reported"
+        );
     }
 
     /**
@@ -116,6 +126,7 @@ final class JSR303Test {
      * Dummy interface for testing messages overriding.
      * @since 0.0.0
      */
+    @FunctionalInterface
     private interface Fum {
         /**
          * Test method.
@@ -201,7 +212,7 @@ final class JSR303Test {
      * @since 0.0.0
      */
     @Loggable()
-    private static class Bar implements JSR303Test.Fum {
+    private static final class Bar implements JSR303Test.Fum {
         @Override
         public void test(@NotNull final String value) {
             //Nothing to do.

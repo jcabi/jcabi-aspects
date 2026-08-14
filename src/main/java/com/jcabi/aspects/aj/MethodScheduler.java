@@ -27,7 +27,6 @@ import org.aspectj.lang.annotation.Before;
  * @since 0.7.16
  */
 @Aspect
-@SuppressWarnings("PMD.DoNotUseThreads")
 public final class MethodScheduler {
 
     /**
@@ -150,7 +149,6 @@ public final class MethodScheduler {
          * @param obj Object
          * @param annt Annotation
          */
-        @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
         Service(final Runnable runnable, final Object obj,
             final ScheduleWithFixedDelay annt) {
             this.start = System.currentTimeMillis();
@@ -165,13 +163,13 @@ public final class MethodScheduler {
                 (long) annt.await()
             );
             this.attempts = (long) annt.shutdownAttempts();
-            final Runnable job = () -> {
-                runnable.run();
-                this.counter.incrementAndGet();
-            };
             for (int thread = 0; thread < annt.threads(); ++thread) {
                 this.executor.scheduleWithFixedDelay(
-                    job, (long) annt.delay(), (long) annt.delay(),
+                    () -> {
+                        runnable.run();
+                        this.counter.incrementAndGet();
+                    },
+                    (long) annt.delay(), (long) annt.delay(),
                     annt.unit()
                 );
             }
@@ -204,7 +202,7 @@ public final class MethodScheduler {
                         );
                     }
                 }
-                for (int attempt = 0; (long) attempt < this.attempts; ++attempt) {
+                for (int attempt = 0; attempt < this.attempts; ++attempt) {
                     this.executor.shutdownNow();
                     this.executor.awaitTermination(1L, TimeUnit.SECONDS);
                 }

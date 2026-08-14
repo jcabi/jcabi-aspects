@@ -20,6 +20,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -40,9 +42,6 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @since 0.8
  */
 @Aspect
-@SuppressWarnings(
-    { "PMD.DoNotUseThreads", "PMD.TooManyMethods", "PMD.GodClass" }
-)
 public final class MethodCacher {
 
     /**
@@ -59,14 +58,17 @@ public final class MethodCacher {
     /**
      * Service that cleans cache.
      */
-    @SuppressWarnings("PMD.SingularField")
     private final transient ScheduledExecutorService cleaner;
 
     /**
      * Service that update cache.
      */
-    @SuppressWarnings("PMD.SingularField")
     private final transient ScheduledExecutorService updater;
+
+    /**
+     * Guard of the tunnels.
+     */
+    private final transient Lock lock;
 
     /**
      * Public ctor.
@@ -75,6 +77,7 @@ public final class MethodCacher {
     public MethodCacher() {
         this.tunnels = new ConcurrentHashMap<>(0);
         this.updatekeys = new LinkedBlockingQueue<>();
+        this.lock = new ReentrantLock();
         this.cleaner = Executors.newSingleThreadScheduledExecutor(
             new NamedThreads(
                 "cacheable-clean",
@@ -119,7 +122,8 @@ public final class MethodCacher {
         final Method method = ((MethodSignature) point.getSignature())
             .getMethod();
         final Cacheable annot = method.getAnnotation(Cacheable.class);
-        synchronized (this.tunnels) {
+        this.lock.lock();
+        try {
             for (final Class<?> before : annot.before()) {
                 final boolean flag = (Boolean) before.getMethod("flushBefore")
                     .invoke(method.getClass());
@@ -144,6 +148,8 @@ public final class MethodCacher {
                     this.postflush(point);
                 }
             }
+        } finally {
+            this.lock.unlock();
         }
         return tunnel.through();
     }
@@ -161,9 +167,9 @@ public final class MethodCacher {
      * Flush cache.
      * @param point Join point
      * @return Value of the method
+     * @throws Throwable If something goes wrong inside
      * @since 0.7.14
      * @deprecated Since 0.7.17, and preflush() should be used
-     * @throws Throwable If something goes wrong inside
      * @checkstyle IllegalThrows (4 lines)
      * @checkstyle MethodsOrderCheck (3 lines)
      */
@@ -219,28 +225,43 @@ public final class MethodCacher {
      * @since 0.7.18
      */
     private void flush(final JoinPoint point, final String when) {
-        synchronized (this.tunnels) {
+        this.lock.lock();
+        try {
             for (final MethodCacher.Key key : this.tunnels.keySet()) {
-                if (!key.sameTarget(point)) {
-                    continue;
-                }
-                final MethodCacher.Tunnel removed = this.tunnels.remove(key);
-                final Method method = ((MethodSignature) point.getSignature())
-                    .getMethod();
-                if (LogHelper.enabled(
-                    key.getLevel(), method.getDeclaringClass()
-                )) {
-                    LogHelper.log(
-                        key.getLevel(),
-                        method.getDeclaringClass(),
-                        "%s: %s:%s removed from cache %s",
-                        Mnemos.toText(method, point.getArgs(), true, false),
-                        key,
-                        removed,
-                        when
+                if (key.sameTarget(point)) {
+                    MethodCacher.removal(
+                        key, this.tunnels.remove(key), point, when
                     );
                 }
             }
+        } finally {
+            this.lock.unlock();
+        }
+    }
+
+    /**
+     * Report a removal from the cache.
+     * @param key The key that was removed
+     * @param tunnel The tunnel that was removed
+     * @param point Joint point
+     * @param when When it happens
+     * @checkstyle ParameterNumberCheck (3 lines)
+     */
+    private static void removal(final MethodCacher.Key key,
+        final MethodCacher.Tunnel tunnel, final JoinPoint point,
+        final String when) {
+        final Method method = ((MethodSignature) point.getSignature())
+            .getMethod();
+        if (LogHelper.enabled(key.getLevel(), method.getDeclaringClass())) {
+            LogHelper.log(
+                key.getLevel(),
+                method.getDeclaringClass(),
+                "%s: %s:%s removed from cache %s",
+                Mnemos.toText(method, point.getArgs(), true, false),
+                key,
+                tunnel,
+                when
+            );
         }
     }
 
@@ -248,29 +269,31 @@ public final class MethodCacher {
      * Clean cache.
      */
     private void clean() {
-        synchronized (this.tunnels) {
+        this.lock.lock();
+        try {
             for (final Map.Entry<MethodCacher.Key, MethodCacher.Tunnel> entry
                 : this.tunnels.entrySet()) {
                 final MethodCacher.Key key = entry.getKey();
                 if (entry.getValue().expired()
                     && !entry.getValue().asyncUpdate()) {
-                    final MethodCacher.Tunnel tunnel = this.tunnels.remove(key);
                     LogHelper.log(
                         key.getLevel(),
                         this,
                         "%s:%s expired in cache",
                         key,
-                        tunnel
+                        this.tunnels.remove(key)
                     );
                 }
             }
+        } finally {
+            this.lock.unlock();
         }
     }
 
     /**
      * Update cache.
      */
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     private void update() {
         while (true) {
             try {
@@ -470,7 +493,6 @@ public final class MethodCacher {
          * Public ctor.
          * @param point Joint point
          */
-        @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
         Key(final JoinPoint point) {
             this.start = System.currentTimeMillis();
             this.accessed = new AtomicInteger();

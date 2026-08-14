@@ -16,8 +16,9 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.10
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class ParallelizerTest {
+
     @Test
     void executesInParallel() {
         final AtomicInteger count = new AtomicInteger(10);

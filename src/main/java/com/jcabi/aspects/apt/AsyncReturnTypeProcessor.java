@@ -51,7 +51,7 @@ public final class AsyncReturnTypeProcessor extends AbstractProcessor {
             if (element.getKind() == ElementKind.METHOD) {
                 final ExecutableElement method = (ExecutableElement) element;
                 final TypeMirror returned = method.getReturnType();
-                if (!returned.getKind().equals(TypeKind.VOID)
+                if (returned.getKind() != TypeKind.VOID
                     && !this.assignableToFuture(returned)) {
                     this.processingEnv.getMessager().printMessage(
                         Diagnostic.Kind.ERROR,

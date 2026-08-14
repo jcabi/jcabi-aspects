@@ -17,7 +17,6 @@ import java.util.concurrent.ThreadFactory;
  *
  * @since 0.7.17
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
 final class NamedThreads implements ThreadFactory {
 
     /**

@@ -52,7 +52,7 @@ import javax.validation.valueextraction.ValueExtractor;
  *
  * @since 0.25.0
  */
-@SuppressWarnings("PMD.ExcessivePublicCount")
+@SuppressWarnings("PMD.CouplingBetweenObjects")
 public final class FakeValidationProvider implements
     ValidationProvider<FakeValidationProvider.FakeConfiguration> {
 

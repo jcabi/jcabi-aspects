@@ -49,7 +49,7 @@ public final class MethodAsyncRunner {
      * @return The result of call
      */
     @Around("execution(@com.jcabi.aspects.Async * * (..))")
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Object wrap(final ProceedingJoinPoint point) {
         final Class<?> returned = ((MethodSignature) point.getSignature()).getMethod()
             .getReturnType();

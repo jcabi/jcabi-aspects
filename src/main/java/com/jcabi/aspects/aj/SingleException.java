@@ -40,15 +40,14 @@ public final class SingleException {
             "execution(* * (..))"
             + " && @annotation(com.jcabi.aspects.UnitedThrow)"
         )
-    @SuppressWarnings({"PMD.AvoidCatchingThrowable", "PMD.PreserveStackTrace"})
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     // @checkstyle IllegalThrowsCheck (1 line)
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         final Method method =
             ((MethodSignature) point.getSignature()).getMethod();
-        final UnitedThrow annot = method.getAnnotation(UnitedThrow.class);
         final Class<? extends Throwable> clz = SingleException.clazz(
             method,
-            annot
+            method.getAnnotation(UnitedThrow.class)
         );
         try {
             return point.proceed();

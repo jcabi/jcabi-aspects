@@ -70,9 +70,6 @@ import java.util.concurrent.TimeUnit;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD, ElementType.TYPE })
-@SuppressWarnings({
-    "PMD.VariableNamingConventions", "PMD.RedundantFieldInitializer"
-})
 public @interface Loggable {
 
     /**

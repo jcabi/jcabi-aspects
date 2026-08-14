@@ -50,7 +50,7 @@ public final class QuietlyReturnTypeProcessor extends AbstractProcessor {
         for (final Element element : env.getElementsAnnotatedWith(type)) {
             if (element.getKind() == ElementKind.METHOD) {
                 final ExecutableElement method = (ExecutableElement) element;
-                if (!method.getReturnType().getKind().equals(TypeKind.VOID)) {
+                if (method.getReturnType().getKind() != TypeKind.VOID) {
                     this.processingEnv.getMessager().printMessage(
                         Diagnostic.Kind.ERROR,
                         String.format(

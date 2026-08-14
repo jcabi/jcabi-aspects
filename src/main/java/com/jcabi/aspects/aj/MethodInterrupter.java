@@ -13,6 +13,8 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -30,7 +32,6 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @since 0.7.16
  */
 @Aspect
-@SuppressWarnings("PMD.DoNotUseThreads")
 public final class MethodInterrupter {
 
     /**
@@ -44,11 +45,17 @@ public final class MethodInterrupter {
     private final transient ScheduledExecutorService interrupter;
 
     /**
+     * Guard of the calls.
+     */
+    private final transient Lock lock;
+
+    /**
      * Public ctor.
      */
     @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public MethodInterrupter() {
         this.calls = new ConcurrentSkipListSet<>();
+        this.lock = new ReentrantLock();
         this.interrupter = Executors.newSingleThreadScheduledExecutor(
             new NamedThreads(
                 "timeable",
@@ -75,7 +82,6 @@ public final class MethodInterrupter {
      * @checkstyle IllegalThrows (5 lines)
      */
     @Around("execution(* * (..)) && @annotation(com.jcabi.aspects.Timeable)")
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         final MethodInterrupter.Call call = new MethodInterrupter.Call(point);
         this.calls.add(call);
@@ -92,10 +98,13 @@ public final class MethodInterrupter {
      * Interrupt threads when needed.
      */
     private void interrupt() {
-        synchronized (this.interrupter) {
+        this.lock.lock();
+        try {
             this.calls.removeIf(
                 call -> call.expired() && call.interrupted()
             );
+        } finally {
+            this.lock.unlock();
         }
     }
 
@@ -141,6 +150,17 @@ public final class MethodInterrupter {
             this.deadline = this.start + annt.unit().toMillis(
                 (long) annt.limit()
             );
+        }
+
+        @Override
+        public int hashCode() {
+            return this.point.hashCode();
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            return obj == this || ((MethodInterrupter.Call) obj)
+                .point.equals(this.point);
         }
 
         @Override

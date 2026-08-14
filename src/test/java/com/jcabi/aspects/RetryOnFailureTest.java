@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link RetryOnFailure} annotation and its implementation.
  * @since 0.0.0
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class RetryOnFailureTest {
 
     @Test

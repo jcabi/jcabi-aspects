@@ -21,10 +21,10 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.22
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class NamedThreadsTest {
 
     @Test
-    @SuppressWarnings("PMD.DoNotUseThreads")
     void testVersion() {
         final Logger root = LogManager.getRootLogger();
         final Level level = root.getLevel();
@@ -40,17 +40,16 @@ final class NamedThreadsTest {
                     // do nothing
                 }
             );
-            final String message = writer.toString();
             MatcherAssert.assertThat(
-                message,
-                Matchers.containsString(
-                    Version.CURRENT.projectVersion()
-                )
-            );
-            MatcherAssert.assertThat(
-                message,
-                Matchers.containsString(
-                    Version.CURRENT.buildNumber()
+                "thread name cannot miss the version and the build number",
+                writer.toString(),
+                Matchers.allOf(
+                    Matchers.containsString(
+                        Version.CURRENT.projectVersion()
+                    ),
+                    Matchers.containsString(
+                        Version.CURRENT.buildNumber()
+                    )
                 )
             );
         } finally {

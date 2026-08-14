@@ -11,6 +11,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -29,6 +31,11 @@ public final class ImmutabilityChecker {
      * Already checked immutable classes.
      */
     private final transient Collection<Class<?>> immutable = new HashSet<>();
+
+    /**
+     * Guard of the checked classes.
+     */
+    private final transient Lock lock = new ReentrantLock();
 
     /**
      * Catch instantiation and validate class.
@@ -63,7 +70,8 @@ public final class ImmutabilityChecker {
      */
     private void check(final Class<?> type)
         throws ImmutabilityChecker.Violation {
-        synchronized (this.immutable) {
+        this.lock.lock();
+        try {
             if (!this.ignore(type)) {
                 if (type.isInterface()
                     && !type.isAnnotationPresent(Immutable.class)) {
@@ -94,6 +102,8 @@ public final class ImmutabilityChecker {
                 this.immutable.add(type);
                 Logger.debug(this, "#check(%s): immutability checked", type);
             }
+        } finally {
+            this.lock.unlock();
         }
     }
 

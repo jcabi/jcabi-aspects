@@ -13,8 +13,8 @@ import org.aspectj.lang.annotation.Aspect;
 /**
  * Logs all exceptions thrown out of a method.
  *
- * @since 0.1.10
  * @see com.jcabi.aspects.LogExceptions
+ * @since 0.1.10
  * @checkstyle IllegalThrows (100 lines)
  * @checkstyle NonStaticMethodCheck (100 lines)
  */
@@ -38,7 +38,7 @@ public final class ExceptionsLogger {
             "execution(* * (..))"
             + " && @annotation(com.jcabi.aspects.LogExceptions)"
         )
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
         try {
             return point.proceed();

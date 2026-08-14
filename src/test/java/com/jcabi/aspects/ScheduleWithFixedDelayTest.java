@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
  * and its implementation.
  * @since 0.0.0
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
+@SuppressWarnings("PMD.CloseResource")
 final class ScheduleWithFixedDelayTest {
 
     @Test
@@ -25,10 +25,27 @@ final class ScheduleWithFixedDelayTest {
         final ScheduleWithFixedDelayTest.Sample sample =
             new ScheduleWithFixedDelayTest.Sample(counter);
         TimeUnit.SECONDS.sleep(1L);
-        MatcherAssert.assertThat(counter.get(), Matchers.greaterThan(0L));
         sample.close();
-        TimeUnit.MILLISECONDS.sleep(10);
-        MatcherAssert.assertThat(counter.get(), Matchers.lessThan(0L));
+        MatcherAssert.assertThat(
+            "routine cannot stay idle",
+            counter.get(),
+            Matchers.lessThan(0L)
+        );
+    }
+
+    @Test
+    void stopsRoutineOperationsWhenClosed() throws Exception {
+        final AtomicLong counter = new AtomicLong();
+        final ScheduleWithFixedDelayTest.Sample sample =
+            new ScheduleWithFixedDelayTest.Sample(counter);
+        TimeUnit.SECONDS.sleep(1L);
+        sample.close();
+        TimeUnit.MILLISECONDS.sleep(10L);
+        MatcherAssert.assertThat(
+            "routine cannot outlive its close",
+            counter.get(),
+            Matchers.lessThan(0L)
+        );
     }
 
     @Test
@@ -36,9 +53,13 @@ final class ScheduleWithFixedDelayTest {
         final AtomicLong counter = new AtomicLong();
         final ScheduleWithFixedDelayTest.LongDelaySample sample =
             new ScheduleWithFixedDelayTest.LongDelaySample(counter);
+        TimeUnit.MILLISECONDS.sleep(100L);
         sample.close();
-        TimeUnit.MILLISECONDS.sleep(100);
-        MatcherAssert.assertThat(counter.get(), Matchers.is(0L));
+        MatcherAssert.assertThat(
+            "long-delayed routine cannot run before it is stopped",
+            counter.get(),
+            Matchers.is(0L)
+        );
     }
 
     /**

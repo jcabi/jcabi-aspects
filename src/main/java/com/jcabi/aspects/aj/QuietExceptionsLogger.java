@@ -14,8 +14,8 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Logs all exceptions thrown out of a method and swallow exception.
  *
- * @since 0.1.10
  * @see com.jcabi.aspects.LogExceptions
+ * @since 0.1.10
  * @checkstyle IllegalThrows (100 lines)
  * @checkstyle NonStaticMethodCheck (100 lines)
  */
@@ -40,7 +40,7 @@ public final class QuietExceptionsLogger {
             "execution(* * (..))"
             + " && @annotation(com.jcabi.aspects.Quietly)"
         )
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Object wrap(final ProceedingJoinPoint point) {
         if (!((MethodSignature) point.getSignature()).getReturnType()
             .equals(Void.TYPE)) {

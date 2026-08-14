@@ -14,17 +14,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for {@link Immutable} annotation and its implementation.
  *
- * @checkstyle ConstantUsageCheck (500 lines)
  * @since 0.0.0
+ * @checkstyle ConstantUsageCheck (500 lines)
  */
-@SuppressWarnings
-    (
-        {
-            "PMD.UnusedPrivateField",
-            "PMD.UnusedLocalVariable",
-            "PMD.FinalFieldCouldBeStatic"
-        }
-    )
+@SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
 final class ImmutableTest {
 
     @Test
@@ -45,14 +38,20 @@ final class ImmutableTest {
 
     @Test
     void passesImmutableObjects() {
-        final Object obj = new ImmutableTest.TruelyImmutable(
-            new ImmutableTest.TruelyImmutableWithNonPrivateFields()
+        Assertions.assertDoesNotThrow(
+            () -> new ImmutableTest.TruelyImmutable(
+                new ImmutableTest.TruelyImmutableWithNonPrivateFields()
+            ),
+            "immutable object cannot be rejected"
         );
     }
 
     @Test
     void passesImmutableObjectsWithNonPrivateFields() {
-        new ImmutableTest.TruelyImmutableWithNonPrivateFields();
+        Assertions.assertDoesNotThrow(
+            ImmutableTest.TruelyImmutableWithNonPrivateFields::new,
+            "immutable object with non-private fields cannot be rejected"
+        );
     }
 
     @Test
@@ -86,6 +85,7 @@ final class ImmutableTest {
      * @since 0.0.0
      */
     @Immutable
+    @FunctionalInterface
     private interface ImmutableInterface {
         /**
          * This function seems to be harmless.
@@ -186,7 +186,6 @@ final class ImmutableTest {
          *
          * @param ipt Input
          */
-        @SuppressWarnings("PMD.NullAssignment")
         private TruelyImmutable(final String ipt) {
             this.text = ipt;
             this.texts = new String[]{"foo"};
@@ -203,6 +202,7 @@ final class ImmutableTest {
      * @checkstyle VisibilityModifier (25 lines)
      */
     @Immutable
+    @SuppressWarnings("PMD.DataClass")
     private static final class TruelyImmutableWithNonPrivateFields {
         /**
          * Something static final.
@@ -242,8 +242,13 @@ final class ImmutableTest {
      * Is java immutable class always final?</a>
      *
      * @since 0.0.0
+     * @checkstyle FinalClassCheck (5 lines)
      */
     @Immutable
+    @SuppressWarnings({
+        "PMD.JUnitTestClassShouldBeFinal",
+        "PMD.ClassWithOnlyPrivateConstructorsShouldBeFinal"
+    })
     private static class MutableByInheritance {
         /**
          * Immutable class member.

@@ -24,8 +24,8 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * Execute method in multiple threads.
  *
- * @since 0.10
  * @see Parallel
+ * @since 0.10
  * @checkstyle NonStaticMethodCheck (100 lines)
  */
 @Aspect
@@ -56,19 +56,20 @@ public final class Parallelizer {
         for (int thread = 0; thread < total; ++thread) {
             callables.add(Parallelizer.callable(point, start));
         }
-        final ExecutorService executor = Executors
-            .newFixedThreadPool(total, new VerboseThreads());
-        final Collection<Future<Throwable>> futures =
-            new ArrayList<>(total);
-        for (final Callable<Throwable> callable : callables) {
-            futures.add(executor.submit(callable));
-        }
-        start.countDown();
         final Collection<Throwable> failures = new LinkedList<>();
-        for (final Future<Throwable> future : futures) {
-            Parallelizer.process(failures, future);
+        try (ExecutorService executor = Executors
+            .newFixedThreadPool(total, new VerboseThreads())) {
+            final Collection<Future<Throwable>> futures =
+                new ArrayList<>(total);
+            for (final Callable<Throwable> callable : callables) {
+                futures.add(executor.submit(callable));
+            }
+            start.countDown();
+            for (final Future<Throwable> future : futures) {
+                Parallelizer.process(failures, future);
+            }
+            executor.shutdown();
         }
-        executor.shutdown();
         if (!failures.isEmpty()) {
             throw Parallelizer.exceptions(failures);
         }
@@ -101,7 +102,6 @@ public final class Parallelizer {
      * @param failures List of exceptions from threads.
      * @return Aggregated exceptions.
      */
-    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     private static Parallelizer.ParallelException exceptions(
         final Iterable<Throwable> failures) {
         Parallelizer.ParallelException current = null;
@@ -117,7 +117,7 @@ public final class Parallelizer {
      * @param start Latch to use.
      * @return Created callable.
      */
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     private static Callable<Throwable> callable(final ProceedingJoinPoint point,
         final CountDownLatch start) {
         return () -> {

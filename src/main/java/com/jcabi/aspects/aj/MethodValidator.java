@@ -7,6 +7,8 @@ package com.jcabi.aspects.aj;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validation;
@@ -29,12 +31,11 @@ import org.aspectj.lang.reflect.MethodSignature;
  *
  * <p>The class is thread-safe.
  *
- * @since 0.1.10
  * @see <a href="http://beanvalidation.org/1.0/spec/#appendix-methodlevelvalidation">Appendix C</a>
  * @see <a href="http://aspects.jcabi.com/jsr-303.html">How it works</a>
+ * @since 0.1.10
  */
 @Aspect
-@SuppressWarnings({ "PMD.CyclomaticComplexity", "PMD.TooManyMethods" })
 public final class MethodValidator {
 
     /**
@@ -71,17 +72,18 @@ public final class MethodValidator {
      * it backward compatible.
      *
      * @param point Join point
-     * @checkstyle LineLength (3 lines)
      */
-    @Before("preinitialization(*.new(.., @(javax.validation.* || javax.validation.constraints.*) (*), ..))")
+    @Before(
+        // @checkstyle StringLiteralsConcatenation (3 lines)
+        "preinitialization(*.new(.., @(javax.validation.*"
+        + " || javax.validation.constraints.*) (*), ..))"
+    )
+    @SuppressWarnings("unchecked")
     public void beforeCtor(final JoinPoint point) {
         if (this.validator != null) {
-            @SuppressWarnings("unchecked")
-            final Constructor<Object> constructor = (Constructor<Object>)
-                ((ConstructorSignature) point.getSignature())
-                    .getConstructor();
             this.validateConstructor(
-                constructor,
+                (Constructor<Object>) ((ConstructorSignature) point
+                    .getSignature()).getConstructor(),
                 point.getArgs()
             );
         }
@@ -174,13 +176,8 @@ public final class MethodValidator {
      */
     private static String pack(
         final Iterable<ConstraintViolation<Object>> errs) {
-        final StringBuilder text = new StringBuilder(0);
-        for (final ConstraintViolation<?> violation : errs) {
-            if (text.length() > 0) {
-                text.append("; ");
-            }
-            text.append(violation.getMessage());
-        }
-        return text.toString();
+        return StreamSupport.stream(errs.spliterator(), false)
+            .map(ConstraintViolation::getMessage)
+            .collect(Collectors.joining("; "));
     }
 }

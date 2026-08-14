@@ -23,14 +23,11 @@ import org.junit.jupiter.api.Test;
  * @since 0.0.0
  * @checkstyle ClassDataAbstractionCoupling (500 lines)
  */
-@SuppressWarnings
-    (
-        {
-            "PMD.TooManyMethods",
-            "PMD.DoNotUseThreads",
-            "PMD.ProhibitPublicStaticMethods"
-        }
-    )
+@SuppressWarnings({
+    "PMD.ProhibitPublicStaticMethods",
+    "PMD.UnitTestContainsTooManyAsserts",
+    "PMD.UnnecessaryLocalRule"
+})
 final class CacheableTest {
 
     /**
@@ -112,17 +109,14 @@ final class CacheableTest {
             done.countDown();
             return null;
         };
-        final ExecutorService executor = Executors.newFixedThreadPool(threads);
-        try {
+        try (ExecutorService executor = Executors.newFixedThreadPool(threads)) {
             for (int pos = 0; pos < threads; ++pos) {
                 executor.submit(task);
             }
             start.countDown();
-            done.await(30, TimeUnit.SECONDS);
+            done.await(30L, TimeUnit.SECONDS);
             MatcherAssert.assertThat(values.size(), Matchers.equalTo(1));
             never.interrupt();
-        } finally {
-            executor.shutdown();
         }
     }
 

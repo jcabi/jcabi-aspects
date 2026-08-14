@@ -8,6 +8,7 @@ import com.jcabi.aspects.Loggable;
 import com.jcabi.log.Logger;
 import com.jcabi.log.VerboseRunnable;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Executors;
@@ -15,6 +16,7 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -31,14 +33,10 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @checkstyle IllegalThrows (500 lines)
  */
 @Aspect
-@SuppressWarnings
-    (
-        {
-            "PMD.AvoidCatchingThrowable",
-            "PMD.TooManyMethods",
-            "PMD.CyclomaticComplexity"
-        }
-    )
+@SuppressWarnings({
+    "PMD.AvoidCatchingGenericException",
+    "PMD.TooManyMethods"
+})
 public final class MethodLogger {
 
     /**
@@ -49,12 +47,10 @@ public final class MethodLogger {
     /**
      * Public ctor.
      */
-    @SuppressWarnings(
-        {
-            "PMD.DoNotUseThreads",
-            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
-        }
-    )
+    @SuppressWarnings({
+        "PMD.CloseResource",
+        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
+    })
     public MethodLogger() {
         this.running = new ConcurrentSkipListSet<>();
         final ScheduledExecutorService monitor =
@@ -137,7 +133,6 @@ public final class MethodLogger {
             "(execution(* *(..)) || initialization(*.new(..)))"
             + " && @annotation(com.jcabi.aspects.Loggable)"
         )
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Object wrapMethod(final ProceedingJoinPoint point) throws Throwable {
         final Method method =
             ((MethodSignature) point.getSignature()).getMethod();
@@ -154,10 +149,7 @@ public final class MethodLogger {
      * @checkstyle ExecutableStatementCountCheck (100 lines)
      * @checkstyle CyclomaticComplexityCheck (100 lines)
      */
-    @SuppressWarnings({
-        "PMD.AvoidThreadGroup",
-        "PMD.GuardLogStatement"
-    })
+    @SuppressWarnings("PMD.AvoidThreadGroup")
     private Object wrap(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation) throws Throwable {
         if (Thread.interrupted()) {
@@ -205,41 +197,69 @@ public final class MethodLogger {
             return result;
         // @checkstyle IllegalCatch (1 line)
         } catch (final Throwable ex) {
-            if (!MethodLogger.contains(annotation.ignore(), ex)
-                && !ex.getClass().isAnnotationPresent(Loggable.Quiet.class)) {
-                final StackTraceElement[] traces = ex.getStackTrace();
-                final String origin;
-                if (traces.length > 0) {
-                    final StackTraceElement trace = traces[0];
-                    origin = MethodLogger.oneText(trace);
-                } else {
-                    origin = "somewhere";
-                }
-                final int exlevel = annotation.logException() >= 0
-                    ? annotation.logException() : level;
-                if (LogHelper.enabled(exlevel, method.getDeclaringClass())) {
-                    LogHelper.log(
-                        exlevel,
-                        method.getDeclaringClass(),
-                        Logger.format(
-                            "%s: thrown %s out of %s in %[nano]s",
-                            Mnemos.toText(
-                                point,
-                                annotation.trim(),
-                                annotation.skipArgs(),
-                                annotation.logThis()
-                            ),
-                            Mnemos.toText(ex),
-                            origin,
-                            System.nanoTime() - start
-                        )
-                    );
-                }
-            }
+            MethodLogger.report(point, method, annotation, level, ex, start);
             throw ex;
         } finally {
             this.running.remove(marker);
         }
+    }
+
+    /**
+     * Log the exception thrown out of the method.
+     * @param point Joint point
+     * @param method The method
+     * @param annotation The annotation
+     * @param level Logging level of the method itself
+     * @param exp The exception thrown
+     * @param start When the method started, in nanoseconds
+     * @checkstyle ParameterNumberCheck (3 lines)
+     */
+    private static void report(final ProceedingJoinPoint point,
+        final Method method, final Loggable annotation, final int level,
+        final Throwable exp, final long start) {
+        if (!MethodLogger.contains(annotation.ignore(), exp)
+            && !exp.getClass().isAnnotationPresent(Loggable.Quiet.class)) {
+            final int exlevel;
+            if (annotation.logException() >= 0) {
+                exlevel = annotation.logException();
+            } else {
+                exlevel = level;
+            }
+            if (LogHelper.enabled(exlevel, method.getDeclaringClass())) {
+                LogHelper.log(
+                    exlevel,
+                    method.getDeclaringClass(),
+                    Logger.format(
+                        "%s: thrown %s out of %s in %[nano]s",
+                        Mnemos.toText(
+                            point,
+                            annotation.trim(),
+                            annotation.skipArgs(),
+                            annotation.logThis()
+                        ),
+                        Mnemos.toText(exp),
+                        MethodLogger.origin(exp),
+                        System.nanoTime() - start
+                    )
+                );
+            }
+        }
+    }
+
+    /**
+     * Where the exception came from.
+     * @param exp The exception thrown
+     * @return The text of its topmost stacktrace element
+     */
+    private static String origin(final Throwable exp) {
+        final StackTraceElement[] traces = exp.getStackTrace();
+        final String origin;
+        if (traces.length > 0) {
+            origin = MethodLogger.oneText(traces[0]);
+        } else {
+            origin = "somewhere";
+        }
+        return origin;
     }
 
     /**
@@ -266,8 +286,7 @@ public final class MethodLogger {
      */
     private static String message(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation, final Object result, final long nano) {
-        final StringBuilder msg = new StringBuilder(0);
-        msg.append(
+        final StringBuilder msg = new StringBuilder(
             Mnemos.toText(
                 point,
                 annotation.trim(),
@@ -360,14 +379,9 @@ public final class MethodLogger {
      * @return The text
      */
     private static String allText(final StackTraceElement... trace) {
-        final StringBuilder text = new StringBuilder(0);
-        for (final StackTraceElement element : trace) {
-            if (text.length() > 0) {
-                text.append(", ");
-            }
-            text.append(MethodLogger.oneText(element));
-        }
-        return text.toString();
+        return Arrays.stream(trace)
+            .map(MethodLogger::oneText)
+            .collect(Collectors.joining(", "));
     }
 
     /**
@@ -404,7 +418,6 @@ public final class MethodLogger {
         /**
          * The thread it's running in.
          */
-        @SuppressWarnings("PMD.DoNotUseThreads")
         private final transient Thread thread;
 
         /**

@@ -26,7 +26,10 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link Loggable} annotation and its implementation.
  * @since 0.0.0
  */
-@SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidUsingShortType" })
+@SuppressWarnings({
+    "PMD.TooManyMethods",
+    "PMD.UnitTestContainsTooManyAsserts"
+})
 final class LoggableTest {
     /**
      * Foo toString result.
@@ -35,22 +38,38 @@ final class LoggableTest {
 
     @Test
     void logsSimpleCall() {
-        new LoggableTest.Foo().revert("hello");
+        MatcherAssert.assertThat(
+            "text cannot stay unreverted",
+            new LoggableTest.Foo().revert("hello"),
+            Matchers.equalTo("olleh")
+        );
     }
 
     @Test
     void ignoresToStringMethods() {
-        new LoggableTest.Foo().self();
+        MatcherAssert.assertThat(
+            "self cannot be anything but itself",
+            new LoggableTest.Foo().self(),
+            Matchers.hasToString(LoggableTest.RESULT)
+        );
     }
 
     @Test
     void logsStaticMethods() throws Exception {
-        LoggableTest.Foo.text();
+        MatcherAssert.assertThat(
+            "static method cannot lose its text",
+            LoggableTest.Foo.text(),
+            Matchers.equalTo("some static text")
+        );
     }
 
     @Test
     void doesntLogInheritedMethods() {
-        new LoggableTest.Foo().parentText();
+        MatcherAssert.assertThat(
+            "inherited method cannot lose its text",
+            new LoggableTest.Foo().parentText(),
+            Matchers.equalTo("some parent text")
+        );
     }
 
     @Test
@@ -93,22 +112,21 @@ final class LoggableTest {
         Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
         );
-        final byte[] result = new LoggableTest.Foo().logsByteArray();
-        MatcherAssert.assertThat(
-            writer.toString(),
-            Matchers.not(
-                Matchers.containsString(
-                    ClassCastException.class.getSimpleName()
-                )
-            )
-        );
         final Collection<String> bytes = new LinkedList<>();
-        for (final byte part : result) {
+        for (final byte part : new LoggableTest.Foo().logsByteArray()) {
             bytes.add(Byte.toString(part));
         }
         MatcherAssert.assertThat(
+            "byte array cannot be logged as anything else",
             writer.toString(),
-            Matchers.stringContainsInOrder(bytes)
+            Matchers.allOf(
+                Matchers.not(
+                    Matchers.containsString(
+                        ClassCastException.class.getSimpleName()
+                    )
+                ),
+                Matchers.stringContainsInOrder(bytes)
+            )
         );
     }
 
@@ -118,22 +136,21 @@ final class LoggableTest {
         Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
         );
-        final short[] result = new LoggableTest.Foo().logsShortArray();
-        MatcherAssert.assertThat(
-            writer.toString(),
-            Matchers.not(
-                Matchers.containsString(
-                    ClassCastException.class.getSimpleName()
-                )
-            )
-        );
         final Collection<String> shorts = new LinkedList<>();
-        for (final short part : result) {
+        for (final short part : new LoggableTest.Foo().logsShortArray()) {
             shorts.add(Short.toString(part));
         }
         MatcherAssert.assertThat(
+            "short array cannot be logged as anything else",
             writer.toString(),
-            Matchers.stringContainsInOrder(shorts)
+            Matchers.allOf(
+                Matchers.not(
+                    Matchers.containsString(
+                        ClassCastException.class.getSimpleName()
+                    )
+                ),
+                Matchers.stringContainsInOrder(shorts)
+            )
         );
     }
 
@@ -171,6 +188,7 @@ final class LoggableTest {
      * Parent class, without logging.
      * @since 0.0.0
      */
+    @SuppressWarnings("PMD.JUnitTestClassShouldBeFinal")
     private static class Parent {
         /**
          * Get some text.
@@ -208,26 +226,6 @@ final class LoggableTest {
         }
 
         /**
-         * Static method.
-         * @return Some text
-         * @throws Exception If terminated
-         */
-        @Timeable(limit = 1, unit = TimeUnit.HOURS)
-        public static String text() throws Exception {
-            TimeUnit.SECONDS.sleep(2L);
-            return LoggableTest.Foo.hiddenText();
-        }
-
-        /**
-         * Method annotated with Loggable specifying explicit logger name.
-         * @return A String
-         */
-        @Loggable(value = Loggable.DEBUG, name = "test-logger", prepend = true)
-        public static String explicitLoggerName() {
-            return LoggableTest.Foo.hiddenText();
-        }
-
-        /**
          * Revert string.
          * @param text Some text
          * @return Reverted text
@@ -236,17 +234,6 @@ final class LoggableTest {
         @Loggable(trim = false)
         public String revert(final String text) {
             return new StringBuffer(text).reverse().toString();
-        }
-
-        /**
-         * Method with different time unit specification.
-         * @return Some text
-         * @throws Exception If terminated
-         */
-        @Loggable(precision = 3)
-        public static String logsDurationInSeconds() throws Exception {
-            TimeUnit.SECONDS.sleep(2L);
-            return LoggableTest.Foo.hiddenText();
         }
 
         /**
@@ -282,6 +269,37 @@ final class LoggableTest {
         @Loggable(logThis = true)
         public String last(final String text) {
             return text.substring(text.length() - 1);
+        }
+
+        /**
+         * Static method.
+         * @return Some text
+         * @throws Exception If terminated
+         */
+        @Timeable(limit = 1, unit = TimeUnit.HOURS)
+        static String text() throws Exception {
+            TimeUnit.SECONDS.sleep(2L);
+            return LoggableTest.Foo.hiddenText();
+        }
+
+        /**
+         * Method annotated with Loggable specifying explicit logger name.
+         * @return A String
+         */
+        @Loggable(value = Loggable.DEBUG, name = "test-logger", prepend = true)
+        static String explicitLoggerName() {
+            return LoggableTest.Foo.hiddenText();
+        }
+
+        /**
+         * Method with different time unit specification.
+         * @return Some text
+         * @throws Exception If terminated
+         */
+        @Loggable(precision = 3)
+        static String logsDurationInSeconds() throws Exception {
+            TimeUnit.SECONDS.sleep(2L);
+            return LoggableTest.Foo.hiddenText();
         }
 
         /**

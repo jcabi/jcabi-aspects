@@ -16,11 +16,9 @@ import org.mockito.Mockito;
  * @since 0.1.10
  * @checkstyle IllegalThrows (500 lines)
  */
-@SuppressWarnings
-    (
-        { "PMD.AvoidCatchingThrowable", "PMD.AvoidThrowingRawExceptionTypes" }
-    )
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class QuietExceptionsLoggerTest {
+
     @Test
     void withoutException() throws Throwable {
         final ProceedingJoinPoint point = Mockito

@@ -16,13 +16,10 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @since 0.0.0
  */
 @Immutable
-@SuppressWarnings(
-    {
-        "PMD.TooManyMethods",
-        "PMD.AvoidUsingShortType",
-        "PMD.ProhibitPublicStaticMethods"
-    }
-)
+@SuppressWarnings({
+    "PMD.TooManyMethods",
+    "PMD.ProhibitPublicStaticMethods"
+})
 final class Mnemos {
 
     /**
@@ -208,7 +205,7 @@ final class Mnemos {
      * @return Text representation of it
      * @since 0.7.19
      */
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public static String toText(final Object arg, final boolean trim,
         final boolean skip) {
         final StringBuilder text = new StringBuilder();
