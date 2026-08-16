@@ -22,7 +22,7 @@ public final class ImmutableAnnotationTest {
 
     @Test
     public void validatesClassWithTrueImmutability() throws Exception {
-        new TruelyImmutable();
+        new TrulyImmutable();
     }
 
     /**
@@ -34,10 +34,10 @@ public final class ImmutableAnnotationTest {
     }
 
     /**
-     * Truely immutable class.
+     * Truly immutable class.
      */
     @Immutable
-    private static final class TruelyImmutable {
+    private static final class TrulyImmutable {
         private final transient String data = "";
     }
 

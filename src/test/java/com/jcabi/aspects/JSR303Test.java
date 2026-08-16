@@ -32,7 +32,7 @@ final class JSR303Test {
     /**
      * The test message.
      */
-    private static final String OVERRIDEN_MSG = "this is a message";
+    private static final String OVERRIDDEN_MSG = "this is a message";
 
     @Test
     void throwsWhenMethodParametersAreInvalid() {
@@ -102,7 +102,7 @@ final class JSR303Test {
             ),
             Matchers.hasProperty(
                 "message",
-                Matchers.containsString(JSR303Test.OVERRIDEN_MSG)
+                Matchers.containsString(JSR303Test.OVERRIDDEN_MSG)
             )
         );
     }
@@ -135,7 +135,7 @@ final class JSR303Test {
          * Test method.
          * @param value Value
          */
-        void test(@NotNull(message = JSR303Test.OVERRIDEN_MSG) String value);
+        void test(@NotNull(message = JSR303Test.OVERRIDDEN_MSG) String value);
     }
 
     /**

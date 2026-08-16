@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 final class ImmutableTest {
 
     @Test
-    void catchedMutableTypes() {
+    void caughtMutableTypes() {
         Assertions.assertThrows(
             IllegalStateException.class,
             ImmutableTest.Mutable::new
@@ -28,7 +28,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void catchedMutableTypesWithArrays() {
+    void caughtMutableTypesWithArrays() {
         Assertions.assertThrows(
             IllegalStateException.class,
             ImmutableTest.MutableWithArray::new
@@ -38,8 +38,8 @@ final class ImmutableTest {
     @Test
     void passesImmutableObjects() {
         Assertions.assertDoesNotThrow(
-            () -> new ImmutableTest.TruelyImmutable(
-                new ImmutableTest.TruelyImmutableWithNonPrivateFields()
+            () -> new ImmutableTest.TrulyImmutable(
+                new ImmutableTest.TrulyImmutableWithNonPrivateFields()
             ),
             "immutable object cannot be rejected"
         );
@@ -48,7 +48,7 @@ final class ImmutableTest {
     @Test
     void passesImmutableObjectsWithNonPrivateFields() {
         Assertions.assertDoesNotThrow(
-            ImmutableTest.TruelyImmutableWithNonPrivateFields::new,
+            ImmutableTest.TrulyImmutableWithNonPrivateFields::new,
             "immutable object with non-private fields cannot be rejected"
         );
     }
@@ -121,11 +121,11 @@ final class ImmutableTest {
     }
 
     /**
-     * Truely immutable class.
+     * Truly immutable class.
      * @since 0.0.0
      */
     @Immutable
-    private static final class TruelyImmutable {
+    private static final class TrulyImmutable {
 
         /**
          * Something static final.
@@ -166,7 +166,7 @@ final class ImmutableTest {
         /**
          * Ctor.
          */
-        private TruelyImmutable() {
+        private TrulyImmutable() {
             this("Hello, world!");
         }
 
@@ -174,7 +174,7 @@ final class ImmutableTest {
          * Ctor.
          * @param ipt Input
          */
-        private TruelyImmutable(final ImmutableTest.TruelyImmutableWithNonPrivateFields ipt) {
+        private TrulyImmutable(final ImmutableTest.TrulyImmutableWithNonPrivateFields ipt) {
             this(ipt.text);
         }
 
@@ -182,7 +182,7 @@ final class ImmutableTest {
          * Ctor.
          * @param ipt Input
          */
-        private TruelyImmutable(final String ipt) {
+        private TrulyImmutable(final String ipt) {
             this.text = ipt;
             this.texts = new String[]{"foo"};
             this.iface = null;
@@ -192,12 +192,12 @@ final class ImmutableTest {
     }
 
     /**
-     * Truely immutable class with non-private fields.
+     * Truly immutable class with non-private fields.
      * @since 0.0.0
      * @checkstyle VisibilityModifier (25 lines)
      */
     @Immutable
-    private static final class TruelyImmutableWithNonPrivateFields {
+    private static final class TrulyImmutableWithNonPrivateFields {
 
         /**
          * Something static final.

@@ -31,7 +31,7 @@ final class ParallelizerTest {
     }
 
     @Test
-    void throwsCatchedException() {
+    void throwsCaughtException() {
         Assertions.assertThrows(
             Exception.class,
             () -> new Runnable() {
