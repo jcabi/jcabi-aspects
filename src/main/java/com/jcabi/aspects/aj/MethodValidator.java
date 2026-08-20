@@ -114,12 +114,6 @@ public final class MethodValidator {
         );
     }
 
-    /**
-     * Validates method parameters.
-     * @param object Object at pointcut
-     * @param method Method at pointcut
-     * @param args Parameters of the method
-     */
     private void validateMethod(final Object object, final Method method,
         final Object... args) {
         this.checkForViolations(
@@ -129,11 +123,6 @@ public final class MethodValidator {
         );
     }
 
-    /**
-     * Validates constructor parameters.
-     * @param ctr Constructor at pointcut
-     * @param args Parameters of the method
-     */
     private void validateConstructor(final Constructor<Object> ctr,
         final Object... args) {
         this.checkForViolations(
@@ -143,11 +132,6 @@ public final class MethodValidator {
         );
     }
 
-    /**
-     * Checks if violations set is empty and throws
-     * {@link ConstraintViolationException} if it isn't.
-     * @param violations JSR303 violations
-     */
     private void checkForViolations(
         final Set<ConstraintViolation<Object>> violations) {
         if (!violations.isEmpty()) {
@@ -158,11 +142,6 @@ public final class MethodValidator {
         }
     }
 
-    /**
-     * Pack violations into string.
-     * @param errs All violations
-     * @return The full text
-     */
     private static String pack(
         final Iterable<ConstraintViolation<Object>> errs) {
         return StreamSupport.stream(errs.spliterator(), false)

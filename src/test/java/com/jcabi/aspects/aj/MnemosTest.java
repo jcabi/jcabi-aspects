@@ -113,10 +113,6 @@ final class MnemosTest {
         );
     }
 
-    /**
-     * Assert that the text built from every object matches its pair.
-     * @param pairs The object pairs to validate
-     */
     private void assertText(final Object[]... pairs) {
         for (final Object[] pair : pairs) {
             MatcherAssert.assertThat(

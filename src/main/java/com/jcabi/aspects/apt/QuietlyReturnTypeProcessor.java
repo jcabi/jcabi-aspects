@@ -37,11 +37,6 @@ public final class QuietlyReturnTypeProcessor extends AbstractProcessor {
         return false;
     }
 
-    /**
-     * Check methods annotated with {@link com.jcabi.aspects.Quietly}.
-     * @param env The environment
-     * @param type The annotation type
-     */
     private void checkMethods(
         final RoundEnvironment env,
         final TypeElement type

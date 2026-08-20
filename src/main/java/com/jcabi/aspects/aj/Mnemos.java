@@ -177,11 +177,6 @@ final class Mnemos {
         return text.toString();
     }
 
-    /**
-     * Make a string out of an object.
-     * @param arg The argument
-     * @return Text representation of it
-     */
     private static String toText(final Object arg) {
         final String text;
         if (arg.getClass().isArray()) {
@@ -202,11 +197,6 @@ final class Mnemos {
         return text;
     }
 
-    /**
-     * Text representation of object arrays.
-     * @param arg Array to change into String
-     * @return Array in String
-     */
     private static String objectArrays(final Object... arg) {
         final StringBuilder bldr = new StringBuilder();
         bldr.append('[');
@@ -219,11 +209,6 @@ final class Mnemos {
         return bldr.append(']').toString();
     }
 
-    /**
-     * Text representation of primitive arrays.
-     * @param arg Array to change into String
-     * @return Array in String
-     */
     private static String primitiveArrays(final Object arg) {
         final String text;
         if (arg instanceof char[]) {

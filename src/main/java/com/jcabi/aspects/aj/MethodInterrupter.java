@@ -5,9 +5,7 @@
 package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Timeable;
-import com.jcabi.log.Logger;
 import com.jcabi.log.VerboseRunnable;
-import java.lang.reflect.Method;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Executors;
@@ -18,7 +16,6 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Interrupts long-running methods.
@@ -37,7 +34,7 @@ public final class MethodInterrupter {
     /**
      * Calls being watched.
      */
-    private final transient Set<MethodInterrupter.Call> calls;
+    private final transient Set<Call> calls;
 
     /**
      * Service that interrupts threads.
@@ -89,7 +86,7 @@ public final class MethodInterrupter {
      */
     @Around("execution(* * (..)) && @annotation(com.jcabi.aspects.Timeable)")
     public Object wrap(final ProceedingJoinPoint point) throws Throwable {
-        final MethodInterrupter.Call call = new MethodInterrupter.Call(point);
+        final Call call = new Call(point);
         this.calls.add(call);
         final Object output;
         try {
@@ -100,9 +97,6 @@ public final class MethodInterrupter {
         return output;
     }
 
-    /**
-     * Interrupt threads when needed.
-     */
     private void interrupt() {
         this.lock.lock();
         try {
@@ -111,131 +105,6 @@ public final class MethodInterrupter {
             );
         } finally {
             this.lock.unlock();
-        }
-    }
-
-    /**
-     * A call being watched.
-     * @since 0.7.16
-     */
-    private static final class Call implements
-        Comparable<MethodInterrupter.Call> {
-
-        /**
-         * The thread called.
-         */
-        private final transient Thread thread;
-
-        /**
-         * When started.
-         */
-        private final transient long start;
-
-        /**
-         * When will expire.
-         */
-        private final transient long deadline;
-
-        /**
-         * Join point.
-         */
-        private final transient ProceedingJoinPoint point;
-
-        /**
-         * Public ctor.
-         * @param pnt Joint point
-         */
-        Call(final ProceedingJoinPoint pnt) {
-            this(
-                pnt,
-                Thread.currentThread(),
-                System.currentTimeMillis(),
-                MethodInterrupter.Call.limit(pnt)
-            );
-        }
-
-        /**
-         * Ctor.
-         * @param pnt Joint point
-         * @param thrd The thread that called
-         * @param begin When it started
-         * @param span How long the call may take, in milliseconds
-         */
-        private Call(final ProceedingJoinPoint pnt, final Thread thrd,
-            final long begin, final long span) {
-            this.point = pnt;
-            this.thread = thrd;
-            this.start = begin;
-            this.deadline = begin + span;
-        }
-
-        @Override
-        public int hashCode() {
-            return this.point.hashCode();
-        }
-
-        @Override
-        public boolean equals(final Object obj) {
-            return obj == this || ((MethodInterrupter.Call) obj)
-                .point.equals(this.point);
-        }
-
-        @Override
-        public int compareTo(final MethodInterrupter.Call obj) {
-            final int compare;
-            if (this.deadline > obj.deadline) {
-                compare = 1;
-            } else if (this.deadline < obj.deadline) {
-                compare = -1;
-            } else {
-                compare = 0;
-            }
-            return compare;
-        }
-
-        /**
-         * Is it expired already?
-         * @return TRUE if expired
-         */
-        boolean expired() {
-            return this.deadline < System.currentTimeMillis();
-        }
-
-        /**
-         * This thread is stopped already (interrupt if not)?
-         * @return TRUE if it's already dead
-         */
-        boolean interrupted() {
-            final boolean dead;
-            if (this.thread.isAlive()) {
-                this.thread.interrupt();
-                final Method method = ((MethodSignature) this.point.getSignature())
-                    .getMethod();
-                if (Logger.isWarnEnabled(method.getDeclaringClass())) {
-                    Logger.warn(
-                        method.getDeclaringClass(),
-                        "%s: interrupted on %[ms]s timeout (over %[ms]s)",
-                        Mnemos.toText(this.point, true, false),
-                        System.currentTimeMillis() - this.start,
-                        this.deadline - this.start
-                    );
-                }
-                dead = false;
-            } else {
-                dead = true;
-            }
-            return dead;
-        }
-
-        /**
-         * How long the call is allowed to take.
-         * @param pnt Joint point
-         * @return Milliseconds
-         */
-        private static long limit(final ProceedingJoinPoint pnt) {
-            final Timeable annt = ((MethodSignature) pnt.getSignature())
-                .getMethod().getAnnotation(Timeable.class);
-            return annt.unit().toMillis((long) annt.limit());
         }
     }
 }

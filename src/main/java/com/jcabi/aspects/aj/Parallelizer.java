@@ -41,11 +41,11 @@ public final class Parallelizer {
      *
      * @param point Joint point
      * @return The result of call
-     * @throws Parallelizer.ParallelException If something goes wrong inside
+     * @throws ParallelException If something goes wrong inside
      */
     @Around("execution(@com.jcabi.aspects.Parallel * * (..))")
     public Object wrap(final ProceedingJoinPoint point)
-        throws Parallelizer.ParallelException {
+        throws ParallelException {
         final int total = ((MethodSignature) point.getSignature())
             .getMethod().getAnnotation(Parallel.class).threads();
         final Collection<Callable<Throwable>> callables =
@@ -77,11 +77,6 @@ public final class Parallelizer {
         return null;
     }
 
-    /**
-     * Process futures.
-     * @param failures Collection of failures
-     * @param future Future tu process
-     */
     private static void process(final Collection<Throwable> failures,
         final Future<Throwable> future) {
         final Throwable exception;
@@ -98,28 +93,17 @@ public final class Parallelizer {
         }
     }
 
-    /**
-     * Create parallel exception.
-     * @param failures List of exceptions from threads
-     * @return Aggregated exceptions
-     */
-    private static Parallelizer.ParallelException exceptions(
+    private static ParallelException exceptions(
         final Collection<Throwable> failures) {
         final Iterator<Throwable> iter = failures.iterator();
-        final Parallelizer.ParallelException exception =
-            new Parallelizer.ParallelException(iter.next());
+        final ParallelException exception =
+            new ParallelException(iter.next());
         while (iter.hasNext()) {
             exception.addSuppressed(iter.next());
         }
         return exception;
     }
 
-    /**
-     * Create callable that executes join point.
-     * @param point Join point to use
-     * @param start Latch to use
-     * @return Created callable
-     */
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     private static Callable<Throwable> callable(final ProceedingJoinPoint point,
         final CountDownLatch start) {
@@ -134,25 +118,5 @@ public final class Parallelizer {
             }
             return result;
         };
-    }
-
-    /**
-     * Exception that encapsulates all exceptions thrown from threads.
-     * @since 0.0.0
-     */
-    private static final class ParallelException extends Exception {
-
-        /**
-         * Serialization marker.
-         */
-        private static final long serialVersionUID = 0x8743EF363FEBC422L;
-
-        /**
-         * Constructor.
-         * @param cause Cause of the current exception
-         */
-        ParallelException(final Throwable cause) {
-            super(cause);
-        }
     }
 }

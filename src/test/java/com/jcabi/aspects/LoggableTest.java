@@ -299,17 +299,10 @@ final class LoggableTest {
             return LoggableTest.Foo.hiddenText();
         }
 
-        /**
-         * Private static method.
-         * @return Some text
-         */
         private static String hiddenText() {
             return "some static text";
         }
 
-        /**
-         * Always throw.
-         */
         @Loggable(ignore = { IOException.class, RuntimeException.class })
         private void doThrow() {
             throw new IllegalStateException();

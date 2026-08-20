@@ -39,11 +39,6 @@ public final class AsyncReturnTypeProcessor extends AbstractProcessor {
         return false;
     }
 
-    /**
-     * Check methods annotated with {@link com.jcabi.aspects.Quietly}.
-     * @param env The environment
-     * @param type The annotation type
-     */
     private void checkMethods(final RoundEnvironment env,
         final TypeElement type) {
         for (final Element element : env.getElementsAnnotatedWith(type)) {
@@ -65,11 +60,6 @@ public final class AsyncReturnTypeProcessor extends AbstractProcessor {
         }
     }
 
-    /**
-     * Is the given type assignable from {@link Future}?
-     * @param type The type to check
-     * @return If it's assignable from Future
-     */
     private boolean assignableToFuture(final TypeMirror type) {
         final Types types = this.processingEnv.getTypeUtils();
         return types.isAssignable(

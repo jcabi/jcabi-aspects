@@ -65,11 +65,6 @@ public final class SingleException {
         }
     }
 
-    /**
-     * Check if there is a constructor with single Throwable argument.
-     * @param clz Class to check
-     * @return Whether constructor exists
-     */
     private static boolean exists(final Class<? extends Throwable> clz) {
         boolean found = false;
         for (final Constructor<?> ctr : clz.getConstructors()) {
@@ -82,12 +77,6 @@ public final class SingleException {
         return found;
     }
 
-    /**
-     * Get required exception class.
-     * @param method Method declaring exception
-     * @param annot UnitedThrow annotation
-     * @return Class of exception
-     */
     @SuppressWarnings("unchecked")
     private static Class<? extends Throwable> clazz(final Method method,
         final UnitedThrow annot) {

@@ -15,7 +15,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -39,7 +38,7 @@ public final class MethodLogger {
     /**
      * Currently running methods.
      */
-    private final transient Set<MethodLogger.Marker> running;
+    private final transient Set<Marker> running;
 
     /**
      * Public ctor.
@@ -63,7 +62,7 @@ public final class MethodLogger {
             new FutureTask<Void>(
                 new VerboseRunnable(
                     () -> {
-                        for (final MethodLogger.Marker marker
+                        for (final Marker marker
                             : this.running) {
                             marker.monitor();
                         }
@@ -138,14 +137,12 @@ public final class MethodLogger {
         return this.wrap(point, method, method.getAnnotation(Loggable.class));
     }
 
-    /**
-     * Catch exception and re-call the method.
-     * @param point Joint point
-     * @param method The method
-     * @param annotation The annotation
-     * @return The result of call
-     * @throws Throwable If something goes wrong inside
-     */
+    static String allText(final StackTraceElement... trace) {
+        return Arrays.stream(trace)
+            .map(MethodLogger::oneText)
+            .collect(Collectors.joining(", "));
+    }
+
     @SuppressWarnings("PMD.AvoidThreadGroup")
     private Object wrap(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation) throws Throwable {
@@ -159,8 +156,8 @@ public final class MethodLogger {
             );
         }
         final long start = System.nanoTime();
-        final MethodLogger.Marker marker =
-            new MethodLogger.Marker(point, annotation);
+        final Marker marker =
+            new Marker(point, annotation);
         this.running.add(marker);
         int level = annotation.value();
         try {
@@ -200,15 +197,6 @@ public final class MethodLogger {
         }
     }
 
-    /**
-     * Log the exception thrown out of the method.
-     * @param point Joint point
-     * @param method The method
-     * @param annotation The annotation
-     * @param level Logging level of the method itself
-     * @param exp The exception thrown
-     * @param start When the method started, in nanoseconds
-     */
     private static void report(final ProceedingJoinPoint point,
         final Method method, final Loggable annotation, final int level,
         final Throwable exp, final long start) {
@@ -241,11 +229,6 @@ public final class MethodLogger {
         }
     }
 
-    /**
-     * Where the exception came from.
-     * @param exp The exception thrown
-     * @return The text of its topmost stacktrace element
-     */
     private static String origin(final Throwable exp) {
         final StackTraceElement[] traces = exp.getStackTrace();
         final String origin;
@@ -257,27 +240,12 @@ public final class MethodLogger {
         return origin;
     }
 
-    /**
-     * Has time for method execution passed.
-     * @param annotation Loggable annotation
-     * @param nano Execution time
-     * @return Is over time limit
-     */
     private static boolean over(final Loggable annotation, final long nano) {
         return nano > annotation.unit().toNanos(
             (long) annotation.limit()
         );
     }
 
-    /**
-     * Prepared message for log.
-     * @param point JointPoint to use
-     * @param method Method for which to log
-     * @param annotation Loggable annotation
-     * @param result Method result
-     * @param nano Method execution time
-     * @return Log message
-     */
     private static String message(final ProceedingJoinPoint point, final Method method,
         final Loggable annotation, final Object result, final long nano) {
         final StringBuilder msg = new StringBuilder(
@@ -311,12 +279,6 @@ public final class MethodLogger {
         return msg.toString();
     }
 
-    /**
-     * Get the destination logger for this method.
-     * @param method The method
-     * @param name The Loggable annotation
-     * @return The logger that will be used
-     */
     private static Object logger(final Method method, final CharSequence name) {
         final Object source;
         if (name.length() == 0) {
@@ -327,12 +289,6 @@ public final class MethodLogger {
         return source;
     }
 
-    /**
-     * Checks whether array of types contains given type.
-     * @param array Array of them
-     * @param exp The exception to find
-     * @return TRUE if it's there
-     */
     private static boolean contains(final Class<? extends Throwable>[] array,
         final Throwable exp) {
         boolean contains = false;
@@ -345,12 +301,6 @@ public final class MethodLogger {
         return contains;
     }
 
-    /**
-     * The type is an instance of another type?
-     * @param child The child type
-     * @param parent Parent type
-     * @return TRUE if child is really a child of a parent
-     */
     private static boolean instanceOf(final Class<?> child,
         final Class<?> parent) {
         boolean instance = child.equals(parent)
@@ -367,22 +317,6 @@ public final class MethodLogger {
         return instance;
     }
 
-    /**
-     * Textualize a stacktrace.
-     * @param trace Array of stacktrace elements
-     * @return The text
-     */
-    private static String allText(final StackTraceElement... trace) {
-        return Arrays.stream(trace)
-            .map(MethodLogger::oneText)
-            .collect(Collectors.joining(", "));
-    }
-
-    /**
-     * Textualize a stacktrace.
-     * @param trace One stacktrace element
-     * @return The text
-     */
     private static String oneText(final StackTraceElement trace) {
         return String.format(
             "%s#%s[%d]",
@@ -390,120 +324,5 @@ public final class MethodLogger {
             trace.getMethodName(),
             trace.getLineNumber()
         );
-    }
-
-    /**
-     * Marker of a running method.
-     * @since 0.0.0
-     */
-    private static final class Marker
-        implements Comparable<MethodLogger.Marker> {
-
-        /**
-         * When the method was started, in milliseconds.
-         */
-        private final transient long started;
-
-        /**
-         * Which monitoring cycle was logged recently.
-         */
-        private final transient AtomicInteger logged;
-
-        /**
-         * The thread it's running in.
-         */
-        private final transient Thread thread;
-
-        /**
-         * Joint point.
-         */
-        private final transient ProceedingJoinPoint point;
-
-        /**
-         * Annotation.
-         */
-        private final transient Loggable annotation;
-
-        /**
-         * Public ctor.
-         * @param pnt Joint point
-         * @param annt Annotation
-         */
-        Marker(final ProceedingJoinPoint pnt, final Loggable annt) {
-            this(
-                pnt, annt, System.currentTimeMillis(), Thread.currentThread()
-            );
-        }
-
-        /**
-         * Ctor.
-         * @param pnt Joint point
-         * @param annt Annotation
-         * @param begin When the method was started, in milliseconds
-         * @param thrd The thread it's running in
-         */
-        private Marker(final ProceedingJoinPoint pnt, final Loggable annt,
-            final long begin, final Thread thrd) {
-            this.point = pnt;
-            this.annotation = annt;
-            this.started = begin;
-            this.thread = thrd;
-            this.logged = new AtomicInteger();
-        }
-
-        @Override
-        public int hashCode() {
-            return this.point.hashCode();
-        }
-
-        @Override
-        public boolean equals(final Object obj) {
-            return obj == this || ((MethodLogger.Marker) obj)
-                .point.equals(this.point);
-        }
-
-        @Override
-        public int compareTo(final MethodLogger.Marker marker) {
-            int cmp = 0;
-            if (this.started < marker.started) {
-                cmp = 1;
-            } else if (this.started > marker.started) {
-                cmp = -1;
-            }
-            return cmp;
-        }
-
-        /**
-         * Monitor it's status and log the problem, if any.
-         */
-        void monitor() {
-            final TimeUnit unit = this.annotation.unit();
-            final long threshold = this.annotation.limit();
-            final long age = unit.convert(
-                System.currentTimeMillis() - this.started, TimeUnit.MILLISECONDS
-            );
-            final int cycle = (int) ((age - threshold) / threshold);
-            if (cycle > this.logged.get()) {
-                final Method method = ((MethodSignature) this.point.getSignature()).getMethod();
-                Logger.warn(
-                    method.getDeclaringClass(),
-                    "%s: takes more than %[ms]s, %[ms]s already, thread=%s/%s",
-                    Mnemos.toText(this.point, true, this.annotation.skipArgs()),
-                    TimeUnit.MILLISECONDS.convert(threshold, unit),
-                    TimeUnit.MILLISECONDS.convert(age, unit),
-                    this.thread.getName(),
-                    this.thread.getState()
-                );
-                Logger.debug(
-                    method.getDeclaringClass(),
-                    "%s: thread %s/%s stacktrace: %s",
-                    Mnemos.toText(this.point, true, this.annotation.skipArgs()),
-                    this.thread.getName(),
-                    this.thread.getState(),
-                    MethodLogger.allText(this.thread.getStackTrace())
-                );
-                this.logged.set(cycle);
-            }
-        }
     }
 }

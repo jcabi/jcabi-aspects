@@ -6,12 +6,9 @@ package com.jcabi.aspects.aj;
 
 import com.jcabi.aspects.Cacheable;
 import com.jcabi.aspects.Loggable;
-import com.jcabi.log.Logger;
 import com.jcabi.log.VerboseRunnable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,7 +17,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import org.aspectj.lang.JoinPoint;
@@ -48,12 +44,12 @@ public final class MethodCacher {
     /**
      * Calling tunnels.
      */
-    private final transient ConcurrentMap<MethodCacher.Key, MethodCacher.Tunnel> tunnels;
+    private final transient ConcurrentMap<Key, Tunnel> tunnels;
 
     /**
      * Save the keys which need update.
      */
-    private final transient BlockingQueue<MethodCacher.Key> updatekeys;
+    private final transient BlockingQueue<Key> updatekeys;
 
     /**
      * Service that cleans cache.
@@ -123,8 +119,8 @@ public final class MethodCacher {
      */
     @Around("execution(* *(..)) && @annotation(com.jcabi.aspects.Cacheable)")
     public Object cache(final ProceedingJoinPoint point) throws Throwable {
-        final MethodCacher.Key key = new MethodCacher.Key(point);
-        MethodCacher.Tunnel tunnel;
+        final Key key = new Key(point);
+        Tunnel tunnel;
         final Method method = ((MethodSignature) point.getSignature())
             .getMethod();
         final Cacheable annot = method.getAnnotation(Cacheable.class);
@@ -137,7 +133,7 @@ public final class MethodCacher {
             }
             tunnel = this.tunnels.get(key);
             if (MethodCacher.isCreateTunnel(tunnel)) {
-                tunnel = new MethodCacher.Tunnel(
+                tunnel = new Tunnel(
                     point, key, annot.asyncUpdate()
                 );
                 this.tunnels.put(key, tunnel);
@@ -156,24 +152,10 @@ public final class MethodCacher {
         return tunnel.through();
     }
 
-    /**
-     * Whether create a new Tunnel.
-     * @param tunnel MethodCacher.Tunnel
-     * @return Boolean
-     */
-    private static boolean isCreateTunnel(final MethodCacher.Tunnel tunnel) {
+    private static boolean isCreateTunnel(final Tunnel tunnel) {
         return tunnel == null || tunnel.expired() && !tunnel.asyncUpdate();
     }
 
-    /**
-     * Does this trigger class demand a flush?
-     * @param trigger The class with the static trigger method
-     * @param name The name of the trigger method
-     * @return TRUE if flushing is required
-     * @throws NoSuchMethodException If the trigger method is absent
-     * @throws IllegalAccessException If the trigger method is not visible
-     * @throws InvocationTargetException If the trigger method fails
-     */
     private static boolean triggered(final Class<?> trigger, final String name)
         throws NoSuchMethodException, IllegalAccessException,
         InvocationTargetException {
@@ -235,16 +217,10 @@ public final class MethodCacher {
         this.flush(point, "after the call");
     }
 
-    /**
-     * Flush cache.
-     * @param point Joint point
-     * @param when When it happens
-     * @since 0.7.18
-     */
     private void flush(final JoinPoint point, final String when) {
         this.lock.lock();
         try {
-            for (final MethodCacher.Key key : this.tunnels.keySet()) {
+            for (final Key key : this.tunnels.keySet()) {
                 if (key.sameTarget(point)) {
                     MethodCacher.removal(
                         key, this.tunnels.remove(key), point, when
@@ -256,15 +232,8 @@ public final class MethodCacher {
         }
     }
 
-    /**
-     * Report a removal from the cache.
-     * @param key The key that was removed
-     * @param tunnel The tunnel that was removed
-     * @param point Joint point
-     * @param when When it happens
-     */
-    private static void removal(final MethodCacher.Key key,
-        final MethodCacher.Tunnel tunnel, final JoinPoint point,
+    private static void removal(final Key key,
+        final Tunnel tunnel, final JoinPoint point,
         final String when) {
         final Method method = ((MethodSignature) point.getSignature())
             .getMethod();
@@ -281,15 +250,12 @@ public final class MethodCacher {
         }
     }
 
-    /**
-     * Clean cache.
-     */
     private void clean() {
         this.lock.lock();
         try {
-            for (final Map.Entry<MethodCacher.Key, MethodCacher.Tunnel> entry
+            for (final Map.Entry<Key, Tunnel> entry
                 : this.tunnels.entrySet()) {
-                final MethodCacher.Key key = entry.getKey();
+                final Key key = entry.getKey();
                 if (entry.getValue().expired()
                     && !entry.getValue().asyncUpdate()) {
                     LogHelper.log(
@@ -306,17 +272,14 @@ public final class MethodCacher {
         }
     }
 
-    /**
-     * Update cache.
-     */
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     private void update() {
         while (true) {
             try {
-                final MethodCacher.Key key = this.updatekeys.take();
-                final MethodCacher.Tunnel tunnel = this.tunnels.get(key);
+                final Key key = this.updatekeys.take();
+                final Tunnel tunnel = this.tunnels.get(key);
                 if (tunnel != null && tunnel.expired()) {
-                    final MethodCacher.Tunnel after = tunnel.copy();
+                    final Tunnel after = tunnel.copy();
                     after.through();
                     this.tunnels.put(key, after);
                 }
@@ -338,308 +301,6 @@ public final class MethodCacher {
                     ex
                 );
             }
-        }
-    }
-
-    /**
-     * Mutable caching/calling tunnel, it is thread-safe.
-     * @since 0.8
-     */
-    private static final class Tunnel {
-
-        /**
-         * Proceeding join point.
-         */
-        private final transient ProceedingJoinPoint point;
-
-        /**
-         * Key related to this tunnel.
-         */
-        private final transient MethodCacher.Key key;
-
-        /**
-         * Whether asynchronous update.
-         */
-        private final transient boolean asynchupdate;
-
-        /**
-         * Was it already executed?
-         */
-        private transient boolean executed;
-
-        /**
-         * When will it expire (moment in time).
-         */
-        private transient long lifetime;
-
-        /**
-         * Cached value.
-         */
-        private transient Object cached;
-
-        /**
-         * Public ctor.
-         * @param pnt ProceedingJoinPoint
-         * @param akey MethodCacher.Key
-         * @param aupdate Boolean
-         */
-        Tunnel(final ProceedingJoinPoint pnt,
-            final MethodCacher.Key akey, final boolean aupdate) {
-            this.point = pnt;
-            this.key = akey;
-            this.asynchupdate = aupdate;
-        }
-
-        @Override
-        public String toString() {
-            return Mnemos.toText(this.cached, true, false);
-        }
-
-        /**
-         * Public ctor.
-         * @return MethodCacher.Tunnel
-         */
-        MethodCacher.Tunnel copy() {
-            return new MethodCacher.Tunnel(
-                this.point, this.key, this.asynchupdate
-            );
-        }
-
-        /**
-         * Get a result through the tunnel.
-         * @return The result
-         * @throws Throwable If something goes wrong inside
-         * @checkstyle IllegalThrows (5 lines)
-         */
-        @SuppressWarnings("PMD.AvoidSynchronizedAtMethodLevel")
-        synchronized Object through() throws Throwable {
-            if (!this.executed) {
-                final long start = System.currentTimeMillis();
-                this.cached = this.point.proceed();
-                final Method method = ((MethodSignature) this.point.getSignature())
-                    .getMethod();
-                final Cacheable annot = method.getAnnotation(Cacheable.class);
-                final String suffix;
-                if (annot.forever()) {
-                    this.lifetime = Long.MAX_VALUE;
-                    suffix = "valid forever";
-                } else if (annot.lifetime() == 0) {
-                    this.lifetime = 0L;
-                    suffix = "invalid immediately";
-                } else {
-                    final long msec = annot.unit().toMillis(
-                        (long) annot.lifetime()
-                    );
-                    this.lifetime = start + msec;
-                    suffix = Logger.format("valid for %[ms]s", msec);
-                }
-                final Class<?> type = method.getDeclaringClass();
-                if (LogHelper.enabled(this.key.getLevel(), type)) {
-                    LogHelper.log(
-                        this.key.getLevel(),
-                        type,
-                        "%s: %s cached in %[ms]s, %s",
-                        Mnemos.toText(
-                            method, this.point.getArgs(), true, false
-                        ),
-                        Mnemos.toText(this.cached, true, false),
-                        System.currentTimeMillis() - start,
-                        suffix
-                    );
-                }
-                this.executed = true;
-            }
-            return this.key.through(this.cached);
-        }
-
-        /**
-         * Is it expired already?
-         * @return TRUE if expired
-         */
-        boolean expired() {
-            return this.executed && this.lifetime < System.currentTimeMillis();
-        }
-
-        /**
-         * Whether asynchronous update.
-         * @return TRUE if asynchronous update
-         */
-        boolean asyncUpdate() {
-            return this.asynchupdate;
-        }
-    }
-
-    /**
-     * Key of a callable target.
-     * @since 0.8
-     */
-    private static final class Key {
-
-        /**
-         * When instantiated.
-         */
-        private final transient long start;
-
-        /**
-         * How many times the key was already accessed.
-         */
-        private final transient AtomicInteger accessed;
-
-        /**
-         * Method.
-         */
-        private final transient Method method;
-
-        /**
-         * Object callable (or class, if static method).
-         */
-        private final transient Object target;
-
-        /**
-         * Arguments.
-         */
-        private final transient Object[] arguments;
-
-        /**
-         * Log level.
-         */
-        private final int level;
-
-        /**
-         * Public ctor.
-         * @param point Joint point
-         */
-        Key(final JoinPoint point) {
-            this(point, ((MethodSignature) point.getSignature()).getMethod());
-        }
-
-        /**
-         * Ctor.
-         * @param point Joint point
-         * @param mtd The method being called
-         */
-        private Key(final JoinPoint point, final Method mtd) {
-            this(
-                mtd,
-                MethodCacher.Key.targetize(point),
-                point.getArgs(),
-                System.currentTimeMillis(),
-                MethodCacher.Key.severity(mtd)
-            );
-        }
-
-        /**
-         * Ctor.
-         * @param mtd The method being called
-         * @param tgt The object being called
-         * @param args The arguments of the call
-         * @param begin When it was instantiated
-         * @param lvl Log level
-         */
-        private Key(final Method mtd, final Object tgt, final Object[] args,
-            final long begin, final int lvl) {
-            this.method = mtd;
-            this.target = tgt;
-            this.arguments = args.clone();
-            this.start = begin;
-            this.level = lvl;
-            this.accessed = new AtomicInteger();
-        }
-
-        @Override
-        public String toString() {
-            return Mnemos.toText(this.method, this.arguments, true, false);
-        }
-
-        @Override
-        public int hashCode() {
-            return this.method.hashCode();
-        }
-
-        @Override
-        public boolean equals(final Object obj) {
-            final boolean equals;
-            if (this == obj) {
-                equals = true;
-            } else if (obj instanceof MethodCacher.Key) {
-                final MethodCacher.Key key = (MethodCacher.Key) obj;
-                equals = key.method.equals(this.method)
-                    && this.target.equals(key.target)
-                    && Arrays.deepEquals(key.arguments, this.arguments);
-            } else {
-                equals = false;
-            }
-            return equals;
-        }
-
-        /**
-         * Send a result through, with necessary logging.
-         * @param result The result to send through
-         * @return The same result/object
-         */
-        Object through(final Object result) {
-            final int hit = this.accessed.getAndIncrement();
-            final Class<?> type = this.method.getDeclaringClass();
-            if (hit > 0 && LogHelper.enabled(this.level, type)) {
-                LogHelper.log(
-                    this.level,
-                    type,
-                    "%s: %s from cache (hit #%d, %[ms]s old)",
-                    this,
-                    Mnemos.toText(result, true, false),
-                    hit,
-                    System.currentTimeMillis() - this.start
-                );
-            }
-            return result;
-        }
-
-        /**
-         * Is it related to the same target?
-         * @param point Proceeding point
-         * @return True if the target is the same
-         */
-        boolean sameTarget(final JoinPoint point) {
-            return MethodCacher.Key.targetize(point).equals(this.target);
-        }
-
-        /**
-         * Calculate its target.
-         * @param point Proceeding point
-         * @return The target
-         */
-        private static Object targetize(final JoinPoint point) {
-            final Object tgt;
-            final Method method = ((MethodSignature) point.getSignature()).getMethod();
-            if (Modifier.isStatic(method.getModifiers())) {
-                tgt = method.getDeclaringClass();
-            } else {
-                tgt = point.getTarget();
-            }
-            return tgt;
-        }
-
-        /**
-         * Log level of the method.
-         * @param method The method being called
-         * @return Log level
-         */
-        private static int severity(final Method method) {
-            final int lvl;
-            if (method.isAnnotationPresent(Loggable.class)) {
-                lvl = method.getAnnotation(Loggable.class).value();
-            } else {
-                lvl = Loggable.DEBUG;
-            }
-            return lvl;
-        }
-
-        /**
-         * Get log level.
-         * @return Log level of current method
-         */
-        private int getLevel() {
-            return this.level;
         }
     }
 }

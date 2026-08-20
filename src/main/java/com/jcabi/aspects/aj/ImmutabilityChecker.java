@@ -50,7 +50,7 @@ public final class ImmutabilityChecker {
         final Class<?> type = point.getTarget().getClass();
         try {
             this.check(type);
-        } catch (final ImmutabilityChecker.Violation ex) {
+        } catch (final Violation ex) {
             throw new IllegalStateException(
                 String.format(
                     "%s is not immutable, can't use it (jcabi-aspects %s/%s)",
@@ -63,19 +63,13 @@ public final class ImmutabilityChecker {
         }
     }
 
-    /**
-     * This class is immutable?
-     * @param type The class to check
-     * @throws ImmutabilityChecker.Violation If it is mutable
-     */
-    private void check(final Class<?> type)
-        throws ImmutabilityChecker.Violation {
+    private void check(final Class<?> type) throws Violation {
         this.lock.lock();
         try {
             if (!this.ignore(type)) {
                 if (type.isInterface()
                     && !type.isAnnotationPresent(Immutable.class)) {
-                    throw new ImmutabilityChecker.Violation(
+                    throw new Violation(
                         String.format(
                             "Interface '%s' is not annotated with @Immutable",
                             type.getName()
@@ -84,7 +78,7 @@ public final class ImmutabilityChecker {
                 }
                 if (!type.isInterface()
                     && !Modifier.isFinal(type.getModifiers())) {
-                    throw new ImmutabilityChecker.Violation(
+                    throw new Violation(
                         String.format(
                             "Class '%s' is not final",
                             type.getName()
@@ -93,8 +87,8 @@ public final class ImmutabilityChecker {
                 }
                 try {
                     this.fields(type);
-                } catch (final ImmutabilityChecker.Violation ex) {
-                    throw new ImmutabilityChecker.Violation(
+                } catch (final Violation ex) {
+                    throw new Violation(
                         String.format("Class '%s' is mutable", type.getName()),
                         ex
                     );
@@ -107,11 +101,6 @@ public final class ImmutabilityChecker {
         }
     }
 
-    /**
-     * This class should be ignored and never checked any more?
-     * @param type The type to check
-     * @return TRUE if this class shouldn't be checked
-     */
     private boolean ignore(final Class<?> type) {
         // @checkstyle BooleanExpressionComplexity (5 lines)
         return type.equals(Object.class)
@@ -121,20 +110,14 @@ public final class ImmutabilityChecker {
             || this.immutable.contains(type);
     }
 
-    /**
-     * All its fields are safe?
-     * @param type Type to check
-     * @throws ImmutabilityChecker.Violation If it is mutable
-     */
-    private void fields(final Class<?> type)
-        throws ImmutabilityChecker.Violation {
+    private void fields(final Class<?> type) throws Violation {
         final Field[] fields = type.getDeclaredFields();
         for (final Field field : fields) {
             if (Modifier.isStatic(field.getModifiers())) {
                 continue;
             }
             if (!Modifier.isFinal(field.getModifiers())) {
-                throw new ImmutabilityChecker.Violation(
+                throw new Violation(
                     String.format(
                         "field '%s' is not final in %s",
                         field, type.getName()
@@ -145,8 +128,8 @@ public final class ImmutabilityChecker {
                 if (field.getType().isArray()) {
                     this.checkArray(field);
                 }
-            } catch (final ImmutabilityChecker.Violation ex) {
-                throw new ImmutabilityChecker.Violation(
+            } catch (final Violation ex) {
+                throw new Violation(
                     String.format(
                         "field '%s' is mutable",
                         field
@@ -157,15 +140,9 @@ public final class ImmutabilityChecker {
         }
     }
 
-    /**
-     * This array field immutable?
-     * @param field The field to check
-     * @throws ImmutabilityChecker.Violation If it is mutable.
-     */
-    private void checkArray(final Field field)
-        throws ImmutabilityChecker.Violation {
+    private void checkArray(final Field field) throws Violation {
         if (!field.isAnnotationPresent(Immutable.Array.class)) {
-            throw new ImmutabilityChecker.Violation(
+            throw new Violation(
                 String.format(
                     "Field '%s' is an array and is not annotated with @Immutable.Array",
                     field.getName()
@@ -175,44 +152,14 @@ public final class ImmutabilityChecker {
         final Class<?> type = field.getType().getComponentType();
         try {
             this.check(type);
-        } catch (final ImmutabilityChecker.Violation ex) {
-            throw new ImmutabilityChecker.Violation(
+        } catch (final Violation ex) {
+            throw new Violation(
                 String.format(
                     "Field array component type '%s' is mutable",
                     type.getName()
                 ),
                 ex
             );
-        }
-    }
-
-    /**
-     * Immutability violation.
-     * @since 0.0.0
-     */
-    private static final class Violation extends Exception {
-
-        /**
-         * Serialization marker.
-         */
-        private static final long serialVersionUID = 1L;
-
-        /**
-         * Public ctor.
-         * @param msg Message
-         */
-        private Violation(final String msg) {
-            super(msg);
-        }
-
-        /**
-         * Public ctor.
-         * @param msg Message
-         * @param cause Cause of it
-         * @checkstyle ConstructorsOrderCheck (3 lines)
-         */
-        private Violation(final String msg, final Exception cause) {
-            super(msg, cause);
         }
     }
 }
