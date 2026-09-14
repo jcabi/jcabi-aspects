@@ -18,6 +18,7 @@ public final class StaticPage {
     private static int cnt;
     /**
      * Download some text.
+     *
      * @param text Some text
      */
     @Cacheable
@@ -26,6 +27,7 @@ public final class StaticPage {
     }
     /**
      * Get counter.
+     *
      * @return The number
      */
     public static int counted() {

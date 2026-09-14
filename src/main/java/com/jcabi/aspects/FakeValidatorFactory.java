@@ -16,6 +16,7 @@ import javax.validation.ValidatorFactory;
 
 /**
  * Fake class.
+ *
  * @since 0.25.0
  */
 class FakeValidatorFactory implements ValidatorFactory {

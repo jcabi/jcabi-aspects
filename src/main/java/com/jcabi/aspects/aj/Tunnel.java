@@ -12,6 +12,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Mutable caching/calling tunnel, it is thread-safe.
+ *
  * @since 0.8
  */
 final class Tunnel {
@@ -48,6 +49,7 @@ final class Tunnel {
 
     /**
      * Public ctor.
+     *
      * @param pnt ProceedingJoinPoint
      * @param akey Key
      * @param aupdate Boolean
@@ -66,6 +68,7 @@ final class Tunnel {
 
     /**
      * Public ctor.
+     *
      * @return Tunnel
      */
     Tunnel copy() {
@@ -76,6 +79,7 @@ final class Tunnel {
 
     /**
      * Get a result through the tunnel.
+     *
      * @return The result
      * @throws Throwable If something goes wrong inside
      * @checkstyle IllegalThrows (5 lines)
@@ -123,6 +127,7 @@ final class Tunnel {
 
     /**
      * Is it expired already?
+     *
      * @return TRUE if expired
      */
     boolean expired() {
@@ -131,6 +136,7 @@ final class Tunnel {
 
     /**
      * Whether asynchronous update.
+     *
      * @return TRUE if asynchronous update
      */
     boolean asyncUpdate() {

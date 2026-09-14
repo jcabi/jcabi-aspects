@@ -17,7 +17,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  *
  * <p>It is an AspectJ aspect and you are not supposed to use it directly. It
  * is instantiated by AspectJ runtime framework when your code is annotated
- * with {@link com.jcabi.aspects.Async} annotation.
+ * with {@link com.jcabi.aspects.Async} annotation.</p>
  *
  * @since 0.16
  */
@@ -27,23 +27,30 @@ public final class MethodAsyncRunner {
     /**
      * Thread pool for asynchronous execution.
      */
-    private final transient ExecutorService executor =
-        Executors.newFixedThreadPool(
+    private final transient ExecutorService executor;
+
+    /**
+     * Ctor.
+     */
+    // @checkstyle ConstructorsCodeFreeCheck (8 lines)
+    public MethodAsyncRunner() {
+        this.executor = Executors.newFixedThreadPool(
             Runtime.getRuntime().availableProcessors(),
             new NamedThreads(
                 "async",
                 "Asynchronous method execution"
             )
         );
+    }
 
     /**
      * Execute method asynchronously.
      *
      * <p>This aspect should be used only on {@code void} or
-     * {@link Future} returning methods.
+     * {@link Future} returning methods.</p>
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Joint point
      * @return The result of call

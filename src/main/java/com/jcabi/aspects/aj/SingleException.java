@@ -16,6 +16,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Throw single exception out of method.
+ *
  * @since 0.13
  * @checkstyle NonStaticMethodCheck (100 lines)
  */
@@ -24,10 +25,17 @@ import org.aspectj.lang.reflect.MethodSignature;
 public final class SingleException {
 
     /**
+     * Ctor.
+     */
+    public SingleException() {
+        // ctor
+    }
+
+    /**
      * Catch all exceptions and throw a single selected exception.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Joint point
      * @return The result of call

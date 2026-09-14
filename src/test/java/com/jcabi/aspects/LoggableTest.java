@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Loggable} annotation and its implementation.
+ *
  * @since 0.0.0
  */
 final class LoggableTest {
@@ -182,6 +183,7 @@ final class LoggableTest {
 
     /**
      * Parent class, without logging.
+     *
      * @since 0.0.0
      */
     @SuppressWarnings("PMD.JUnitTestClassShouldBeFinal")
@@ -189,6 +191,7 @@ final class LoggableTest {
 
         /**
          * Get some text.
+         *
          * @return The text
          */
         String parentText() {
@@ -198,6 +201,7 @@ final class LoggableTest {
 
     /**
      * Dummy class, for tests above.
+     *
      * @since 0.0.0
      */
     @Loggable
@@ -215,6 +219,7 @@ final class LoggableTest {
 
         /**
          * Get self instance.
+         *
          * @return Self
          */
         @Loggable
@@ -224,6 +229,7 @@ final class LoggableTest {
 
         /**
          * Revert string.
+         *
          * @param text Some text
          * @return Reverted text
          */
@@ -235,6 +241,7 @@ final class LoggableTest {
 
         /**
          * Method returns byte array.
+         *
          * @return Byte array
          */
         @Loggable
@@ -246,6 +253,7 @@ final class LoggableTest {
 
         /**
          * Method returns short array.
+         *
          * @return Byte array
          */
         @Loggable
@@ -260,6 +268,7 @@ final class LoggableTest {
 
         /**
          * Get last char.
+         *
          * @param text Text to get last char from
          * @return Last char
          */
@@ -270,6 +279,7 @@ final class LoggableTest {
 
         /**
          * Static method.
+         *
          * @return Some text
          * @throws Exception If terminated
          */
@@ -281,6 +291,7 @@ final class LoggableTest {
 
         /**
          * Method annotated with Loggable specifying explicit logger name.
+         *
          * @return A String
          */
         @Loggable(value = Loggable.DEBUG, name = "test-logger", prepend = true)
@@ -290,6 +301,7 @@ final class LoggableTest {
 
         /**
          * Method with different time unit specification.
+         *
          * @return Some text
          * @throws Exception If terminated
          */
@@ -311,6 +323,7 @@ final class LoggableTest {
 
     /**
      * Class with a method that uses logException to control exception log level.
+     *
      * @since 0.0.0
      */
     private static final class Bar {
@@ -326,6 +339,7 @@ final class LoggableTest {
 
     /**
      * Matcher that checks if a string contains the given pattern.
+     *
      * @since 0.0.0
      */
     private static final class RegexContainsMatcher extends TypeSafeMatcher<String> {
@@ -337,6 +351,7 @@ final class LoggableTest {
 
         /**
          * Ctor.
+         *
          * @param regex The regex pattern
          */
         private RegexContainsMatcher(final String regex) {
@@ -345,6 +360,7 @@ final class LoggableTest {
 
         /**
          * Ctor.
+         *
          * @param ptrn The regex to match against
          */
         private RegexContainsMatcher(final Pattern ptrn) {

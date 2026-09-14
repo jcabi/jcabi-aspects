@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Repeater}.
+ *
  * @since 0.1.10
  */
 @SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")

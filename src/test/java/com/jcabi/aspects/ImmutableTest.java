@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Immutable} annotation and its implementation.
+ *
  * @since 0.0.0
  * @checkstyle ConstantUsageCheck (500 lines)
  */
@@ -80,6 +81,7 @@ final class ImmutableTest {
 
     /**
      * Other vague interface.
+     *
      * @since 0.0.0
      */
     @Immutable
@@ -88,6 +90,7 @@ final class ImmutableTest {
 
         /**
          * This function seems to be harmless.
+         *
          * @param input An input
          */
         void willBreakImmutability(int input);
@@ -95,6 +98,7 @@ final class ImmutableTest {
 
     /**
      * Supposedly immutable class.
+     *
      * @since 0.0.0
      */
     @Immutable
@@ -109,6 +113,7 @@ final class ImmutableTest {
 
     /**
      * Mutable class because of array.
+     *
      * @since 0.0.0
      */
     @Immutable
@@ -122,6 +127,7 @@ final class ImmutableTest {
 
     /**
      * Truly immutable class.
+     *
      * @since 0.0.0
      */
     @Immutable
@@ -172,6 +178,7 @@ final class ImmutableTest {
 
         /**
          * Ctor.
+         *
          * @param ipt Input
          */
         private TrulyImmutable(final ImmutableTest.TrulyImmutableWithNonPrivateFields ipt) {
@@ -180,6 +187,7 @@ final class ImmutableTest {
 
         /**
          * Ctor.
+         *
          * @param ipt Input
          */
         private TrulyImmutable(final String ipt) {
@@ -193,6 +201,7 @@ final class ImmutableTest {
 
     /**
      * Truly immutable class with non-private fields.
+     *
      * @since 0.0.0
      * @checkstyle VisibilityModifier (25 lines)
      */
@@ -221,6 +230,7 @@ final class ImmutableTest {
 
         /**
          * Another immutable class member.
+         *
          * @checkstyle VisibilityModifierCheck (3 lines)
          */
         final String text = "Hello!";
@@ -235,6 +245,7 @@ final class ImmutableTest {
      * "http://marxsoftware.blogspot.se/2009/09/
      * is-java-immutable-class-always-final.html">
      * Is java immutable class always final?</a>
+     *
      * @since 0.0.0
      * @checkstyle FinalClassCheck (5 lines)
      */
@@ -253,6 +264,7 @@ final class ImmutableTest {
         /**
          * Could be overloaded by a child of the class and then return
          * nonsensical value.
+         *
          * @return A value that could differ from what is expected if
          *  returned by an overriding method
          */

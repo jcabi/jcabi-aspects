@@ -14,6 +14,7 @@ import javax.validation.metadata.BeanDescriptor;
 
 /**
  * Fake class.
+ *
  * @since 0.25.0
  */
 final class FakeValidator implements Validator {

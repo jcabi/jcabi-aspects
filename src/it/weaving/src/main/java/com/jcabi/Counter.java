@@ -19,6 +19,7 @@ public final class Counter {
 
     /**
      * Get count.
+     *
      * @return Count
      */
     public int get() {

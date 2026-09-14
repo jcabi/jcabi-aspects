@@ -17,6 +17,7 @@ import javax.validation.valueextraction.ValueExtractor;
 
 /**
  * Fake class.
+ *
  * @since 0.25.0
  */
 final class FakeConfiguration implements Configuration<FakeConfiguration> {

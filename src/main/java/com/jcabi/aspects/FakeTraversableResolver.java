@@ -10,6 +10,7 @@ import javax.validation.TraversableResolver;
 
 /**
  * Fake class.
+ *
  * @since 0.25.0
  */
 final class FakeTraversableResolver implements TraversableResolver {

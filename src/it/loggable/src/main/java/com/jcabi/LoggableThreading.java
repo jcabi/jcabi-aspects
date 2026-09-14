@@ -13,6 +13,7 @@ public final class LoggableThreading {
 
     /**
      * Loggable method.
+     *
      * @return Some value
      */
     @Loggable(Loggable.DEBUG)

@@ -26,7 +26,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  *
  * <p>It is an AspectJ aspect and you are not supposed to use it directly. It
  * is instantiated by AspectJ runtime framework when your code is annotated
- * with {@link Loggable} annotation.
+ * with {@link Loggable} annotation.</p>
  *
  * @since 0.7.2
  * @checkstyle IllegalThrows (500 lines)
@@ -83,7 +83,7 @@ public final class MethodLogger {
      * Log methods in a class.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Joint point
      * @return The result of call
@@ -119,7 +119,7 @@ public final class MethodLogger {
      * Log individual methods.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Joint point
      * @return The result of call

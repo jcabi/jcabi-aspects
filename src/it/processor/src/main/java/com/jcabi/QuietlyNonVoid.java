@@ -13,6 +13,7 @@ public final class QuietlyNonVoid {
 
     /**
      * Does not return void. Should be flagged by annotation processor.
+     *
      * @return non void
      */
     @Quietly

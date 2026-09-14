@@ -14,6 +14,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Key of a callable target.
+ *
  * @since 0.8
  */
 final class Key {
@@ -50,6 +51,7 @@ final class Key {
 
     /**
      * Public ctor.
+     *
      * @param point Joint point
      */
     Key(final JoinPoint point) {
@@ -58,6 +60,7 @@ final class Key {
 
     /**
      * Ctor.
+     *
      * @param point Joint point
      * @param mtd The method being called
      */
@@ -73,6 +76,7 @@ final class Key {
 
     /**
      * Ctor.
+     *
      * @param mtd The method being called
      * @param tgt The object being called
      * @param args The arguments of the call
@@ -117,6 +121,7 @@ final class Key {
 
     /**
      * Send a result through, with necessary logging.
+     *
      * @param result The result to send through
      * @return The same result/object
      */
@@ -139,6 +144,7 @@ final class Key {
 
     /**
      * Is it related to the same target?
+     *
      * @param point Proceeding point
      * @return True if the target is the same
      */

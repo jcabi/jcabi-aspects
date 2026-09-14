@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadFactory;
  * {@link MethodCacher}, {@link MethodInterrupter}, etc.
  *
  * <p>This custom class is used instead of a default ThreadFactory in order
- * to name scheduled threads correctly on construction.
+ * to name scheduled threads correctly on construction.</p>
  *
  * @since 0.7.17
  */
@@ -36,6 +36,7 @@ final class NamedThreads implements ThreadFactory {
 
     /**
      * Public ctor.
+     *
      * @param suffix Suffix of thread names
      * @param desc Description of purpose
      */
@@ -48,6 +49,7 @@ final class NamedThreads implements ThreadFactory {
 
     /**
      * Ctor.
+     *
      * @param label Name of the threads
      * @param desc Description of purpose
      * @param grp Thread group to use

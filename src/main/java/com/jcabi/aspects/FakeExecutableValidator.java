@@ -13,6 +13,7 @@ import javax.validation.executable.ExecutableValidator;
 
 /**
  * Fake class.
+ *
  * @since 0.25.0
  */
 final class FakeExecutableValidator implements ExecutableValidator {

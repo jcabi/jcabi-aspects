@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link ImmutabilityChecker}.
+ *
  * @since 0.7.8
  */
 final class ImmutabilityCheckerTest {
@@ -33,6 +34,7 @@ final class ImmutabilityCheckerTest {
 
     /**
      * Class with a field that is not final.
+     *
      * @since 0.7.8
      */
     @Immutable
@@ -46,6 +48,7 @@ final class ImmutabilityCheckerTest {
 
         /**
          * Constructor.
+         *
          * @param fld Field to store
          */
         private NonFinal(final String fld) {
@@ -55,6 +58,7 @@ final class ImmutabilityCheckerTest {
 
     /**
      * Class that references itself.
+     *
      * @since 0.7.8
      */
     @Immutable
@@ -67,6 +71,7 @@ final class ImmutabilityCheckerTest {
 
         /**
          * Constructor.
+         *
          * @param nxt Next object
          */
         private Recursive(final ImmutabilityCheckerTest.Recursive nxt) {
@@ -75,6 +80,7 @@ final class ImmutabilityCheckerTest {
 
         /**
          * Get the next object.
+         *
          * @return Object stored
          */
         ImmutabilityCheckerTest.Recursive getNext() {

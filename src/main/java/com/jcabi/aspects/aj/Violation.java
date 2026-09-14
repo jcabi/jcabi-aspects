@@ -6,6 +6,7 @@ package com.jcabi.aspects.aj;
 
 /**
  * Immutability violation.
+ *
  * @since 0.0.0
  */
 final class Violation extends Exception {
@@ -17,6 +18,7 @@ final class Violation extends Exception {
 
     /**
      * Public ctor.
+     *
      * @param msg Message
      */
     Violation(final String msg) {
@@ -25,6 +27,7 @@ final class Violation extends Exception {
 
     /**
      * Public ctor.
+     *
      * @param msg Message
      * @param cause Cause of it
      * @checkstyle ConstructorsOrderCheck (3 lines)

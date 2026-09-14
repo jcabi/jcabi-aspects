@@ -9,6 +9,7 @@ import com.jcabi.log.Logger;
 
 /**
  * Helper methods for logging.
+ *
  * @since 0.17
  */
 final class LogHelper {
@@ -22,6 +23,7 @@ final class LogHelper {
 
     /**
      * Log one line.
+     *
      * @param level Level of logging
      * @param log Destination log
      * @param message Message to log
@@ -45,6 +47,7 @@ final class LogHelper {
 
     /**
      * Log level is enabled?
+     *
      * @param level Level of logging
      * @param log Destination log
      * @return TRUE if enabled

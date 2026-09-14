@@ -9,6 +9,7 @@ import javax.validation.ConstraintValidatorFactory;
 
 /**
  * Fake class.
+ *
  * @since 0.25.0
  */
 final class FakeConstraintValidatorFactory

@@ -17,6 +17,7 @@ import org.aspectj.lang.annotation.Before;
 
 /**
  * Schedules methods.
+ *
  * @since 0.7.16
  */
 @Aspect
@@ -40,7 +41,7 @@ public final class MethodScheduler {
      * Instantiate a new routine task.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Joint point
      */
@@ -82,7 +83,7 @@ public final class MethodScheduler {
      * Stop/close a routine task.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Joint point
      */

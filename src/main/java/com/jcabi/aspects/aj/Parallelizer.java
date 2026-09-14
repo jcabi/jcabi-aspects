@@ -23,6 +23,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Execute method in multiple threads.
+ *
  * @see Parallel
  * @since 0.10
  * @checkstyle NonStaticMethodCheck (100 lines)
@@ -32,12 +33,19 @@ import org.aspectj.lang.reflect.MethodSignature;
 public final class Parallelizer {
 
     /**
+     * Ctor.
+     */
+    public Parallelizer() {
+        // ctor
+    }
+
+    /**
      * Execute method in multiple threads.
      *
-     * <p>This aspect should be used only on void returning methods.
+     * <p>This aspect should be used only on void returning methods.</p>
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Joint point
      * @return The result of call

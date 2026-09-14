@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for {@link Version}.
+ *
  * @since 0.23
  */
 final class VersionTest {

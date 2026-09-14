@@ -20,7 +20,7 @@ import org.aspectj.lang.annotation.Aspect;
 /**
  * Checks for class immutability.
  *
- * <p>The class is thread-safe.
+ * <p>The class is thread-safe.</p>
  *
  * @since 0.7.8
  */
@@ -30,18 +30,26 @@ public final class ImmutabilityChecker {
     /**
      * Already checked immutable classes.
      */
-    private final transient Collection<Class<?>> immutable = new HashSet<>();
+    private final transient Collection<Class<?>> immutable;
 
     /**
      * Guard of the checked classes.
      */
-    private final transient Lock lock = new ReentrantLock();
+    private final transient Lock lock;
+
+    /**
+     * Ctor.
+     */
+    public ImmutabilityChecker() {
+        this.immutable = new HashSet<>();
+        this.lock = new ReentrantLock();
+    }
 
     /**
      * Catch instantiation and validate class.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Joint point
      */

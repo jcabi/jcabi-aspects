@@ -10,6 +10,7 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  * Fake class.
+ *
  * @param <T> Type
  * @param <X> Another type
  * @since 0.25.0

@@ -117,6 +117,7 @@ final class JSR303Test {
 
     /**
      * Annotation.
+     *
      * @since 0.0.0
      */
     @Retention(RetentionPolicy.RUNTIME)
@@ -126,6 +127,7 @@ final class JSR303Test {
 
     /**
      * Dummy interface for testing messages overriding.
+     *
      * @since 0.0.0
      */
     @FunctionalInterface
@@ -133,6 +135,7 @@ final class JSR303Test {
 
         /**
          * Test method.
+         *
          * @param value Value
          */
         void test(@NotNull(message = JSR303Test.OVERRIDDEN_MSG) String value);
@@ -140,6 +143,7 @@ final class JSR303Test {
 
     /**
      * Dummy class, for tests above.
+     *
      * @since 0.0.0
      */
     @Loggable
@@ -147,6 +151,7 @@ final class JSR303Test {
 
         /**
          * Do nothing.
+         *
          * @param text Some text
          * @return Some data
          */
@@ -159,6 +164,7 @@ final class JSR303Test {
 
         /**
          * Always return null.
+         *
          * @return Some data
          */
         @NotNull
@@ -177,6 +183,7 @@ final class JSR303Test {
 
     /**
      * Dummy class for testing constructor validation.
+     *
      * @since 0.0.0
      */
     @Loggable
@@ -184,6 +191,7 @@ final class JSR303Test {
 
         /**
          * Public ctor.
+         *
          * @param param The param
          */
         private ConstructorValidation(@NotNull final String param) {
@@ -192,6 +200,7 @@ final class JSR303Test {
 
         /**
          * Public ctor.
+         *
          * @param first First param
          * @param second Second param
          */
@@ -206,6 +215,7 @@ final class JSR303Test {
 
     /**
      * Dummy class for testing messages overriding.
+     *
      * @since 0.0.0
      */
     @Loggable

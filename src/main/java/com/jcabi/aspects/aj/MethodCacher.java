@@ -32,9 +32,9 @@ import org.aspectj.lang.reflect.MethodSignature;
  *
  * <p>It is an AspectJ aspect and you are not supposed to use it directly. It
  * is instantiated by AspectJ runtime framework when your code is annotated
- * with {@link Cacheable} annotation.
+ * with {@link Cacheable} annotation.</p>
  *
- * <p>The class is thread-safe.
+ * <p>The class is thread-safe.</p>
  *
  * @since 0.8
  */
@@ -110,7 +110,7 @@ public final class MethodCacher {
      * Call the method or fetch from cache.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Joint point
      * @return The result of call
@@ -164,6 +164,7 @@ public final class MethodCacher {
 
     /**
      * Flush cache.
+     *
      * @param point Join point
      * @return Value of the method
      * @throws Throwable If something goes wrong inside
@@ -182,7 +183,7 @@ public final class MethodCacher {
      * Flush cache.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Joint point
      * @since 0.7.14
@@ -202,7 +203,7 @@ public final class MethodCacher {
      * Flush cache after method execution.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Joint point
      * @since 0.7.18

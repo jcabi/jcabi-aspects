@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link RetryOnFailure} annotation and its implementation.
+ *
  * @since 0.0.0
  */
 final class RetryOnFailureTest {

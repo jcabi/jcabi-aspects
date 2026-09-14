@@ -6,6 +6,7 @@
 /**
  * Contains a class generated from a template that is used to access project
  * version and build number.
+ *
  * @since 0.23
  */
 package com.jcabi.aspects.version;

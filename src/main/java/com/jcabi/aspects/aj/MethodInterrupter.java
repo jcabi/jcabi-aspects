@@ -22,9 +22,9 @@ import org.aspectj.lang.annotation.Aspect;
  *
  * <p>It is an AspectJ aspect and you are not supposed to use it directly. It
  * is instantiated by AspectJ runtime framework when your code is annotated
- * with {@link Timeable} annotation.
+ * with {@link Timeable} annotation.</p>
  *
- * <p>The class is thread-safe.
+ * <p>The class is thread-safe.</p>
  *
  * @since 0.7.16
  */
@@ -77,7 +77,7 @@ public final class MethodInterrupter {
      * Run and interrupt a method, if stuck.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Joint point
      * @return The result of call

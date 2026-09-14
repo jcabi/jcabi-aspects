@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * Retry the method in case of exception.
  *
  * <p>For example, this {@code load()} method will retry to load the URL
- * content if it fails at the first attempts:
+ * content if it fails at the first attempts:</p>
  *
  * <pre> &#64;RetryOnFailure(attempts = 2)
  * String load(URL url) throws IOException {
@@ -32,30 +32,35 @@ public @interface RetryOnFailure {
 
     /**
      * How many times to retry.
+     *
      * @return Number of attempts
      */
     int attempts() default 3;
 
     /**
      * Delay between attempts, in time units.
+     *
      * @return Delay
      */
     long delay() default 50;
 
     /**
      * Time unit.
+     *
      * @return Time unit.
      */
     TimeUnit unit() default TimeUnit.MILLISECONDS;
 
     /**
      * When to retry (in case of what exception types).
+     *
      * @return Array of types.
      */
     Class<? extends Throwable>[] types() default {Throwable.class};
 
     /**
      * Exception types to ignore.
+     *
      * @return Array of types
      */
     Class<? extends Throwable>[] ignore() default {};
@@ -63,12 +68,14 @@ public @interface RetryOnFailure {
     /**
      * Shall it be fully verbose (show full exception trace) or just
      * exception message?
+     *
      * @return Verbosity flag
      */
     boolean verbose() default true;
 
     /**
      * Shall the time between retries by randomized.
+     *
      * @return Random retry time flag
      */
     boolean randomize() default true;

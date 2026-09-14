@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 /**
  * Annotates an immutable class.
  *
- * <p>For example:
+ * <p>For example:</p>
  *
  * <pre> &#64;Immutable
  * public class Foo {
@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
  * }</pre>
  *
  * <p>As soon as you try to instantiate this class a runtime exception
- * will be thrown, because this class is mutable.
+ * will be thrown, because this class is mutable.</p>
  *
  * @since 0.7.8
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
@@ -36,6 +36,7 @@ public @interface Immutable {
      * Identifies that an array-type field should be considered immutable. Note
      * that for an array to be considered immutable, its component type must
      * also be immutable.
+     *
      * @since 0.17
      * @todo #33 Let's prevent modifications to arrays having this annotation,
      *  somehow. Perhaps we can create an aspect that will throw an exception

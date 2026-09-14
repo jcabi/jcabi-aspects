@@ -27,9 +27,9 @@ import org.aspectj.lang.reflect.MethodSignature;
  * annotations only because
  * JSR-303 in its current version doesn't support method level validation
  * (see its Appendix C). At the moment we don't support anything expect these
- * two annotations. We think that it's better to wait for JSR-303.
+ * two annotations. We think that it's better to wait for JSR-303.</p>
  *
- * <p>The class is thread-safe.
+ * <p>The class is thread-safe.</p>
  *
  * @see <a href="http://beanvalidation.org/1.0/spec/#appendix-methodlevelvalidation">Appendix C</a>
  * @see <a href="http://aspects.jcabi.com/jsr-303.html">How it works</a>
@@ -41,15 +41,23 @@ public final class MethodValidator {
     /**
      * JSR-303 Validator.
      */
-    private final transient Validator validator = Validation
-        .buildDefaultValidatorFactory()
-        .getValidator();
+    private final transient Validator validator;
+
+    /**
+     * Ctor.
+     */
+    // @checkstyle ConstructorsCodeFreeCheck (5 lines)
+    public MethodValidator() {
+        this.validator = Validation
+            .buildDefaultValidatorFactory()
+            .getValidator();
+    }
 
     /**
      * Validate arguments of a method.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Join point
      */
@@ -68,7 +76,7 @@ public final class MethodValidator {
      * Validate arguments of constructor.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Join point
      */
@@ -92,7 +100,7 @@ public final class MethodValidator {
      * Validate method response.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Join point
      * @param result Result of the method

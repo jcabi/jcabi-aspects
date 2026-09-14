@@ -5,6 +5,7 @@
 
 /**
  * Project version and buildNumber generated at build time, tests.
+ *
  * @since 0.23
  */
 package com.jcabi.aspects.version;

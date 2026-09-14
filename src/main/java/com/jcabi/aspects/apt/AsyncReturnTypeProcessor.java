@@ -24,11 +24,19 @@ import javax.tools.Diagnostic;
  * Annotation processor that checks whether methods annotated with
  * {@link com.jcabi.aspects.Async} have void or
  * {@link Future} return types.
+ *
  * @since 0.17
  */
 @SupportedAnnotationTypes("com.jcabi.aspects.Async")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public final class AsyncReturnTypeProcessor extends AbstractProcessor {
+
+    /**
+     * Ctor.
+     */
+    public AsyncReturnTypeProcessor() {
+        // ctor
+    }
 
     @Override
     public boolean process(final Set<? extends TypeElement> annotations,

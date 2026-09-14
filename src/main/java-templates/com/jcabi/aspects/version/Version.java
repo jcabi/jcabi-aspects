@@ -6,6 +6,7 @@ package com.jcabi.aspects.version;
 
 /**
  * Current version of the project. Generated from a template at build time.
+ *
  * @since 0.23
  */
 public enum Version {
@@ -26,6 +27,7 @@ public enum Version {
 
     /**
      * Public ctor.
+     *
      * @param ver Maven's project.version property
      * @param buildnum Maven's buildNumber property created with
      *  buildnumber-maven-plugin
@@ -37,6 +39,7 @@ public enum Version {
 
     /**
      * Returns project version number.
+     *
      * @return Project version number
      */
     public String projectVersion() {
@@ -45,6 +48,7 @@ public enum Version {
 
     /**
      * Returns project build number.
+     *
      * @return Build number
      */
     public String buildNumber() {

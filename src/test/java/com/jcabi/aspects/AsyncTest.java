@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Async} annotation and its implementation.
+ *
  * @since 0.0.0
  */
 final class AsyncTest {
@@ -64,12 +65,14 @@ final class AsyncTest {
 
     /**
      * Dummy class for test purposes.
+     *
      * @since 0.0.0
      */
     private static final class Foo {
 
         /**
          * Async method that returns a Future containing the thread name.
+         *
          * @return The future
          */
         @Async
@@ -107,6 +110,7 @@ final class AsyncTest {
         /**
          * Async method that does not return void or Future. Should throw
          * exception.
+         *
          * @return An int value
          */
         @Async

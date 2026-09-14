@@ -12,6 +12,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * A call being watched.
+ *
  * @since 0.7.16
  */
 final class Call implements
@@ -39,6 +40,7 @@ final class Call implements
 
     /**
      * Public ctor.
+     *
      * @param pnt Joint point
      */
     Call(final ProceedingJoinPoint pnt) {
@@ -52,6 +54,7 @@ final class Call implements
 
     /**
      * Ctor.
+     *
      * @param pnt Joint point
      * @param thrd The thread that called
      * @param begin When it started
@@ -91,6 +94,7 @@ final class Call implements
 
     /**
      * Is it expired already?
+     *
      * @return TRUE if expired
      */
     boolean expired() {
@@ -99,6 +103,7 @@ final class Call implements
 
     /**
      * This thread is stopped already (interrupt if not)?
+     *
      * @return TRUE if it's already dead
      */
     boolean interrupted() {

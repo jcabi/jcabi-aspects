@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Cacheable} annotation and its implementation.
+ *
  * @since 0.0.0
  */
 @SuppressWarnings({
@@ -136,6 +137,7 @@ final class CacheableTest {
 
     /**
      * Dummy class, for tests above.
+     *
      * @since 0.0.0
      */
     private static final class Foo {
@@ -147,6 +149,7 @@ final class CacheableTest {
 
         /**
          * Public ctor.
+         *
          * @param num Number to encapsulate
          */
         Foo(final long num) {
@@ -172,6 +175,7 @@ final class CacheableTest {
 
         /**
          * Download some text.
+         *
          * @return Downloaded text
          */
         @Cacheable(unit = TimeUnit.SECONDS)
@@ -182,6 +186,7 @@ final class CacheableTest {
 
         /**
          * Download some text.
+         *
          * @return Downloaded text
          */
         @Cacheable(unit = TimeUnit.SECONDS, asyncUpdate = true)
@@ -192,6 +197,7 @@ final class CacheableTest {
 
         /**
          * Sleep forever, to abuse caching system.
+         *
          * @return The same object
          */
         @Cacheable(unit = TimeUnit.SECONDS)
@@ -215,6 +221,7 @@ final class CacheableTest {
 
         /**
          * Download some text.
+         *
          * @return Downloaded text
          */
         @Cacheable(unit = TimeUnit.SECONDS)
@@ -233,12 +240,14 @@ final class CacheableTest {
 
     /**
      * Dummy class, for tests above.
+     *
      * @since 0.0.0
      */
     public static final class Bar {
 
         /**
          * Flush before?
+         *
          * @return TRUE if flush is required
          */
         public static boolean flushBefore() {
@@ -247,6 +256,7 @@ final class CacheableTest {
 
         /**
          * Get some number.
+         *
          * @return The number
          */
         @Cacheable(before = CacheableTest.Bar.class)

@@ -7,7 +7,7 @@
  * Aspects, implementation for AspectJ.
  *
  * <p>The only dependency you need is (check our latest version available
- * at <a href="https://www.jcabi.com">www.jcabi.com</a>):
+ * at <a href="https://www.jcabi.com">www.jcabi.com</a>):</p>
  *
  * <pre>&lt;dependency&gt;
  *   &lt;groupId&gt;com.jcabi&lt;/groupId&gt;

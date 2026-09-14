@@ -14,6 +14,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Marker of a running method.
+ *
  * @since 0.0.0
  */
 final class Marker
@@ -46,6 +47,7 @@ final class Marker
 
     /**
      * Public ctor.
+     *
      * @param pnt Joint point
      * @param annt Annotation
      */
@@ -57,6 +59,7 @@ final class Marker
 
     /**
      * Ctor.
+     *
      * @param pnt Joint point
      * @param annt Annotation
      * @param begin When the method was started, in milliseconds

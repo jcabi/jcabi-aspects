@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
  *
  * <p>This annotation should be applied only to methods that return void, in
  * other cases the behavior might be unexpected (because {@code NULL} will
- * always be returned).
+ * always be returned).</p>
  *
  * @since 0.10
  */
@@ -26,6 +26,7 @@ public @interface Parallel {
 
     /**
      * Number of threads to use for parallel execution.
+     *
      * @return The number of threads
      */
     int threads() default 1;

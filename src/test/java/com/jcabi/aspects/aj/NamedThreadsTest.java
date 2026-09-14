@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link NamedThreads}.
+ *
  * @since 0.22
  */
 final class NamedThreadsTest {

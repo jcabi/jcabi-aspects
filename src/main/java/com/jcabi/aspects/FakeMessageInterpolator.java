@@ -9,6 +9,7 @@ import javax.validation.MessageInterpolator;
 
 /**
  * Fake class.
+ *
  * @since 0.25.0
  */
 final class FakeMessageInterpolator implements MessageInterpolator {

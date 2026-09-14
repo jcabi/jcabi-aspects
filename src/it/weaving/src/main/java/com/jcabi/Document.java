@@ -20,6 +20,7 @@ public final class Document {
 
     /**
      * Public ctor.
+     *
      * @param txt Name of it
      */
     public Document(@NotNull String txt) {
@@ -28,6 +29,7 @@ public final class Document {
 
     /**
      * Get name of it.
+     *
      * @return Name of it
      * @throws Exception If something is wrong
      */

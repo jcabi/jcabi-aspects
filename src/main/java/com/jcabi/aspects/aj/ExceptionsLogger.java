@@ -12,6 +12,7 @@ import org.aspectj.lang.annotation.Aspect;
 
 /**
  * Logs all exceptions thrown out of a method.
+ *
  * @see com.jcabi.aspects.LogExceptions
  * @since 0.1.10
  * @checkstyle IllegalThrows (100 lines)
@@ -22,10 +23,17 @@ import org.aspectj.lang.annotation.Aspect;
 public final class ExceptionsLogger {
 
     /**
+     * Ctor.
+     */
+    public ExceptionsLogger() {
+        // ctor
+    }
+
+    /**
      * Catch exception and log it.
      *
      * <p>Try NOT to change the signature of this method, in order to keep
-     * it backward compatible.
+     * it backward compatible.</p>
      *
      * @param point Joint point
      * @return The result of call

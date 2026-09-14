@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Timeable} annotation.
+ *
  * @since 0.0.0
  */
 final class TimeableTest {
@@ -24,6 +25,7 @@ final class TimeableTest {
 
     /**
      * Long running method.
+     *
      * @throws Exception If terminated
      */
     @Timeable(limit = 1, unit = TimeUnit.MILLISECONDS)

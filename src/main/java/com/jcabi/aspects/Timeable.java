@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * Makes a method time constrained.
  *
  * <p>For example, this {@code load()} method should not take more than
- * a second, and should be interrupted if it takes more:
+ * a second, and should be interrupted if it takes more:</p>
  *
  * <pre> &#64;Timeable(limit = 1, unit = TimeUnit.SECONDS)
  * String load(String resource) {
@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  * is checking its
  * {@link Thread#isInterrupted()} status. If you want to design your long
  * running methods in a way that {@link Timeable} can terminate them, embed
- * a checker into your most intessively used place, for example:
+ * a checker into your most intessively used place, for example:</p>
  *
  * <pre> &#64;Timeable(limit = 1, unit = TimeUnit.SECONDS)
  * String load(String resource) {
@@ -59,6 +59,7 @@ public @interface Timeable {
 
     /**
      * Maximum amount allowed for this method.
+     *
      * @return The limit
      */
     int limit() default Timeable.DEFAULT_LIMIT;
@@ -67,7 +68,7 @@ public @interface Timeable {
      * Time unit for the limit.
      *
      * <p>The minimum unit you can use is a second. We simply can't monitor with
-     * a frequency higher than a second.
+     * a frequency higher than a second.</p>
      *
      * @return The time unit
      */

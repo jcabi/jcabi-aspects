@@ -20,11 +20,19 @@ import javax.tools.Diagnostic;
 /**
  * Annotation processor that checks whether methods annotated with
  * {@link com.jcabi.aspects.Quietly} have void return types.
+ *
  * @since 0.16
  */
 @SupportedAnnotationTypes("com.jcabi.aspects.Quietly")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public final class QuietlyReturnTypeProcessor extends AbstractProcessor {
+
+    /**
+     * Ctor.
+     */
+    public QuietlyReturnTypeProcessor() {
+        // ctor
+    }
 
     @Override
     public boolean process(

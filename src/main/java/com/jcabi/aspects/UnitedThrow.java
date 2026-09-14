@@ -12,6 +12,7 @@ import java.lang.annotation.Target;
 
 /**
  * Throw only allowed exceptions, encapsulate others.
+ *
  * @since 0.13
  */
 @Documented
@@ -22,6 +23,7 @@ public @interface UnitedThrow {
 
     /**
      * Default empty exception.
+     *
      * @since 0.13
      */
     class None extends Throwable {
@@ -30,10 +32,18 @@ public @interface UnitedThrow {
          * Serialization marker.
          */
         private static final long serialVersionUID = -2085901092419654865L;
+
+        /**
+         * Ctor.
+         */
+        None() {
+            // ctor
+        }
     }
 
     /**
      * Exception that should be allowed.
+     *
      * @return The type of exception.
      */
     Class<? extends Throwable> value() default UnitedThrow.None.class;

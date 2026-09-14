@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Mnemos}.
+ *
  * @since 0.0.0
  */
 final class MnemosTest {

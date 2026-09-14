@@ -17,6 +17,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Repeat execution in case of exception.
+ *
  * @see RetryOnFailure
  * @since 0.1.10
  */
@@ -30,7 +31,15 @@ public final class Repeater {
     private static final Random RAND = new SecureRandom();
 
     /**
+     * Ctor.
+     */
+    public Repeater() {
+        // ctor
+    }
+
+    /**
      * Catch exception and re-call the method.
+     *
      * @param point Joint point
      * @return The result of call
      * @throws Throwable If something goes wrong inside

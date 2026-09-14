@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Running service.
+ *
  * @since 0.0.0
  */
 final class Service implements Closeable {
@@ -56,11 +57,12 @@ final class Service implements Closeable {
 
     /**
      * Public ctor.
+     *
      * @param runnable The runnable to schedule
      * @param obj Object
      * @param annt Annotation
      */
-    @SuppressWarnings("FutureReturnValueIgnored")
+    @SuppressWarnings({"FutureReturnValueIgnored", "PMD.CloseInlineResourceRule"})
     Service(final Runnable runnable, final Object obj,
         final ScheduleWithFixedDelay annt) {
         // @checkstyle ConstructorsCodeFreeCheck (30 lines)

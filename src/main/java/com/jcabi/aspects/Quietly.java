@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  * Log all exceptions thrown out of this method and swallow them.
  *
  * <p>This annotation should be applied only to methods that return void, in
- * other cases the behavior might be unexpected.
+ * other cases the behavior might be unexpected.</p>
  *
  * @since 0.7.22
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>

@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * Makes a method response cacheable in memory for some time.
  *
  * <p>For example, this {@code load()} method loads some data from the network
- * and we want it to cache loaded data for 5 seconds (to avoid delays):
+ * and we want it to cache loaded data for 5 seconds (to avoid delays):</p>
  *
  * <pre> &#64;Cacheable(lifetime = 5, unit = TimeUnit.SECONDS)
  * String load(String resource) throws IOException {
@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  *
  * <p>You can cache them forever, which means that once calculated and
  * cached value will never expire (may be a nice alternative to static
- * initializers):
+ * initializers):</p>
  *
  * <pre> &#64;Cacheable(forever = true)
  * String load(String resource) throws IOException {
@@ -32,11 +32,11 @@ import java.util.concurrent.TimeUnit;
  * }</pre>
  *
  * <p>Since version 0.7.14 you can also annotate methods that should flush
- * cache of the object.
+ * cache of the object.</p>
  *
  * <p>Since 0.7.18 you can control when exactly flushing happens, with
  * {@link Cacheable.FlushBefore} and {@link Cacheable.FlushAfter} annotations
- * ({@link Cacheable.Flush} is deprecated), for example:
+ * ({@link Cacheable.Flush} is deprecated), for example:</p>
  *
  * <pre>public class Page {
  *   &#64;Cacheable
@@ -60,6 +60,7 @@ public @interface Cacheable {
 
     /**
      * Lifetime of an object in cache, in time units.
+     *
      * @return The time amount
      */
     int lifetime() default 1;
@@ -68,7 +69,7 @@ public @interface Cacheable {
      * Time units of object lifetime.
      *
      * <p>The minimum unit you can use is a second. We simply can't cache for
-     * less than a second, because cache is being cleaned every second.
+     * less than a second, because cache is being cleaned every second.</p>
      *
      * @return The time unit
      */
@@ -76,6 +77,7 @@ public @interface Cacheable {
 
     /**
      * Keep in cache forever.
+     *
      * @return The flag
      */
     boolean forever() default false;
@@ -83,6 +85,7 @@ public @interface Cacheable {
     /**
      * Returns the current store after the expiration, and
      * then asynchronously update the data.
+     *
      * @return The flag
      */
     boolean asyncUpdate() default false;
@@ -92,7 +95,7 @@ public @interface Cacheable {
      *
      * <p>Before calling the method, call static method {@code flushBefore()}
      * in this class and, according to its result, either flush or not.
-     * For example:
+     * For example:</p>
      *
      * <pre> class Foo {
      *   &#64;Cacheable(before = Foo.class)
@@ -115,7 +118,7 @@ public @interface Cacheable {
      *
      * <p>After calling the method, call static method {@code flushAfter()}
      * in this class and, according to its result, either flush or not.
-     * For example:
+     * For example:</p>
      *
      * <pre> class Foo {
      *   &#64;Cacheable(after = Foo.class)
@@ -136,6 +139,7 @@ public @interface Cacheable {
     /**
      * Identifies a method that should flush all cached entities of
      * this class/object.
+     *
      * @since 0.7.14
      * @deprecated It is identical to {@link Cacheable.FlushBefore}
      */
@@ -149,6 +153,7 @@ public @interface Cacheable {
     /**
      * Identifies a method that should flush all cached entities of
      * this class/object, before being executed.
+     *
      * @since 0.7.18
      */
     @Documented
@@ -160,6 +165,7 @@ public @interface Cacheable {
     /**
      * Identifies a method that should flush all cached entities of
      * this class/object, after being executed.
+     *
      * @since 0.7.18
      */
     @Documented

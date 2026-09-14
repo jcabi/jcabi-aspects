@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for {@link ScheduleWithFixedDelay} annotation
  * and its implementation.
+ *
  * @since 0.0.0
  */
 @SuppressWarnings("PMD.CloseResource")
@@ -64,6 +65,7 @@ final class ScheduleWithFixedDelayTest {
 
     /**
      * Sample annotated class.
+     *
      * @since 0.0.0
      */
     @ScheduleWithFixedDelay(unit = TimeUnit.MILLISECONDS)
@@ -76,6 +78,7 @@ final class ScheduleWithFixedDelayTest {
 
         /**
          * Public ctor.
+         *
          * @param cnt Counter to encapsulate
          */
         Sample(final AtomicLong cnt) {
@@ -95,6 +98,7 @@ final class ScheduleWithFixedDelayTest {
 
     /**
      * Sample class with long delay.
+     *
      * @since 0.0.0
      */
     @ScheduleWithFixedDelay
@@ -107,6 +111,7 @@ final class ScheduleWithFixedDelayTest {
 
         /**
          * Public ctor.
+         *
          * @param cnt Counter to encapsulate
          */
         LongDelaySample(final AtomicLong cnt) {

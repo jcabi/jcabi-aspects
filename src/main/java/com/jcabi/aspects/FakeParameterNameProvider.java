@@ -12,6 +12,7 @@ import javax.validation.ParameterNameProvider;
 
 /**
  * Fake class.
+ *
  * @since 0.25.0
  */
 final class FakeParameterNameProvider implements ParameterNameProvider {

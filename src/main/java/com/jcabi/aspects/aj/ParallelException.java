@@ -6,6 +6,7 @@ package com.jcabi.aspects.aj;
 
 /**
  * Exception that encapsulates all exceptions thrown from threads.
+ *
  * @since 0.0.0
  */
 final class ParallelException extends Exception {
@@ -17,6 +18,7 @@ final class ParallelException extends Exception {
 
     /**
      * Constructor.
+     *
      * @param cause Cause of the current exception
      */
     ParallelException(final Throwable cause) {

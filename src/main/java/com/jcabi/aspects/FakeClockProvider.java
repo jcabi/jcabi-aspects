@@ -9,6 +9,7 @@ import javax.validation.ClockProvider;
 
 /**
  * Fake class.
+ *
  * @since 0.25.0
  */
 final class FakeClockProvider implements ClockProvider {

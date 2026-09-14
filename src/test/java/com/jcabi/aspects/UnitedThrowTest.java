@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link UnitedThrow}.
+ *
  * @since 0.0.0
  */
 final class UnitedThrowTest {
@@ -63,6 +64,7 @@ final class UnitedThrowTest {
 
     /**
      * Class for testing UnitedThrow.
+     *
      * @since 0.0.0
      */
     @SuppressWarnings("DoNotCallSuggester")
@@ -78,6 +80,7 @@ final class UnitedThrowTest {
 
         /**
          * Test method.
+         *
          * @throws IOException In case of exception.
          */
         @UnitedThrow

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Parallelizer}.
+ *
  * @since 0.10
  */
 final class ParallelizerTest {

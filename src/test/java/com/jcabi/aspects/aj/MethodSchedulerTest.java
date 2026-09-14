@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link MethodScheduler}.
+ *
  * @since 0.7.22
  */
 @SuppressWarnings("PMD.CloseResource")
@@ -48,6 +49,7 @@ final class MethodSchedulerTest {
 
     /**
      * Short running task.
+     *
      * @since 0.7.22
      */
     @ScheduleWithFixedDelay(unit = TimeUnit.NANOSECONDS)
@@ -60,6 +62,7 @@ final class MethodSchedulerTest {
 
         /**
          * Ctor.
+         *
          * @param flag Flag to raise when finished
          */
         ShortRun(final AtomicBoolean flag) {
@@ -84,6 +87,7 @@ final class MethodSchedulerTest {
 
     /**
      * Long running task.
+     *
      * @since 0.7.22
      */
     @ScheduleWithFixedDelay(
@@ -99,6 +103,7 @@ final class MethodSchedulerTest {
 
         /**
          * Ctor.
+         *
          * @param flag Flag to raise when finished
          */
         LongRun(final AtomicBoolean flag) {

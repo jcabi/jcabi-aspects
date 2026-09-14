@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Schedules the method to run with fixed delay, automatically.
  *
- * <p>For example, you want a method to do something every minute:
+ * <p>For example, you want a method to do something every minute:</p>
  *
  * <pre> &#64;ScheduleWithFixedDelay(delay = 1, unit = TimeUnit.MINUTES)
  * public class Bucket implements Runnable, Closeable {
@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
  * }</pre>
  *
  * <p>Execution will be started as soon as you make an instance of the class,
- * and will be stopped when you call {@code close()}:
+ * and will be stopped when you call {@code close()}:</p>
  *
  * <pre> Bucket bucket = new Bucket();
  * // some time later
@@ -40,14 +40,14 @@ import java.util.concurrent.TimeUnit;
  * be closed and stopped, your the class should implement
  * {@link java.io.Closeable} and its {@code close()}
  * method should be explicitly called
- * at the moment you want it to stop.
+ * at the moment you want it to stop.</p>
  *
  * <p><b>NOTE:</b> It should be pointed out that in order to ensure that there
  * are no duplicate executions, you can only schedule an execution once between
  * all equal objects (i.e. instances that are equal as per
  * {@link Object#equals(Object)})). Invoking the same method multiple times,
  * without stopping it first, will result in an {@link IllegalStateException}
- * being thrown.
+ * being thrown.</p>
  *
  * @since 0.7.16
  * @see <a href="http://aspects.jcabi.com">http://aspects.jcabi.com/</a>
@@ -59,24 +59,28 @@ public @interface ScheduleWithFixedDelay {
 
     /**
      * Delay, in time units.
+     *
      * @return The delay time amount
      */
     int delay() default 1;
 
     /**
      * Time units of delay.
+     *
      * @return The time unit
      */
     TimeUnit unit() default TimeUnit.MINUTES;
 
     /**
      * How long to wait for the task to finish after shutdown in await units.
+     *
      * @return The await time amount
      */
     int await() default 1;
 
     /**
      * Time units of await time.
+     *
      * @return The await time unit
      */
     TimeUnit awaitUnit() default TimeUnit.MINUTES;
@@ -85,18 +89,21 @@ public @interface ScheduleWithFixedDelay {
      * How many times to do a forceful shutdown after await time.
      * Each forceful shutdown attempt will be followed by a 1 second wait to
      * allow the threads to finish.
+     *
      * @return The number if times
      */
     int shutdownAttempts() default 1;
 
     /**
      * Total number of fixed threads.
+     *
      * @return The number of threads
      */
     int threads() default 1;
 
     /**
      * Be less verbose.
+     *
      * @return The flag
      */
     boolean verbose() default true;

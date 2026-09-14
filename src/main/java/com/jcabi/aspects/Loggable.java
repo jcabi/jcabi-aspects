@@ -15,14 +15,14 @@ import java.util.concurrent.TimeUnit;
  * Makes a method loggable via {@link com.jcabi.log.Logger}.
  *
  * <p>For example, this {@code load()} method produces a log line
- * on every call:
+ * on every call:</p>
  *
  * <pre> &#64;Loggable
  * String load(String resource) throws IOException {
  *   return "something";
  * }</pre>
  *
- * <p>You can configure the level of logging:
+ * <p>You can configure the level of logging:</p>
  *
  * <pre> &#64;Loggable(Loggable.DEBUG)
  * void save(String resource) throws IOException {
@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  * <p>Since version 0.7.6, you can specify a maximum execution time limit for
  * a method. If such a limit is reached a logging message will be issued with
  * a {@code WARN} priority. It is a very convenient mechanism for profiling
- * applications in production. Default value of a limit is 1 second.
+ * applications in production. Default value of a limit is 1 second.</p>
  *
  * <pre> &#64;Loggable(limit = 2)
  * void save(String resource) throws IOException {
@@ -40,7 +40,7 @@ import java.util.concurrent.TimeUnit;
  * }</pre>
  *
  * <p>Since version 0.7.14 you can change the time unit for the "limit"
- * parameter. Default unit of measurement is a second:
+ * parameter. Default unit of measurement is a second:</p>
  *
  * <pre> &#64;Loggable(limit = 200, unit = TimeUnit.MILLISECONDS)
  * void save(String resource) throws IOException {
@@ -50,7 +50,7 @@ import java.util.concurrent.TimeUnit;
  * <p>Since version 0.7.17 you can ignore certain exception types, and they
  * won't be logged when thrown. It is very useful when exceptions are used
  * to control flow (which is not a good practice, but is still used in
- * some frameworks, for example in JAX-RS):
+ * some frameworks, for example in JAX-RS):</p>
  *
  * <pre> &#64;Loggable(ignore = WebApplicationException.class)
  * String get() {
@@ -60,7 +60,7 @@ import java.util.concurrent.TimeUnit;
  * }</pre>
  *
  * <p>Since version 0.8 you can mark some exceptions as "always to be ignored",
- * using {@link Loggable.Quiet} annotation.
+ * using {@link Loggable.Quiet} annotation.</p>
  *
  * @since 0.7.2
  * @see com.jcabi.log.Logger
@@ -99,6 +99,7 @@ public @interface Loggable {
 
     /**
      * Level of logging.
+     *
      * @return The log level
      */
     int value() default Loggable.INFO;
@@ -106,6 +107,7 @@ public @interface Loggable {
     /**
      * Maximum amount allowed for this method (a warning will be
      * issued if it takes longer).
+     *
      * @since 0.7.6
      * @return The limit
      */
@@ -113,6 +115,7 @@ public @interface Loggable {
 
     /**
      * Time unit for the limit.
+     *
      * @since 0.7.14
      * @return The time unit
      */
@@ -120,6 +123,7 @@ public @interface Loggable {
 
     /**
      * Shall we trim long texts in order to make log lines more readable?
+     *
      * @since 0.7.13
      * @return The flag
      */
@@ -128,6 +132,7 @@ public @interface Loggable {
     /**
      * Method entry moment should be reported as well (by default only
      * an exit moment is reported).
+     *
      * @since 0.7.16
      * @return The flag
      */
@@ -137,7 +142,7 @@ public @interface Loggable {
      * List of exception types, which should not be logged if thrown.
      *
      * <p>You can also mark some exception types as "always to be ignored",
-     * using {@link Loggable.Quiet} annotation.
+     * using {@link Loggable.Quiet} annotation.</p>
      *
      * @since 0.7.17
      * @return Array of types
@@ -146,6 +151,7 @@ public @interface Loggable {
 
     /**
      * Skip logging of result, replacing it with dots?
+     *
      * @since 0.7.19
      * @return The flag
      */
@@ -153,6 +159,7 @@ public @interface Loggable {
 
     /**
      * Skip logging of arguments, replacing them all with dots?
+     *
      * @since 0.7.19
      * @return The flag
      */
@@ -160,6 +167,7 @@ public @interface Loggable {
 
     /**
      * Add toString() result to log line.
+     *
      * @since 0.8.1
      * @return The flag
      */
@@ -168,6 +176,7 @@ public @interface Loggable {
     /**
      * The precision (number of fractional digits) to be used when displaying
      * the measured execution time.
+     *
      * @since 0.18
      * @return The precision
      */
@@ -176,6 +185,7 @@ public @interface Loggable {
     /**
      * The name of the logger to be used. If not specified, defaults to the
      * class name of the annotated class or method.
+     *
      * @since 0.18
      * @return The logger's name
      */
@@ -210,7 +220,7 @@ public @interface Loggable {
      * of the options is to use {@link Loggable#ignore()} attribute to list
      * all exception types that should be ignored. However, this
      * {@link Loggable.Quiet} annotation is more convenient when we want to
-     * ignore one specific exception type in all situations.
+     * ignore one specific exception type in all situations.</p>
      *
      * @since 0.8
      */

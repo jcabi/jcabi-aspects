@@ -22,6 +22,7 @@ public final class Page {
     private int cnt;
     /**
      * Download some text (use cache).
+     *
      * @param text Some text
      * @return Downloaded text
      */
@@ -32,6 +33,7 @@ public final class Page {
     }
     /**
      * Download some text (don't cache).
+     *
      * @param text Some text
      * @return Downloaded text
      */
@@ -42,6 +44,7 @@ public final class Page {
     }
     /**
      * Get counter.
+     *
      * @return The number
      */
     public int counted() {

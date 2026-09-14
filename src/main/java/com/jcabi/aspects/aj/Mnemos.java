@@ -13,6 +13,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Utility class with text functions for making mnemos.
+ *
  * @since 0.0.0
  */
 @Immutable
@@ -37,6 +38,7 @@ final class Mnemos {
 
     /**
      * Make a string out of point.
+     *
      * @param point The point
      * @param trim Shall we trim long texts?
      * @param skip Shall we skip details and output just dots?
@@ -62,6 +64,7 @@ final class Mnemos {
 
     /**
      * Make a string out of point.
+     *
      * @param point The point
      * @param trim Shall we trim long texts?
      * @param skip Shall we skip details and output just dots?
@@ -79,6 +82,7 @@ final class Mnemos {
 
     /**
      * Make a string out of method.
+     *
      * @param method The method
      * @param args Actual arguments of the method
      * @param additional Additional text to add before log line
@@ -111,6 +115,7 @@ final class Mnemos {
 
     /**
      * Make a string out of method.
+     *
      * @param method The method
      * @param args Actual arguments of the method
      * @param trim Shall we trim long texts?
@@ -126,6 +131,7 @@ final class Mnemos {
 
     /**
      * Make a string out of an exception.
+     *
      * @param exp The exception
      * @return Text representation of it
      */
@@ -141,6 +147,7 @@ final class Mnemos {
 
     /**
      * Make a string out of an object.
+     *
      * @param arg The argument
      * @param trim Shall we trim long texts?
      * @param skip Shall we skip it with dots?

@@ -25,6 +25,7 @@ public final class AsyncValid {
     /**
      * Returns void.
      * Should not be flagged by annotation processor.
+     *
      * @return Future type.
      */
     @Async

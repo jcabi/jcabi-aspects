@@ -14,6 +14,7 @@ public final class AsyncInvalid {
     /**
      * Does not return void or future.
      * Should be flagged by annotation processor.
+     *
      * @return non void or future.
      */
     @Async

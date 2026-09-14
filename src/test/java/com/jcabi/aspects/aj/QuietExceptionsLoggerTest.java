@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 
 /**
  * Tests for {@link QuietExceptionsLogger}.
+ *
  * @since 0.1.10
  * @checkstyle IllegalThrows (500 lines)
  */
