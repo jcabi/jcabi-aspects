@@ -29,6 +29,8 @@ path = [
     "README.md",
     "renovate.json",
     "src/it/fake-validation/src/main/resources/META-INF/services/javax.validation.spi.ValidationProvider",
+    "src/it/loggable/.mvn/maven.config",
+    "src/it/weaving/.mvn/maven.config",
 ]
 precedence = "override"
 SPDX-FileCopyrightText = "Copyright (c) 2025 Yegor Bugayenko"
