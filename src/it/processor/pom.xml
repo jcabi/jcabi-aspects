@@ -33,13 +33,18 @@
   <parent>
     <groupId>com.jcabi</groupId>
     <artifactId>parent</artifactId>
-    <version>0.68.0</version>
+    <version>0.73.4</version>
   </parent>
   <artifactId>processor</artifactId>
   <name>processor</name>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <dependencies>
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+      <version>1.9.27</version>
+    </dependency>
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-log</artifactId>
