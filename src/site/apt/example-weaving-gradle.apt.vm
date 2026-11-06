@@ -52,7 +52,7 @@ Weaving Java Binaries
 
   Luckily, these steps can be automated.
   All you need to do to start using our AOP aspects is
-  add these two artifacts to your <<<build.gradle.kts>>>:
+  add this dependency to your <<<build.gradle.kts>>>:
 
 +--
 dependencies {
@@ -60,7 +60,8 @@ dependencies {
 }
 +--
 
-  Then, you use
+  Then, you declare the same artifact once more as an <<<aspect(...)>>>
+  dependency, so that the weaver can find our aspects, and you use
   {{{https://plugins.gradle.org/plugin/io.freefair.aspectj.post-compile-weaving}post-compile-weaving}}
   plugin which executes AspectJ weaver to modify your <<<.class>>> files:
 
