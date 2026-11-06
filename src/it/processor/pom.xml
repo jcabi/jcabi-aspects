@@ -41,6 +41,11 @@
   <packaging>jar</packaging>
   <dependencies>
     <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+      <version>1.9.27</version>
+    </dependency>
+    <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-log</artifactId>
       <!-- version is set in order to avoid a cyclic reference -->
