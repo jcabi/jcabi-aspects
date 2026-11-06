@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: Copyright (c) 2026 Yegor Bugayenko
+# SPDX-License-Identifier: MIT
+
+[default.extend-identifiers]
+# javax.annotation.processing.ProcessingEnvironment API method.
+getMessager = "getMessager"
