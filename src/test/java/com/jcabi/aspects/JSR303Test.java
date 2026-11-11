@@ -115,6 +115,30 @@ final class JSR303Test {
         );
     }
 
+    @Test
+    void acceptsValidArgumentsOfStaticMethod() {
+        Assertions.assertDoesNotThrow(
+            () -> JSR303Test.Stat.call("valid"),
+            "valid argument of a static method cannot be rejected"
+        );
+    }
+
+    @Test
+    void rejectsInvalidArgumentsOfStaticMethod() {
+        Assertions.assertThrows(
+            ConstraintViolationException.class,
+            () -> JSR303Test.Stat.call(null)
+        );
+    }
+
+    @Test
+    void rejectsNonMatchingArgumentOfStaticMethod() {
+        Assertions.assertThrows(
+            ConstraintViolationException.class,
+            () -> JSR303Test.Stat.digits("abc")
+        );
+    }
+
     /**
      * Annotation.
      *
@@ -178,6 +202,33 @@ final class JSR303Test {
          */
         void voidAlways() {
             // nothing to do
+        }
+    }
+
+    /**
+     * Dummy class with static methods.
+     *
+     * @since 0.0.0
+     */
+    @Loggable
+    private static final class Stat {
+
+        /**
+         * Do nothing.
+         *
+         * @param text Some text
+         */
+        static void call(@NotNull final String text) {
+            //Nothing to do.
+        }
+
+        /**
+         * Do nothing.
+         *
+         * @param text Some text
+         */
+        static void digits(@Pattern(regexp = "\\d+") final String text) {
+            //Nothing to do.
         }
     }
 
