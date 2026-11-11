@@ -31,6 +31,11 @@ public final class Repeater {
     private static final Random RAND = new SecureRandom();
 
     /**
+     * Largest shift that keeps the random bound positive.
+     */
+    private static final int MAXSHIFT = 30;
+
+    /**
      * Ctor.
      */
     public Repeater() {
@@ -115,7 +120,9 @@ public final class Repeater {
         InterruptedException {
         final long delay;
         if (rof.randomize()) {
-            delay = (long) Repeater.RAND.nextInt(2 << attempt) * rof.delay();
+            delay = (long) Repeater.RAND.nextInt(
+                1 << Math.min(attempt + 1, Repeater.MAXSHIFT)
+            ) * rof.delay();
         } else {
             delay = rof.delay() * (long) attempt;
         }
