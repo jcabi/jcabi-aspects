@@ -6,6 +6,9 @@ package com.jcabi.aspects.aj;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -64,11 +67,15 @@ public final class MethodValidator {
     @Before("execution(* *(.., @(javax.validation.* || javax.validation.constraints.*) (*), ..))")
     public void beforeMethod(final JoinPoint point) {
         if (this.validator != null) {
-            this.validateMethod(
-                point.getThis(),
-                ((MethodSignature) point.getSignature()).getMethod(),
-                point.getArgs()
-            );
+            final Method method =
+                ((MethodSignature) point.getSignature()).getMethod();
+            if (Modifier.isStatic(method.getModifiers())) {
+                MethodValidator.fail(
+                    new StaticConstraints(method).arguments(point.getArgs())
+                );
+            } else {
+                this.validateMethod(point.getThis(), method, point.getArgs());
+            }
         }
     }
 
@@ -112,14 +119,16 @@ public final class MethodValidator {
             returning = "result"
         )
     public void after(final JoinPoint point, final Object result) {
-        this.checkForViolations(
-            this.validator
-                .forExecutables().validateReturnValue(
-                    point.getThis(),
-                    new ImprovedJoinPoint(point).currentMethod(),
-                    result
-                )
-        );
+        final Method method = new ImprovedJoinPoint(point).currentMethod();
+        if (Modifier.isStatic(method.getModifiers())) {
+            MethodValidator.fail(new StaticConstraints(method).result(result));
+        } else {
+            this.checkForViolations(
+                this.validator
+                    .forExecutables()
+                    .validateReturnValue(point.getThis(), method, result)
+            );
+        }
     }
 
     private void validateMethod(final Object object, final Method method,
@@ -146,6 +155,15 @@ public final class MethodValidator {
             throw new ConstraintViolationException(
                 MethodValidator.pack(violations),
                 violations
+            );
+        }
+    }
+
+    private static void fail(final Collection<String> messages) {
+        if (!messages.isEmpty()) {
+            throw new ConstraintViolationException(
+                String.join("; ", messages),
+                new HashSet<>()
             );
         }
     }
