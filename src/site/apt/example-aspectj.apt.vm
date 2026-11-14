@@ -71,6 +71,20 @@ Weaving with AspectJ Maven Plugin
         <goal>compile</goal>
       </goals>
     </execution>
+    <execution>
+      <id>weave-test-classes</id>
+      <phase>process-test-classes</phase>
+      <goals>
+        <goal>test-compile</goal>
+      </goals>
+    </execution>
   </executions>
 </plugin>
 +--
+
+  The <<<compile>>> goal weaves main classes only. The separate
+  <<<test-compile>>> execution weaves classes in <<<src/test/java>>>
+  after Maven compiles them and before Surefire runs the tests.
+  Keep <<<aspectLibraries>>> in the plugin configuration so both
+  executions can find the aspects. A project containing only test
+  sources does not need a dummy class in <<<src/main/java>>>.
