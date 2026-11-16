@@ -12,12 +12,13 @@ import java.util.regex.Pattern;
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 /**
  * Checks constraints of static methods, which Bean Validation providers
  * refuse to validate, because they need an object to call a method on.
  *
- * <p>The class supports {@link NotNull}, {@link javax.validation.constraints.Null},
+ * <p>The class supports {@link NotNull}, {@link Null},
  * {@link javax.validation.constraints.Pattern}, and custom constraints that
  * name their validators explicitly.</p>
  *
@@ -34,6 +35,7 @@ final class StaticConstraints {
 
     /**
      * Ctor.
+     *
      * @param mtd Static method
      */
     StaticConstraints(final Method mtd) {
@@ -42,6 +44,7 @@ final class StaticConstraints {
 
     /**
      * Messages of violated constraints of the arguments.
+     *
      * @param args Arguments of the method
      * @return Messages, empty if all arguments are valid
      */
@@ -58,6 +61,7 @@ final class StaticConstraints {
 
     /**
      * Messages of violated constraints of the result.
+     *
      * @param result Result of the method
      * @return Messages, empty if the result is valid
      */
@@ -83,7 +87,7 @@ final class StaticConstraints {
         final boolean result;
         if (annotation instanceof NotNull) {
             result = value != null;
-        } else if (annotation instanceof javax.validation.constraints.Null) {
+        } else if (annotation instanceof Null) {
             result = value == null;
         } else if (annotation instanceof javax.validation.constraints.Pattern) {
             result = value == null || Pattern.compile(
@@ -124,7 +128,7 @@ final class StaticConstraints {
         if (text.startsWith("{")) {
             if (annotation instanceof NotNull) {
                 text = "must not be null";
-            } else if (annotation instanceof javax.validation.constraints.Null) {
+            } else if (annotation instanceof Null) {
                 text = "must be null";
             } else if (annotation
                 instanceof javax.validation.constraints.Pattern) {
