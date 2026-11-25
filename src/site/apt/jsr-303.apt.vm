@@ -49,16 +49,19 @@ JSR-303 Annotations with AspectJ
 <dependency>
   <groupId>javax.validation</groupId>
   <artifactId>validation-api</artifactId>
-  <version>1.1.0.CR3</version>
+  <version>2.0.1.Final</version>
   <scope>provided</scope>
 </dependency>
 <dependency>
   <groupId>org.apache.bval</groupId>
-  <artifactId>bval-jsr303</artifactId>
-  <version>0.4</version>
+  <artifactId>bval-jsr</artifactId>
+  <version>2.0.6</version>
   <scope>runtime</scope>
 </dependency>
 +--
+
+  Use BVal 2.x with this API; BVal 3.x uses the <<<jakarta.validation>>>
+  namespace instead of <<<javax.validation>>>.
 
   Next, annotate method arguments:
 
