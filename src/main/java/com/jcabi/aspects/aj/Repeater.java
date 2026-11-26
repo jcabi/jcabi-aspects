@@ -115,7 +115,9 @@ public final class Repeater {
         InterruptedException {
         final long delay;
         if (rof.randomize()) {
-            delay = (long) Repeater.RAND.nextInt(2 << attempt) * rof.delay();
+            delay = (long) Repeater.RAND.nextInt(
+                1 << Math.min(attempt + 1, 30)
+            ) * rof.delay();
         } else {
             delay = rof.delay() * (long) attempt;
         }
