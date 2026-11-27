@@ -59,7 +59,7 @@ Weaving Java Binaries
 <dependency>
   <groupId>org.aspectj</groupId>
   <artifactId>aspectjrt</artifactId>
-  <version>1.6.12</version>
+  <version>1.9.27</version>
   <scope>runtime</scope>
 </dependency>
 +--
@@ -75,7 +75,7 @@ Weaving Java Binaries
       <plugin>
         <groupId>com.jcabi</groupId>
         <artifactId>jcabi-maven-plugin</artifactId>
-        <version>0.8</version>
+        <version>0.17.2</version>
         <executions>
           <execution>
             <goals>
