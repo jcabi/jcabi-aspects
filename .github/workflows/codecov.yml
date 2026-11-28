@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v6
         with:
           distribution: 'temurin'
@@ -24,7 +24,7 @@ jobs:
           restore-keys: |
             maven-
       - run: mvn install -Pjacoco
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./target/site/jacoco/jacoco.xml
